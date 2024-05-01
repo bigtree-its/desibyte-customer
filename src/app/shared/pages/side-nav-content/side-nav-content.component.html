@@ -1,1 +1,20 @@
-<p>side-nav-content works!</p>
+<div class="side-nav-bar-content">
+    <div *ngIf="user" class="flex-column jcc aic mb-5">
+        <div class="flex-column jcc aic" style="height: 100px;width:100px;background-color: var(--yellow);border-radius:50%;justify-content:center;">
+            <span style="font-size: 30px;">{{user.firstName | slice:0:1}}{{user.lastName | slice:0:1}}</span>
+        </div>
+        <span style="font-size: 20px;">{{user.name}}</span>
+    </div>
+    <div class="flex-column">
+        <span *ngIf="user === null" class="navItem" routerLink="/login">Login</span>
+        <span *ngIf="user === null" class="navItem" routerLink="/register">Signup</span>
+        <span *ngIf="user !== null" class="navItem" (click)="logout()">Logout</span>
+        <span *ngIf="user !== null" class="navItem" routerLink="/my_orders">Orders</span>
+        <span class="navItem" routerLink="/contact_us">Become a partner</span>
+        <span *ngIf="user !== null" class="navItem" routerLink="/my_profile">Profile</span>
+    </div>
+
+    <!-- <ul class="side-nav-bar-menu">
+        <li *ngFor="let navItem of navItems" (click)="onNavigationSelection(navItem)" class="navItem">{{ navItem.label }}</li>
+    </ul> -->
+</div>

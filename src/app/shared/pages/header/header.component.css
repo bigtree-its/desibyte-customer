@@ -1,0 +1,127 @@
+.page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+}
+
+.menu-icon {
+    padding: 0 6px;
+    font-size: 15px;
+}
+
+.menu-icon:hover {
+    cursor: pointer;
+    color: var(--red);
+}
+
+.logo {
+    cursor: pointer;
+    font-size: 30px;
+    padding: 0 20px;
+}
+
+.logo-icon,
+.cart-icon {
+    font-size: 20px;
+}
+
+.cart-icon {
+    margin-right: 5px;
+}
+
+.cart-icon:hover {
+    cursor: pointer;
+    color: var(--d-orange);
+}
+
+nav {
+    margin: 0 auto;
+    width: 100%;
+    height: auto;
+    display: inline-block;
+    /* background:#37bc9b; */
+}
+
+
+/* Nav */
+
+nav ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    float: left;
+}
+
+
+/* Nav items */
+
+nav ul li {
+    position: relative;
+    margin: 0 20px 0 0;
+    float: left;
+}
+
+li>a:after {
+    content: ' »';
+}
+
+
+/* Change this in order to change the Dropdown symbol */
+
+li>a:only-child:after {
+    content: '';
+}
+
+
+/* Nav item text */
+
+nav ul li a {
+    padding: 5px;
+    display: inline-block;
+    color: #222;
+    text-decoration: none;
+}
+
+nav ul li a:hover {
+    opacity: 0.5;
+}
+
+
+/* Nav Item Dropdown*/
+
+nav ul li ul {
+    display: none;
+    position: absolute;
+    left: 0;
+    /* background:#37bc9b; */
+    background: #fadbdbfc;
+    color: black;
+    float: left;
+    min-width: 200px;
+}
+
+
+/* Nav->Item->Dropdown->Item*/
+
+nav ul li ul li {
+    display: block;
+    clear: both;
+    padding: 5px 0;
+    border: 1px solid rgba(251, 240, 240, 0.466);
+}
+
+nav ul li ul li div {
+    display: block;
+    clear: both;
+    padding: 5px 0;
+    background-color: aqua;
+}
+
+
+/* Display the Menu Content when hovering Nav Item */
+
+nav ul li:hover ul {
+    display: block;
+}

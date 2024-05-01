@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { NavigationService } from 'src/app/services/navigation.service';
 
 @Component({
   selector: 'app-header',
@@ -7,5 +9,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+  
 
+  navigationService = inject(NavigationService);
+  
+  toggleSideNav() {
+    this.navigationService.setShowNav(true);
+  }
+
+  faBars = faBars;
 }

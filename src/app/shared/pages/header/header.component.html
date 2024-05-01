@@ -1,7 +1,17 @@
-<div class="sm flex-row jcsb aic">
-    <span class="logo-text f-size-xl" [routerLink]="['/']">DESIFY</span>
-    <button type="button" class="btn-13">Post Ad</button>
+<div class="container-fluid border-bottom">
+    <div class="sm flex-row jcsb aic">
+        <fa-icon [icon]="faBars" (click)="toggleSideNav()" class="menu-icon"></fa-icon>
+        <span class="logo-text f-size-xl" [routerLink]="['/']">DESIFY</span>
+        <button type="button" class="btn-13 br-25">Post Ad</button>
+    </div>
+    <div class="lg flex-row jcsb aic">
+        <span class="logo-text f-size-xl" [routerLink]="['/']">DESIFY</span>
+        <div class="flex-row gap-1">
+    
+        </div>
+        <div class="flex-row gap-1">
+            <button type="button" class="btn-13 br-25">Post Ad</button>
+        </div>
+    </div>
 </div>
-<div class="lg flex-row jcsb aic">
-    <span class="logo-text f-size-xl" [routerLink]="['/']">DESIFY</span>
-</div>
+

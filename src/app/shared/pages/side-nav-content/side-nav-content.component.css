@@ -1,0 +1,12 @@
+.side-nav-bar-content {
+    flex: 1;
+}
+
+.navItem {
+    padding: 10px 0;
+}
+
+.navItem:hover {
+    cursor: pointer;
+    color: var(--pink);
+}

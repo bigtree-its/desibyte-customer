@@ -40,6 +40,7 @@
     --font-size-small: 0.75rem;
     --font-size-default: 0.875rem;
     --brand-color: #deff08;
+    --brand-color-dark: #53d900;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -420,15 +421,13 @@ tr:nth-child(odd) {
     border-radius: 0.5em;
     cursor: pointer;
     border: 1px solid var(--brand-color);
-    background-color: #fff;
+    background-color: var(--brand-color);
     transition: all 0.3s;
-    /* box-shadow: 2px 2px 12px #c5c5c5, -6px -6px 12px #ffffff; */
 }
 
 .btn-13:hover {
     color: #000a19;
-    background-color: var(--brand-color);
-    /* box-shadow: inset 4px 4px 12px #c5c5c5, inset -4px -4px 12px #ffffff; */
+    background-color: var(--brand-color-dark);
 }
 
 

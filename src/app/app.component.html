@@ -1,6 +1,11 @@
+<app-side-nav [sidenavTemplateRef]="navContent" [direction]="'right'" [navWidth]="280" [duration]="0.5"></app-side-nav>
 <div class="container-fluid">
-  <app-header></app-header>
-  <section>
-      <router-outlet></router-outlet>
-  </section>
+    <app-header></app-header>
+    <section>
+        <router-outlet></router-outlet>
+    </section>
 </div>
+
+<ng-template #navContent>
+    <app-side-nav-content></app-side-nav-content>
+</ng-template>
