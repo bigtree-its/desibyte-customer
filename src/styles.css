@@ -415,19 +415,36 @@ tr:nth-child(odd) {
     font-weight: 600;
 }
 
-.btn-13 {
-    color: #090909;
-    padding: 0 10px;
+.btn-12 {
+    padding: 5px 13px;
     border-radius: 0.5em;
     cursor: pointer;
-    border: 1px solid var(--brand-color);
-    background-color: var(--brand-color);
+    background-color: #000a19;
+    color: var(--brand-color);
     transition: all 0.3s;
+    border: none;
+}
+
+.btn-12:hover {
+    cursor: pointer;
+    background-color: var(--brand-color);
+    color: #090909;
+}
+
+.btn-13 {
+    
+    padding: 5px 13px;
+    border-radius: 0.5em;
+    background-color: var(--brand-color);
+    color: #090909;
+    transition: all 0.3s;
+    border: none;
 }
 
 .btn-13:hover {
-    color: #000a19;
-    background-color: var(--brand-color-dark);
+    cursor: pointer;
+    background-color: #000a19;
+    color: var(--brand-color);
 }
 
 

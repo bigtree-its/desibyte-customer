@@ -6,12 +6,12 @@
         <span style="font-size: 20px;">{{user.name}}</span>
     </div>
     <div class="flex-column">
-        <span *ngIf="user === null" class="navItem" routerLink="/login">Login</span>
-        <span *ngIf="user === null" class="navItem" routerLink="/register">Signup</span>
-        <span *ngIf="user !== null" class="navItem" (click)="logout()">Logout</span>
-        <span *ngIf="user !== null" class="navItem" routerLink="/my_orders">Orders</span>
+        <span *ngIf="!user" class="navItem" routerLink="/login">Login</span>
+        <span *ngIf="!user" class="navItem" routerLink="/register">Signup</span>
+        <span *ngIf="user" class="navItem" (click)="logout()">Logout</span>
+        <span *ngIf="user" class="navItem" routerLink="/my_orders">Orders</span>
         <span class="navItem" routerLink="/contact_us">Become a partner</span>
-        <span *ngIf="user !== null" class="navItem" routerLink="/my_profile">Profile</span>
+        <span *ngIf="user" class="navItem" routerLink="/my_profile">Profile</span>
     </div>
 
     <!-- <ul class="side-nav-bar-menu">

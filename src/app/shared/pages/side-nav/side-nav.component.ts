@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { NavigationService } from 'src/app/services/navigation.service';
+import { NavigationService } from 'src/app/services/common/navigation.service';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 
 @Component({

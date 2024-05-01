@@ -50,36 +50,22 @@ export interface PasswordResetSubmit {
     password: string;
 }
 
-export interface ApiResponse {
-    endpoint: string;
-    message: string;
+export interface CustomerPreferences{
+    customerId: string;
+    communicationViaEmail: Boolean;
+    communicationViaMobile: Boolean;
+    cuisines: string[];
+    chefs: string[];
+    foods: string[];
 }
 
-export class Supplier {
-    _id: string;
-    name: string;
-    email: string;
+export interface PersonalDetails {
+    customerId: string;
+    firstName: string;
+    lastName: string;
     mobile: string;
-    address: Address;
 }
 
-export class Customer {
-    _id: string;
-    name: string;
-    email: string;
-    mobile: string;
-    address: Address;
-}
-
-export class Address {
-    addressLine1: string;
-    addressLine2: string;
-    city: string;
-    postcode: string;
-    country: string;
-    latitude: string;
-    longitude: string;
-}
 
 
 

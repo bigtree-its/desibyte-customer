@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { NavigationService } from 'src/app/services/navigation.service';
+import { NavigationService } from 'src/app/services/common/navigation.service';
 
 @Component({
   selector: 'app-header',

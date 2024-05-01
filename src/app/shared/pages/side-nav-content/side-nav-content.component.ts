@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from 'src/app/model/auth-model';
+import { User } from 'src/app/model/all-auth';
+import { AccountService } from 'src/app/services/auth/account.service';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { User } from 'src/app/model/auth-model';
 })
 export class SideNavContentComponent implements OnInit {
 
-  // accountService = inject(AccountService);
+  accountService = inject(AccountService);
   user?: User;
   
   navItems = [
@@ -35,6 +36,6 @@ export class SideNavContentComponent implements OnInit {
   }
 
   logout(){
-    // this.accountService.logout();
+    this.accountService.logout();
   }
 }

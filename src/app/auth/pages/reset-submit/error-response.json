@@ -1,0 +1,18 @@
+{
+    "headers": {
+        "normalizedNames": {},
+        "lazyUpdate": null
+    },
+    "status": 400,
+    "statusText": "OK",
+    "url": "http://localhost:8081/api/users/password-reset/submit",
+    "ok": false,
+    "name": "HttpErrorResponse",
+    "message": "Http failure response for http://localhost:8081/api/users/password-reset/submit: 400 OK",
+    "error": {
+        "reference": "bdcef844-c33c-4dab-9bc1-1092cdc9ad2d",
+        "title": "Bad Request",
+        "detail": "There was a problem. Please contact customer support to reset your password.",
+        "status": 400
+    }
+}

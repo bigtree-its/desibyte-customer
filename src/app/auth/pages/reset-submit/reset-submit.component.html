@@ -1,0 +1,26 @@
+<div class="container jcc">
+    <div class="d-flex jcc">
+        <div class="flex-column border card mt-3 p-3 jcs width-m">
+            <div class="d-flex justify-content-center" style="margin-bottom: 30px;">
+                <span style="font-weight: 900;font-size: 30px;cursor: pointer;">Reset
+                    Password</span>
+            </div>
+            <div class="input-div">
+                <input class="_381fS" type="password" name="password" id="password" tabindex="3" autocomplete="off" value="" [(ngModel)]="password" #ctrl="ngModel">
+                <div class="_2EeI1 _26LFr"></div>
+                <label class="_1Cvlf _2tL9P" for="password">Password</label>
+            </div>
+            <div class="input-div">
+                <input class="_381fS" type="password" name="repeatPassword" id="repeatPassword" tabindex="4" autocomplete="off" value="" [(ngModel)]="repeatPassword" #ctrl="ngModel">
+                <div class="_2EeI1 _26LFr"></div>
+                <label class="_1Cvlf _2tL9P" for="repeatPassword">Repeat Password</label>
+            </div>
+            <div class="d-flex justify-content-center align-items-center my-3">
+                <button class="btn-lift flex-grow" (click)="submit()">Reset Password</button>
+            </div>
+            <div *ngIf="errorMessage !== undefined" style="font-weight: normal;text-align: center;display: block;background-color: rgb(241, 215, 215);color: #bc3737;padding: 20px;">
+                <p>{{errorMessage}}</p>
+            </div>
+        </div>
+    </div>
+</div>
