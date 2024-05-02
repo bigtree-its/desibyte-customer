@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
+
 .page {
     display: flex;
     flex-direction: column;
@@ -46,12 +47,12 @@
     border: none;
     padding: 5px 10px;
     background: transparent;
-    color: #f36805;
+    color: #212020;
 }
 
-.selected{
-    background-color: #fff;
-    color: #f36805;
+.selected {
+    background: var(--brand-color-dark);
+    color: #333;
     font-weight: 900;
 }
 
@@ -72,29 +73,6 @@
 
 .address-item:hover {
     color: var(--blue);
+    font-weight: 900;
     cursor: pointer;
-}
-
-.order-total {
-    font-size: 30px;
-    font-family: " Poiret One ", sans-serif;
-}
-
-#contentDiv {
-    width: 100%;
-}
-
-@media (min-width: 700px) {
-    .customer-address-container {
-        display: flex;
-        flex-direction: row;
-    }
-    .left-content {
-        display: flex;
-        flex-grow: 1;
-        margin-left: 20px;
-    }
-    #contentDiv {
-        width: 50%;
-    }
 }
