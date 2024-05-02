@@ -4,18 +4,19 @@ export const environment = {
   CURRENCY: 'GBP',
   CURRENCY_SYMBOL: '£',
 
-  CollectionsUrl:
-    'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/collections',
-  ChefsUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/chefs',
-  CuisinesUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/cuisines',
-  DishesUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/dishes',
-  ReviewsUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/reviews',
-  ServiceAreasUrl:
-    'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/serviceareas',
-  MenusUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/menus',  
+  CollectionsUrl: "https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/collections",
+  ChefsUrl: "https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/chefs",
+  CuisinesUrl: "https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/cuisines",
+  DishesUrl: "https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/dishes",
+  ReviewsUrl: "https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/reviews",
+  ServiceAreasUrl: "https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/serviceareas",
+  MenusUrl: "https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/menus",
+  CalendersUrl: "https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/calendars",
+  GroupsUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/groups',
+  ProductsUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/products',
   SupplierUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/suppliers',
-  CalendersUrl:
-    'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/calendars',
+  FeedbacksUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/feedbacks',
+  PartyBundlesUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/party-bundles',
  
 
   LoginUrl:

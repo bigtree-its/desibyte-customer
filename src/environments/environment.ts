@@ -3,125 +3,48 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-
-  AUTH_SERVER: 'bigtree-auth-service-672f06320174.herokuapp.com',
-  ORDER_SERVER: 'polar-fortress-28097-08459456d8d7.herokuapp.com',
-  ADS_SERVER_REMOTE: 'chef-service-1b2023ebc956.herokuapp.com',
-  ADS_SERVER_LOCAL: 'http://localhost:8082',
+  production: true,
+  
   CURRENCY: 'GBP',
   CURRENCY_SYMBOL: '£',
 
-  // ====================
-  // Ads Service Remote
-  // ====================
-  // GroupsUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/groups',
-  // ProductsUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/products',
-  // FeedbacksUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/feedbacks',
-  // CollectionsUrl:
-  //   'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/collections',
-  // ChefsUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/chefs',
-  // CuisinesUrl:
-  //   'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/cuisines',
-  // DishesUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/dishes',
-  // ReviewsUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/reviews',
-  // ServiceAreasUrl:
-  //   'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/serviceareas',
-  // MenusUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/menus',
-  // CalendersUrl:
-  //   'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/calendars',
+  // Ads
+  CollectionsUrl: "https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/collections",
+  ChefsUrl: "https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/chefs",
+  CuisinesUrl: "https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/cuisines",
+  DishesUrl: "https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/dishes",
+  ReviewsUrl: "https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/reviews",
+  ServiceAreasUrl: "https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/serviceareas",
+  MenusUrl: "https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/menus",
+  CalendersUrl: "https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/calendars",
+  GroupsUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/groups',
+  ProductsUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/products',
+  SupplierUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/suppliers',
+  FeedbacksUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/feedbacks',
+  PartyBundlesUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/party-bundles',
 
-  // ====================
-  // Order Service Remote
-  // ====================
-
-  // FoodOrdersTrackingUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/food-order-tracking',
-  // FoodOrdersUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/food-orders',
-  // FoodOrderSearchUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/food-orders/search',
-  // FoodOrdersStripePaymentsUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/food-orders/stripe-payments',
-  // FoodOrdersPaymentIntentUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/food-orders/stripe-payments/payment-intent',
-  // ProductOrdersUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/product-orders',
-  // ProductOrdersSearchUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/product-orders/search',
-  // ProductOrdersPaymentsUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/product-orders/stripe-payments',
-
-  // ====================
-  // Order Service Local
-  // ====================
-  FoodOrdersTrackingUrl: 'http://localhost:8082/orders/v1/food-order-tracking',
-  FoodOrdersUrl: 'http://localhost:8082/orders/v1/foods',
-  FoodOrderSearchUrl: 'http://localhost:8082/orders/v1/foods/search',
-  FoodOrdersStripePaymentsUrl: 'http://localhost:8082/orders/v1/foods/stripe-payments',
-  FoodOrdersPaymentIntentUrl: 'http://localhost:8082/orders/v1/foods/stripe-payments/payment-intent',
-  ProductOrdersUrl: 'http://localhost:8082/orders/v1/products',
-  ProductOrdersSearchUrl: 'http://localhost:8082/orders/v1/products/search',
-  ProductOrdersPaymentsUrl: 'http://localhost:8082/orders/v1/products/stripe-payments',
+// Orders
+  FoodOrdersTrackingUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/foods-tracking',
+  FoodOrdersUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/foods',
+  FoodOrderSearchUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/foods/search',
+  FoodOrdersStripePaymentsUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/foods/stripe-payments',
+  FoodOrdersPaymentIntentUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/food-s/stripe-payments/payment-intent',
+  ProductOrdersUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/products',
+  ProductOrdersSearchUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/products/search',
+  ProductOrdersPaymentsUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/products/stripe-payments',
 
 
-  // ====================
-  // Auth Service Remote
-  // ====================
-  LoginUrl:
-    'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/auth/token',
-  LogoutUrl:
-    'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/auth/logout',
-  RegisterUrl:
-    'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/users/signup',
-  PasswordResetInitiateUrl:
-    'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/auth/passwords/reset_initiate',
-  PasswordResetSubmitUrl:
-    'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/auth/passwords/reset_submit',
-  GetCustomerPreferencesUrl:
-    'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/customers/replace-me/preferences',
-  CreateOrUpdateCustomerPreferencesUrl:
-    'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/customers/preferences',
-  CreateContactsUrl:
-    'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/contacts',
-  UpdatePersonalDetails:
-    'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/users/update_personal',
+  // Auth
+  LoginUrl:'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/auth/token',
+  LogoutUrl:'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/auth/logout',
+  RegisterUrl:'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/users/signup',
+  PasswordResetInitiateUrl:'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/auth/passwords/reset_initiate',
+  PasswordResetSubmitUrl:'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/auth/passwords/reset_submit',
+  GetCustomerPreferencesUrl:'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/customers/replace-me/preferences',
+  CreateOrUpdateCustomerPreferencesUrl:'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/customers/preferences',
+  CreateContactsUrl:'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/contacts',
+  UpdatePersonalDetails:'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/users/update_personal',
  
-
-
-// ====================
-  // Auth Service Local
-  // ====================
-  // LoginUrl:
-  //   'http://localhost:8081/v1/auth/token',
-  // LogoutUrl:
-  //   'http://localhost:8081/v1/auth/logout',
-  // RegisterUrl:
-  //   'http://localhost:8081/v1/users/signup',
-  // PasswordResetInitiateUrl:
-  //   'http://localhost:8081/v1/auth/passwords/reset_initiate',
-  // PasswordResetSubmitUrl:
-  //   'http://localhost:8081/v1/auth/passwords/reset_submit',
-  // GetCustomerPreferencesUrl:
-  //   'http://localhost:8081/v1/customers/replace-me/preferences',
-  // CreateOrUpdateCustomerPreferencesUrl:
-  //   'http://localhost:8081/v1/customers/preferences',
-  // CreateContactsUrl:
-  //   'http://localhost:8081/v1/contacts',
-  // UpdatePersonalDetails:
-  //   'http://localhost:8081/v1/users/update_personal',
-
-  // ====================
-  // Ads Service Local
-  // ====================
-  CollectionsUrl: "http://localhost:8083/ads/v1/collections",
-  ChefsUrl: "http://localhost:8083/ads/v1/chefs",
-  CuisinesUrl: "http://localhost:8083/ads/v1/cuisines",
-  DishesUrl: "http://localhost:8083/ads/v1/dishes",
-  ReviewsUrl: "http://localhost:8083/ads/v1/reviews",
-  ServiceAreasUrl: "http://localhost:8083/ads/v1/serviceareas",
-  MenusUrl: "http://localhost:8083/ads/v1/menus",
-  CalendersUrl: "http://localhost:8083/ads/v1/calendars",
-  GroupsUrl: 'http://localhost:8083/ads/v1/groups',
-  ProductsUrl: 'http://localhost:8083/ads/v1/products',
-  SupplierUrl: 'http://localhost:8083/ads/v1/suppliers',
-  FeedbacksUrl: 'http://localhost:8083/ads/v1/feedbacks',
-  PartyBundlesUrl: 'http://localhost:8083/ads/v1/party-bundles',
-  
-
-  // debug: window['env']['debug'] || false,
 
   /** RapidAPI  */
   X_RapidAPI_Url:
