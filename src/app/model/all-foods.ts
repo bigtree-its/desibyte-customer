@@ -3,6 +3,7 @@ import { Address, Contact, Customer } from "./common";
 export interface OrderSupplier{
     _id: string;
     name: string;
+    tradingName: string;
     image: string;
     mobile: string;
     email: string;

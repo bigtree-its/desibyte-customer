@@ -17,28 +17,23 @@
         <div class="flex-column p-2 mt-2" *ngIf="!showHomeScreen">
             <div class="flex-row jcsb aic  border-bottom py-1">
                 <span class="bold fs-5">Your details</span>
-                <fa-icon *ngIf="!yourDetails" [icon]="chevronDown" (click)="openCloseDetails()"
-                    class="btn-circle"></fa-icon>
-                <fa-icon *ngIf="yourDetails" [icon]="chevronUp" (click)="openCloseDetails()"
-                    class="btn-circle"></fa-icon>
+                <fa-icon *ngIf="!yourDetails" [icon]="chevronDown" (click)="openCloseDetails()" class="btn-circle"></fa-icon>
+                <fa-icon *ngIf="yourDetails" [icon]="chevronUp" (click)="openCloseDetails()" class="btn-circle"></fa-icon>
             </div>
             <ng-template *ngIf="yourDetails" [ngTemplateOutlet]="details"></ng-template>
         </div>
         <div class="flex-column p-2 mt-2" *ngIf="!showHomeScreen">
             <div class="flex-row jcsb aic  border-bottom py-1 mb-1">
                 <span class="bold fs-5">Delivery option</span>
-                <fa-icon *ngIf="!yourAddress" [icon]="chevronDown" (click)="openCloseAddress()"
-                    class="btn-circle"></fa-icon>
-                <fa-icon *ngIf="yourAddress" [icon]="chevronUp" (click)="openCloseAddress()"
-                    class="btn-circle"></fa-icon>
+                <fa-icon *ngIf="!yourAddress" [icon]="chevronDown" (click)="openCloseAddress()" class="btn-circle"></fa-icon>
+                <fa-icon *ngIf="yourAddress" [icon]="chevronUp" (click)="openCloseAddress()" class="btn-circle"></fa-icon>
             </div>
             <ng-template *ngIf="yourAddress" [ngTemplateOutlet]="deliveryOption"></ng-template>
         </div>
         <div class="flex-column p-2 mt-2" *ngIf="!showHomeScreen">
             <div class="flex-row jcsb aic border-bottom py-1">
                 <span class="bold fs-5 ">Items</span>
-                <fa-icon *ngIf="!openItems" [icon]="chevronDown" (click)="openCloseItems()"
-                    class="btn-circle"></fa-icon>
+                <fa-icon *ngIf="!openItems" [icon]="chevronDown" (click)="openCloseItems()" class="btn-circle"></fa-icon>
                 <fa-icon *ngIf="openItems" [icon]="chevronUp" (click)="openCloseItems()" class="btn-circle"></fa-icon>
             </div>
             <ng-template *ngIf="openItems" [ngTemplateOutlet]="items"></ng-template>
@@ -57,8 +52,7 @@
             <div *ngIf="!showHomeScreen" class="flex-column">
                 <ng-template [ngTemplateOutlet]="details"></ng-template>
                 <ng-template [ngTemplateOutlet]="deliveryOption"></ng-template>
-                <button *ngIf="canShowPlaceOrderButton()" class="btn-arrow mt-1 d-flex jcc aic"
-                    (click)="placeOrder(paymentForm)">
+                <button *ngIf="canShowPlaceOrderButton()" class="btn-arrow mt-1 d-flex jcc aic" (click)="placeOrder(paymentForm)">
                     <span>{{loading? 'Please wait...': "I'm Ready to Pay"}}</span>
                     <svg width="34" height="34" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="37" cy="37" r="35.5" stroke="black" stroke-width="3"></circle>
@@ -80,8 +74,7 @@
     </div>
 
     <div class="sm footer flex-row p-2 jcc">
-        <button *ngIf="canShowPlaceOrderButton()" class="btn-arrow mt-1 d-flex jcc aic"
-            (click)="placeOrder(paymentForm)">
+        <button *ngIf="canShowPlaceOrderButton()" class="btn-arrow mt-1 d-flex jcc aic" (click)="placeOrder(paymentForm)">
             <span>{{loading? 'Please wait...': "I'm Ready to Pay"}}</span>
             <svg width="34" height="34" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="37" cy="37" r="35.5" stroke="black" stroke-width="3"></circle>
@@ -98,14 +91,12 @@
         <div class="flex-row mb-2 border-bottom py-2 aic">
             <span>Do you have an account?</span>
             <!-- <span [routerLink]="['/login']" [queryParams]="{returnUrl: 'checkout'}" class="clickable ml-2">Login</span> -->
-            <button type="button" [routerLink]="['/login']" [queryParams]="{returnUrl: '/f/checkout'}"
-                class="btn btn-outline-dark px-3 ml-3">Login</button>
+            <button type="button" [routerLink]="['/login']" [queryParams]="{returnUrl: '/f/checkout'}" class="btn btn-outline-dark px-3 ml-3">Login</button>
         </div>
         <div class="flex-row py-2 aic">
             <span>Don't have an account?</span>
             <!-- <span [routerLink]="['/register']" class="clickable ml-2">Signup</span> -->
-            <button type="button" [routerLink]="['/register']" [queryParams]="{returnUrl: '/f/checkout'}"
-                class="btn btn-outline-dark px-3 ml-3">Signup</button>
+            <button type="button" [routerLink]="['/register']" [queryParams]="{returnUrl: '/f/checkout'}" class="btn btn-outline-dark px-3 ml-3">Signup</button>
         </div>
     </div>
 </ng-template>
@@ -122,20 +113,17 @@
             <span>Leave a note for the chef with anything they need to know
                 (e.g. the doorbell doesn't work). Do not include details about
                 any allergies here.</span>
-            <input class="fb-input br-14" type="text" name="notesToChef" tabindex="2" autocomplete="off" value
-                [(ngModel)]="notesToChef" #ctrl="ngModel" required="true">
+            <input class="fb-input br-14" type="text" name="notesToChef" tabindex="2" autocomplete="off" value [(ngModel)]="notesToChef" #ctrl="ngModel" required="true">
         </div>
     </div>
 </ng-template>
 <ng-template #deliveryOption>
     <div class="flex-column p-3 mb-2">
-       
+
         <div *ngIf="chef.doDelivery" class="d-flex bg-light flex-grow br-25 p-0_5">
-            <button class="service-mode br-25" (click)="selectPickup()"
-                [class.selected]="serviceMode==='COLLECTION'"><fa-icon [icon]="faPersonBiking"
+            <button class="service-mode br-25" (click)="selectPickup()" [class.selected]="serviceMode==='COLLECTION'"><fa-icon [icon]="faPersonBiking"
                     class="mr-1"></fa-icon>Collection</button>
-            <button class="service-mode  br-25" (click)="selectDelivery()" [class.selected]="serviceMode==='DELIVERY'"
-                [disabled]="!chef.doDelivery"><fa-icon [icon]="faBox" class="mr-1"></fa-icon>Delivery</button>
+            <button class="service-mode  br-25" (click)="selectDelivery()" [class.selected]="serviceMode==='DELIVERY'" [disabled]="!chef.doDelivery"><fa-icon [icon]="faBox" class="mr-1"></fa-icon>Delivery</button>
         </div>
         <div *ngIf="serviceMode === 'COLLECTION' || !chef.doDelivery" class="flex-column">
             <strong style="display: block;">Please collect
@@ -147,16 +135,12 @@
         </div>
         <div class="flex-column" *ngIf="chef.doDelivery  && serviceMode === 'DELIVERY'">
             <strong class="py-1">Where should we send your order?</strong>
-            <div class="flex-row-space-between align-items-center"
-                *ngIf="customerAddress !== null && customerAddress !== undefined && customerAddress.addressLine1 !== null && customerAddress.addressLine1 !== undefined &&  customerAddress.addressLine1.length > 0">
-                <div
-                    style=" padding: 1rem;display: flex;flex-direction: column;background-color: var(--light-background);flex-grow: 1;margin-right: 10px;">
-                    <span
-                        *ngIf="customerAddress.addressLine1 !== undefined &&  customerAddress.addressLine1.length > 0">{{
+            <div class="flex-row-space-between align-items-center" *ngIf="customerAddress !== null && customerAddress !== undefined && customerAddress.addressLine1 !== null && customerAddress.addressLine1 !== undefined &&  customerAddress.addressLine1.length > 0">
+                <div style=" padding: 1rem;display: flex;flex-direction: column;background-color: var(--light-background);flex-grow: 1;margin-right: 10px;">
+                    <span *ngIf="customerAddress.addressLine1 !== undefined &&  customerAddress.addressLine1.length > 0">{{
                         customerAddress.addressLine1
                         }}</span>
-                    <span
-                        *ngIf="customerAddress.addressLine2 !== undefined &&  customerAddress.addressLine2.length > 0">{{
+                    <span *ngIf="customerAddress.addressLine2 !== undefined &&  customerAddress.addressLine2.length > 0">{{
                         customerAddress.addressLine2
                         }}</span>
                     <span *ngIf="customerAddress.city !== undefined &&  customerAddress.city.length > 0">{{
@@ -170,15 +154,12 @@
                 </div>
             </div>
             <div class="postcode-lookup-container" *ngIf="lookupAddress">
-                <input class="fb-input" type="text" name="postcode" id="postcode" tabindex="4" autocomplete="off" value
-                    [(ngModel)]="addressLookupPostcode" #ctrl="ngModel" placeholder="Enter your postcode">
+                <input class="fb-input" type="text" name="postcode" id="postcode" tabindex="4" autocomplete="off" value [(ngModel)]="addressLookupPostcode" #ctrl="ngModel" placeholder="Enter your postcode">
                 <button class="btn-13 py-2" (click)="findAddress()">Find</button>
             </div>
             <div *ngIf="postcodeAddressList !== undefined && postcodeAddressList.length > 0 && !addressSelected">
-                <div
-                    style="border: 1px solid var(--light-border);overflow-y: auto;height: 100px;margin-top: 5px;padding: 5px;">
-                    <div class="address-item" *ngFor="let add of postcodeAddressList"
-                        (click)="onSelectDeliveryAddress(add)">
+                <div style="border: 1px solid var(--light-border);overflow-y: auto;height: 100px;margin-top: 5px;padding: 5px;">
+                    <div class="address-item" *ngFor="let add of postcodeAddressList" (click)="onSelectDeliveryAddress(add)">
                         <span> {{add.StreetAddress }},
                             {{add.Place}}</span>
                     </div>
@@ -210,9 +191,19 @@
 </ng-template>
 
 <ng-template #items>
-    <div *ngIf="order !== null && order !== undefined" class="flex-column">
-        <app-f-order-item *ngFor="let item of order?.items" [item]="item" [editable]="false"></app-f-order-item>
+    <div *ngIf="order" class="flex-column">
+        <div *ngIf="order.partyOrder" class="flex-row w-100 aic gap-1 py-2">
+            <span class="bolder">Event</span>
+            <span>{{order.partyDate| date: 'E':'EST'}}</span>
+        </div>
+        <div *ngIf="order.items">
+            <app-f-order-item *ngFor="let item of order?.items" [item]="item" [editable]="false"></app-f-order-item>
+        </div>
+        <div *ngIf="order.partyItems">
+            <app-f-order-item *ngFor="let item of order?.partyItems" [partyItem]="item" [editable]="false"></app-f-order-item>
+        </div>
     </div>
+    <ng-template [ngTemplateOutlet]="summary"></ng-template>
 </ng-template>
 
 <ng-template #itemsContent let-modal>
@@ -235,8 +226,7 @@
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
-        <app-payment-form [order]="order" [paymentIntentId]="order.paymentIntentId"
-            [clientSecret]="order.clientSecret"></app-payment-form>
+        <app-payment-form [order]="order" [paymentIntentId]="order.paymentIntentId" [clientSecret]="order.clientSecret"></app-payment-form>
     </div>
 </ng-template>
 

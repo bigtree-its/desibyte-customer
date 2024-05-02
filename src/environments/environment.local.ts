@@ -44,9 +44,7 @@ export const environment = {
     // ProductOrdersSearchUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/product-orders/search',
     // ProductOrdersPaymentsUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/product-orders/stripe-payments',
   
-    // ====================
-    // Order Service Local
-    // ====================
+    // Orders
     FoodOrdersTrackingUrl: 'http://localhost:8082/orders/v1/food-order-tracking',
     FoodOrdersUrl: 'http://localhost:8082/orders/v1/foods',
     FoodOrderSearchUrl: 'http://localhost:8082/orders/v1/foods/search',

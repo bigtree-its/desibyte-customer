@@ -15,6 +15,7 @@ import {
   faArrowLeft,
   faArrowRight,
   faBatteryEmpty,
+  faBucket,
   faCalendar,
   faFaceSmile,
   faPeopleArrows,
@@ -55,6 +56,7 @@ export class ChefHomeComponent implements AfterViewInit, OnDestroy {
   faCalendar = faCalendar;
   faAngleDown = faAngleDown;
   faAngleUp = faAngleUp;
+  faBag = faBucket;
 
   chef: LocalChef | undefined;
   display_picture: any;

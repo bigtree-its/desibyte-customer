@@ -16,9 +16,18 @@
     color: #fff;
 }
 
-.selectedCal{
+.selectedCal {
     background-color: #868080;
     color: var(--brand-color);
+}
+
+.basket {
+    color: coral;
+}
+
+.basket:hover {
+    cursor: pointer;
+    color: #2661f6;
 }
 
 ::ng-deep .modal-content {
