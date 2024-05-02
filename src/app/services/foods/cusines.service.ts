@@ -1,8 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Cuisine } from '../model/localchef';
-import { ServiceLocator } from './service.locator';
+import { ServiceLocator } from '../common/service.locator';
+import { Cuisine } from 'src/app/model/all-foods';
 
 @Injectable({
   providedIn: 'root',

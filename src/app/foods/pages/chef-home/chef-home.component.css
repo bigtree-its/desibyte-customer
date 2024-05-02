@@ -1,0 +1,32 @@
+.select-span {
+    display: flex;
+    border-bottom: 2px solid #fff;
+    padding: 6px 10px;
+    align-items: center;
+    margin: 3px 10px;
+}
+
+.select-span:hover {
+    border-bottom: 2px solid #111;
+    cursor: pointer;
+}
+
+.selectedSpan {
+    background-color: #111;
+    color: #fff;
+}
+
+.selectedCal{
+    background-color: #868080;
+    color: var(--brand-color);
+}
+
+::ng-deep .modal-content {
+    border: none;
+    z-index: 9999999;
+    border-radius: 0;
+}
+
+::ng-deep .modal-dialog {
+    /* min-width: 800px; */
+}

@@ -1,0 +1,109 @@
+.title-text {
+    font-family: "Protest Riot", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 50px;
+    color: #333BFF;
+}
+
+.hero {
+    height: 400px;
+    width: 100%;
+    background-color: rgb(254, 238, 12);
+    object-position: left center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* background-image: url("https://www.trulia.com/images/app-shopping/homePage/hiDpiExtraLarge.webp"); */
+    /* background-image: url("/assets/images/home-food.jpeg"); */
+}
+
+.page-hash {
+    border-radius: 25px;
+    padding: 10px;
+    background-color: aliceblue;
+}
+
+.cuisine {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    border-radius: 12px;
+    font-size: 12px;
+    justify-content: center;
+    align-items: center;
+}
+
+.cuisine:hover {
+    cursor: pointer;
+    background-color: var(--warning);
+}
+
+.cuisine-logo {
+    width: 100px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.cuisine-logo:hover {
+    transition: 0.5s ease-in-out;
+}
+
+.slider {
+    height: 50px;
+    line-height: 50px;
+    overflow: hidden;
+    align-items: center;
+    text-align: center;
+    margin: 10px 0;
+    border-radius: 20px;
+}
+
+.slider div {
+    height: 50px;
+    margin-bottom: 50px;
+    padding: 0 15px;
+    text-align: center;
+    box-sizing: border-box;
+    font-weight: 900;
+    font-size: 40px;
+}
+
+.slider-text1 {
+    animation: slide 5s linear infinite;
+    color: #f90202;
+}
+
+.slider-text2 {
+    color: #2237f3;
+}
+
+.slider-text3 {
+    color: #141414;
+}
+
+
+@keyframes slide {
+    0% {
+        margin-top: -300px;
+    }
+    5% {
+        margin-top: -200px;
+    }
+    33% {
+        margin-top: -200px;
+    }
+    38% {
+        margin-top: -100px;
+    }
+    66% {
+        margin-top: -100px;
+    }
+    71% {
+        margin-top: 0;
+    }
+    100% {
+        margin-top: 0;
+    }
+}

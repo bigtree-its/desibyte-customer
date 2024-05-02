@@ -13,7 +13,7 @@ import { AccountService } from 'src/app/services/auth/account.service';
 export class SideNavContentComponent implements OnInit {
 
   accountService = inject(AccountService);
-  user?: User;
+  user: User;
   
   navItems = [
     { label: 'Login', route: '/apps'},
@@ -28,7 +28,16 @@ export class SideNavContentComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('Fetching logged in customer...')
-   
+    this.accountService.getData();
+    this.accountService.getCustomerPreferences();
+    this.accountService.loginSession$.subscribe({
+      next: (value) => {
+        this.user = value;
+      },
+      error: (err) => console.error('CustomerObject emitted an error: ' + err),
+      complete: () =>
+        console.log('CustomerObject emitted the complete notification'),
+    });
   }
 
   onNavigationSelection(navItem: any) {

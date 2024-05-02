@@ -1,0 +1,114 @@
+<div class="flex-column jcc">
+    <div class="flex-row my-2">
+        <span class="page-hash bold px-3">#1 Desi Home Foods</span>
+    </div>
+    <div class="flex-column jcc aic hero p-4">
+        <h1 class="lg big-text" style="font-size: 60px;">What will you eat today?</h1>
+        <span class="sm big-text fs-1">Craving for Homefood?</span>
+        <span class="lg  fs-4">We make it easy to order home food from your neighbourhood chefs</span>
+        <div class="content">
+            <div class="slider logo-text">
+                <div class="slider-text1">Nostalgic</div>
+                <div class="slider-text2">A taste of home</div>
+                <div class="slider-text3">Made with love</div>
+            </div>
+        </div>
+        <div class="hp-search-container">
+            <div class="flex-row jcsb w-100">
+                <input type="text" placeholder="Enter your location" class="hp-search-box" [(ngModel)]="serviceLocationSearchText" (keyup.enter)="onEnter(content)">
+                <div style="background-color: black; color: #fff;cursor: pointer;" class="d-flex jcc aic p-3">
+                    <fa-icon [icon]="faSearch" (click)="onEnter(content)"></fa-icon>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-column jcc aic  my-4 br-7">
+        <strong style="font-size: 22px;font-weight: 800;" class="color-navy">Top
+            Locations</strong>
+        <div class="flex-row flex-wrap aic gap-1 jcc aic">
+            <span class="clickable border my-2 py-3 px-5" *ngFor="let pl of popularLocations" [routerLink]="['/f/chef-list']" [queryParams]="{location: pl.slug}">{{pl.name}}</span>
+        </div>
+    </div>
+
+    <div class="flex-column jcc aic my-4 br-7">
+        <strong style="font-size: 22px;font-weight: 800; padding: 20px 0;" class="color-navy">Top Cuisines</strong>
+        <div class="flex-row flex-wrap aic gap-1 jcc aic">
+            <div *ngFor="let cuisine of cuisines" [routerLink]="['/f/chef-list']" [queryParams]="{cuisine: cuisine.slug}" class="cuisine">
+                <img src={{cuisine.logo}} class="cuisine-logo" height="90px" width="120px">
+                <span>{{cuisine.name}}</span>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<ng-template #addressList let-modal class="modal-dialog-centered ">
+
+    <div class="modal-header " hidden>
+    </div>
+    <div class="modal-body ">
+        <div class="flex-column border ">
+            <div class="flex-row jcsb w-100 border-bottom p-3 aic ">
+                <input type="text " placeholder="eg Glasgow " class="hp-search-box " [(ngModel)]="serviceLocationSearchText " (keyup.enter)="onEnter(addressList) ">
+                <span *ngIf="showServiceLocations " (click)="closeServiceLocations() " style="color: var(--danger);cursor: pointer;padding: 0 10px; ">Clear</span>
+                <button type="button " class="btn btn-sm btn-dark br-25 ">Go</button>
+            </div>
+            <div class="flex-column " style="max-height: 500px;overflow-y: auto; ">
+                <span class="hp-location " *ngFor="let sl of serviceLocations " (click)="onSelectServiceLocation(sl) ">{{ sl.name }},
+                    {{sl.city}}</span>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal-footer " hidden>
+    </div>
+</ng-template>
+
+<ng-template #locationResults let-modal>
+    <div class="modal " id="exampleModalCentered " tabindex="-1 " role="dialog " aria-labelledby="exampleModalCenteredLabel " aria-hidden="true ">
+        <div class="modal-dialog modal-dialog-centered " role="document ">
+            <div class="modal-content ">
+                <div class="modal-header " hidden>
+                    <h5 class="modal-title " id="exampleModalCenteredLabel ">Modal title
+                    </h5>
+                    <button type="button " class="close " data-dismiss="modal " aria-label="Close ">
+                        <span aria-hidden="true ">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body ">
+                    <div class="flex-column " style="min-height: 500px;overflow-y: auto;background-color: chocolate; ">
+                        <span class="hp-location " *ngFor="let sl of serviceLocations " (click)="onSelectServiceLocation(sl) ">{{ sl.name
+                            }},
+                            {{sl.city}}</span>
+                    </div>
+                </div>
+                <div class="modal-footer " hidden>
+                    <button type="button " class="btn btn-secondary " data-dismiss="modal ">Close</button>
+                    <button type="button " class="btn btn-primary ">Save
+                        changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #content let-modal>
+
+    <div class="modal-header d-flex jcsb ">
+        <h4 class="big-text">Locations</h4>
+        <fa-icon [icon]="faClose " class="btn-circle fa-2xl " (click)="modal.dismiss( 'Cross click') "></fa-icon>
+        <!-- <button type="button " class="btn-circle " aria-label="Close " (click)="modal.dismiss( 'Cross click') ">X</button> -->
+    </div>
+    <div class="modal-body justify-content-center ">
+        <!-- <h4 class="modal-title " id="modal-basic-title ">Locations</h4> -->
+        <div class="flex-column " style="max-height: 500px;overflow-y: auto; ">
+            <span class="hp-location " *ngFor="let sl of serviceLocations " (click)="onSelectServiceLocation(sl) ">{{ sl.name }},
+                {{sl.city}}</span>
+        </div>
+    </div>
+    <!-- <div class="modal-footer "> -->
+    <div class="modal-footer " style="margin: 10px;padding: 10px;gap:.6rem; " hidden>
+    </div>
+</ng-template>

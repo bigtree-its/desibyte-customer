@@ -1,0 +1,32 @@
+<div class="d-flex w-100 border-bottom py-2 aic jcsb">
+    <div class="flex-column jcc aic">
+        <span class="qty-circle" *ngIf="!editable">{{quantity}}</span>
+        <div *ngIf="editable" class="d-flex jcc aic">
+            <button class="btn-circle-d" (click)="decreaseQuantity()"> - </button>
+            <span class="qty-value">{{quantity}}</span>
+            <button class="btn-circle-g" (click)="increaseQuantity()">+</button>
+        </div>
+    </div>
+    <div class="flex-column w-100 ml-1">
+        <div *ngIf="item" class="flex-row jcsb aic w-100">
+            <span>{{item?.name}}</span>
+            <strong>{{item?.subTotal | currency: 'GBP'}}</strong>
+        </div>
+        <div *ngIf="partyItem" class="flex-row jcsb aic w-100">
+            <span>{{partyItem?.name}}</span>
+            <strong>{{partyItem?.subTotal | currency: 'GBP'}}</strong>
+        </div>
+        <div *ngIf="item?.choice !== null && item?.choice !== undefined">
+            <div style="width: 100%;clear: both; display: flex; justify-content: space-between;">
+                <span style="font-style: italic;">({{item?.choice.name}})</span>
+                <span>{{item?.choice.price | currency: 'GBP'}}</span>
+            </div>
+        </div>
+        <div *ngIf="item?.extras !== null && item?.extras !== undefined && item?.extras.length > 0">
+            <div style="width: 100%;clear: both; display: flex; justify-content: space-between;" *ngFor="let extra of item?.extras">
+                <span>{{extra.name}}</span>
+                <span>{{extra.price | currency: 'GBP'}}</span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -11,6 +11,7 @@ import { SideNavContentComponent } from './shared/pages/side-nav-content/side-na
 import { AuthModule } from './auth';
 import { AuthInterceptor } from './services/auth/auth.interceptor';
 import { CustomDateParserFormatter } from './services/common/CustomDateParserFormatter';
+import { FoodsModule } from './foods';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { CustomDateParserFormatter } from './services/common/CustomDateParserFor
   imports: [
     BrowserModule,
     SharedModule,
+    FoodsModule,
     AuthModule,
     HttpClientModule,
     AppRoutingModule,

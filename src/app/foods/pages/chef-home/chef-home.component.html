@@ -1,0 +1,380 @@
+<div *ngIf="chef !== null && chef !== undefined && !incorrectLanding">
+
+    <div class="flex-row jcsb py-2 aic px-3">
+        <fa-icon [icon]="faArrowLeft" (click)="goback()" class="back mr-3"></fa-icon>
+        <span class="big-text fs-3 mr-2">{{chef.kitchenName}}</span>
+        <span [class.open]="chef.open" [class.closed]="!chef.open">{{chef.open?
+            "Open":"Closed"}}</span>
+    </div>
+    <div class="sm flex-row jcc aic w-100 my-1">
+        <div class="clickable-row" style="font-size: 12px;" (click)="selectLayout('Reviews')">
+            <fa-icon [icon]="faStar"></fa-icon>
+            <span style="padding-left: 6px;">{{chef.rating}}</span>
+            <span style="padding-left: 6px;">({{chef.reviews}}
+                reviews)</span>
+        </div>
+    </div>
+    <div class="sm flex-row jcc aic w-100 my-1 gap-1">
+        <span style="font-size: 16px;" class="big-text mx-2" *ngFor="let cuisine of chef.cuisines | slice:0:3">{{
+            cuisine.name }}
+        </span>
+    </div>
+    <div class="sm">
+        <ng-container [ngTemplateOutlet]="menuBar"></ng-container>
+    </div>
+    
+    <div class="sm flex-column w-100 my-1" style="padding-bottom: 100px;">
+        <ng-container [ngSwitch]="activeLayout">
+            <ng-container *ngSwitchCase="'Menu'" [ngTemplateOutlet]="menuLayout"></ng-container>
+            <ng-container *ngSwitchCase="'Reviews'" [ngTemplateOutlet]="reviewsLayout"></ng-container>
+            <ng-container *ngSwitchCase="'Info'" [ngTemplateOutlet]="infoLayout"></ng-container>
+            <ng-container *ngSwitchCase="'Party'" [ngTemplateOutlet]="partyLayout"></ng-container>
+        </ng-container>
+    </div>
+    <div class="sm footer flex-row jcsb aic px-3 py-2"
+        *ngIf="(order?.items && order.items.length > 0) || (order?.partyItems && order.partyItems.length > 0)">
+        <span class="color-red fs-1 big-text">{{order.total |
+            currency:'GBP'}}</span>
+        <button class="btn-arrow mt-1 d-flex jcc aic" (click)="checkout()">
+            <span>CHECKOUT</span>
+            <svg width="34" height="34" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="37" cy="37" r="35.5" stroke="black" stroke-width="3"></circle>
+                <path
+                    d="M25 35.5C24.1716 35.5 23.5 36.1716 23.5 37C23.5 37.8284 24.1716 38.5 25 38.5V35.5ZM49.0607 38.0607C49.6464 37.4749 49.6464 36.5251 49.0607 35.9393L39.5147 26.3934C38.9289 25.8076 37.9792 25.8076 37.3934 26.3934C36.8076 26.9792 36.8076 27.9289 37.3934 28.5147L45.8787 37L37.3934 45.4853C36.8076 46.0711 36.8076 47.0208 37.3934 47.6066C37.9792 48.1924 38.9289 48.1924 39.5147 47.6066L49.0607 38.0607ZM25 38.5L48 38.5V35.5L25 35.5V38.5Z"
+                    fill="black"></path>
+            </svg>
+        </button>
+    </div>
+    <div class="lg row">
+        <div class="col-md-8" style=" min-height: 100vh;overflow-y: auto; margin-bottom: 100px;">
+            <div class="py-1">
+                <div class="flex-row jcc aic">
+                    <div style="height: 220px;width: 200px;">
+                        <img src="{{chef.image}}"
+                            style="object-fit: contain;height: 100%; width: 100%;border-radius: 12px;">
+                    </div>
+                    <div class="flex-column gap-1 ml-2">
+                        <div class="title-section">
+                            <div class="clickable-row" style="font-size: 12px;" (click)="selectLayout('Reviews')">
+                                <fa-icon [icon]="faStar"></fa-icon>
+                                <span style="padding-left: 6px;">{{chef.rating}}</span>
+                                <span style="padding-left: 6px;">({{chef.reviews}}
+                                    reviews)</span>
+                            </div>
+                        </div>
+                        <div class="flex-row">
+                            <span *ngIf="chef.preOrderOnly" class="attribute">PreOrder Only</span>
+                        </div>
+                        <span class="py-1 px-1 f-size-s lg">{{chef.description}}</span>
+                        <div class="my-1">
+                            <div class="gap-1 flex-row-wrap">
+                                <span style="font-size: 10px;" class="attribute big-text"
+                                    *ngFor="let cuisine of chef.cuisines | slice:0:3">{{
+                                    cuisine.name }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="flex-column gap-1" *ngIf="chef.doDelivery">
+                            <div class="flex-row big-text">
+                                <span
+                                    style="background-color: gold;padding: 0 20px; border-top-left-radius: 12px;border-bottom-left-radius: 12px;">DELIVERY
+                                    DISTANCE</span>
+                                <span class="pl-2">{{chef.deliveryDistance}}
+                                    miles</span>
+                            </div>
+                            <div class="flex-row big-text">
+                                <span
+                                    style="background-color: gold;padding: 0 20px; border-top-left-radius: 12px;border-bottom-left-radius: 12px;">FREE
+                                    DELIVERY</span>
+                                <span class="pl-2">Order over
+                                    {{chef.freeDeliveryOver |
+                                    currency: 'GBP'}}</span>
+                            </div>
+                        </div>
+                        <div *ngIf="!chef.doDelivery" style="padding: 5px 0;">
+                            <span class="attribute">Collection Only</span>
+                        </div>
+                        <ng-container [ngTemplateOutlet]="menuBar"></ng-container>
+                    </div>
+                </div>
+            </div>
+
+            <ng-container [ngSwitch]="activeLayout">
+                <ng-container *ngSwitchCase="'Menu'" [ngTemplateOutlet]="menuLayout"></ng-container>
+                <ng-container *ngSwitchCase="'Reviews'" [ngTemplateOutlet]="reviewsLayout"></ng-container>
+                <ng-container *ngSwitchCase="'Info'" [ngTemplateOutlet]="infoLayout"></ng-container>
+                <ng-container *ngSwitchCase="'Party'" [ngTemplateOutlet]="partyLayout"></ng-container>
+            </ng-container>
+        </div>
+        <div class="col-md-4">
+            <div
+                style="flex-direction: column;position: sticky;top: 0;min-height: 100vh;overflow-y: auto;width: 100%; padding: 10px;">
+                <div class="d-flex jcsb py-2 px-3">
+                    <span style="font-size: 20px;">Your Order</span>
+                    <span *ngIf="order != null" class="fs-4 bolder">{{order.total
+                        |
+                        currency:'GBP'}}</span>
+                </div>
+                <div *ngIf="order && !order.partyOrder">
+                    <div
+                        *ngIf="order !== null && order !== undefined &&  order.items !== null &&  order.items !== undefined &&  order.items.length > 0; then itemsBlock else noItemsBlock">
+                    </div>
+                </div>
+
+                <div *ngIf="order && order.partyOrder">
+                    <div
+                        *ngIf="order.partyItems !== null &&  order.partyItems !== undefined &&  order?.partyItems.length > 0; then itemsBlock else noItemsBlock">
+                    </div>
+                </div>
+
+                <div class="d-flex jcc aic mt-3">
+                    <button *ngIf="(order?.items && order.items.length > 0) || (order?.partyItems && order.partyItems.length > 0)" class="btn-arrow mt-3 d-flex jcc aic w-100" (click)="checkout()">
+                        <span>Checkout</span>
+                        <svg width="34" height="34" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="37" cy="37" r="35.5" stroke="black" stroke-width="3"></circle>
+                            <path
+                                d="M25 35.5C24.1716 35.5 23.5 36.1716 23.5 37C23.5 37.8284 24.1716 38.5 25 38.5V35.5ZM49.0607 38.0607C49.6464 37.4749 49.6464 36.5251 49.0607 35.9393L39.5147 26.3934C38.9289 25.8076 37.9792 25.8076 37.3934 26.3934C36.8076 26.9792 36.8076 27.9289 37.3934 28.5147L45.8787 37L37.3934 45.4853C36.8076 46.0711 36.8076 47.0208 37.3934 47.6066C37.9792 48.1924 38.9289 48.1924 39.5147 47.6066L49.0607 38.0607ZM25 38.5L48 38.5V35.5L25 35.5V38.5Z"
+                                fill="black"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="flex-row jcc aic " *ngIf="incorrectLanding">
+    <div class="p-5 my-3 flex-column jcc aic bg-dark br-12">
+        <span class="fs-1 color-brand">Sorry, we didn't catch that...</span>
+        <p class="color-white">We couldn't find that page. Please enter your area and search for a HomeChef – we have
+            plenty to choose from
+            <a href="/f/home">Lets Go</a>
+        </p>
+    </div>
+</div>
+<ng-template #menuBar>
+    <div class="flex-row border br-25 w-100 my-1 px-1">
+        <b (click)="selectLayout('Menu')" [class.selectedCal]="activeLayout === 'Menu'" class="square">Menu</b>
+        <b (click)="selectLayout('Reviews')" [class.selectedCal]="activeLayout === 'Reviews'" class="square">Reviews
+            ({{reviews.length}})</b>
+        <b (click)="selectLayout('Info')" [class.selectedCal]="activeLayout === 'Info'" class="square mx-2 px-3">Info</b>
+        <b (click)="openModal(partyModal)" [class.selectedCal]="activeLayout === 'Party'" class="square mx-2 px-3">Party</b>
+    </div>
+</ng-template>
+<ng-template #noItemsBlock>
+    <div class="alert alert-info p-5"
+        style=" margin-top: 10px;display: flex;flex-direction: column; gap: 0.1rem;align-items: center;">
+        <fa-icon [icon]="faBatteryEmpty" class="fa-2xl" style="opacity: 0.1;"></fa-icon>
+        <span style="margin-top: 10px;font-weight: 900;">
+            YOUR BASKET IS EMPTY
+        </span>
+        <br>
+        <span>What are you feeling today?</span>
+        <span>Checkout our Home Chefs</span>
+    </div>
+</ng-template>
+
+<ng-template #itemsBlock>
+    <div class="flex-column jcc aic">
+        <div *ngIf="order && order.partyOrder" class="flex-row jcsb w-100 aic gap-1">
+            <span class="bolder">Event</span>
+            <div class="input-group">
+                <input class="form-control" placeholder="dd-mm-yyyy" name="dp" [(ngModel)]="eventDate" ngbDatepicker
+                    #d="ngbDatepicker" />
+                <fa-icon [icon]="faCalendar" (click)="d.toggle()"
+                    class="border br-tr-7 br-br-7 p-2 clickable-icon"></fa-icon>
+            </div>
+            <ngb-timepicker [(ngModel)]="eventTime" />
+        </div>
+        <div class="flex-row-space-between">
+            <span>Subtotal</span>
+            <span>{{order.subTotal | currency: 'GBP'}}</span>
+        </div>
+        <div class="flex-row-space-between">
+            <span>Delivery fee</span>
+            <span>{{order.deliveryFee | currency: 'GBP'}}</span>
+        </div>
+        <div class="flex-row-space-between">
+            <span>Packing fee</span>
+            <span>{{order.packingFee | currency: 'GBP'}}</span>
+        </div>
+        <div class="flex-row-space-between">
+            <span>Service Fee</span>
+            <span>{{order.serviceFee | currency: 'GBP'}}</span>
+        </div>
+        <div class="flex-row-space-between" style="margin-top: 10px;">
+            <span style="font-weight: 900;">TOTAL</span>
+            <span style="font-weight: 900;">{{order.total | currency:
+                'GBP'}}</span>
+        </div>
+        <div style="display: flex;flex-direction: column;width: 100%;padding: 5px;">
+            <div *ngIf="order?.items && order.items.length > 0">
+                <app-f-order-item *ngFor="let item of order.items" [item]="item"></app-f-order-item>
+            </div>
+            <div *ngIf="order?.partyItems && order?.partyItems.length > 0">
+                <app-f-order-item *ngFor="let item of order.partyItems" [partyItem]="item"></app-f-order-item>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #NoItemsInCategory>
+    <span class="d-flex jcc aic py-2">
+        No items to display
+    </span>
+</ng-template>
+<ng-template #ItemsInCategory>
+    <div style="padding: 10px;">
+        <app-food-item *ngFor="let menu of items_to_display" [menu]="menu" [displayDescription]="true">
+        </app-food-item>
+    </div>
+</ng-template>
+
+<ng-template #reviewsLayout>
+    <div class="flex-column">
+        <div class="flex-row my-2 jcc aic">
+            <strong class="ml-2">Want to write a review ? </strong>
+            <button class="btn-lift btn-sm mx-3" [routerLink]="['/write_review']"
+                [queryParams]="{chef: supplierId}">Write
+                Review</button>
+        </div>
+        <div *ngIf="reviews !== null && reviews !== undefined &&  reviews.length > 0"
+            style="max-height: 300px;overflow-y: auto;">
+            <app-review-item *ngFor="let r of reviews" [review]="r"></app-review-item>
+        </div>
+        <div *ngIf="reviews === null || reviews === undefined ||  reviews.length === 0">
+            <span>No Reviews Yet</span>
+        </div>
+    </div>
+</ng-template>
+<ng-template #infoLayout>
+    <div class="flex-column">
+        <div class="border flex-column py-2 px-3 br-12 my-2">
+            <b class="fs-6 py-2">Food hygiene rating</b>
+            <div class="d-flex aic gap-1">
+                <div class="flex-grow">
+                    <img src="/assets/images/fhis.png" height="40px" width="100px">
+                </div>
+                <div class="flex-grow flex-column ml-2">
+                    <span>
+                        Rating by the Food Standards Agency and your local
+                        authority. This rating may have changed.
+                    </span>
+                    <span>
+                        For more information
+                    </span>
+                    <span>
+                        Last inspection 02/08/2023
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="border flex-column py-2 px-3 br-12 my-2">
+            <b class="fs-6 py-2">A little bit about us</b>
+            <p>{{chef.description}}</p>
+        </div>
+        <div class="border flex-column py-2 px-3 br-12 my-2">
+            <b class="fs-6 py-2">Where to find us</b>
+            <div class="flex-row fs-7">
+                <span>{{chef.address.addressLine1}}</span>
+                <span class="pl-1">{{chef.address.addressLine2}}</span>
+            </div>
+            <div class="flex-row fs-7">
+                <span>{{chef.address.city}}</span>
+                <span class="pl-1">{{chef.address.postcode}}</span>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #menuLayout>
+    <!-- <div class="scroll-container">
+        <div class="arrow-icon-div" (click)="scrollLeft()">
+            <fa-icon [icon]="faArrowLeft"></fa-icon>
+        </div>
+        <div #widgetsContent style="display: flex;width: 415px;padding: 10px;overflow-x: hidden;white-space: nowrap;">
+            <span *ngFor="let c of collections" class="select-span" (click)="onSelectCategory(c)" [class.selectedCal]="c?.name === selectedCategory?.name">{{c?.name}}</span>
+        </div>
+        <div class="arrow-icon-div" (click)="scrollRight()">
+            <fa-icon [icon]="faArrowRight"></fa-icon>
+        </div>
+    </div> -->
+    <div class="flex-column">
+        <div class="flex-column">
+            <div class="flex-column" *ngFor="let c of collections">
+                <div class="d-flex jcsb aic p-2 border-bottom">
+                    <span class="bolder">{{c?.name}}</span>
+                    <fa-icon class="btn-circle" *ngIf="selectedCategory === null || selectedCategory.name !== c.name"
+                        [icon]="faAngleDown" (click)="onSelectCategory(c)"></fa-icon>
+                    <fa-icon class="btn-circle" *ngIf="selectedCategory === c" [icon]="faAngleUp"
+                        (click)="onSelectCategory(null)"></fa-icon>
+                </div>
+                <div class="flex-column" *ngIf="selectedCategory && selectedCategory.name === c.name">
+                    <ng-container [ngTemplateOutlet]="ItemsInCategory"></ng-container>
+                </div>
+            </div>
+        </div>
+        <!-- <span  class="select-span" (click)="onSelectCategory(c)" [class.selectedCal]="c?.name === selectedCategory?.name">{{c?.name}}</span> -->
+    </div>
+
+    <div *ngIf="displayCal && calendars" class="flex-column">
+        <div class="flex-row jcc aic">
+            <div [class.selectedCal]="calendar.date === calendarToDisplay.date"
+                class="flex-column jcc aic btn-circle mx-2 p-4" *ngFor="let calendar of calendars;"
+                (click)="selectCalendar(calendar)">
+                <span class="bold">{{calendar.date| date: 'E':'EST'}}</span>
+                <span class="bold">{{calendar.date| date: 'd':'EST'}}</span>
+            </div>
+        </div>
+
+        <div *ngIf="calendarToDisplay" class="flex-column">
+            <app-food-item *ngFor="let food of calendarToDisplay.foods" [menu]="food" [displayDescription]="true"
+                [readyBy]="calendarToDisplay.date"></app-food-item>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #partyLayout>
+    <div class="flex-column">
+        <app-food-item *ngFor="let pb of partyBundles" [pb]="pb"></app-food-item>
+    </div>
+</ng-template>
+
+<ng-template #partyModal let-modal>
+    <div class="modal-header d-flex jcsb aic">
+        <span class="bolder fs-6">Start Party Order</span>
+        <button type="button" class="btn-modal-close" aria-label="Close"
+            (click)="close()">X</button>
+    </div>
+    <div class="modal-body jcc" style="height: 400px;">
+        <div class="p-4">
+            <table>
+                <tr>
+                    <td><span class="bolder">Event Date</span></td>
+                    <td>
+                        <!-- <input class="form-control" ngbDatepicker [minDate]="minDate" (click)="datePicker.toggle()" #datePicker="ngbDatepicker" formControlName="date" placeholder="yyyy-mm-dd"> -->
+
+                        <div class="input-group">
+                            <input class="form-control" [minDate]="minDate" placeholder="dd-mm-yyyy" name="dp"
+                                [(ngModel)]="eventDate" ngbDatepicker #d="ngbDatepicker" />
+                            <fa-icon [icon]="faCalendar" (click)="d.toggle()"
+                                class="border br-tr-7 br-br-7 p-2 clickable-icon"></fa-icon>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="bolder">Delivery Time</span></td>
+                    <td>
+                        <ngb-timepicker [(ngModel)]="eventTime" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+    <div *ngIf="eventDate" class="modal-footer flex-column" style="margin: 10px;padding: 10px;gap:.6rem;">
+        <button type="button" class="btn-32" (click)="selectLayout('Party')">Check our Party Menu</button>
+    </div>
+
+</ng-template>

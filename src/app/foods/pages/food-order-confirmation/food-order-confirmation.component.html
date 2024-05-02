@@ -1,0 +1,141 @@
+<div class="container-fluid">
+    <div class="d-flex jcsb aic">
+        <span class="a-page-header">Order Confirmation</span>
+        <div>
+
+            <strong *ngIf="order" class="f-size-lg color-red bolder">{{order?.total|
+                currency:
+                'GBP'}}</strong>
+        </div>
+    </div>
+
+    <div class="flex-column jcc aic" *ngIf="loading">
+        <div class="waiter"></div>
+        <span class="py-2 fs-4">Please wait while we confirm your order</span>
+    </div>
+
+
+
+    <div class="row" *ngIf="!loading">
+        <div class="col-md-6">
+            <app-f-order-item *ngFor="let item of order?.items" [item]="item" [editable]=false></app-f-order-item>
+            <ng-template [ngTemplateOutlet]="summary"></ng-template>
+        </div>
+        <div class="col-md-6">
+            <div class="flex-column" *ngIf="order">
+                <div class="bg-light p-3 my-2">
+                    <div class="flex-row aic">
+                        <span class="bolder fs-5">Your Order</span>
+                        <span class="bolder fs-3 big-text ml-3">{{order.reference}}</span>
+                    </div>
+                    <div class="progress_container">
+                        <div class="progress" id="progress"></div>
+                        <div class="flex-column jcc aic">
+                            <div class="circle mt-3" [class.active]="order?.status === 'Draft' || order?.status === 'Paid' || order?.status === 'Collected' || order?.status === 'Delivered' || order?.status === 'Ready'">
+                            </div>
+                            <span>New</span>
+                        </div>
+                        <div class="flex-column  jcc aic">
+                            <div class="circle mt-3" [class.active]="order?.status === 'Paid' || order?.status === 'Collected' || order?.status === 'Delivered' || order?.status === 'Ready'">
+                            </div>
+                            <span>In Progress</span>
+                        </div>
+                        <div class="flex-column  jcc aic">
+                            <div class="circle mt-3" [class.active]="order?.status === 'Ready' || order?.status === 'Cancelled'"></div>
+                            <span *ngIf="order?.status === 'Paid'">Ready</span>
+                            <span *ngIf="order?.status === 'Cancelled'">Cancelled</span>
+                        </div>
+                        <div class="flex-column jcc aie" *ngIf="order?.status !== 'Cancelled'">
+                            <div class="circle mt-3" [class.active]="order?.status === 'Collected' || order?.status === 'Delivered'"></div>
+                            <span>Completed</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-column p-4 bg-light my-3 jcc aic fs-6 bold">
+                    <span>You will be notified once your order is ready to be {{order.serviceMode === 'DELIVERY'?
+                        'Delivered':'Collected'}}</span>
+                    <span class="fs-6 py-2">You can also track your order at <a href="/my_orders">Orders</a></span>
+                </div>
+                <!-- <ng-container *ngIf="showOrder" [ngTemplateOutlet]="orderLayout"></ng-container> -->
+                <div class="flex-column border p-2 br-7">
+                    <span class="bolder py-2">{{order.serviceMode === 'DELIVERY'? 'Delivery Address': 'Collection Address'}}</span>
+                    <div class="flex-row" *ngIf="order.serviceMode === 'DELIVERY'">
+                        <span>{{order.customer.address.addressLine1}},</span>
+                        <span>{{order.customer.address.addressLine2}}</span>
+                    </div>
+                    <div class="flex-row" *ngIf="order.serviceMode === 'DELIVERY'">
+                        <span>{{order.customer.address.city}}, </span>
+                        <span class="pl-1">{{order.customer.address.postcode}}</span>
+                    </div>
+                    <div class="flex-row" *ngIf="order.serviceMode === 'COLLECTION'">
+                        <span>{{supplier.address.addressLine1}},</span>
+                        <span>{{supplier.address.addressLine2}}</span>
+                    </div>
+                    <div class="flex-row" *ngIf="order.serviceMode === 'COLLECTION'">
+                        <span>{{supplier.address.city}}, </span>
+                        <span class="pl-1">{{supplier.address.postcode}}</span>
+                    </div>
+                </div>
+                <div class="flex-column border p-2 br-7 my-1" *ngIf="order.serviceMode === 'DELIVERY'">
+                    <span class="bolder py-2">Order prepared by</span>
+                    <span [routerLink]="[ '/f/chef', supplier?._id] " style="font-size: 15px;cursor: pointer;color:coral;" class="bold py-1">{{supplier?.name}}</span>
+                    <div class="flex-row">
+                        <span>{{supplier.address.addressLine1}},</span>
+                        <span>{{supplier.address.addressLine2}}</span>
+                    </div>
+                    <div class="flex-row">
+                        <span>{{supplier.address.city}}, </span>
+                        <span>{{supplier.address.postcode}}</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div style="height: 50px;"></div>
+    <div class="d-flex jcsb footer p-2">
+        <span>Need Help? visit our <a href="#"> help center</a></span>
+        <span>{{order?.dateCreated | date: 'dd MMM, yyyy'}}</span>
+    </div>
+</div>
+
+<ng-template #summary>
+    <div class="flex-column my-2 w-100">
+        <div class="flex-row-space-between">
+            <strong>Subtotal</strong>
+            <strong>{{order?.subTotal| currency: 'GBP'}}</strong>
+        </div>
+        <div class="flex-row-space-between">
+            <span>Delivery fee</span>
+            <span>{{order?.deliveryFee| currency: 'GBP'}}</span>
+        </div>
+        <div class="flex-row-space-between">
+            <span>Service Fee</span>
+            <span>{{order?.serviceFee| currency: 'GBP'}}</span>
+        </div>
+        <div class="flex-row-space-between" style="margin-top: 10px;">
+            <strong>Total</strong>
+            <strong>{{order?.total| currency: 'GBP'}}</strong>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #items>
+    <div *ngIf="order !== null && order !== undefined" class="flex-column">
+        <app-f-order-item *ngFor="let item of order?.items" [item]="item" [editable]="false"></app-f-order-item>
+    </div>
+</ng-template>
+
+<ng-template #itemsContent let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Your Items</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div style="display: flex;flex-direction: column;height: 380px;overflow: auto;padding-bottom: 10px;">
+            <div *ngIf="order !== null && order !== undefined">
+                <app-f-order-item *ngFor="let item of order?.items" [item]="item"></app-f-order-item>
+            </div>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
+.page {
+    display: flex;
+    flex-direction: column;
+    overflow-y: hidden;
+    margin-top: 60px;
+    padding: 10px 0;
+    justify-content: center;
+}
+
+.page-header {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    font-size: 20px;
+    font-weight: 200;
+    margin-left: 10px;
+}
+
+.page-header-icon {
+    background-color: var(--yellow);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 40px;
+}
+
+.page-header-icon:hover {
+    cursor: pointer;
+    background-color: var(--yellow);
+}
+
+.page-header-icon>img {
+    height: 20px;
+    width: 20px;
+}
+
+.left-content {
+    display: none;
+}
+
+.service-mode {
+    display: inline-block;
+    flex-grow: 1;
+    border: none;
+    padding: 5px 10px;
+    background: transparent;
+    color: #f36805;
+}
+
+.selected{
+    background-color: #fff;
+    color: #f36805;
+    font-weight: 900;
+}
+
+.postcode-lookup-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+}
+
+.postcode-lookup-container input {
+    line-height: 30px;
+}
+
+.address-item {
+    padding: 0 6px;
+}
+
+.address-item:hover {
+    color: var(--blue);
+    cursor: pointer;
+}
+
+.order-total {
+    font-size: 30px;
+    font-family: " Poiret One ", sans-serif;
+}
+
+#contentDiv {
+    width: 100%;
+}
+
+@media (min-width: 700px) {
+    .customer-address-container {
+        display: flex;
+        flex-direction: row;
+    }
+    .left-content {
+        display: flex;
+        flex-grow: 1;
+        margin-left: 20px;
+    }
+    #contentDiv {
+        width: 50%;
+    }
+}

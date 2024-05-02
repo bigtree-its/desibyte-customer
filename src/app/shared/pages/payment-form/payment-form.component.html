@@ -1,0 +1,33 @@
+<div class="stripe-form-wrapper">
+    <!-- <div id="link-authentication-element" #linkAuthenticationInfo>
+        Stripe.js injects the Link Authentication Element
+    </div> -->
+    <!-- <div id="cardInfo" #cardInfo style="border: 1px solid var(--v-border);padding: 12px 5px;">
+        Stripe.js injects the Card Element
+    </div> -->
+
+
+    <!-- <div id="payment-element" style="border: 1px solid var(--v-border);padding: 12px 5px;">
+        
+    </div> -->
+    <label for="payment-info"></label>
+    <div id="payment-info" #PaymentInfo></div>
+
+    <div class="flex-row jcc aic">
+        <span class="big-text fs-3 mr-3">{{order?.total| currency: 'GBP'}}</span>
+        <button id="paywithCardButton" class="btn-l2r fs-5" (click)="confirmPaymentIntent()">
+            {{loading ? 'Please wait...':'Pay'}}
+        </button>
+    </div>
+    
+    <small class="text-muted">By selecting this button, you agree to the Terms of
+        Sale.</small>
+
+    <div id="cardErrors" *ngIf="cardErrors">{{cardErrors}}</div>
+    <div id="payment-result-section" class="payment-result-section hidden">
+        <span id="payment-message"></span>
+    </div>
+    <div class="my-5">
+        <img src="/assets/icons/secure-stripe-payment-logo.png" class="stripe-logo" />
+    </div>
+</div>

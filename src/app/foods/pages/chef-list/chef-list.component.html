@@ -1,0 +1,60 @@
+<div class="page">
+
+    <div class="full-screen mb-2 px-3">
+        <div class="flex-row-scrollable py-3">
+            <div *ngFor="let cuisine of cuisines" class="cuisine" (click)="onSelectCuisine(cuisine)" [class.selectedCuisine]="isSelectedCuisine(cuisine)">
+                <img src={{cuisine.logo}} class="cuisine-logo" height="90px" width="120px">
+                <span>{{cuisine.name}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-column w-100 mb-2 px-3 sm">
+        <h4 class="big-text">Whats on your mind ?</h4>
+        <div class="flex-row-scrollable py-3">
+            <div *ngFor="let d of dishes" class="border d-flex jcc aic px-3 mr-1" (click)="onSelectDish(d)" [class.clicked]="isDishSelected(d)">
+                <span class="big-text">{{d.name}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-column w-100 mb-2 px-3 lg">
+        <h4 class="big-text">Whats on your mind ?</h4>
+        <div class="flex-row-scrollable">
+            <div *ngFor="let d of dishes" class="selectable mr-1" (click)="onSelectDish(d)" [class.selected]="isDishSelected(d)">
+                <fa-icon [icon]="faCheck"></fa-icon>
+                <span class="pl-1">{{d.name}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="full-screen mb-2 px-3">
+        <div class="flex-row-space-between mb-1 md bg-light p-2 mx-1" *ngIf="serviceLocation != null && serviceLocation !== undefined">
+            <span>{{serviceLocation.name}}, {{serviceLocation.city}}</span>
+            <span class="change-area" routerLink="/">Change</span>
+        </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+        <div class="col mb-4 br-12" *ngFor="let chef of filteredChefs " [routerLink]="[ '/f/chef', chef._id] ">
+            <div class="card br-12 chef-card" style="border:none;">
+                <img src="{{chef.image}}" class="card-img-top br-top-14" alt="...">
+                <div class="card-body">
+                    <h5 class="fs-6 bolder">{{chef.kitchenName}}</h5>
+                    <p class="card-text"> {{chef.description}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <div class="footer-div ">
+        <div class="footer-container f-size-xs ">
+            <span>For any support or help you can contact us</span>
+            <span>contact.desify&#64;gmail.com</span>
+            <div class="copyright-div ">
+                <fa-icon [icon]="faCopyright "></fa-icon>
+                <span>2024 <span class="logo-text">desify</span></span>
+            </div>
+        </div>
+    </div>
+</div>

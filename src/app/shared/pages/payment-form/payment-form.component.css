@@ -1,0 +1,11 @@
+.stripe-form-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.stripe-logo {
+    height: 40px;
+    align-self: flex-start;
+    margin-top: 5px;
+}

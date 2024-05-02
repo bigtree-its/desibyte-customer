@@ -1,0 +1,21 @@
+<div class="flex-column border p-2 m-1">
+
+    <div class="flex-row-space-between align-items-center">
+        <div class="flex-row" style="padding: 10px 0;">
+            <fa-icon [icon]="faStar" [ngStyle]="{'color': review.rating > 0  ? 'var(--orange)' :  'var(--grey)'}" style="margin-right: 3px;"></fa-icon>
+            <fa-icon [icon]="faStar" [ngStyle]="{'color': review.rating > 1  ? 'var(--orange)' :  'var(--grey)'}" style="margin-right: 3px;"></fa-icon>
+            <fa-icon [icon]="faStar" [ngStyle]="{'color': review.rating > 2  ? 'var(--orange)' :  'var(--grey)'}" style="margin-right: 3px;"></fa-icon>
+            <fa-icon [icon]="faStar" [ngStyle]="{'color': review.rating > 3  ? 'var(--orange)' :  'var(--grey)'}" style="margin-right: 3px;"></fa-icon>
+            <fa-icon [icon]="faStar" [ngStyle]="{'color': review.rating > 4  ? 'var(--orange)' :  'var(--grey)'}"></fa-icon>
+        </div>
+        <span>{{review.title}}</span>
+    </div>
+
+    <div class="flex-row-space-between">
+        <span style="font-size: 16px;font-weight: 600;">{{review.customer.name}}</span>
+        <span>{{review.date  | dateAgo}}</span>
+        <!-- <span>{{review.date  | date : 'EE d LLL'}}</span> -->
+    </div>
+
+    <span style="margin-top: 10px;">{{review.comment}}</span>
+</div>

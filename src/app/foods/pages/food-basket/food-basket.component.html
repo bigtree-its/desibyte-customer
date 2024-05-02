@@ -1,0 +1,110 @@
+<div class="container-fluid">
+    <div class="flex-row aic">
+        <fa-icon [icon]="faArrowLeft" class="back" (click)="goback()"></fa-icon>
+        <span class="a-page-header">Your Basket</span>
+    </div>
+    <div *ngIf="!order">
+        <div class="alert alert-info p-5">
+            Your basket is empty. Please explore our home <a href="/">Home Chefs</a>
+        </div>
+    </div>
+    <div class="sm flex-row jcsb aic mb-4">
+        <div style="height: 60px;width: 60px;">
+            <img src="{{chef.image}}" style="object-fit: cover;
+            max-height: 58px;
+            height: 58px;
+            width: 60px;
+            max-width: 60px;">
+        </div>
+        <span class="big-text fs-3 ml-2" [routerLink]="[ '/f/chef', chef._id]">{{chef?.kitchenName}}</span>
+        <span class="big-text fs-1">{{cartTotal | currency: 'GBP'}}</span>
+    </div>
+    <div class="row">
+        <div class="col-md-6 lg">
+            <div class="flex-row py-2">
+                <div style="height: 200px;width: 170px;">
+                    <img src="{{chef.image}}" style="object-fit: cover;
+                    max-height: 198px;
+                    height: 198px;
+                    width: 170px;
+                    max-width: 170px;">
+                </div>
+                <div class="flex-column" style="padding: 0 20px;width: 100%;">
+                    <div class="title-section">
+                        <span class="big-text fs-1 mr-2" [routerLink]="[ '/f/chef', chef._id]">{{chef?.kitchenName}}</span>
+                        <div class="clickable-row" style="font-size: 12px;">
+                            <fa-icon [icon]="faStar"></fa-icon>
+                            <span style="padding-left: 6px;">{{chef?.rating}}</span>
+                            <span style="padding-left: 6px;">({{chef?.reviews}}
+                                reviews)</span>
+                        </div>
+                    </div>
+                    <span class="py-1 px-1 f-size-xs">{{chef?.description}}</span>
+                    <div class="flex-row-wrap">
+                        <ng-container *ngFor="let cuisine of chef?.cuisines | slice:0:3">
+                            <div class="attribute">{{ cuisine.name }}
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div class="flex-column" *ngIf="chef?.doDelivery">
+                        <div class="flex-row" style="padding: 5px;align-items: center;">
+                            <fa-icon [icon]="faPeopleArrows" class="mr-1"></fa-icon>
+                            <span style="font-size: 12px;">I do delivery
+                                upto {{chef?.deliveryDistance}} miles</span>
+                        </div>
+                        <div class="flex-row" *ngIf="chef?.freeDeliveryOver > 0" style="padding: 5px;align-items: center;">
+                            <fa-icon [icon]="faFaceSmile" class="mr-1"></fa-icon>
+                            <span style="font-size: 12px;">Free Delivery
+                                order over {{chef?.freeDeliveryOver |
+                                currency: 'GBP'}}</span>
+                        </div>
+                    </div>
+                    <div *ngIf="!chef?.doDelivery" style="padding: 5px 0;">
+                        <span class="attribute">Collection Only</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div *ngIf="order !== null && order !== undefined &&  order.items !== null &&  order.items !== undefined &&  order.items.length > 0; then thenBlock else elseBlock">
+            </div>
+        </div>
+    </div>
+
+    <div class="sm footer flex-row p-2 jcc" *ngIf="order !== null && order !== undefined &&  order.items !== null &&  order.items !== undefined &&  order.items.length > 0">
+        <button class="btn-arrow mt-1 d-flex jcc aic" [routerLink]="[ '/f/checkout'] ">
+            <span>CHECKOUT</span>
+            <svg width="34" height="34" viewBox="0 0 74 74" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="37" cy="37" r="35.5" stroke="black"
+                    stroke-width="3"></circle>
+                <path
+                    d="M25 35.5C24.1716 35.5 23.5 36.1716 23.5 37C23.5 37.8284 24.1716 38.5 25 38.5V35.5ZM49.0607 38.0607C49.6464 37.4749 49.6464 36.5251 49.0607 35.9393L39.5147 26.3934C38.9289 25.8076 37.9792 25.8076 37.3934 26.3934C36.8076 26.9792 36.8076 27.9289 37.3934 28.5147L45.8787 37L37.3934 45.4853C36.8076 46.0711 36.8076 47.0208 37.3934 47.6066C37.9792 48.1924 38.9289 48.1924 39.5147 47.6066L49.0607 38.0607ZM25 38.5L48 38.5V35.5L25 35.5V38.5Z"
+                    fill="black"></path>
+            </svg>
+        </button>
+    </div>
+</div>
+
+<ng-template #elseBlock>
+    <div style="margin-top: 100px;display: flex;flex-direction: column;gap: 1rem;justify-content: center;align-items: center;width: 100%;">
+        <fa-icon [icon]="faBatteryEmpty" class="fa-2xl" style="opacity: 0.1;"></fa-icon>
+        <!-- <img src="/assets/icons/shopping-basket.png" height="100px" width="100px" style="opacity: 0.1;"> -->
+        <span style="margin-top: 50px;font-weight: 900;">
+            YOUR BASKET IS EMPTY
+        </span>
+        <p>What are you feeling today? Checkout our Home Cooks</p>
+    </div>
+</ng-template>
+
+<ng-template #thenBlock>
+    <div class="flex-column border px-3 py-2">
+        <span class="big-text fs-1 lg">{{cartTotal | currency: 'GBP'}}</span>
+        <div class="v-scrollable-data-container">
+            <app-f-order-item *ngFor="let item of order.items" [item]="item"></app-f-order-item>
+        </div>
+        <div class="lg">
+            <button class="btn btn-primary btn-sm py-2 f-size-md mt-3" [routerLink]="[ '/f/checkout'] ">Checkout</button>
+        </div>
+    </div>
+</ng-template>
