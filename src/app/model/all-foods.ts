@@ -21,13 +21,6 @@ export class OrderStatus{
     static readonly refunded: string = "REFUNDED";
 }
 
-export interface OrderCustomer{
-    name: string;
-    mobile: string;
-    email: string;
-    address: Address;
-}
-
 export interface LocalChef {
     _id: string | undefined;
     coverPhoto: string | undefined;
@@ -220,7 +213,7 @@ export interface FoodOrder {
     paymentIntentId: string;
     clientSecret: string;
     supplier: OrderSupplier;
-    customer: OrderCustomer;
+    customer: Customer;
     reference: string;
     status?: string;
     currency: string;

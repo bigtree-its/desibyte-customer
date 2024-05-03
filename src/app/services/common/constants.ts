@@ -4,8 +4,10 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class Constants {
-  static StorageItem_F_Order: string = 'f_order';
-  static StorageItem_P_Order: string = 'p_order';
+  static StorageItem_Food_Order: string = 'food_order';
+  static StorageItem_Party_Order: string = 'party_order';
+  static StorageItem_Service_Order: string = 'service_order';
+  static StorageItem_Product_Order: string = 'product_order';
   static StorageItem_C_User: string = 'c_user';
   static StorageItem_C_Chef: string = 'c_chef';
   static StorageItem_C_Reviews: string = 'c_reviews';

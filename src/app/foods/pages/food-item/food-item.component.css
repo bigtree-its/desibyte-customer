@@ -83,6 +83,10 @@
     background-color: #2fad35;
 }
 
+.disabled{
+    background-color: #f2f2f2;
+}
+
 
 /* Customize the label (the container) */
 

@@ -380,7 +380,6 @@ body {
 
 .btn-12 {
     padding: 5px 13px;
-    border-radius: 0.5em;
     cursor: pointer;
     background-color: #000a19;
     color: var(--brand-color);
@@ -564,7 +563,7 @@ body {
     font-family: "Londrina Outline", sans-serif;
 }
 
-.border-none {
+.no-br {
     border: none;
 }
 
@@ -1256,10 +1255,17 @@ select {
     white-space: nowrap;
     width: 24px;
 }
+.btn-trash{
+    color: coral;
+}
+.btn-trash:hover{
+    cursor: pointer;
+    color: var(--red);
+}
 
 .btn-circle,
-.btn-circle-g,
-.btn-circle-d {
+.btn-qty-g,
+.btn-qty-d {
     height: 30px;
     width: 30px;
     border: 1px solid #f1f1f1;
@@ -1269,22 +1275,18 @@ select {
     justify-content: center;
     align-items: center;
 }
-
-.btn-circle-g {
-    border: 1px solid #08de9e;
+.btn-qty-g, .btn-qty-d{
+    height: 20px;
+    width: 20px;
 }
 
-.btn-circle-d {
-    border: 1px solid rgb(230, 76, 76);
-}
-
-.btn-circle-g:hover {
+.btn-qty-g:hover {
     cursor: pointer;
     opacity: 1;
     background-color: #08de9e;
 }
 
-.btn-circle-d:hover {
+.btn-qty-d:hover {
     cursor: pointer;
     opacity: 1;
     color: #fff;
@@ -1968,7 +1970,7 @@ select {
 }
 
 .mr-5 {
-    margin-right: 40px;
+    margin-right: 50px;
 }
 
 .mr-6 {
@@ -1989,6 +1991,12 @@ select {
 
 .ml-3 {
     margin-left: 30px;
+}
+.ml-4 {
+    margin-left: 40px;
+}
+.ml-5 {
+    margin-left: 50px;
 }
 
 .mt-1 {

@@ -211,7 +211,7 @@ export class OrderService {
   setData(data: Order) {
     console.info('Storing product order..');
     this.localService.saveData(
-      Constants.StorageItem_P_Order,
+      Constants.StorageItem_Product_Order,
       JSON.stringify(data)
     );
     this.orderSubject$.next(this.order);
@@ -219,13 +219,13 @@ export class OrderService {
 
   purgeData() {
     console.log('Purging product and service order.');
-    this.localService.removeData(Constants.StorageItem_P_Order);
+    this.localService.removeData(Constants.StorageItem_Product_Order);
     this.order = null;
     this.orderSubject$.next(null);
   }
 
   getData() {
-    var json = this.localService.getData(Constants.StorageItem_P_Order);
+    var json = this.localService.getData(Constants.StorageItem_Product_Order);
     console.log('Order in local storage ' + json);
     if (this.isJsonString(json)) {
       var obj = JSON.parse(json);

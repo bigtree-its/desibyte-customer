@@ -14,11 +14,14 @@ import { Constants } from '../common/constants';
   providedIn: 'root',
 })
 export class FoodOrderService {
+ 
   ipAddress: any;
   supplier: LocalChef;
   foodOrderKey: string;
   private foodOrder?: FoodOrder;
-  public orderSubject$ = new BehaviorSubject(this.foodOrder);
+  private partyOrder?: FoodOrder;
+  public foodOrderSubject$ = new BehaviorSubject(this.foodOrder);
+  public partyOrderSubject$ = new BehaviorSubject(this.foodOrder);
   public orderListSubject$ = new BehaviorSubject(null);
 
   constructor(
@@ -81,42 +84,52 @@ export class FoodOrderService {
   }
 
   setupSupplier() {
-    if (this.supplier !== null && this.supplier !== undefined) {
+    if (this.supplier) {
       console.log('Current supplier ' + this.supplier._id);
-      if (this.foodOrder !== null && this.foodOrder !== undefined) {
-        if (this.foodOrder.status === 'Completed') {
+      if (this.foodOrder  ) {
+        if (this.foodOrder.status === 'Completed'  ) {
           return;
         }
-        if (
-          this.foodOrder.supplier === null ||
-          this.foodOrder.supplier._id === undefined ||
-          this.foodOrder.supplier._id !== this.supplier._id
-        ) {
-          console.log('Setting up supplier');
-          this.changeSupplier();
-          this.foodOrder.items = [];
-          this.foodOrder.status = 'Draft';
-          this.calculateTotal();
+        if (this.foodOrder.total === 0 && (!this.foodOrder.supplier || this.foodOrder.supplier._id !== this.supplier._id) ){
+          this.setSupplierInFoodOrder();
+          console.log('Updated supplier in the food order');
+          this.setData(this.foodOrder);
+          return;
+        }
+        if (this.foodOrder.supplier._id === this.supplier._id){
+          console.log('The food order has current supplier')
+          return;
+        }
+        if (this.foodOrder.total > 0 && (this.foodOrder.supplier._id !== this.supplier._id) ){
+          console.log('You have changed the supplier. Flushing the existing food order')
+          this.createFoodOrder();
+          return;
         }
       }
-    } else {
-      console.log(
-        'Supplier not found in context. Cannot set supplier into order..'
-      );
-    }
+      if (this.partyOrder  ) {
+        if (this.partyOrder.status === 'Completed'  ) {
+          return;
+        }
+        if (this.partyOrder.total === 0 && (!this.partyOrder.supplier || this.partyOrder.supplier._id !== this.supplier._id) ){
+          this.setSupplierInPartyOrder();
+          console.log('Updated supplier in the party order');
+          this.setData(this.partyOrder);
+          return;
+        }
+        if (this.partyOrder.supplier._id === this.supplier._id){
+          console.log('The party order has current supplier')
+          return;
+        }
+        if (this.partyOrder.total > 0 && (this.partyOrder.supplier._id !== this.supplier._id) ){
+          console.log('You have changed the supplier. Flushing the existing party order')
+          this.createPartyOrder();
+          return;
+        }
+      }
+
+    } 
   }
 
-  private changeSupplier() {
-    this.foodOrder.supplier = {
-      _id: this.supplier._id,
-      name: this.supplier.name,
-      tradingName: this.supplier.kitchenName,
-      image: this.supplier.coverPhoto,
-      mobile: this.supplier.contact.mobile,
-      email: this.supplier.contact.email,
-      address: this.supplier.address,
-    };
-  }
 
   retrieveSingleOrder(
     reference: string,
@@ -324,53 +337,45 @@ export class FoodOrderService {
   }
 
   public addToOrder(foodOrderItem: FoodOrderItem) {
-    console.log('Adding item to food order '+ foodOrderItem.name);
-    if (this.foodOrder === null || this.foodOrder === undefined) {
-      this.getData();
+    console.log('Adding item to food order ' + foodOrderItem.name);
+    if (!this.foodOrder) {
+      this.buildFoodOrderFromCache(true);
     }
-    if (
-      this.foodOrder != null &&
-      this.foodOrder !== undefined &&
-      this.foodOrder.items === null
-    ) {
+    if (this.foodOrder &&this.foodOrder.items === null) {
       this.foodOrder.items = [];
     }
 
     this.foodOrder.items.push(foodOrderItem);
-    this.calculateTotal();
+    this.calculateFoodOrderTotal();
   }
 
   addPartyItemToOrder(partyItem: PartyOrderItem) {
-    console.log('Adding party item to food order '+ partyItem.name);
-    if (this.foodOrder === null || this.foodOrder === undefined) {
-      this.getData();
+    console.log('Adding party item to party order ' + partyItem.name);
+    if (!this.partyOrder) {
+      this.buildPartyOrderFromCache(true);
     }
-    if (
-      this.foodOrder != null &&
-      this.foodOrder !== undefined &&
-      this.foodOrder.partyItems === null
-    ) {
-      this.foodOrder.partyItems = [];
+    if (this.partyOrder && this.partyOrder.partyItems.length === 0 ) {
+      this.partyOrder.partyItems = [];
     }
 
-    this.foodOrder.partyItems.push(partyItem);
-    this.calculateTotal();
+    this.partyOrder.partyItems.push(partyItem);
+    this.calculatePartyOrderTotal();
   }
 
   removePartyItem(partyItem: PartyOrderItem) {
-    if (this.foodOrder) {
-      for (var i = 0; i < this.foodOrder.partyItems.length; i++) {
-        var item = this.foodOrder.partyItems[i];
+    if (this.partyOrder) {
+      for (var i = 0; i < this.partyOrder.partyItems.length; i++) {
+        var item = this.partyOrder.partyItems[i];
         if (item._tempId === partyItem._tempId) {
-          this.foodOrder.partyItems.splice(i, 1);
+          this.partyOrder.partyItems.splice(i, 1);
         }
       }
     }
-    this.calculateTotal();
+    this.calculatePartyOrderTotal();
   }
 
   removeItem(itemToDelete: FoodOrderItem) {
-    if (this.foodOrder !== null && this.foodOrder !== undefined) {
+    if (this.foodOrder) {
       for (var i = 0; i < this.foodOrder.items.length; i++) {
         var item = this.foodOrder.items[i];
         if (item._tempId === itemToDelete._tempId) {
@@ -378,17 +383,16 @@ export class FoodOrderService {
         }
       }
     }
-    this.calculateTotal();
+    this.calculateFoodOrderTotal();
   }
 
   updateItem(item: FoodOrderItem) {
     var idx = -1;
     console.log('Updating item ' + JSON.stringify(item));
-    if (this.foodOrder !== null && this.foodOrder !== undefined) {
+    if (this.foodOrder) {
       for (var i = 0; i < this.foodOrder.items.length; i++) {
         var fi = this.foodOrder.items[i];
         if (fi._tempId === item._tempId) {
-          console.log('Found existing item at index ' + i);
           idx = i;
           break;
         }
@@ -401,9 +405,7 @@ export class FoodOrderService {
           ...this.foodOrder.items.slice(idx + 1),
         ];
         this.foodOrder.items = newItems;
-        // this.foodOrder.items.splice(i, 1);
-        // this.foodOrder.items.push(item);
-        this.calculateTotal();
+        this.calculateFoodOrderTotal();
       }
     }
   }
@@ -411,9 +413,9 @@ export class FoodOrderService {
   updatePartyItem(partyItem: PartyOrderItem) {
     var idx = -1;
     console.log('Updating party item ' + JSON.stringify(partyItem));
-    if (this.foodOrder !== null && this.foodOrder !== undefined) {
-      for (var i = 0; i < this.foodOrder.partyItems.length; i++) {
-        var fi = this.foodOrder.partyItems[i];
+    if (this.partyOrder ) {
+      for (var i = 0; i < this.partyOrder.partyItems.length; i++) {
+        var fi = this.partyOrder.partyItems[i];
         if (fi._tempId === partyItem._tempId) {
           console.log('Found existing party item at index ' + i);
           idx = i;
@@ -423,28 +425,24 @@ export class FoodOrderService {
 
       if (idx != -1) {
         const newItems = [
-          ...this.foodOrder.partyItems.slice(0, idx),
+          ...this.partyOrder.partyItems.slice(0, idx),
           partyItem,
-          ...this.foodOrder.partyItems.slice(idx + 1),
+          ...this.partyOrder.partyItems.slice(idx + 1),
         ];
-        this.foodOrder.partyItems = newItems;
-        this.calculateTotal();
+        this.partyOrder.partyItems = newItems;
+        this.calculatePartyOrderTotal();
       }
     }
   }
-  public calculateTotal() {
+  public calculateFoodOrderTotal() {
     var subTotal: number = 0.0;
-    if ( this.foodOrder.partyOrder && this.foodOrder.partyItems){
-      this.foodOrder.partyItems.forEach((item) => {
-        subTotal = subTotal + item.subTotal;
-      });
-    }
-    if ( !this.foodOrder.partyOrder && this.foodOrder.items){
+    
+    if (this.foodOrder && !this.foodOrder.partyOrder && this.foodOrder.items) {
       this.foodOrder.items.forEach((item) => {
         subTotal = subTotal + item.subTotal;
       });
     }
-    
+
     this.foodOrder.deliveryFee = 0.0;
     this.foodOrder.packingFee = 0.0;
     this.foodOrder.serviceFee = 0.0;
@@ -461,13 +459,43 @@ export class FoodOrderService {
       this.foodOrder.deliveryFee +
       this.foodOrder.packingFee +
       this.foodOrder.serviceFee;
-    
+
     this.foodOrder.total = totalToPay;
     this.foodOrder.total = +(+this.foodOrder.total).toFixed(2);
-    console.log('Food order SubTotal: ' + subTotal+' Total: '+ totalToPay);
+    console.log('Food order updated with SubTotal: ' + subTotal + ' Total: ' + totalToPay);
     this.setData(this.foodOrder);
   }
 
+  public calculatePartyOrderTotal() {
+    var subTotal: number = 0.0;
+    if (this.partyOrder && this.partyOrder.partyOrder && this.partyOrder.partyItems) {
+      this.partyOrder.partyItems.forEach((item) => {
+        subTotal = subTotal + item.subTotal;
+      });
+    }
+    
+    this.partyOrder.deliveryFee = 0.0;
+    this.partyOrder.packingFee = 0.0;
+    this.partyOrder.serviceFee = 0.0;
+    this.partyOrder.subTotal = subTotal;
+    if (subTotal !== 0) {
+      this.partyOrder.serviceFee = 0.5;
+      if (this.partyOrder.serviceMode === 'DELIVERY') {
+        this.partyOrder.deliveryFee = 0.5;
+      }
+    }
+
+    var totalToPay: number =
+      this.partyOrder.subTotal +
+      this.partyOrder.deliveryFee +
+      this.partyOrder.packingFee +
+      this.partyOrder.serviceFee;
+
+    this.partyOrder.total = totalToPay;
+    this.partyOrder.total = +(+this.partyOrder.total).toFixed(2);
+    console.log('Party order updated with Subtotal: ' + subTotal + ' Total: ' + totalToPay);
+    this.setData(this.partyOrder);
+  }
   createPaymentIntentForOrder(
     FoodOrder: FoodOrder
   ): Observable<PaymentIntentResponse> {
@@ -480,9 +508,9 @@ export class FoodOrderService {
     };
     console.log(
       'Creating payment intent: ' +
-        this.serviceLocator.FoodOrdersPaymentIntentUrl +
-        ', ' +
-        JSON.stringify(paymentIntentRequest)
+      this.serviceLocator.FoodOrdersPaymentIntentUrl +
+      ', ' +
+      JSON.stringify(paymentIntentRequest)
     );
     return this.http.post<PaymentIntentResponse>(
       this.serviceLocator.FoodOrdersPaymentIntentUrl,
@@ -495,9 +523,9 @@ export class FoodOrderService {
   ): Observable<PaymentIntentResponse> {
     console.log(
       'Creating payment intent: ' +
-        this.serviceLocator.FoodOrdersPaymentIntentUrl +
-        ', ' +
-        JSON.stringify(paymentIntentRequest)
+      this.serviceLocator.FoodOrdersPaymentIntentUrl +
+      ', ' +
+      JSON.stringify(paymentIntentRequest)
     );
     return this.http.post<PaymentIntentResponse>(
       this.serviceLocator.FoodOrdersPaymentIntentUrl,
@@ -505,12 +533,20 @@ export class FoodOrderService {
     );
   }
 
-  public createOrder() {
+  public createOrder(partyOrder: boolean) {
     console.log('Creating empty new order');
     if (Utils.isValid(this.supplier)) {
       this.supplier = this.chefService.getData();
     }
-    this.foodOrder = {
+    if (partyOrder) {
+      this.createPartyOrder();
+    } else {
+      this.createFoodOrder();
+    }
+  }
+
+  private createPartyOrder() {
+    this.partyOrder = {
       id: '',
       paymentIntentId: '',
       clientSecret: '',
@@ -518,7 +554,7 @@ export class FoodOrderService {
         _id: this.supplier?._id,
         name: this.supplier?.name,
         tradingName: this.supplier?.kitchenName,
-        image: this.supplier?.coverPhoto,
+        image: this.supplier?.image,
         mobile: this.supplier?.contact.mobile,
         email: this.supplier?.contact.email,
         address: {
@@ -532,6 +568,70 @@ export class FoodOrderService {
         },
       },
       customer: {
+        _id: '',
+        name: '',
+        mobile: '',
+        email: '',
+        address: {
+          addressLine1: '',
+          addressLine2: '',
+          city: '',
+          country: '',
+          postcode: '',
+          latitude: '',
+          longitude: '',
+        },
+      },
+      reference: '',
+      currency: 'GBP',
+      serviceMode: '',
+      items: [],
+      partyItems: [],
+      subTotal: 0,
+      total: 0,
+      serviceFee: 0,
+      deliveryFee: this.getDeliveryFee(),
+      packingFee: this.getPackagingFee(),
+      dateCreated: new Date(),
+      partyDate: undefined,
+      deliverBy: undefined,
+      collectBy: undefined,
+      dateDeleted: undefined,
+      expectedDeliveryDate: undefined,
+      dateAccepted: undefined,
+      dateDelivered: undefined,
+      dateCollected: undefined,
+      partyOrder: true,
+      notes: '',
+    };
+    console.log('Created a new party Order ');
+    this.setData(this.partyOrder);
+  }
+
+  private createFoodOrder() {
+    this.foodOrder = {
+      id: '',
+      paymentIntentId: '',
+      clientSecret: '',
+      supplier: {
+        _id: this.supplier?._id,
+        name: this.supplier?.name,
+        tradingName: this.supplier?.kitchenName,
+        image: this.supplier?.image,
+        mobile: this.supplier?.contact.mobile,
+        email: this.supplier?.contact.email,
+        address: {
+          addressLine1: this.supplier?.address.addressLine1,
+          addressLine2: this.supplier?.address.addressLine2,
+          city: this.supplier?.address.city,
+          country: this.supplier?.address.country,
+          postcode: this.supplier?.address.postcode,
+          latitude: this.supplier?.address.latitude,
+          longitude: this.supplier?.address.longitude,
+        },
+      },
+      customer: {
+        _id: '',
         name: '',
         mobile: '',
         email: '',
@@ -567,8 +667,8 @@ export class FoodOrderService {
       partyOrder: false,
       notes: '',
     };
-
-    console.log('Created a empty Order ' + JSON.stringify(this.foodOrder));
+    console.log('Created a new food Order ');
+    this.setData(this.foodOrder);
   }
 
   getDeliveryFee(): number {
@@ -590,9 +690,9 @@ export class FoodOrderService {
   updateOrder(orderUpdateRequest: OrderUpdateRequest): Observable<FoodOrder> {
     console.log(
       'Updating Order: ' +
-        this.serviceLocator.FoodOrdersUrl +
-        ', ' +
-        JSON.stringify(orderUpdateRequest)
+      this.serviceLocator.FoodOrdersUrl +
+      ', ' +
+      JSON.stringify(orderUpdateRequest)
     );
     return this.http
       .put<FoodOrder>(this.serviceLocator.FoodOrdersUrl, orderUpdateRequest)
@@ -606,9 +706,9 @@ export class FoodOrderService {
   placeOrder(FoodOrder: FoodOrder): Observable<FoodOrder> {
     console.log(
       'Placing an order for LocalChef : ' +
-        this.serviceLocator.FoodOrdersUrl +
-        ', ' +
-        JSON.stringify(FoodOrder)
+      this.serviceLocator.FoodOrdersUrl +
+      ', ' +
+      JSON.stringify(FoodOrder)
     );
     return this.http.post<FoodOrder>(
       this.serviceLocator.FoodOrdersUrl,
@@ -624,13 +724,17 @@ export class FoodOrderService {
     // });
   }
 
-  setData(data: FoodOrder) {
-    console.info('Storing food order..');
-    this.localService.saveData(
-      Constants.StorageItem_F_Order,
-      JSON.stringify(data)
-    );
-    this.orderSubject$.next(this.foodOrder);
+  setData(order: FoodOrder) {
+
+    if (order.partyOrder) {
+      console.log('Storing party order in cache  and notifying.. ')
+      this.localService.saveData(Constants.StorageItem_Party_Order, JSON.stringify(order));
+      this.partyOrderSubject$.next(this.partyOrder);
+    } else {
+      console.log('Storing food order in cache and notifying.. ')
+      this.localService.saveData(Constants.StorageItem_Food_Order, JSON.stringify(order));
+      this.foodOrderSubject$.next(this.foodOrder);
+    }
   }
 
   setFoodOrders(FoodOrders: FoodOrder[]) {
@@ -643,49 +747,106 @@ export class FoodOrderService {
   }
 
   purgeData() {
-    console.log('Purging food order.');
-    this.localService.removeData(Constants.StorageItem_F_Order);
+    console.log('Purging all food orders.');
+    this.localService.removeData(Constants.StorageItem_Food_Order);
+    this.localService.removeData(Constants.StorageItem_Party_Order);
     this.foodOrder = null;
-    this.orderSubject$.next(null);
+    this.partyOrder = null;
+    this.foodOrderSubject$.next(null);
+    this.partyOrderSubject$.next(null);
   }
 
   getData() {
-    var json = this.localService.getData(Constants.StorageItem_F_Order);
-    console.log('FoodOrder in storage ' + json);
-    if (Utils.isValid(json) && this.isJsonString(json)) {
+    this.buildFoodOrderFromCache(false);
+    this.buildPartyOrderFromCache(false);
+  }
+
+  private buildFoodOrderFromCache(createNew: boolean) {
+    var json = this.localService.getData(Constants.StorageItem_Food_Order);
+    if (Utils.isValid(json) && Utils.isJsonString(json)) {
       var obj = JSON.parse(json);
       this.foodOrder = obj.constructor.name === 'Array' ? obj[0] : obj;
-      console.log('FoodOrder object' + JSON.stringify(this.foodOrder));
-      this.orderSubject$.next(this.foodOrder);
+      console.log('FoodOrder found in cache' + JSON.stringify(this.foodOrder));
+      this.foodOrderSubject$.next(this.foodOrder);
     } else {
-      this.createOrder();
+      console.log('FoodOrder not found in Cache');
+      if ( createNew){
+        this.createFoodOrder();
+      }
     }
   }
 
-  isJsonString(str) {
-    try {
-      JSON.parse(str);
-    } catch (e) {
-      return false;
+  private buildPartyOrderFromCache(createNew: boolean) {
+    var json = this.localService.getData(Constants.StorageItem_Party_Order);
+    if (Utils.isValid(json) && Utils.isJsonString(json)) {
+      var obj = JSON.parse(json);
+      this.partyOrder = obj.constructor.name === 'Array' ? obj[0] : obj;
+      console.log('PartyOrder found in Cache' + JSON.stringify(this.partyOrder));
+      this.partyOrderSubject$.next(this.partyOrder);
+    } else {
+      console.log('PartyOrder not found in Cache');
+      if ( createNew){
+        this.createPartyOrder();
+      }
     }
-    return true;
   }
 
   destroy() {
     this.purgeData();
   }
 
-  convertPartyOrder() {
-    if ( this.foodOrder && !this.foodOrder.partyOrder){
-      console.log('Converting regular food order to party order')
-      this.foodOrder.partyOrder = true;
-      this.foodOrder.items = [];
-      this.foodOrder.partyItems = [];
-      this.foodOrder.subTotal= 0;
-      this.foodOrder.total= 0;
-      this.foodOrder.serviceFee =0;
-      this.foodOrder.reference ='';
-      this.foodOrder.notes ='';
+  destroyFoodOrder() {
+    console.log('Destroying food order')
+    this.localService.removeData(Constants.StorageItem_Food_Order);
+    this.foodOrder = null;
+    this.foodOrderSubject$.next(null);
+  }
+  destroyPartyOrder() {
+    console.log('Destroying party order')
+    this.localService.removeData(Constants.StorageItem_Party_Order);
+    this.partyOrder = null;
+    this.partyOrderSubject$.next(null);
+  }
+
+  setSupplierInFoodOrder() {
+    this.foodOrder.supplier = {
+      _id: this.supplier?._id,
+      name: this.supplier?.name,
+      tradingName: this.supplier?.kitchenName,
+      image: this.supplier?.image,
+      mobile: this.supplier?.contact.mobile,
+      email: this.supplier?.contact.email,
+      address: {
+        addressLine1: this.supplier?.address.addressLine1,
+        addressLine2: this.supplier?.address.addressLine2,
+        city: this.supplier?.address.city,
+        country: this.supplier?.address.country,
+        postcode: this.supplier?.address.postcode,
+        latitude: this.supplier?.address.latitude,
+        longitude: this.supplier?.address.longitude,
+      }
     }
   }
+  setSupplierInPartyOrder() {
+    this.foodOrder.supplier = {
+      _id: this.supplier?._id,
+      name: this.supplier?.name,
+      tradingName: this.supplier?.kitchenName,
+      image: this.supplier?.image,
+      mobile: this.supplier?.contact.mobile,
+      email: this.supplier?.contact.email,
+      address: {
+        addressLine1: this.supplier?.address.addressLine1,
+        addressLine2: this.supplier?.address.addressLine2,
+        city: this.supplier?.address.city,
+        country: this.supplier?.address.country,
+        postcode: this.supplier?.address.postcode,
+        latitude: this.supplier?.address.latitude,
+        longitude: this.supplier?.address.longitude,
+      }
+    }
+  }
+
 }
+
+

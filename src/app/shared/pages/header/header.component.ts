@@ -46,7 +46,7 @@ export class HeaderComponent {
 
   ngOnInit(): void {
     this.fOrderSvc.getData();
-    this.fOrderSvc.orderSubject$.subscribe({
+    this.fOrderSvc.foodOrderSubject$.subscribe({
       next: (value) => {
         this.fOrder = value;
         console.log('FoodOrder rx emitted a notification. '+ JSON.stringify(this.fOrder))

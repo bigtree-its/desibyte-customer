@@ -39,6 +39,9 @@ export class FoodItemComponent {
   faCircle = faCircle;
   candidates: PartyBundleCandidate[] = [];
 
+  partyItemComplete: boolean = false;
+  partyBundleError: string;
+
   constructor(
     private basketService: BasketService,
     private modalService: NgbModal
@@ -80,22 +83,22 @@ export class FoodItemComponent {
   }
 
   selectItemOnCandidate(candidate: PartyBundleCandidate, food: Food, e: any) {
-    if (this.pb !== null && this.pb !== undefined) {
+    if (this.pb) {
       var candis: PartyBundleCandidate[] = this.pb.partyBundleCandidates.filter(c => c.name === candidate.name);
       var theCandidate = candis[0];
       // When User selected a food item
       if (e.target.checked) {
         var candiOnSelectedCandis: PartyBundleCandidate[] = this.candidates.filter(c => c.name === candidate.name);
         var theSelectedCandidate = candiOnSelectedCandis[0];
-        if ( theSelectedCandidate){
+        if (theSelectedCandidate) {
           if (theSelectedCandidate.items.length === theSelectedCandidate.max) {
             e.target.checked = false;
             return;
-          }else{
-            console.log('Pushing item to ' + theSelectedCandidate.name );
+          } else {
+            console.log('Pushing item to ' + theSelectedCandidate.name);
             theSelectedCandidate.items.push(food);
           }
-        }else{
+        } else {
           // The candidate never been selected
           var c1: PartyBundleCandidate = {
             name: theCandidate.name,
@@ -107,12 +110,12 @@ export class FoodItemComponent {
           this.candidates.push(c1);
         }
       } else {
-         // When User un-selected a food item
-         console.log('User unselected  '+ food.name);
+        // When User un-selected a food item
+        console.log('User unselected  ' + food.name);
         var candiOnSelectedCandis: PartyBundleCandidate[] = this.candidates.filter(c => c.name === candidate.name);
         var theSelectedCandidate = candiOnSelectedCandis[0];
-        if ( theSelectedCandidate){
-          for (var i = 0; i <  theSelectedCandidate.items.length; i++) {
+        if (theSelectedCandidate) {
+          for (var i = 0; i < theSelectedCandidate.items.length; i++) {
             var foodOn = theSelectedCandidate.items[i];
             if (foodOn.name === food.name) {
               theSelectedCandidate.items.splice(i, 1);
@@ -120,25 +123,47 @@ export class FoodItemComponent {
           }
         }
       }
+      this.consolidatePartyBundle();
     }
   }
 
+  consolidatePartyBundle() {
+    var status = false;
+    var required = 0;
+    var complete = 0;
+    for (var i = 0; i < this.pb.partyBundleCandidates.length; i++) {
+      var c = this.pb.partyBundleCandidates[i];
+      if (c.required) {
+        required = required + 1;
+        var max = c.max;
+        var candidateOnOrder: PartyBundleCandidate[] = this.candidates.filter(a => a.name === c.name);
+        var candidate = candidateOnOrder[0];
+        if (candidate && candidate.required) {
+          if (max === candidate.items.length) {
+            complete = complete + 1;
+          }
+        }
+      }
+    }
+    this.partyItemComplete = complete >= required;
+  }
+
   getRequiredText(_t88: PartyBundleCandidate) {
-    if ( this.candidates.length > 0){
+    if (this.candidates.length > 0) {
       var candidate = null;
-      for (var i = 0; i <  this.candidates.length; i++) {
+      for (var i = 0; i < this.candidates.length; i++) {
         var c = this.candidates[i];
         if (c.name === _t88.name) {
           candidate = c;
           break;
         }
       }
-      if ( candidate){
-        return candidate.items.length === 0? "Required": candidate.items.length < candidate.max? candidate.max - candidate.items.length + " more": "All Set"; 
+      if (candidate) {
+        return candidate.items.length === 0 ? "Required" : candidate.items.length < candidate.max ? candidate.max - candidate.items.length + " more" : "All Set";
       }
-      
+
     }
-    return _t88.required? "Required": "Optional";
+    return _t88.required ? "Required" : "Optional";
   }
 
   handleChoiceSelection(e: any) {
@@ -210,11 +235,11 @@ export class FoodItemComponent {
     if (this.selectedchoice !== null && this.selectedchoice !== undefined) {
       extraTotal = extraTotal + this.selectedchoice.price;
     }
-    if ( this.pb){
+    if (this.pb) {
       this.price = (this.pb.price + extraTotal) * this.quantity;
       this.price = +(+this.price).toFixed(2);
     }
-    if (this.menu){
+    if (this.menu) {
       this.price = (this.menu.price + extraTotal) * this.quantity;
       this.price = +(+this.price).toFixed(2);
     }
@@ -222,7 +247,7 @@ export class FoodItemComponent {
 
   addToOrder() {
     console.log('Add to Order: ');
-    if ( this.pb){
+    if (this.pb) {
       var partyItem: PartyOrderItem = {
         _tempId: Date.now(),
         id: this.pb._id,
@@ -236,7 +261,7 @@ export class FoodItemComponent {
         specialInstruction: this.specialInstruction,
       };
       this.basketService.addPartyItem(partyItem);
-    }else{
+    } else {
       var foodOrderItem: FoodOrderItem = {
         _tempId: Date.now(),
         id: this.menu._id,
@@ -251,7 +276,7 @@ export class FoodItemComponent {
       };
       this.basketService.addToFoodOrder(foodOrderItem);
     }
-   
+
     this.close();
   }
 }

@@ -98,7 +98,7 @@ export class FoodCheckoutComponent implements OnDestroy {
     this.chef = this.chefService.getData();
 
     this.orderService.getData();
-    this.orderService.orderSubject$.subscribe({
+    this.orderService.foodOrderSubject$.subscribe({
       next: (value) => {
         console.log('OrderSubject rx emitted : '+ JSON.stringify(value));
         var FoodOrder: FoodOrder = value;

@@ -116,7 +116,7 @@ export class ChefHomeComponent implements AfterViewInit, OnDestroy {
   selectedCategory: Collection;
   starSelected: string = '/assets/icons/star2.png';
   star: string = '/assets/icons/star1.png';
-  order: FoodOrder;
+  foodOrder: FoodOrder;
   cartTotal: number = 0.0;
   destroy$ = new Subject<void>();
   collections: Collection[];
@@ -127,6 +127,8 @@ export class ChefHomeComponent implements AfterViewInit, OnDestroy {
   incorrectLanding: boolean;
   partyBundles: PartyBundle[];
   minDate = undefined;
+  partyOrder: FoodOrder;
+  itemsInCart: number = 0;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -160,27 +162,8 @@ export class ChefHomeComponent implements AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
    
-    this.orderService.orderSubject$.subscribe({
-      next: (value) => {
-        console.log('OrderSubject emitted a change' + JSON.stringify(value));
-        if (Utils.isValid(value)) {
-          this.order = value;
-          this.cartTotal = this.order.total;
-          if (this.order.partyOrder) {
-            if ( this.order.partyDate){
-              this.eventDate = {
-                year: this.order.partyDate.getFullYear(),
-                month: this.order.partyDate.getMonth() + 1,
-                day: this.order.partyDate.getDate(),
-              };
-            }
-          }
-        }
-      },
-      error: (err) => console.error('OrderSubject emitted an error: ' + err),
-      complete: () =>
-        console.log('OrderSubject emitted the complete notification'),
-    });
+    this.loadFoodOrder();
+    this.loadPartyOrder();
 
     this.activatedRoute.params.subscribe((params) => {
       this.supplierId = params['id'];
@@ -211,6 +194,59 @@ export class ChefHomeComponent implements AfterViewInit, OnDestroy {
           );
         },
       });
+    });
+  }
+
+  private loadFoodOrder() {
+    this.orderService.foodOrderSubject$.subscribe({
+      next: (value) => {
+        console.log('FoodOrderSubject emitted a change ' + JSON.stringify(value));
+        if (Utils.isValid(value)) {
+          this.foodOrder = value;
+          this.summariseOrders();
+        }
+      },
+      error: (err) => console.error('FoodOrderSubject emitted an error: ' + err),
+      complete: () => console.log('FoodOrderSubject emitted the complete notification'),
+    });
+  }
+
+  summariseOrders(){
+    var items = 0;
+    var total = 0;
+    if ( this.foodOrder){
+      items = items+ this.foodOrder.items.length;
+      total = total+ this.foodOrder.total;
+    }
+    if ( this.partyOrder){
+      items = items+ this.partyOrder.partyItems.length;
+      total = total+ this.partyOrder.total;
+    }
+    this.itemsInCart = items;
+    this.cartTotal = total;
+    this.cartTotal = +(+this.cartTotal).toFixed(2);
+  }
+
+  private loadPartyOrder() {
+    this.orderService.partyOrderSubject$.subscribe({
+      next: (value) => {
+        console.log('PartyOrderRx emitted a change ' + JSON.stringify(value));
+        if (Utils.isValid(value)) {
+          this.partyOrder = value;
+          this.summariseOrders();
+          if (this.foodOrder.partyOrder) {
+            if (this.foodOrder.partyDate) {
+              this.eventDate = {
+                year: this.foodOrder.partyDate.getFullYear(),
+                month: this.foodOrder.partyDate.getMonth() + 1,
+                day: this.foodOrder.partyDate.getDate(),
+              };
+            }
+          }
+        }
+      },
+      error: (err) => console.error('PartyOrderRx emitted an error: ' + err),
+      complete: () => console.log('PartyOrderRx emitted the complete notification'),
     });
   }
 

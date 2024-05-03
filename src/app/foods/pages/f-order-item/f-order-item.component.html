@@ -1,10 +1,10 @@
-<div class="d-flex w-100 border-bottom py-2 aic jcsb">
+<div class="d-flex w-100 py-2 aic jcsb">
     <div class="flex-column jcc aic">
         <span class="qty-circle" *ngIf="!editable">{{quantity}}</span>
         <div *ngIf="editable" class="d-flex jcc aic">
-            <button class="btn-circle-d" (click)="decreaseQuantity()"> - </button>
-            <span class="qty-value">{{quantity}}</span>
-            <button class="btn-circle-g" (click)="increaseQuantity()">+</button>
+            <button class="btn-qty-d" (click)="decreaseQuantity()"> - </button>
+            <span class="qty-value px-1">{{quantity}}</span>
+            <button class="btn-qty-g" (click)="increaseQuantity()">+</button>
         </div>
     </div>
     <div class="flex-column w-100 ml-1">

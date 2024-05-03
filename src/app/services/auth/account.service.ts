@@ -221,8 +221,8 @@ export class AccountService {
     this.jwtService.destroyToken();
     this.loginSession$.next(null);
     this.localService.removeData(Constants.StorageItem_C_User);
-    this.localService.removeData(Constants.StorageItem_P_Order);
-    this.localService.removeData(Constants.StorageItem_F_Order);
+    this.localService.removeData(Constants.StorageItem_Product_Order);
+    this.localService.removeData(Constants.StorageItem_Food_Order);
     this.localService.removeData(Constants.StorageItem_C_Chef);
   }
 
