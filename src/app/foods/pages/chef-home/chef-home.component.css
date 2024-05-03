@@ -16,6 +16,20 @@
     color: #fff;
 }
 
+.menu {
+    color: #868080;
+}
+
+.menu:hover {
+    color: #3e1ecd;
+    cursor: pointer;
+}
+
+.selectedMenu {
+    color: #3e1ecd;
+    cursor: pointer;
+}
+
 .selectedCal {
     background-color: #868080;
     color: var(--brand-color);

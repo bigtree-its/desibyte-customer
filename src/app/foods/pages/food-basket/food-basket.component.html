@@ -1,5 +1,5 @@
 <div class="container-fluid flex-column">
-    <div class="flex-row aic my-2" >
+    <div class="flex-row aic my-2">
         <fa-icon *ngIf="standAlone" [icon]="faArrowLeft" class="btn-circle" (click)="goback()"></fa-icon>
         <span class="bolder fs-3 ml-5">Your Cart</span>
     </div>
@@ -8,7 +8,7 @@
             <div class="bolder fs-5">Your food basket</div>
             <fa-icon [icon]="faTrash" class="btn-trash" title="Delete Order" (click)="deleteOrder(foodOrder)"></fa-icon>
         </div>
-        
+
         <ng-container [ngTemplateOutlet]="foodItems"></ng-container>
         <ng-container [ngTemplateOutlet]="foodOrderSummary"></ng-container>
         <div class="flex-row jcsb aic py-2">
@@ -24,12 +24,16 @@
             </div>
             <button type="button" class="btn-12 my-2">Checkout</button>
         </div>
-        
+
     </div>
     <div *ngIf="partyOrder && partyOrder.partyItems.length > 0" class="felx-column border br-7 p-3 my-3">
         <div class="flex-row jcsb aic py-2">
             <div class="bolder fs-5">Your party basket</div>
             <fa-icon [icon]="faTrash" class="btn-trash" title="Delete Order" (click)="deleteOrder(partyOrder)"></fa-icon>
+        </div>
+        <div class="flex-row aic jcc">
+            <span>Event on</span>
+            <span>{{partyOrder.partyDate | date : 'EE d LLL'}}</span>
         </div>
         <ng-container [ngTemplateOutlet]="partyItems"></ng-container>
         <ng-container [ngTemplateOutlet]="partyOrderSummary"></ng-container>
@@ -47,7 +51,7 @@
             <button type="button" class="btn-12 my-2">Checkout</button>
         </div>
     </div>
-   
+
     <div class="p-3 border br-7 mx-2" *ngIf=" (!foodOrder || foodOrder?.items.length === 0)  && (!partyOrder || partyOrder?.partyItems.length === 0)">
         <span>You have no items in your basket</span>
     </div>
@@ -128,4 +132,3 @@
         </div>
     </div>
 </ng-template>
-

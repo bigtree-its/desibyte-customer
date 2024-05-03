@@ -58,7 +58,7 @@
     <div class="lg row">
         <div class="col-md-8" style=" min-height: 100vh;overflow-y: auto; margin-bottom: 100px;">
             <div class="py-1">
-                <div class="flex-row jcc aic">
+                <div class="flex-row jcc aic border br-7">
                     <div style="height: 220px;width: 200px;">
                         <img src="{{chef.image}}" style="object-fit: contain;height: 100%; width: 100%;border-radius: 12px;">
                     </div>
@@ -77,22 +77,20 @@
                         <span class="py-1 px-1 f-size-s lg">{{chef.description}}</span>
                         <div class="my-1">
                             <div class="gap-1 flex-row-wrap">
-                                <span style="font-size: 10px;" class="attribute big-text" *ngFor="let cuisine of chef.cuisines | slice:0:3">{{
+                                <span class="big-text mr-3" *ngFor="let cuisine of chef.cuisines | slice:0:3">{{
                                     cuisine.name }}
                                 </span>
                             </div>
                         </div>
                         <div class="flex-column gap-1" *ngIf="chef.doDelivery">
-                            <div class="flex-row big-text">
-                                <span style="background-color: gold;padding: 0 20px; border-top-left-radius: 12px;border-bottom-left-radius: 12px;">DELIVERY
-                                    DISTANCE</span>
+                            <div class="flex-row">
+                                <span class="bolder">Delivery Distance</span>
                                 <span class="pl-2">{{chef.deliveryDistance}}
                                     miles</span>
                             </div>
-                            <div class="flex-row big-text">
-                                <span style="background-color: gold;padding: 0 20px; border-top-left-radius: 12px;border-bottom-left-radius: 12px;">FREE
-                                    DELIVERY</span>
-                                <span class="pl-2">foodOrder over
+                            <div class="flex-row">
+                                <span class="bolder">Free Delivery</span>
+                                <span class="pl-2">Order over
                                     {{chef.freeDeliveryOver |
                                     currency: 'GBP'}}</span>
                             </div>
@@ -128,12 +126,12 @@
     </div>
 </div>
 <ng-template #menuBar>
-    <div class="flex-row border br-25 w-100 my-1 px-1">
-        <b (click)="selectLayout('Menu')" [class.selectedCal]="activeLayout === 'Menu'" class="square">Menu</b>
-        <b (click)="selectLayout('Reviews')" [class.selectedCal]="activeLayout === 'Reviews'" class="square">Reviews
+    <div class="flex-row w-100 my-1 p-1 border-top">
+        <b (click)="selectLayout('Menu')" [class.selectedMenu]="activeLayout === 'Menu'" class="menu">Menu</b>
+        <b (click)="selectLayout('Reviews')" [class.selectedMenu]="activeLayout === 'Reviews'" class="menu mx-2 px-3">Reviews
             ({{reviews.length}})</b>
-        <b (click)="selectLayout('Info')" [class.selectedCal]="activeLayout === 'Info'" class="square mx-2 px-3">Info</b>
-        <b (click)="openModal(partyModal)" [class.selectedCal]="activeLayout === 'Party'" class="square mx-2 px-3">Party</b>
+        <b (click)="selectLayout('Info')" [class.selectedMenu]="activeLayout === 'Info'" class="menu mx-2 px-3">Info</b>
+        <b (click)="openModal(partyModal)" [class.selectedMenu]="activeLayout === 'Party'" class="menu mx-2 px-3">Party</b>
     </div>
 </ng-template>
 <ng-template #noItemsBlock>
@@ -316,16 +314,21 @@
         <span class="bolder fs-6">Start Party foodOrder</span>
         <button type="button" class="btn-modal-close" aria-label="Close" (click)="close()">X</button>
     </div>
-    <div class="modal-body jcc" style="height: 400px;">
-        <div class="flex-column p-4 w-100">
-            <span class="bolder">Event Date</span>
-            <div class="input-group">
-                <input class="form-control" [minDate]="minDate" placeholder="dd-mm-yyyy" name="dp" [(ngModel)]="eventDate" ngbDatepicker #d="ngbDatepicker" />
-                <fa-icon [icon]="faCalendar" (click)="d.toggle()" class="border br-tr-7 br-br-7 p-2 clickable-icon"></fa-icon>
+    <div class="modal-body jcc" style="height: 350px;">
+        <div class="p-2 w-100">
+            <div class="flex-row jcsb aic">
+                <div class="flex-column">
+                    <span class="bolder">Event Date</span>
+                    <div class="input-group">
+                        <input class="form-control" [minDate]="minDate" placeholder="dd-mm-yyyy" name="dp" [(ngModel)]="eventDate" ngbDatepicker #d="ngbDatepicker" />
+                        <fa-icon [icon]="faCalendar" (click)="d.toggle()" class="border br-tr-7 br-br-7 p-2 clickable-icon"></fa-icon>
+                    </div>
+                </div>
+                <div class="flex-column">
+                    <span class="bolder mt-3">Delivery Time</span>
+                    <ngb-timepicker [(ngModel)]="eventTime" />
+                </div>
             </div>
-
-            <span class="bolder mt-3">Delivery Time</span>
-            <ngb-timepicker [(ngModel)]="eventTime" />
         </div>
 
     </div>
