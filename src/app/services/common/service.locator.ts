@@ -39,6 +39,7 @@ export class ServiceLocator {
 
   SupplierUrl: string;
   PartyBundlesUrl: string;
+  PostcodeDistrictsUrl: string;
 
   constructor() {
     this.SupplierUrl = environment.SupplierUrl;
@@ -53,6 +54,7 @@ export class ServiceLocator {
     this.menusUrl = environment.MenusUrl;
     this.calendersUrl = environment.CalendersUrl;
     this.PartyBundlesUrl = environment.PartyBundlesUrl;
+    this.PostcodeDistrictsUrl = environment.PostcodeDistrictsUrl;
 
     this.FoodOrdersTrackingUrl = environment.FoodOrdersTrackingUrl;
     this.FoodOrdersUrl = environment.FoodOrdersUrl;

@@ -22,6 +22,7 @@ export const environment = {
   SupplierUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/suppliers',
   FeedbacksUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/feedbacks',
   PartyBundlesUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/party-bundles',
+  PostcodeDistrictsUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/postcode-districts',
 
 // Orders
   // FoodOrdersTrackingUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/foods-tracking',

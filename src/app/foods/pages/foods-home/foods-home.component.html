@@ -7,27 +7,38 @@
         <span class="sm big-text fs-1">Craving for Homefood?</span>
         <span class="lg  fs-4">We make it easy to order home food from your neighbourhood chefs</span>
         <div class="content">
-            <div class="slider logo-text">
+            <div class="slider spl-text">
                 <div class="slider-text1">Nostalgic</div>
                 <div class="slider-text2">A taste of home</div>
                 <div class="slider-text3">Made with love</div>
             </div>
         </div>
-        <div class="hp-search-container">
+        <div class="flex-row jcsb w-100 px-3" style="max-width: 426px;">
+            <input class="fb-input" type="text" name="postcode" id="postcode" tabindex="4" autocomplete="off" value [(ngModel)]="addressLookupPostcode" #ctrl="ngModel" placeholder="Enter your postcode" (keyup.enter)="onEnter(content)">
+            <button class="btn-12 py-2" (click)="findAddress()">Find</button>
+        </div>
+        <div style="border: 1px solid var(--light-border);overflow-y: auto;max-height: 100px;margin-top: 5px;padding: 5px;">
+            <div class="address-item" *ngFor="let add of postcodeAddressList" (click)="onSelectDeliveryAddress(add)">
+                <span> {{add.StreetAddress }},
+                    {{add.Place}}</span>
+            </div>
+        </div>
+
+        <!-- <div class="hp-search-container">
             <div class="flex-row jcsb w-100">
-                <input type="text" placeholder="Enter your location" class="hp-search-box" [(ngModel)]="serviceLocationSearchText" (keyup.enter)="onEnter(content)">
+                <input type="text" placeholder="Enter your location" class="hp-search-box" [(ngModel)]="postcodeDistrictsSearchText" (keyup.enter)="onEnter(content)">
                 <div style="background-color: black; color: #fff;cursor: pointer;" class="d-flex jcc aic p-3">
                     <fa-icon [icon]="faSearch" (click)="onEnter(content)"></fa-icon>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <div class="flex-column jcc aic  my-4 br-7">
         <strong style="font-size: 22px;font-weight: 800;" class="color-navy">Top
             Locations</strong>
         <div class="flex-row flex-wrap aic gap-1 jcc aic">
-            <span class="clickable border my-2 py-3 px-5" *ngFor="let pl of popularLocations" [routerLink]="['/f/chef-list']" [queryParams]="{location: pl.slug}">{{pl.name}}</span>
+            <span class="clickable border my-2 py-3 px-5" *ngFor="let pd of postcodeDistricts" [routerLink]="['/f/area', pd.slug]">{{pd.area}}</span>
         </div>
     </div>
 
@@ -51,13 +62,13 @@
     <div class="modal-body ">
         <div class="flex-column border ">
             <div class="flex-row jcsb w-100 border-bottom p-3 aic ">
-                <input type="text " placeholder="eg Glasgow " class="hp-search-box " [(ngModel)]="serviceLocationSearchText " (keyup.enter)="onEnter(addressList) ">
-                <span *ngIf="showServiceLocations " (click)="closeServiceLocations() " style="color: var(--danger);cursor: pointer;padding: 0 10px; ">Clear</span>
+                <input type="text " placeholder="eg Glasgow " class="hp-search-box " [(ngModel)]="postcodeDistrictsSearchText " (keyup.enter)="onEnter(addressList) ">
+                <span *ngIf="showPostcodeDistricts " (click)="closeServiceLocations() " style="color: var(--danger);cursor: pointer;padding: 0 10px; ">Clear</span>
                 <button type="button " class="btn btn-sm btn-dark br-25 ">Go</button>
             </div>
             <div class="flex-column " style="max-height: 500px;overflow-y: auto; ">
-                <span class="hp-location " *ngFor="let sl of serviceLocations " (click)="onSelectServiceLocation(sl) ">{{ sl.name }},
-                    {{sl.city}}</span>
+                <span class="hp-location " *ngFor="let pd of postcodeDistricts " (click)="onSelectPostcodeDistrict(pd) ">{{ pd.prefix }},
+                    {{pd.area}}</span>
             </div>
 
         </div>
@@ -79,9 +90,9 @@
                 </div>
                 <div class="modal-body ">
                     <div class="flex-column " style="min-height: 500px;overflow-y: auto;background-color: chocolate; ">
-                        <span class="hp-location " *ngFor="let sl of serviceLocations " (click)="onSelectServiceLocation(sl) ">{{ sl.name
-                            }},
-                            {{sl.city}}</span>
+                        <span class="hp-location " *ngFor="let pd of postcodeDistricts " (click)="onSelectPostcodeDistrict(pd) ">{{ pd.prefix
+                            }}-
+                            {{pd.area}}</span>
                     </div>
                 </div>
                 <div class="modal-footer " hidden>
@@ -104,8 +115,8 @@
     <div class="modal-body justify-content-center ">
         <!-- <h4 class="modal-title " id="modal-basic-title ">Locations</h4> -->
         <div class="flex-column " style="max-height: 500px;overflow-y: auto; ">
-            <span class="hp-location " *ngFor="let sl of serviceLocations " (click)="onSelectServiceLocation(sl) ">{{ sl.name }},
-                {{sl.city}}</span>
+            <span class="hp-location " *ngFor="let pd of postcodeDistricts " (click)="onSelectPostcodeDistrict(pd) ">{{ pd.prefix }}-
+                {{pd.area}}</span>
         </div>
     </div>
     <!-- <div class="modal-footer "> -->

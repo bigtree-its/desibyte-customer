@@ -3,8 +3,9 @@ import { Router } from '@angular/router';
 import { faClose, faLocation, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Cuisine } from 'src/app/model/all-foods';
-import { ServiceLocation } from 'src/app/model/common';
+import { Address, PostcodeDistrict, RapidApiByPostcodeResponse, RapidApiByPostcodeResponseSummary, ServiceLocation } from 'src/app/model/common';
 import { LocationService } from 'src/app/services/common/location.service';
+import { RapidApiService } from 'src/app/services/common/rapid-api.service';
 import { Utils } from 'src/app/services/common/utils';
 import { CuisinesService } from 'src/app/services/foods/cusines.service';
 
@@ -24,18 +25,31 @@ export class FoodsHomeComponent implements OnInit{
   cuisinesService = inject(CuisinesService);
   modalService = inject(NgbModal);
   locationService = inject(LocationService);
-  serviceLocations: ServiceLocation[];
-  showServiceLocations: boolean;
-  serviceLocationSearchText: any;
-  selectedServiceLocation: ServiceLocation;
+  rapidApiService = inject(RapidApiService);
 
-  popularLocations: ServiceLocation[];
+
+  showPostcodeDistricts: boolean;
+  postcodeDistrictsSearchText: any;
+  selectedPostcodeDistrict: PostcodeDistrict;
+
+  popularDistricts: PostcodeDistrict[];
   cuisines: Cuisine[] = [];
   cuisineMap: Map<String, Cuisine> = new Map<String, Cuisine>();
+  postcodeDistricts: PostcodeDistrict[];
+
+  customerAddress: Address;
+  addressLookupPostcode: string;
+  hidePostcodeLookupForm: boolean;
+  postcodeAddressList: RapidApiByPostcodeResponseSummary[];
+  rapidApiByPostcodeResponseSummary: RapidApiByPostcodeResponseSummary;
+  postcode: string;
+  addressSelected: boolean;
+  postcodeDistrict: PostcodeDistrict;
+  invalidPostcodeDistrict: boolean;
 
   ngOnInit(): void {
-    this.fetchAllServiceAreas();
-    this.fetchPopularLocations('Glasgow');
+    this.fetchAllPostcodeDistricts();
+    this.fetchPopularPostcodeDistricts('Glasgow');
     this.cuisinesService.getCuisines().subscribe((d) => {
       this.cuisines = d;
       for (var i = 0; i < d.length; i++) {
@@ -45,20 +59,20 @@ export class FoodsHomeComponent implements OnInit{
     });
   }
 
-  fetchPopularLocations(searchString: string) {
+  fetchPopularPostcodeDistricts(searchString: string) {
     if (searchString === null && searchString === undefined) {
       return;
     }
     this.locationService
-      .fetchLocalAreas(searchString.trim())
+      .fetchPostcodeDistricts(searchString.trim(), null)
       // .pipe(first())
       .subscribe(
-        (data: ServiceLocation[]) => {
-          this.popularLocations = data;
+        (data: PostcodeDistrict[]) => {
+          this.popularDistricts = data;
         },
         (error) => {
           console.log(
-            'Popular Locations Lookup resulted an error.' +
+            'Popular postcode districts Lookup resulted an error.' +
             JSON.stringify(error)
           );
         }
@@ -66,67 +80,38 @@ export class FoodsHomeComponent implements OnInit{
   }
 
 
-  fetchAllServiceAreas() {
+  fetchAllPostcodeDistricts() {
     this.locationService
-      .fetchLocalAreas('Glasgow')
+    .fetchPostcodeDistricts(null, null)
       // .pipe(first())
       .subscribe(
-        (data: ServiceLocation[]) => {
-          this.serviceLocations = data;
-          this.showServiceLocations = true;
-          console.log(
-            'The service location List: ' +
-            JSON.stringify(this.showServiceLocations)
-          );
+        (data: PostcodeDistrict[]) => {
+          this.postcodeDistricts = data;
         },
         (error) => {
           console.log(
-            'Address Lookup resulted an error.' + JSON.stringify(error)
+            'Postcode districts resulted an error.' + JSON.stringify(error)
           );
         }
       );
   }
 
-  lookupServiceLocation(searchString: string, content) {
-    if (searchString === null && searchString === undefined) {
-      return;
-    }
-    this.locationService
-      .fetchLocalAreas(searchString.trim())
-      // .pipe(first())
-      .subscribe(
-        (data: ServiceLocation[]) => {
-          this.serviceLocations = data;
-          if ( Utils.isValid(this.serviceLocations)){
-            this.open(content);
-          }
-          this.showServiceLocations = true;
-          console.log('The service location List: ' + JSON.stringify(this.serviceLocations)
-          );
-        },
-        (error) => {
-          console.log(
-            'Address Lookup resulted an error.' + JSON.stringify(error)
-          );
-        }
-      );
-  }
 
-  onSelectServiceLocation(selectedServiceLocation: ServiceLocation) {
+  onSelectPostcodeDistrict(selectedPostcodeDistrict: PostcodeDistrict) {
     this.close();
-    this.selectedServiceLocation = selectedServiceLocation;
+    this.selectedPostcodeDistrict = selectedPostcodeDistrict;
     // this.fetchChefsByServiceLocation(selectedServiceLocation);
     this.router
-      .navigate(['/f/chef-list'], {
-        queryParams: { location: selectedServiceLocation.slug },
+      .navigate(['/f/area'], {
+        queryParams: { location: selectedPostcodeDistrict.slug },
       })
       .then();
-    console.log('Selected location: ' + selectedServiceLocation.name);
+    console.log('Selected location: ' + selectedPostcodeDistrict.prefix);
   }
   
   onEnter(content) {
-    if ( this.serviceLocationSearchText !== undefined){
-      this.lookupServiceLocation(this.serviceLocationSearchText, content);
+    if (this.addressLookupPostcode &&this.addressLookupPostcode.length >= 5) {
+      this.doPostcodeLookup();
     }
    
   }
@@ -145,9 +130,61 @@ export class FoodsHomeComponent implements OnInit{
   }
 
   closeServiceLocations() {
-    this.showServiceLocations = false;
-    this.serviceLocationSearchText = undefined;
-    this.serviceLocations = [];
+    this.showPostcodeDistricts = false;
+    this.postcodeDistrictsSearchText = undefined;
+    this.postcodeDistricts = [];
+  }
+
+  findAddress() {
+    if (this.addressLookupPostcode &&this.addressLookupPostcode.length >= 5) {
+      this.doPostcodeLookup();
+    }
+  }
+
+  onSubmitPostcodeLookup() {
+    console.log('Search address form submitted..');
+    if (this.addressLookupPostcode &&this.addressLookupPostcode.length >= 5) {
+      this.doPostcodeLookup();
+    }
+  }
+
+  doPostcodeLookup() {
+    this.rapidApiService
+      .lookupAddresses(this.addressLookupPostcode.trim())
+      // .pipe(first())
+      .subscribe(
+        (data: RapidApiByPostcodeResponse) => {
+          this.postcodeAddressList = data.Summaries;
+          this.addressSelected = false;
+          console.log('Address Lookup response ' +JSON.stringify(this.postcodeAddressList));
+        },
+        (error) => {
+          console.log( 'Address Lookup resulted an error.' + JSON.stringify(error));
+        }
+      );
+  }
+
+  onSelectDeliveryAddress(selectAddress: RapidApiByPostcodeResponseSummary) {
+    var city = selectAddress.Place.split(/[\s ]+/).pop();
+    this.customerAddress = {
+      city: city,
+      addressLine1: selectAddress.StreetAddress,
+      addressLine2: selectAddress.Place,
+      country: 'UK',
+      postcode: this.addressLookupPostcode,
+      latitude: '',
+      longitude: '',
+    };
+    this.addressSelected = true;
+    var area = this.addressLookupPostcode.trim().substring(0,3);
+    this.locationService.fetchPostcodeDistricts(area, null).subscribe((pd) => {
+      if (Utils.isValid(pd)) {
+        this.postcodeDistrict = pd[0];
+        this.router.navigateByUrl("f/area/"+this.postcodeDistrict.slug);
+      }else{
+        this.invalidPostcodeDistrict = true;
+      }
+    });
   }
 
   close() {

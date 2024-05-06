@@ -1,6 +1,6 @@
 <div *ngIf="chef !== null && chef !== undefined && !incorrectLanding">
 
-    <div class="flex-row jcsb py-2 aic px-3">
+    <div class="flex-row jcsb py-2 aic px-3 chef-home-banner">
         <fa-icon [icon]="faArrowLeft" class="btn-circle" (click)="goback()"></fa-icon>
         <span class="big-text fs-3 mr-2">{{chef.kitchenName}}</span>
         <span [class.open]="chef.open" [class.closed]="!chef.open">{{chef.open?
@@ -111,7 +111,7 @@
             </ng-container>
         </div>
         <div class="col-md-4">
-            <app-basket [standAlone]="false"></app-basket>
+            <app-basket [standAlone]="false" [eventDate]="eventDate"></app-basket>
         </div>
     </div>
 
@@ -126,7 +126,7 @@
     </div>
 </div>
 <ng-template #menuBar>
-    <div class="flex-row w-100 my-1 p-1 border-top">
+    <div class="flex-row w-100 my-1 p-1 border-top jcc aic">
         <b (click)="selectLayout('Menu')" [class.selectedMenu]="activeLayout === 'Menu'" class="menu">Menu</b>
         <b (click)="selectLayout('Reviews')" [class.selectedMenu]="activeLayout === 'Reviews'" class="menu mx-2 px-3">Reviews
             ({{reviews.length}})</b>

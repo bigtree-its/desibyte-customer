@@ -166,7 +166,7 @@ export interface LocalChefSearchQuery {
     cuisines: string;
     slots: string;
     email: string;
-    serviceAreas: string;
+    postcodeDistricts: string;
     status: string;
     noMinimumOrder: boolean;
     collectionOnly: boolean;

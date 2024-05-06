@@ -56,7 +56,15 @@ export class Review {
     customer: Customer;
 }
 
-
+export class PostcodeDistrict{
+    public _id: string;
+    public active: boolean;
+    public prefix: string;
+    public area: string;
+    public region: string;
+    public postTown: string;
+    public slug: string;
+}
 
 
 export class PostcodeLookupResult {

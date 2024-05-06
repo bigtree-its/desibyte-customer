@@ -46,7 +46,7 @@ export class ChefHomeComponent implements AfterViewInit, OnDestroy {
   @ViewChild('widgetsContent', { read: ElementRef })
   public widgetsContent: ElementRef<any>;
 
-  eventDate: NgbDateStruct;
+  ngbEventDate: NgbDateStruct;
   eventTime = { hour: 13, minute: 30 };
 
   faArrowLeft = faArrowLeft;
@@ -129,6 +129,7 @@ export class ChefHomeComponent implements AfterViewInit, OnDestroy {
   minDate = undefined;
   partyOrder: FoodOrder;
   itemsInCart: number = 0;
+  eventDate: Date;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -140,6 +141,14 @@ export class ChefHomeComponent implements AfterViewInit, OnDestroy {
     private modalService: NgbModal,
     private config: NgbDatepickerConfig
   ) {
+    if ( this.ngbEventDate){
+      this.eventDate = new Date(
+        this.ngbEventDate.year,
+        this.ngbEventDate.month - 1,
+        this.ngbEventDate.day
+      );
+    }
+   
   }
 
   ngAfterViewInit(): void {
@@ -234,13 +243,16 @@ export class ChefHomeComponent implements AfterViewInit, OnDestroy {
         if (Utils.isValid(value)) {
           this.partyOrder = value;
           this.summariseOrders();
-          if (this.foodOrder.partyOrder) {
-            if (this.foodOrder.partyDate) {
-              this.eventDate = {
-                year: this.foodOrder.partyDate.getFullYear(),
-                month: this.foodOrder.partyDate.getMonth() + 1,
-                day: this.foodOrder.partyDate.getDate(),
+          if (this.partyOrder.partyOrder) {
+            if (this.partyOrder.partyDate) {
+              this.ngbEventDate = {
+                year: this.partyOrder.partyDate.getFullYear(),
+                month: this.partyOrder.partyDate.getMonth() + 1,
+                day: this.partyOrder.partyDate.getDate(),
               };
+            }else{
+              this.partyOrder.partyDate = this.eventDate;
+              this.orderService.updatePartyOrder(this.partyOrder);
             }
           }
         }
@@ -447,36 +459,6 @@ export class ChefHomeComponent implements AfterViewInit, OnDestroy {
     this.modalService.dismissAll();
   }
 
-  isEventValid(): any {
-    var today = new Date();
-    const jsDate = new Date(
-      this.eventDate.year,
-      this.eventDate.month - 1,
-      this.eventDate.day
-    );
-    var diff = this.calculateDiff(jsDate);
-    // var eventDate = this.eventDate.day;
-    console.log('Today ' + today + ' Event day ' + jsDate + ' Lapsed: ' + diff);
-    return false;
-  }
-
-  calculateDiff(dateSent) {
-    let currentDate = new Date();
-    dateSent = new Date(dateSent);
-    return Math.floor(
-      (Date.UTC(
-        currentDate.getFullYear(),
-        currentDate.getMonth(),
-        currentDate.getDate()
-      ) -
-        Date.UTC(
-          dateSent.getFullYear(),
-          dateSent.getMonth(),
-          dateSent.getDate()
-        )) /
-      (1000 * 60 * 60 * 24)
-    );
-  }
 
   checkout() {
     this.router.navigateByUrl("f/checkout")

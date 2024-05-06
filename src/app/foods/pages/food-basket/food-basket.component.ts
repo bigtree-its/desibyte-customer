@@ -17,6 +17,8 @@ import { FoodOrderService } from 'src/app/services/foods/food-order.service';
 export class FoodBasketComponent {
 
   @Input() standAlone?: boolean = true;
+  @Input() eventDate?: Date;
+  @Input() eventTime?: Date;
 
   faArrowLeft = faArrowLeft;
   faBatteryEmpty = faBatteryEmpty;

@@ -117,6 +117,7 @@ export const environment = {
     SupplierUrl: 'http://localhost:8083/ads/v1/suppliers',
     FeedbacksUrl: 'http://localhost:8083/ads/v1/feedbacks',
     PartyBundlesUrl: 'http://localhost:8083/ads/v1/party-bundles',
+    PostcodeDistrictsUrl: 'http://localhost:8083/ads/v1/postcode-districts',
     
   
     // debug: window['env']['debug'] || false,

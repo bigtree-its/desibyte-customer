@@ -10,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { faCheck, faCopyright, faStar } from '@fortawesome/free-solid-svg-icons';
 import { Subject, takeUntil } from 'rxjs';
 import { Cuisine, Dish, LocalChef, LocalChefSearchQuery } from 'src/app/model/all-foods';
-import { ServiceLocation } from 'src/app/model/common';
+import { PostcodeDistrict, ServiceLocation } from 'src/app/model/common';
 import { Constants } from 'src/app/services/common/constants';
 import { LocalService } from 'src/app/services/common/local.service';
 import { LocationService } from 'src/app/services/common/location.service';
@@ -56,6 +56,10 @@ export class ChefListComponent implements OnDestroy {
   faStar = faStar;
   faCopyright = faCopyright;
   faCheck = faCheck;
+  areaQuery: string;
+  cuisineQuery: string;
+  postcodeDistrict: PostcodeDistrict;
+  invalidPostcodeDistrict: boolean;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -66,44 +70,56 @@ export class ChefListComponent implements OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    var location = this.activatedRoute.snapshot.queryParamMap.get('location');
-    const cuisine = this.activatedRoute.snapshot.queryParamMap.get('cuisine');
-    console.log('location: ' + location);
-    console.log('cuisine: ' + cuisine);
-    if (location !== null && location.length > 5) {
-      this.locationService.getLocation(location).subscribe((sl) => {
-        if (Utils.isValid(sl)) {
-          this.serviceLocation = sl;
-          this.titleService.setTitle(sl.slug.toLocaleUpperCase())
-          this.localService.saveData(
-            Constants.StorageItem_Location,JSON.stringify(this.serviceLocation)
-          );
-          this.fetchChefsByServiceLocation(this.serviceLocation);
-        }
-      });
-    }
-
-    if (cuisine !== null && cuisine.length > 5) {
-      this.cuisinesService.getSingleCuisine(cuisine).subscribe((c) => {
-        if (Utils.isValid(c)) {
-          this.cuisine = c;
-          console.log('Fetched the cuisine ' + JSON.stringify(this.cuisine));
-          this.fetchChefsByCuisines(this.cuisine);
-        }
-      });
-    }
-
-    this.cuisinesService.getCuisines().subscribe((d) => {
-      this.cuisines = d;
-      this.selectedCuisine = this.cuisines[0];
-      for (var i = 0; i < d.length; i++) {
-        var theCuisine = d[i];
-        this.cuisineMap.set(theCuisine.name, theCuisine);
-      }
+    this.activatedRoute.params.subscribe((params) => {
+      this.areaQuery = params['area'];
+      this.cuisineQuery = params['cuisine'];
     });
-
+    this.cuisinesService.getCuisines().subscribe((d) => {
+      if ( d){
+        this.cuisines = d;
+        for (var i = 0; i < d.length; i++) {
+          var theCuisine = d[i];
+          this.cuisineMap.set(theCuisine.name, theCuisine);
+        }
+        if (this.cuisineQuery) {
+          this.cuisinesService.getSingleCuisine(this.cuisineQuery).subscribe((c) => {
+            if (Utils.isValid(c)) {
+              this.cuisine = c;
+              console.log('Fetched the cuisine ' + JSON.stringify(this.cuisine));
+              this.fetchChefsByCuisines(this.cuisine);
+            }
+          });
+        }
+      }
+     
+    });
+    // var location = this.activatedRoute.snapshot.queryParamMap.get('location');
+    // const cuisine = this.activatedRoute.snapshot.queryParamMap.get('cuisine');
+    console.log('location: ' + this.areaQuery);
+    console.log('cuisine: ' + this.cuisineQuery);
+    if (this.areaQuery) {
+      this.getChefs();
+    }
     this.loadDishes();
   }
+
+  private getChefs() {
+    var params = this.areaQuery.split("-");
+    var prefix = params[0];
+    var area = params[1];
+    this.locationService.fetchPostcodeDistricts(prefix, null).subscribe((pd) => {
+      if (Utils.isValid(pd)) {
+        this.postcodeDistrict = pd[0];
+        this.fetchChefsByPostcodeDistrict(this.postcodeDistrict);
+        this.titleService.setTitle("Home Chefs in "+this.postcodeDistrict.area+", "+ this.postcodeDistrict.prefix.toUpperCase());
+        this.localService.saveData(Constants.StorageItem_Location, JSON.stringify(this.postcodeDistrict));
+        this.fetchChefsByPostcodeDistrict(this.postcodeDistrict);
+      }else{
+        this.invalidPostcodeDistrict = true;
+      }
+    });
+  }
+
 
   private loadDishes() {
     let observable = this.dishService.getDishes();
@@ -225,21 +241,18 @@ export class ChefListComponent implements OnDestroy {
     this.router.navigate(['cooks', cook._id]).then();
   }
 
-  fetchChefsByServiceLocation(serviceLocation: ServiceLocation) {
+  fetchChefsByPostcodeDistrict(postcodeDistrict: PostcodeDistrict) {
     const chefSearchQuery = {} as LocalChefSearchQuery;
-    chefSearchQuery.serviceAreas = serviceLocation._id;
-    console.log('The Query for chefs ' + JSON.stringify(chefSearchQuery));
+    chefSearchQuery.postcodeDistricts = postcodeDistrict._id;
     this.chefService
       .getAllLocalChefs(chefSearchQuery)
       .subscribe((result: LocalChef[]) => {
         this.localChefs = result;
         this.filteredChefs = this.localChefs;
-        this.serviceLocations = [];
       });
   }
 
   fetchChefsByCuisines(cuisine: Cuisine) {
-    console.log('The Cuisine ' + JSON.stringify(cuisine));
     const chefSearchQuery = {} as LocalChefSearchQuery;
     chefSearchQuery.cuisines = cuisine._id;
     console.log('The Query for chefs ' + JSON.stringify(chefSearchQuery));

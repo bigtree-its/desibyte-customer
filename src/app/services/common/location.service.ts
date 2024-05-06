@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ServiceLocator } from './service.locator';
-import { ServiceLocation } from 'src/app/model/common';
+import { PostcodeDistrict, ServiceLocation } from 'src/app/model/common';
 
 @Injectable({
   providedIn: 'root'
@@ -29,4 +29,21 @@ export class LocationService {
     }
     return this.http.get<ServiceLocation>(this.serviceLocator.ServiceAreasUrl, { params });
   }
+
+  fetchPostcodeDistricts(prefix: string, area: string): Observable<PostcodeDistrict[]> {
+    var params = new HttpParams();
+    if (prefix) {
+      params = params.set('prefix', prefix);
+    }
+    if (area) {
+      params = params.set('area', area);
+    }
+    console.log('Lookup postcode districts for : ' + params)
+    return this.http.get<PostcodeDistrict[]>(this.serviceLocator.PostcodeDistrictsUrl, { params });
+  }
+
+  fetchOne(_id: string): Observable<PostcodeDistrict> {
+    return this.http.get<PostcodeDistrict>(this.serviceLocator.PostcodeDistrictsUrl+"/"+ _id);
+  }
+
 }

@@ -18,7 +18,7 @@ import { FOrderItemComponent } from './pages/f-order-item/f-order-item.component
 
 const routes: Routes = [
   { path: 'f/home', component: FoodsHomeComponent },
-  { path: 'f/chef-list', component: ChefListComponent },
+  { path: 'f/area/:area', component: ChefListComponent },
   { path: 'f/chef/:id', component: ChefHomeComponent },
   { path: 'f/basket', component: FoodBasketComponent },
   { path: 'f/checkout', component: FoodCheckoutComponent },

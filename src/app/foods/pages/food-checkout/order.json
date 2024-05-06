@@ -1,0 +1,49 @@
+{
+    "id": "",
+    "paymentIntentId": "",
+    "clientSecret": "",
+    "supplier": {
+        "_id": "f7155e59-01b7-412f-9747-c9759dca7770",
+        "name": "Madhusmita",
+        "image": "/assets/images/chefs/f7155e59-01b7-412f-9747-c9759dca7770.jpeg",
+        "mobile": "07979191176",
+        "email": "nava.arul@gmail.com",
+        "address": {
+            "addressLine1": "359, Glasgow Road",
+            "addressLine2": "Eagleshan",
+            "city": "Glasgow",
+            "postcode": "G755SF",
+            "latitude": 1234,
+            "longitude": 23232,
+            "country": "UK"
+        }
+    },
+    "customer": {
+        "name": "",
+        "mobile": "",
+        "email": "",
+        "address": {
+            "addressLine1": "",
+            "addressLine2": "",
+            "city": "",
+            "country": "",
+            "postcode": "",
+            "latitude": "",
+            "longitude": ""
+        }
+    },
+    "reference": "",
+    "currency": "GBP",
+    "serviceMode": "",
+    "items": [],
+    "partyItems": [],
+    "subTotal": 0,
+    "total": 0,
+    "serviceFee": 0,
+    "deliveryFee": 0,
+    "packingFee": 0,
+    "dateCreated": "2024-05-02T17:26:44.200Z",
+    "partyOrder": false,
+    "notes": "",
+    "status": "Draft"
+}

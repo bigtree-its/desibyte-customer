@@ -17,7 +17,7 @@ export const environment = {
   SupplierUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/suppliers',
   FeedbacksUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/feedbacks',
   PartyBundlesUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/party-bundles',
- 
+  PostcodeDistrictsUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/postcode-districts',
 
   LoginUrl:
     'https://bigtree-auth-service-672f06320174.herokuapp.com/authenticate/customer/token',

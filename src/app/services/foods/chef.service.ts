@@ -37,8 +37,8 @@ export class ChefService {
     if (query.delivery !== undefined && query.delivery !== null) {
       params = params.set('delivery', "");
     }
-    if (query.serviceAreas !== undefined && query.serviceAreas !== null) {
-      params = params.set('serviceAreas', query.serviceAreas);
+    if (query.postcodeDistricts !== undefined && query.postcodeDistricts !== null) {
+      params = params.set('postcodeDistricts', query.postcodeDistricts);
     }
     if (query.status !== undefined && query.status !== null) {
       params = params.set('status', query.status);

@@ -15,6 +15,7 @@ import { Constants } from '../common/constants';
 })
 export class FoodOrderService {
  
+ 
   ipAddress: any;
   supplier: LocalChef;
   foodOrderKey: string;
@@ -37,6 +38,11 @@ export class FoodOrderService {
         this.setupSupplier();
       }
     });
+  }
+
+  updatePartyOrder(partyOrder: FoodOrder) {
+    this.partyOrder = partyOrder;
+    this.setData(partyOrder);
   }
 
   updateStatus(orderTracking: OrderTracking) {
