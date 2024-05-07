@@ -25,24 +25,14 @@ export const environment = {
   PostcodeDistrictsUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/postcode-districts',
 
 // Orders
-  // FoodOrdersTrackingUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/foods-tracking',
-  // FoodOrdersUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/foods',
-  // FoodOrderSearchUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/foods/search',
-  // FoodOrdersStripePaymentsUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/foods/stripe-payments',
-  // FoodOrdersPaymentIntentUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/food-s/stripe-payments/payment-intent',
-  // ProductOrdersUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/products',
-  // ProductOrdersSearchUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/products/search',
-  // ProductOrdersPaymentsUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/products/stripe-payments',
-
-
-  FoodOrdersTrackingUrl: 'http://localhost:8082/orders/v1/food-order-tracking',
-  FoodOrdersUrl: 'http://localhost:8082/orders/v1/foods',
-  FoodOrderSearchUrl: 'http://localhost:8082/orders/v1/foods/search',
-  FoodOrdersStripePaymentsUrl: 'http://localhost:8082/orders/v1/foods/stripe-payments',
-  FoodOrdersPaymentIntentUrl: 'http://localhost:8082/orders/v1/foods/stripe-payments/payment-intent',
-  ProductOrdersUrl: 'http://localhost:8082/orders/v1/products',
-  ProductOrdersSearchUrl: 'http://localhost:8082/orders/v1/products/search',
-  ProductOrdersPaymentsUrl: 'http://localhost:8082/orders/v1/products/stripe-payments',
+  FoodOrdersTrackingUrl: 'https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/foods-tracking',
+  FoodOrdersUrl: 'https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/foods',
+  FoodOrderSearchUrl: 'https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/foods/search',
+  FoodOrdersStripePaymentsUrl: 'https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/foods/stripe-payments',
+  FoodOrdersPaymentIntentUrl: 'https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/foods/stripe-payments/payment-intent',
+  ProductOrdersUrl: 'https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/products',
+  ProductOrdersSearchUrl: 'https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/products/search',
+  ProductOrdersPaymentsUrl: 'https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/products/stripe-payments',
 
 
   // Auth

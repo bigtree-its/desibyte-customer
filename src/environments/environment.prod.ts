@@ -41,14 +41,14 @@ export const environment = {
 
 
   // Orders
-  FoodOrdersTrackingUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/foods-tracking',
-  FoodOrdersUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/foods',
-  FoodOrderSearchUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/foods/search',
-  FoodOrdersStripePaymentsUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/foods/stripe-payments',
-  FoodOrdersPaymentIntentUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/food-s/stripe-payments/payment-intent',
-  ProductOrdersUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/products',
-  ProductOrdersSearchUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/products/search',
-  ProductOrdersPaymentsUrl: 'https://polar-fortress-28097-08459456d8d7.herokuapp.com/orders/v1/products/stripe-payments',
+  FoodOrdersTrackingUrl: 'https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/foods-tracking',
+  FoodOrdersUrl: 'https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/foods',
+  FoodOrderSearchUrl: 'https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/foods/search',
+  FoodOrdersStripePaymentsUrl: 'https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/foods/stripe-payments',
+  FoodOrdersPaymentIntentUrl: 'https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/foods/stripe-payments/payment-intent',
+  ProductOrdersUrl: 'https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/products',
+  ProductOrdersSearchUrl: 'https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/products/search',
+  ProductOrdersPaymentsUrl: 'https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/products/stripe-payments',
 
 
   debug: false,

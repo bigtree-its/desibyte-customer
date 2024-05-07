@@ -1,0 +1,13 @@
+{
+    "headers": {
+        "normalizedNames": {},
+        "lazyUpdate": null
+    },
+    "status": 401,
+    "statusText": "OK",
+    "url": "http://localhost:8081/api/contacts",
+    "ok": false,
+    "name": "HttpErrorResponse",
+    "message": "Http failure response for http://localhost:8081/api/contacts: 401 OK",
+    "error": null
+}

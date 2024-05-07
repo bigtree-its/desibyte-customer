@@ -1,4 +1,13 @@
 
+export interface Contacts {
+    _id?: string;
+    fullName: string;
+    email: string;
+    mobile: string;
+    about: string;
+    message: string;
+}
+
 export class Supplier {
     _id: string;
     name: string;

@@ -1,0 +1,270 @@
+<div class="container-fluid">
+    <div class="flex-column">
+        <div class="flex-row jcsb aic border-bottom ">
+            <div class="flex-row aic">
+                <div *ngIf="viewOrder" class="arrow-icon-div" (click)="goBack()">
+                    <fa-icon [icon]="faArrowLeft"></fa-icon>
+                </div>
+                <span class="py-2 fs-1 big-text">{{viewOrder?
+                    viewOrder.reference: 'My Orders'}}</span>
+            </div>
+            <span class="color-red f-size-md bold" *ngIf="viewOrder">{{viewOrder.total | currency: 'GBP'}}</span>
+        </div>
+
+        <div class="flex-column" *ngIf="!viewOrder">
+            <form>
+                <div class="my-2 row">
+                    <label for="table-filtering-search" class="col-xs-3 col-sm-auto col-form-label">Full text search:</label>
+                    <div class="col-xs-3 col-sm-auto">
+                        <input id="table-filtering-search" class="form-control" type="text" [formControl]="filter" />
+                    </div>
+                </div>
+            </form>
+            <div class="overflow-y height-500 w-100">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Reference</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let order of myOrders$ | async; index as i" (click)="open(order)">
+                            <th scope="row">{{ i + 1 }}</th>
+                            <td><ngb-highlight [result]="order.reference" [term]="filter.value" /></td>
+                            <td><ngb-highlight [result]="order.total | currency: 'GBP' " [term]="filter.value" /></td>
+                            <td><ngb-highlight [result]="order.dateCreated | date " [term]="filter.value" /></td>
+                            <td><ngb-highlight [result]="order.status | titlecase" [term]="filter.value" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- <table class="styled-table">
+                <thead>
+                    <tr>
+                      <th>Reference</th>
+                      <th>Total</th>
+                      <th>Date</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr (click)="open(order)" *ngFor="let order of orders | orderByDate:'dateCreated':'desc'">
+                        <td class="pl-2">{{order.reference}}</td>
+                        <td class="pl-2">{{order.total | currency: 'GBP'}}</td>
+                        <td class="pl-2">{{order.dateCreated | date }}</td>
+                        <td class="pl-2">{{order.status | titlecase}}</td>
+                    </tr>
+                  </tbody>
+            </table> -->
+        </div>
+        <div class="flex-column" *ngIf="viewOrder">
+
+            <div class="bg-light p-3 my-2">
+                <span class="bolder fs-7">Order Summary</span>
+                <div class="flex-row py-2 align-items-center">
+                    <span *ngIf="!loading" class="bold fs-3 big-text">{{viewOrder.status |
+                        titlecase}}</span>
+                    <div *ngIf="loading" class="d-flex jcc aic p-3">
+                        <div class="loader"></div>
+                    </div>
+                    <button class="btn btn-11 ml-2 " *ngIf="viewOrder?.status==='Draft' " (click)="makePayment(paymentForm)">Pay</button>
+                    <button class="btn btn-11 ml-2 " *ngIf="viewOrder?.status==='Draft' " (click)="cancel()">Cancel</button>
+                </div>
+
+                <div class="progress_container">
+                    <div class="progress" id="progress"></div>
+                    <div class="flex-column jcc aic">
+                        <div class="circle mt-3" [class.active]="viewOrder?.status === 'Draft' || viewOrder?.status === 'Paid' || viewOrder?.status === 'Collected' || viewOrder?.status === 'Delivered' || viewOrder?.status === 'Ready'">
+                        </div>
+                        <span>New</span>
+                    </div>
+                    <div class="flex-column  jcc aic">
+                        <div class="circle mt-3" [class.active]="viewOrder?.status === 'Paid' || viewOrder?.status === 'Collected' || viewOrder?.status === 'Delivered' || viewOrder?.status === 'Ready'">
+                        </div>
+                        <span>In Progress</span>
+                    </div>
+                    <div class="flex-column  jcc aic">
+                        <div class="circle mt-3" [class.active]="viewOrder?.status === 'Ready' || viewOrder?.status === 'Cancelled'"></div>
+                        <span *ngIf="viewOrder?.status === 'Paid'">Ready</span>
+                        <span *ngIf="viewOrder?.status === 'Cancelled'">Cancelled</span>
+                    </div>
+                    <div class="flex-column jcc aie" *ngIf="viewOrder?.status !== 'Cancelled'">
+                        <div class="circle mt-3" [class.active]="viewOrder?.status === 'Collected' || viewOrder?.status === 'Delivered'"></div>
+                        <span>Completed</span>
+                    </div>
+                </div>
+            </div>
+            <!-- <ng-container *ngIf="showOrder" [ngTemplateOutlet]="orderLayout"></ng-container> -->
+            <div class="flex-column border p-2 br-7">
+                <span class="bolder py-2">{{viewOrder.serviceMode === 'DELIVERY'? 'Delivery Address': 'Collection Address'}}</span>
+                <span [routerLink]="[ '/f/chef', supplier?._id] " style="font-size: 15px;cursor: pointer;color:coral;" class="bold py-1" *ngIf="viewOrder.serviceMode === 'COLLECTION'">{{supplier.kitchenName}}</span>
+                <div class="flex-row" *ngIf="viewOrder.serviceMode === 'DELIVERY'">
+                    <span>{{viewOrder.customer.address.addressLine1}},</span>
+                    <span>{{viewOrder.customer.address.addressLine2}}</span>
+                </div>
+                <div class="flex-row" *ngIf="viewOrder.serviceMode === 'DELIVERY'">
+                    <span>{{viewOrder.customer.address.city}}, </span>
+                    <span class="pl-1">{{viewOrder.customer.address.postcode}}</span>
+                </div>
+                <div class="flex-row" *ngIf="viewOrder.serviceMode === 'COLLECTION'">
+                    <span>{{supplier.address.addressLine1}},</span>
+                    <span>{{supplier.address.addressLine2}}</span>
+                </div>
+                <div class="flex-row" *ngIf="viewOrder.serviceMode === 'COLLECTION'">
+                    <span>{{supplier.address.city}}, </span>
+                    <span class="pl-1">{{supplier.address.postcode}}</span>
+                </div>
+            </div>
+            <div class="flex-column border p-2 br-7 my-1" *ngIf="viewOrder.serviceMode === 'DELIVERY'">
+                <span class="bolder py-2">Order prepared by</span>
+                <span [routerLink]="[ '/f/chef', supplier?._id] " style="font-size: 15px;cursor: pointer;color:coral;" class="bold py-1">{{supplier?.kitchenName}}</span>
+                <div class="flex-row">
+                    <span>{{supplier.address.addressLine1}},</span>
+                    <span>{{supplier.address.addressLine2}}</span>
+                </div>
+                <div class="flex-row">
+                    <span>{{supplier.address.city}}, </span>
+                    <span>{{supplier.address.postcode}}</span>
+                </div>
+            </div>
+            <div class="flex-row-space-between border-bottom py-3">
+                <span class="bold f-size-lg ">Your Items</span>
+                <fa-icon class="btn-circle" *ngIf="!showItems" [icon]="chevronDown" (click)="openCloseItems()"></fa-icon>
+                <fa-icon class="btn-circle" *ngIf="showItems" [icon]="chevronUp" (click)="openCloseItems()"></fa-icon>
+            </div>
+            <ng-container *ngIf="showItems" [ngTemplateOutlet]="itemsLayout"></ng-container>
+            <div class="bg-light p-3 my-2">
+                <div class="flex-column justify-content-center align-items-center">
+                    <div style=" display: flex; flex-direction: column;width: 100%;padding: 5px 30px;">
+                        <div class="flex-row-space-between">
+                            <span>Subtotal</span>
+                            <span>{{viewOrder?.subTotal | currency:
+                                'GBP'}}</span>
+                        </div>
+                        <div class="flex-row-space-between">
+                            <span>Delivery fee</span>
+                            <span>{{viewOrder?.deliveryFee | currency:
+                                'GBP'}}</span>
+                        </div>
+                        <div class="flex-row-space-between">
+                            <span>Packing fee</span>
+                            <span>{{viewOrder?.packingFee | currency:
+                                'GBP'}}</span>
+                        </div>
+                        <div class="flex-row-space-between">
+                            <span>Service Fee</span>
+                            <span>{{viewOrder?.serviceFee | currency:
+                                'GBP'}}</span>
+                        </div>
+                        <div class="flex-row-space-between" style="margin-top: 10px;">
+                            <span style="font-weight: 900;">TOTAL</span>
+                            <span style="font-weight: 900;">{{viewOrder?.total |
+                                currency:
+                                'GBP'}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<ng-template #supplierLayout>
+    <div class="flex-row py-2">
+        <div style="height: 200px;width: 170px;">
+            <img src="{{supplier.image}}" style="object-fit: cover;
+            max-height: 198px;
+            height: 198px;
+            width: 170px;
+            max-width: 170px;">
+        </div>
+        <div class="flex-column" style="padding: 0 20px;width: 100%;">
+            <div class="title-section">
+                <span class="bolder f-size-md mr-2">{{supplier?.kitchenName}}</span>
+                <div class="clickable-row" style="font-size: 12px;">
+                    <fa-icon [icon]="faStar"></fa-icon>
+                    <span style="padding-left: 6px;">{{supplier?.rating}}</span>
+                    <span style="padding-left: 6px;">({{supplier?.reviews}}
+                        reviews)</span>
+                </div>
+            </div>
+            <span class="py-1 px-1 f-size-s">{{supplier?.description}}</span>
+            <div class="flex-row-wrap">
+                <ng-container *ngFor="let cuisine of supplier?.cuisines | slice:0:3">
+                    <div class="attribute">{{ cuisine.name }}
+                    </div>
+                </ng-container>
+            </div>
+            <div class="flex-column" *ngIf="supplier?.doDelivery">
+                <div class="flex-row" style="padding: 5px;align-items: center;">
+                    <fa-icon [icon]="faPeopleArrows" class="mr-1"></fa-icon>
+                    <span style="font-size: 12px;">I do delivery
+                        upto {{supplier?.deliveryDistance}} miles</span>
+                </div>
+                <div class="flex-row" *ngIf="supplier?.freeDeliveryOver > 0" style="padding: 5px;align-items: center;">
+                    <fa-icon [icon]="faFaceSmile" class="mr-1"></fa-icon>
+                    <span style="font-size: 12px;">Free Delivery
+                        order over {{supplier?.freeDeliveryOver |
+                        currency: 'GBP'}}</span>
+                </div>
+            </div>
+            <div *ngIf="!supplier?.doDelivery" style="padding: 5px 0;">
+                <span class="attribute">Collection Only</span>
+            </div>
+            <div class="flex-row">
+                <button class="btn-red" [routerLink]="[ '/cooks', supplier?._id] ">Order
+                    Again</button>
+            </div>
+
+        </div>
+    </div>
+</ng-template>
+<ng-template #orderLayout>
+    <div class="py-2">
+        <table style="width: 100%;">
+            <tr>
+                <th>Ref#</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Delivery Method</th>
+            </tr>
+            <tr>
+                <td>{{viewOrder?.reference}}</td>
+                <td>{{viewOrder?.dateCreated | date}}</td>
+                <td>{{viewOrder?.status | titlecase}}</td>
+                <td>{{viewOrder?.serviceMode | titlecase}}</td>
+            </tr>
+        </table>
+    </div>
+</ng-template>
+<ng-template #itemsLayout>
+    <table class="mt-1 mb-4">
+        <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>price</th>
+        </tr>
+        <tr class="border-bottom py-3" *ngFor="let item of viewOrder?.items">
+            <td>{{item.name}}</td>
+            <td class="pl-2">{{item.quantity}}</td>
+            <td>{{item.subTotal | currency: 'GBP'}}</td>
+        </tr>
+    </table>
+</ng-template>
+
+<ng-template #paymentForm let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Secure Pay</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <app-payment-form [order]="viewOrder" [paymentIntentId]="viewOrder?.paymentIntentId" [clientSecret]="viewOrder?.clientSecret"></app-payment-form>
+    </div>
+</ng-template>

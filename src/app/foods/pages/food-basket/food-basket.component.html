@@ -22,7 +22,7 @@
                 </div>
                 <span class="fs-6 ml-2" [routerLink]="[ '/f/chef', foodOrder.supplier]">{{foodOrder.supplier.tradingName}}</span>
             </div>
-            <button type="button" class="btn-12 my-2">Checkout</button>
+            <button type="button" class="btn-12 my-2" [routerLink]="[ '/f/checkout']">Checkout</button>
         </div>
 
     </div>
@@ -48,7 +48,7 @@
                 </div>
                 <span class="fs-6 ml-2" [routerLink]="[ '/f/chef', partyOrder.supplier]">{{partyOrder.supplier.tradingName}}</span>
             </div>
-            <button type="button" class="btn-12 my-2">Checkout</button>
+            <button type="button" class="btn-12 my-2" [routerLink]="[ '/f/checkout']">Checkout</button>
         </div>
     </div>
 

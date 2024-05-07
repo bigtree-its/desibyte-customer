@@ -121,9 +121,9 @@
     <div class="flex-column p-3 mb-2">
 
         <div *ngIf="chef.doDelivery" class="d-flex bg-light flex-grow br-25 p-0_5">
-            <button class="service-mode br-25" (click)="selectPickup()" [class.selected]="serviceMode==='COLLECTION'"><fa-icon [icon]="faPersonBiking"
+            <button class="service-mode" (click)="selectPickup()" [class.selected]="serviceMode==='COLLECTION'"><fa-icon [icon]="faPersonBiking"
                     class="mr-1"></fa-icon>Collection</button>
-            <button class="service-mode  br-25" (click)="selectDelivery()" [class.selected]="serviceMode==='DELIVERY'" [disabled]="!chef.doDelivery"><fa-icon [icon]="faBox" class="mr-1"></fa-icon>Delivery</button>
+            <button class="service-mode" (click)="selectDelivery()" [class.selected]="serviceMode==='DELIVERY'" [disabled]="!chef.doDelivery"><fa-icon [icon]="faBox" class="mr-1"></fa-icon>Delivery</button>
         </div>
         <div *ngIf="serviceMode === 'COLLECTION' || !chef.doDelivery" class="flex-column">
             <strong style="display: block;">Please collect

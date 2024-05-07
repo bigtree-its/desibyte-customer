@@ -12,6 +12,8 @@ import { AuthModule } from './auth';
 import { AuthInterceptor } from './services/auth/auth.interceptor';
 import { CustomDateParserFormatter } from './services/common/CustomDateParserFormatter';
 import { FoodsModule } from './foods';
+import { AdminModule } from './admin';
+import { DecimalPipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import { FoodsModule } from './foods';
     BrowserModule,
     SharedModule,
     FoodsModule,
+    AdminModule,
     AuthModule,
     HttpClientModule,
     AppRoutingModule,
@@ -30,6 +33,7 @@ import { FoodsModule } from './foods';
     FontAwesomeModule
   ],
   providers: [ 
+    DecimalPipe,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter },],
   bootstrap: [AppComponent]

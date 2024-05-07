@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { tap, Observable, BehaviorSubject, of } from 'rxjs';
+import { tap, Observable, BehaviorSubject, of, Subject } from 'rxjs';
 import { FoodOrder, FoodOrderItem, LocalChef, OrderSearchQuery, OrderTracking, OrderUpdateRequest, Orders, PartyOrderItem, SupplierOrders } from 'src/app/model/all-foods';
 import { Utils } from '../common/utils';
 import { ChefService } from './chef.service';
@@ -15,7 +15,10 @@ import { Constants } from '../common/constants';
 })
 export class FoodOrderService {
  
- 
+  private _loading$ = new BehaviorSubject<boolean>(true);
+  private _search$ = new Subject<void>();
+  
+
   ipAddress: any;
   supplier: LocalChef;
   foodOrderKey: string;
@@ -39,6 +42,7 @@ export class FoodOrderService {
       }
     });
   }
+
 
   updatePartyOrder(partyOrder: FoodOrder) {
     this.partyOrder = partyOrder;

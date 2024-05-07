@@ -1,0 +1,146 @@
+<!-- <ng-container *ngIf="(loadStripe$ | async) as stripe; else loadingStripe"></ng-container> -->
+
+<div class="container mt-5">
+
+    <div class="flex-column" *ngIf="insufficient_data">
+        <div class="ng-info">
+            Something is not right. The link you provided is not valid.
+        </div>
+    </div>
+    <div class="flex-column" *ngIf="!insufficient_data">
+        <div class="page-header border-bottom mt-8">
+            <span class="f-size-xl bolder">{{order?.reference}}</span>
+        </div>
+       
+        <div class="flex-column p-3">
+            <div class="flex-row-space-between border-bottom py-3">
+                <span class="bold f-size-lg ">Your Order</span>
+                <fa-icon class="collapsible-icon" *ngIf="!showOrder" [icon]="faPlus" (click)="openCloseOrder()"></fa-icon>
+                <fa-icon class="collapsible-icon" *ngIf="showOrder" [icon]="faMinus" (click)="openCloseOrder()"></fa-icon>
+            </div>
+            <ng-container *ngIf="showOrder" [ngTemplateOutlet]="orderLayout"></ng-container>
+            <div class="flex-row-space-between border-bottom py-3">
+                <span class="bold f-size-lg ">Your Chef</span>
+                <fa-icon class="collapsible-icon" *ngIf="!showSupplier" [icon]="faPlus" (click)="openCloseSupplier()"></fa-icon>
+                <fa-icon class="collapsible-icon" *ngIf="showSupplier" [icon]="faMinus" (click)="openCloseSupplier()"></fa-icon>
+            </div>
+            <ng-container *ngIf="showSupplier" [ngTemplateOutlet]="supplierLayout"></ng-container>
+    
+            <div class="flex-row-space-between border-bottom py-3">
+                <span class="bold f-size-lg ">Your Items</span>
+                <fa-icon class="collapsible-icon" *ngIf="!showItems" [icon]="faPlus" (click)="openCloseItems()"></fa-icon>
+                <fa-icon class="collapsible-icon" *ngIf="showItems" [icon]="faMinus" (click)="openCloseItems()"></fa-icon>
+            </div>
+            <ng-container *ngIf="showItems" [ngTemplateOutlet]="itemsLayout"></ng-container>
+            <div style="background-color: aliceblue;border-radius: 7px;padding:20px;margin: 10px 0;">
+                <div class="flex-column justify-content-center align-items-center">
+                    <div style=" display: flex; flex-direction: column;width: 100%;padding: 5px 30px;">
+                        <div class="flex-row-space-between">
+                            <span>Subtotal</span>
+                            <span>{{order?.subTotal | currency: 'GBP'}}</span>
+                        </div>
+                        <div class="flex-row-space-between">
+                            <span>Delivery fee</span>
+                            <span>{{order?.deliveryFee | currency: 'GBP'}}</span>
+                        </div>
+                        <div class="flex-row-space-between">
+                            <span>Packing fee</span>
+                            <span>{{order?.packingFee | currency: 'GBP'}}</span>
+                        </div>
+                        <div class="flex-row-space-between">
+                            <span>Service Fee</span>
+                            <span>{{order?.serviceFee | currency: 'GBP'}}</span>
+                        </div>
+                        <div class="flex-row-space-between" style="margin-top: 10px;">
+                            <span style="font-weight: 900;">TOTAL</span>
+                            <span style="font-weight: 900;">{{order?.total | currency:
+                                'GBP'}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<ng-template #supplierLayout>
+    <div class="flex-row py-2">
+        <div style="height: 200px;width: 170px;">
+            <img src="/assets/images/chefs/{{supplier?._id}}/cover-photo.jpg" style="object-fit: cover;
+            max-height: 198px;
+            height: 198px;
+            width: 170px;
+            max-width: 170px;">
+        </div>
+        <div class="flex-column" style="padding: 0 20px;width: 100%;">
+            <div class="title-section">
+                <span class="chef-name  title mr-2">{{supplier?.kitchenName}}</span>
+                <div class="clickable-row" style="font-size: 12px;">
+                    <fa-icon [icon]="faStar"></fa-icon>
+                    <span style="padding-left: 6px;">{{supplier?.rating}}</span>
+                    <span style="padding-left: 6px;">({{supplier?.reviews}}
+                        reviews)</span>
+                </div>
+            </div>
+            <span class="py-1 px-1 f-size-xs">{{supplier?.description}}</span>
+            <div class="flex-row-wrap">
+                <ng-container *ngFor="let cuisine of supplier?.cuisines | slice:0:3">
+                    <div class="attribute">{{ cuisine.name }}
+                    </div>
+                </ng-container>
+            </div>
+            <div class="flex-column" *ngIf="supplier?.doDelivery">
+                <div class="flex-row" style="padding: 5px;align-items: center;">
+                    <fa-icon [icon]="faPeopleArrows" class="mr-1"></fa-icon>
+                    <span style="font-size: 12px;">I do delivery
+                        upto {{supplier?.deliveryDistance}} miles</span>
+                </div>
+                <div class="flex-row" *ngIf="supplier?.freeDeliveryOver > 0" style="padding: 5px;align-items: center;">
+                    <fa-icon [icon]="faFaceSmile" class="mr-1"></fa-icon>
+                    <span style="font-size: 12px;">Free Delivery
+                        order over {{supplier?.freeDeliveryOver |
+                        currency: 'GBP'}}</span>
+                </div>
+            </div>
+            <div *ngIf="!supplier?.doDelivery" style="padding: 5px 0;">
+                <span class="attribute">Collection Only</span>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #orderLayout>
+    <div class="py-2">
+        <table style="width: 100%;">
+            <tr>
+                <th>Ref#</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Delivery Method</th>
+            </tr>
+            <tr>
+                <td>{{order?.reference}}</td>
+                <td>{{order?.dateCreated | date}}</td>
+                <td>{{order?.status | titlecase}}</td>
+                <td>{{order?.serviceMode | titlecase}}</td>
+            </tr>
+        </table>
+    </div>
+</ng-template>
+<ng-template #itemsLayout>
+    <table class="mt-1 mb-4">
+        <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>price</th>
+        </tr>
+        <tr class="border-bottom py-3" *ngFor="let item of order?.items">
+            <td>{{item.name}}</td>
+            <td class="pl-2">{{item.quantity}}</td>
+            <td>{{item.subTotal | currency: 'GBP'}}</td>
+        </tr>
+    </table>
+</ng-template>
+<ng-template #loadingStripe>
+    Loading.... Please wait!
+</ng-template>

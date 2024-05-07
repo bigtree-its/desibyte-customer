@@ -45,14 +45,15 @@
     display: inline-block;
     flex-grow: 1;
     border: none;
-    padding: 5px 10px;
+    padding: 10px;
     background: transparent;
     color: #212020;
+    border-radius: 25px;
 }
 
 .selected {
-    background: var(--brand-color-dark);
-    color: #333;
+    background: coral;
+    color: #fff;
     font-weight: 900;
 }
 

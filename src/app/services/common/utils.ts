@@ -5,7 +5,7 @@ import { LocalChef } from 'src/app/model/all-foods';
   providedIn: 'root',
 })
 export class Utils {
-  constructor() {}
+  constructor() { }
 
   static days: string[] = [
     'Sunday',
@@ -46,6 +46,9 @@ export class Utils {
     'Dec',
   ];
 
+  static compare(v1: string | number, v2: string | number) {
+    return (v1 < v2 ? -1 : v1 > v2 ? 1 : 0);
+  }
 
   static isJsonString(str) {
     try {
@@ -57,28 +60,28 @@ export class Utils {
   }
 
   public static isCollectionEmpty(data: any[]): Boolean {
-    if ( data === null || data === undefined || data.length === 0){
-        return true;
+    if (data === null || data === undefined || data.length === 0) {
+      return true;
     }
     return false;
   }
 
-  public  static isEmpty(data: string): Boolean {
-    if ( data === null || data === undefined || data.length === 0){
-        return true;
+  public static isEmpty(data: string): Boolean {
+    if (data === null || data === undefined || data.length === 0) {
+      return true;
     }
     return false;
   }
 
   public static isValid(data: any): Boolean {
-    if ( data === null || data === undefined ){
-        return false;
+    if (data === null || data === undefined) {
+      return false;
     }
     return true;
   }
 
   public static isEquals(data1: string, data2: string): Boolean {
-    console.log('Comparing '+ data1+" and "+ data2)
+    console.log('Comparing ' + data1 + " and " + data2)
     return data1 === data2;
   }
 
