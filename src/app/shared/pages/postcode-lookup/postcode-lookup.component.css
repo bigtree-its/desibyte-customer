@@ -1,0 +1,45 @@
+.btn-close {
+    height: 30px;
+    width: 35px;
+    border-radius: 50%;
+    border: 1px solid #f7f7f7;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, .3);
+}
+
+.btn-close:hover {
+    background-color: #d4d3d3;
+    cursor: pointer;
+    box-shadow: none;
+}
+
+.address-list-container {
+    background-color: #f9f9f9;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid #f3f3f3;
+    border-right: 1px solid #f3f3f3;
+    padding: 5px;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    z-index: 99999;
+    width: 100%;
+}
+
+.addresslist-scroller {
+    max-height: 150px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.address-item {
+    padding: 6px;
+}
+
+.address-item:hover {
+    color: var(--blue);
+    cursor: pointer;
+}

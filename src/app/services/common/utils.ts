@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { LocalChef } from 'src/app/model/all-foods';
+import { Address } from 'src/app/model/common';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Utils {
+  
   constructor() { }
 
   static days: string[] = [
@@ -92,37 +94,45 @@ export class Utils {
     return true;
   }
 
+  static addressToString(customerAddress: Address): string {
+    var address: string = '';
+    if (!customerAddress) {
+      return address;
+    }
+    if (customerAddress.addressLine1) {
+      if (address.length > 0) {
+        address = address + ', ';
+      }
+      address = address + customerAddress.addressLine1;
+    }
+    if (customerAddress.addressLine2) {
+      if (address.length > 0) {
+        address = address + ', ';
+      }
+      address = address + customerAddress.addressLine2;
+    }
+    if (customerAddress.city) {
+      if (address.length > 0) {
+        address = address + ', ';
+      }
+      address = address + customerAddress.city;
+    }
+    if (customerAddress.postcode) {
+      if (address.length > 0) {
+        address = address + ', ';
+      }
+      address = address + customerAddress.postcode;
+    }
+    return address;
+  }
 
   static getChefAddress(chef: LocalChef) {
     var address: string = '';
 
-    if (chef === null || chef === undefined) {
+    if (!chef) {
       return address;
     }
-    if (chef.address.addressLine1 !== undefined) {
-      if (address.length > 0) {
-        address = address + ', ';
-      }
-      address = address + chef.address.addressLine1;
-    }
-    if (chef.address.addressLine2 !== undefined) {
-      if (address.length > 0) {
-        address = address + ', ';
-      }
-      address = address + chef.address.addressLine2;
-    }
-    if (chef.address.city !== undefined) {
-      if (address.length > 0) {
-        address = address + ', ';
-      }
-      address = address + chef.address.city;
-    }
-    if (chef.address.postcode !== undefined) {
-      if (address.length > 0) {
-        address = address + ', ';
-      }
-      address = address + chef.address.postcode;
-    }
-    return address;
+    return this.addressToString(chef.address);
+   
   }
 }

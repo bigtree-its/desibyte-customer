@@ -1,0 +1,19 @@
+<div class="flex-column w-100" style="max-width: 426px;position:relative;">
+    <div class="flex-row jcsb w-100 border p-1 br-25 aic">
+        <input *ngIf="!selectedAddress" class="fb-input br-25 bg-white" type="text" name="postcode" id="postcode" tabindex="4" autocomplete="off" value
+            [(ngModel)]="addressLookupPostcode" #ctrl="ngModel" placeholder="Enter your postcode"
+            (keyup.enter)="onEnter()">
+        <span *ngIf="selectedAddress" class="bolder px-2">{{selectedAddress}}</span>
+        <button *ngIf="!showAddressList && !selectedAddress" class="btn-12 py-2 ml-2 br-25" (click)="findAddress()">Find</button>
+        <button type="button" *ngIf="(postcodeAddressList && showAddressList) || selectedAddress" class="btn btn-close " (click)="closeServiceLocations()"></button>
+    </div>
+    <div *ngIf="postcodeAddressList && showAddressList" class="address-list-container">
+        <span class="bolder p-2">{{postcodeAddressList.length}} addresses found</span>
+        <div class="addresslist-scroller">
+            <div class="address-item" *ngFor="let add of postcodeAddressList" (click)="onSelectDeliveryAddress(add)">
+                <span> {{add.StreetAddress }},{{add.Place}}</span>
+            </div>
+        </div>
+        
+    </div>
+</div>

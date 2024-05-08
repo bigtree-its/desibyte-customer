@@ -14,6 +14,7 @@ import { CustomDateParserFormatter } from './services/common/CustomDateParserFor
 import { FoodsModule } from './foods';
 import { AdminModule } from './admin';
 import { DecimalPipe } from '@angular/common';
+import { AdsModule } from './ads/ads.module';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { DecimalPipe } from '@angular/common';
     FoodsModule,
     AdminModule,
     AuthModule,
+    AdsModule,
     HttpClientModule,
     AppRoutingModule,
     NgbModule,

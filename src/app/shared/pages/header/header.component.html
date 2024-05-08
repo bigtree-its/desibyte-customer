@@ -1,16 +1,29 @@
 <div class="container-fluid border-bottom">
     <div class="sm flex-row jcsb aic">
         <fa-icon [icon]="faBars" (click)="toggleSideNav()" class="menu-icon"></fa-icon>
-        <span class="logo-text f-size-xl" [routerLink]="['/']">desio</span>
-        <button type="button" class="btn-13 br-25">Post Ad</button>
+        <div class="flex-row" [routerLink]="['/']">
+            <span class="logo-text fs-2" style="color: red;">d</span>
+            <span class="logo-text fs-2" style="color: rgb(243, 166, 0);">e</span>
+            <span class="logo-text fs-2" style="color: rgb(62, 62, 217);">s</span>
+            <span class="logo-text fs-2" style="color: rgb(3, 183, 123);">i</span>
+            <span class="logo-text fs-2" style="color: rgb(255, 106, 0);">o</span>
+        </div>
+        <button type="button" class="btn-13 br-25">Post an Ad</button>
     </div>
     <div class="lg flex-row jcsb aic">
-        <span class="logo-text f-size-xl" [routerLink]="['/']">desio</span>
+        <div class="flex-row" [routerLink]="['/']">
+            <span class="logo-text fs-2" style="color: red;">d</span>
+            <span class="logo-text fs-2" style="color: rgb(243, 166, 0);">e</span>
+            <span class="logo-text fs-2" style="color: rgb(62, 62, 217);">s</span>
+            <span class="logo-text fs-2" style="color: rgb(3, 183, 123);">i</span>
+            <span class="logo-text fs-2" style="color: rgb(255, 106, 0);">o</span>
+        </div>
         <div class="flex-row gap-1">
 
         </div>
         <div class="flex-row jcc aic gap-1">
             <span *ngIf="!user" class="btn-text mx-1" routerLink="/login">Login</span>
+            <span *ngIf="!user" class="btn-text mx-2" routerLink="/register">Signup</span>
             <div *ngIf="user" class="nav-item mr-2" ngbDropdown>
                 <div class="flex-row gap-1 jcc aic mx-1">
                     <fa-icon class="btn-circle" [icon]="faUser"></fa-icon>
@@ -24,7 +37,7 @@
                     <a ngbDropdownItem routerLink="/my_profile">My Profile</a>
                 </div>
             </div>
-            <button type="button" class="btn-13 br-25">Post an Ad</button>
+            <button type="button" class="btn-13 br-25" routerLink="/ads/post">Post an Ad</button>
         </div>
     </div>
 </div>

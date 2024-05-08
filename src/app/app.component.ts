@@ -13,6 +13,6 @@ export class AppComponent {
       console.log('Production!');
     }
   }
-  title = 'Desiland';
+  title = 'Desio';
 }
 
