@@ -258,6 +258,18 @@
                 <span class="pl-1">{{chef.address.postcode}}</span>
             </div>
         </div>
+        <div class="border flex-column py-2 px-3 br-12 my-2">
+            <b class="fs-6 py-2">Allergen Advice</b>
+            <span class="py-1" *ngFor="let item of chef.allergenAdvice">{{item}}</span>
+        </div>
+        <div class="border flex-column py-2 px-3 br-12 my-2">
+            <b class="fs-6 py-2">Collection Timings</b>
+            <span class="py-1" *ngFor="let item of chef.collectionTimings">{{item}}</span>
+        </div>
+        <div class="border flex-column py-2 px-3 br-12 my-2">
+            <b class="fs-6 py-2">Party Orders</b>
+            <span class="py-1" *ngFor="let item of chef.partyDescription">{{item}}</span>
+        </div>
     </div>
 </ng-template>
 
