@@ -1,4 +1,4 @@
-import { Address, Contact, Customer } from "./common";
+import { Address, Contact, Customer, PostcodeDistrict } from "./common";
 
 export interface OrderSupplier{
     _id: string;
@@ -11,29 +11,32 @@ export interface OrderSupplier{
 }
 
 export class OrderStatus{
-    static readonly created: string = "DRAFT";
-    static readonly accepted: string = "ACCEPTED";
-    static readonly paid: string = "PAID";
-    static readonly processing: string = "PROCESSING";
-    static readonly collected: string = "COLLECTED";
-    static readonly delivered: string = "DELIVERED";
-    static readonly cancelled: string = "CANCELLED";
-    static readonly refunded: string = "REFUNDED";
+    static readonly created: string = "Draft";
+    static readonly accepted: string = "Accepted";
+    static readonly paid: string = "Paid";
+    static readonly processing: string = "Processing";
+    static readonly collected: string = "Collected";
+    static readonly delivered: string = "Delivered";
+    static readonly cancelled: string = "Cancelled";
+    static readonly refunded: string = "Refunded";
 }
 
 export interface LocalChef {
-    _id: string | undefined;
-    coverPhoto: string | undefined;
+    _id: string;
+    coverPhoto: string;
     name: string;
     email: string;
     image: string;
     kitchenName: string;
     days: string[];
     description: string[];
+    partyDescription: string[];
+    allergenAdvice: string[];
+    collectionTimings: string[];
     cuisines: Cuisine[];
     dishes: Dish[];
     slots: Slot[];
-    serviceAreas: LocalArea[];
+    serviceAreas: PostcodeDistrict[];
     categories: string[];
     specials: string[];
     gallery: string[];
@@ -85,18 +88,6 @@ export class Collection {
     chefId: string;
     slug: String;
     image: String;
-}
-
-export interface LocalAreaSearchResponse {
-    localAreas: LocalArea[];
-}
-
-export interface LocalArea {
-    _id: string;
-    name: string;
-    city: string;
-    slug: string;
-    country: string;
 }
 
 export interface Extra {
@@ -203,7 +194,7 @@ export interface SupplierOrder{
     pickupTime: Date;
     deliveryTime: Date;
     customer: Customer;
-    chef: Chef;
+    chef: LocalChef;
     review: Review;
     notes: string;
 }
@@ -311,37 +302,6 @@ export interface Orders {
 export interface SupplierOrders{
     orders: SupplierOrder[]
 }
-
-export interface Chef {
-    _id: string;
-    coverPhoto: string;
-    name: string;
-    email: string;
-    displayName: string;
-    days: string[];
-    description: string[];
-    cuisines: Cuisine[];
-    slots: string[];
-    serviceAreas: LocalArea[];
-    categories: string[];
-    specials: string[];
-    gallery: string[];
-    rating: number;
-    reviews: number;
-    address: Address;
-    contact: Contact;
-    active: boolean;
-    minimumOrder: number;
-    packagingFee: number;
-    delivery: boolean;
-    partyOrders: boolean;
-    freeDeliveryOver: number;
-    deliveryMinimum: number;
-    deliveryFee: number;
-    deliveryDistance: number;
-    minimumPartyOrder: number;
-}
-
 
 export interface FoodOrderItem {
     _tempId: number;

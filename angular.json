@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "desify-customer": {
+        "Desio-customer": {
             "projectType": "application",
             "schematics": {},
             "root": "",
@@ -13,7 +13,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/desify-customer",
+                        "outputPath": "dist/Desio-customer",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": [
@@ -28,7 +28,10 @@
                             "node_modules/bootstrap/dist/css/bootstrap.min.css",
                             "src/styles.css"
                         ],
-                        "scripts": []
+                        "scripts": [],
+                        "allowedCommonJsDependencies": [
+                            "lodash","crypto-js"
+                         ]
                     },
                     "configurations": {
                         "production": {
@@ -68,13 +71,13 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "browserTarget": "desify-customer:build:production"
+                            "browserTarget": "Desio-customer:build:production"
                         },
                         "development": {
-                            "browserTarget": "desify-customer:build:development"
+                            "browserTarget": "Desio-customer:build:development"
                         },
                         "local": {
-                            "browserTarget": "desify-customer:build:local"
+                            "browserTarget": "Desio-customer:build:local"
                         }
                     },
                     "defaultConfiguration": "local"
@@ -82,7 +85,7 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "desify-customer:build"
+                        "browserTarget": "Desio-customer:build"
                     }
                 },
                 "test": {

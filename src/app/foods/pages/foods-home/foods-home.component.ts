@@ -28,7 +28,7 @@ export class FoodsHomeComponent implements OnInit{
   rapidApiService = inject(RapidApiService);
 
 
-  showPostcodeDistricts: boolean;
+  showAddressList: boolean;
   postcodeDistrictsSearchText: any;
   selectedPostcodeDistrict: PostcodeDistrict;
 
@@ -130,9 +130,9 @@ export class FoodsHomeComponent implements OnInit{
   }
 
   closeServiceLocations() {
-    this.showPostcodeDistricts = false;
-    this.postcodeDistrictsSearchText = undefined;
-    this.postcodeDistricts = [];
+    this.showAddressList = false;
+    this.addressLookupPostcode = undefined;
+    this.postcodeAddressList = [];
   }
 
   findAddress() {
@@ -156,6 +156,7 @@ export class FoodsHomeComponent implements OnInit{
         (data: RapidApiByPostcodeResponse) => {
           this.postcodeAddressList = data.Summaries;
           this.addressSelected = false;
+          this.showAddressList = true;
           console.log('Address Lookup response ' +JSON.stringify(this.postcodeAddressList));
         },
         (error) => {

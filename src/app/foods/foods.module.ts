@@ -13,7 +13,7 @@ import { FoodOrderConfirmationComponent } from './pages/food-order-confirmation/
 import { SharedModule } from '../shared';
 import { DateCalcPipe } from '../pipes/date-calc.pipe';
 import { DateAgoPipe } from '../pipes/date-ago.pipe';
-import { NgbDatepickerModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerModule, NgbDropdownModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { FOrderItemComponent } from './pages/f-order-item/f-order-item.component';
 
 const routes: Routes = [
@@ -46,6 +46,7 @@ const routes: Routes = [
     NgbDatepickerModule,
     NgbTimepickerModule,
     FontAwesomeModule,
+    NgbDropdownModule,
     RouterModule.forChild(routes)
   ]
 })

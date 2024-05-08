@@ -15,10 +15,6 @@ import { Constants } from '../common/constants';
 })
 export class FoodOrderService {
  
-  private _loading$ = new BehaviorSubject<boolean>(true);
-  private _search$ = new Subject<void>();
-  
-
   ipAddress: any;
   supplier: LocalChef;
   foodOrderKey: string;

@@ -1,4 +1,4 @@
-<div class="page">
+<div class="container-fluid">
 
     <div class="full-screen mb-2 px-3">
         <div class="flex-row-scrollable py-3">
@@ -31,7 +31,7 @@
     <div class="full-screen mb-2 px-3">
         <div class="flex-row-space-between mb-1 md bg-light p-2 mx-1" *ngIf="serviceLocation != null && serviceLocation !== undefined">
             <span>{{serviceLocation.name}}, {{serviceLocation.city}}</span>
-            <span class="change-area" routerLink="/">Change</span>
+            <span class="change-area" routerLink="/f/home">Change</span>
         </div>
     </div>
 
@@ -47,13 +47,13 @@
         </div>
     </div>
  
-    <div class="footer-div ">
-        <div class="footer-container f-size-xs ">
+    <div class="footer">
+        <div class="flex-column">
             <span>For any support or help you can contact us</span>
-            <span>contact.desify&#64;gmail.com</span>
+            <span>contact.desio&#64;gmail.com</span>
             <div class="copyright-div ">
                 <fa-icon [icon]="faCopyright "></fa-icon>
-                <span>2024 <span class="logo-text">desify</span></span>
+                <span>2024 <span class="logo-text">Desio</span></span>
             </div>
         </div>
     </div>

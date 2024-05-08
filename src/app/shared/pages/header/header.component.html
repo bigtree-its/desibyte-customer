@@ -9,8 +9,22 @@
         <div class="flex-row gap-1">
 
         </div>
-        <div class="flex-row gap-1">
-            <button type="button" class="btn-13 br-25">Post Ad</button>
+        <div class="flex-row jcc aic gap-1">
+            <span *ngIf="!user" class="btn-text mx-1" routerLink="/login">Login</span>
+            <div *ngIf="user" class="nav-item mr-2" ngbDropdown>
+                <div class="flex-row gap-1 jcc aic mx-1">
+                    <fa-icon class="btn-circle" [icon]="faUser"></fa-icon>
+                    <span class="bolder">{{user.firstName.trim().substring(0,10)}}</span>
+                    <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdown1" role="button"></a>
+                </div>
+                <div ngbDropdownMenu aria-labelledby="navbarDropdown1" class="dropdown-menu">
+                    <a ngbDropdownItem (click)="logout()">Logout</a>
+                    <a ngbDropdownItem routerLink="/my_orders">My Orders</a>
+                    <a ngbDropdownItem routerLink="/contact_us">Contact Us</a>
+                    <a ngbDropdownItem routerLink="/my_profile">My Profile</a>
+                </div>
+            </div>
+            <button type="button" class="btn-13 br-25">Post an Ad</button>
         </div>
     </div>
 </div>

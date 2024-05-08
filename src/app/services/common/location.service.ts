@@ -1,17 +1,26 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ServiceLocator } from './service.locator';
-import { PostcodeDistrict, ServiceLocation } from 'src/app/model/common';
+import { Address, PostcodeDistrict, ServiceLocation } from 'src/app/model/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocationService {
 
-  constructor( private http: HttpClient,
+  private customerAddress?: Address;
+  public customerAddress$ = new BehaviorSubject(this.customerAddress);
+
+  constructor(private http: HttpClient,
     private serviceLocator: ServiceLocator
-    ) { }
+  ) {
+  }
+
+  setCustomerAddress(address: Address) {
+    this.customerAddress = address;
+    this.customerAddress$.next(this.customerAddress);
+  }
 
   fetchLocalAreas(searchText: string): Observable<ServiceLocation[]> {
     var params = new HttpParams();
@@ -22,7 +31,7 @@ export class LocationService {
     return this.http.get<ServiceLocation[]>(this.serviceLocator.ServiceAreasUrl, { params });
   }
 
-  getLocation(slug: string): Observable<ServiceLocation>{
+  getLocation(slug: string): Observable<ServiceLocation> {
     var params = new HttpParams();
     if (slug !== undefined && slug !== null) {
       params = params.set('slug', slug);
@@ -43,7 +52,7 @@ export class LocationService {
   }
 
   fetchOne(_id: string): Observable<PostcodeDistrict> {
-    return this.http.get<PostcodeDistrict>(this.serviceLocator.PostcodeDistrictsUrl+"/"+ _id);
+    return this.http.get<PostcodeDistrict>(this.serviceLocator.PostcodeDistrictsUrl + "/" + _id);
   }
 
 }

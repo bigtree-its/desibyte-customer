@@ -12,10 +12,22 @@ import { OrderByDatePipe } from '../pipes/order-by-date.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const routes: Routes = [
-  { path: 'my_orders', component: MyOrdersComponent },
-  { path: 'my_orders/manage', component: ManageOrderComponent },
-  { path: 'my_profile', component: MyProfileComponent },
-  { path: 'contact_us', component: BecomeAPartnerComponent }
+  {
+    path: 'my_orders', component: MyOrdersComponent, loadChildren: () =>
+      import('./admin.module').then((m) => m.AdminModule),
+  },
+  {
+    path: 'my_orders/manage', component: ManageOrderComponent, loadChildren: () =>
+      import('./admin.module').then((m) => m.AdminModule),
+  },
+  {
+    path: 'my_profile', component: MyProfileComponent, loadChildren: () =>
+      import('./admin.module').then((m) => m.AdminModule),
+  },
+  {
+    path: 'contact_us', component: BecomeAPartnerComponent, loadChildren: () =>
+      import('./admin.module').then((m) => m.AdminModule),
+  }
 ]
 
 

@@ -118,9 +118,9 @@
     </div>
 </ng-template>
 <ng-template #deliveryOption>
-    <div class="flex-column p-3 mb-2">
+    <div class="flex-column p-3 mb-2 bg-light">
 
-        <div *ngIf="chef.doDelivery" class="d-flex bg-light flex-grow br-25 p-0_5">
+        <div *ngIf="chef.doDelivery" class="d-flex flex-grow br-25 p-0_5 bolder inset-box-shadow" style="background-color: #ddd;justify-self: center;padding: clamp(0.13rem, 0.09vw + 0.1rem, 0.25rem);">
             <button class="service-mode" (click)="selectPickup()" [class.selected]="serviceMode==='COLLECTION'"><fa-icon [icon]="faPersonBiking"
                     class="mr-1"></fa-icon>Collection</button>
             <button class="service-mode" (click)="selectDelivery()" [class.selected]="serviceMode==='DELIVERY'" [disabled]="!chef.doDelivery"><fa-icon [icon]="faBox" class="mr-1"></fa-icon>Delivery</button>

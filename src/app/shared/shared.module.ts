@@ -10,6 +10,7 @@ import { ReviewItemComponent } from './pages/review-item/review-item.component';
 import { DateAgoPipe } from '../pipes/date-ago.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaymentFormComponent } from './pages/payment-form/payment-form.component';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 const routes: Routes = [
   { path: '', component: HomeComponent }
@@ -30,6 +31,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     FormsModule,
     FontAwesomeModule,
+    NgbDropdownModule,
     RouterModule.forChild(routes)
   ],
   exports: [

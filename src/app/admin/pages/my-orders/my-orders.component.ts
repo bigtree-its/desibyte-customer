@@ -106,7 +106,8 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
       const term = text.toLowerCase();
       return (
         order.reference.toLowerCase().includes(term) ||
-        pipe.transform(order.status).includes(term)
+        pipe.transform(order.status).includes(term) || 
+        pipe.transform(order.total).includes(term) 
       );
     });
   }
