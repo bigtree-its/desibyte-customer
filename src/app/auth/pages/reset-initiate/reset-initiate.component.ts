@@ -45,7 +45,7 @@ export class ResetInitiateComponent implements OnInit, OnDestroy{
         this.onSubmission = true;
       },
       error: (err) => {
-        console.error('Erros from reset initiate.')
+        console.error('Errors from reset initiate.')
         this.errorMessage = err.error.detail;
       },
     });

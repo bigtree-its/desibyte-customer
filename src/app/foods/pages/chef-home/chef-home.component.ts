@@ -58,7 +58,7 @@ export class ChefHomeComponent implements AfterViewInit, OnDestroy {
   faAngleUp = faAngleUp;
   faBag = faBucket;
 
-  chef: LocalChef | undefined;
+  chef: LocalChef;
   display_picture: any;
   gallery: string[] = [];
 

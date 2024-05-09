@@ -47,6 +47,9 @@ export const environment = {
   UpdatePersonalDetails:'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/users/update_personal',
  
 
+  //Ads
+  AdPropertyUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/properties',
+
   /** RapidAPI  */
   X_RapidAPI_Url:
     'https://samsinfield-postcodes-4-u-uk-address-finder.p.rapidapi.com/ByPostcode/json',

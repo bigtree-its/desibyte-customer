@@ -1,8 +1,10 @@
-<div class="container">
+<div class="container mb-5">
     <div class="flex-column">
         <span class="bolder fs-1 mt-2 mb-4">Post an ad</span>
+
+        <span class="bolder py-1">Tell us what you are posting</span>
         <select class="form-select mb-3" (change)="onChangeCategory($event)">
-            <option default>Tell us what you are posting</option>
+            <option default>Please select</option>
             <option value="Car">Car</option>
             <option value="Property">Property</option>
             <option value="Toys">Toys</option>
@@ -16,63 +18,90 @@
             <span class="bolder py-1">Property Postcode</span>
             <app-postcode-lookup (addressEmitter)="onSelectAddress($event)"></app-postcode-lookup>
         </div>
-        <div class="flex-column" *ngIf="category==='Property'">
-            <span class="bolder py-1">Property Type</span>
-            <select class="form-select mb-3">
-                <option default>Please select</option>
-                <option value="Flat">Flat</option>
-                <option value="Detached House">Detached House</option>
-                <option value="Garage">Garage</option>
-                <option value="Commercial">Commercial</option>
-            </select>
+
+        <div class="flex-row aic my-2 gap-1" *ngIf="category==='Property'">
+            <div class="flex-column">
+                <span class="bolder py-1">Property Type</span>
+                <select class="form-select mb-3" (change)="onChangePropertyType($event)">
+                    <option default>Please select</option>
+                    <option value="Flat">Flat</option>
+                    <option value="Detached House">Detached House</option>
+                    <option value="Garage">Garage</option>
+                    <option value="Commercial">Commercial</option>
+                </select>
+            </div>
+            <div class="flex-column ml-3">
+                <span class="bolder py-1">Property Tenure</span>
+                <select class="form-select mb-3" (change)="onChangePropertyTenure($event)">
+                    <option default>Please select</option>
+                    <option value="Freehold">Freehold</option>
+                    <option value="Lease">Lease</option>
+                </select>
+            </div>
         </div>
-        <div class="flex-column" *ngIf="category==='Property'">
-            <span class="bolder py-1">Bedrooms</span>
-            <select class="form-select mb-3">
-                <option default>Please select</option>
-                <option value="Studio">Studio</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-            </select>
+
+        <div class="flex-row aic my-2 gap-1" *ngIf="category==='Property'">
+            <div class="flex-column">
+                <span class="bolder py-1">Bedrooms</span>
+                <select class="form-select mb-3" (change)="onChangeBedrooms($event)">
+                    <option default>Please select</option>
+                    <option value="0">Studio</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
+            <div class="flex-column ml-3">
+                <span class="bolder py-1">Bathrooms</span>
+                <select class="form-select mb-3" (change)="onChangeBathrooms($event)">
+                    <option default>Please select</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+            </div>
         </div>
+
         <div class="flex-column" *ngIf="category==='Property'">
             <span class="bolder py-1">Whats your intend?</span>
             <div class="radio-buttons-container">
                 <div class="radio-button">
-                    <input name="radio-group" id="Rent" value="Rent" class="radio-button__input" type="radio"
-                        (change)="handlePropertyIntend($event)">
+                    <input name="radio-group" id="Rent" value="Rent" class="radio-button__input" type="radio" (change)="handlePropertyIntend($event)">
                     <label for="Rent" class="radio-button__label">
                         <span class="radio-button__custom"></span>Rent
                     </label>
                 </div>
                 <div class="radio-button">
-                    <input name="radio-group" id="Sale" value="Sale" class="radio-button__input" type="radio"
-                        (change)="handlePropertyIntend($event)">
+                    <input name="radio-group" id="Sale" value="Sale" class="radio-button__input" type="radio" (change)="handlePropertyIntend($event)">
                     <label for="Sale" class="radio-button__label">
                         <span class="radio-button__custom"></span>Sale
                     </label>
                 </div>
                 <div class="radio-button">
-                    <input name="radio-group" id="Share" value="Share" class="radio-button__input" type="radio"
-                        (change)="handlePropertyIntend($event)">
+                    <input name="radio-group" id="Share" value="Share" class="radio-button__input" type="radio" (change)="handlePropertyIntend($event)">
                     <label for="Share" class="radio-button__label">
-                        <span class="radio-button__custom"></span>Share Room(s) in a property
+                        <span class="radio-button__custom"></span>Share Room(s)
+                        in a property
                     </label>
                 </div>
             </div>
         </div>
-        <div class="flex-row jcsb aic gap-1 my-2"
-            *ngIf="category==='Property' && (propertyIntention === 'Share' || propertyIntention === 'Rent') ">
+        <div class="flex-row aic gap-1 my-2" *ngIf="category==='Property' && (consumptionType === 'Share' || consumptionType === 'Rent') ">
             <div class="flex-column">
                 <span class="bolder py-1">Rental Amount</span>
                 <div class="input-group">
                     <div class="bg-light border jcc aic d-flex p-2 br-tl-7 br-bl-7">£</div>
-                    <input type="number" min="0.00" step="1" value="1.00" id="exampleInputAmount" class="form-control"
-                        placeholder="Rental Amount">
+                    <input type="number" [(ngModel)]="price" #ctrl="ngModel" min="0.00" step="1" value="1.00" id="rentalAmount" class="form-control" placeholder="Rental Amount">
                 </div>
             </div>
 
@@ -80,15 +109,13 @@
                 <span class="bolder py-1">Rental Period</span>
                 <div class="radio-buttons-container">
                     <div class="radio-button">
-                        <input name="rental-period" id="Monthly" value="Monthly" class="radio-button__input"
-                            type="radio" (change)="handleRentalPeriod($event)">
+                        <input name="rental-period" id="Monthly" value="Monthly" class="radio-button__input" type="radio" (change)="handleRentalPeriod($event)">
                         <label for="Monthly" class="radio-button__label">
                             <span class="radio-button__custom"></span>Monthly
                         </label>
                     </div>
                     <div class="radio-button">
-                        <input name="rental-period" id="Weekly" value="Weekly" class="radio-button__input" type="radio"
-                            (change)="handleRentalPeriod($event)">
+                        <input name="rental-period" id="Weekly" value="Weekly" class="radio-button__input" type="radio" (change)="handleRentalPeriod($event)">
                         <label for="Weekly" class="radio-button__label">
                             <span class="radio-button__custom"></span>Weekly
                         </label>
@@ -96,31 +123,40 @@
                 </div>
             </div>
         </div>
+        <div class="flex-column my-2" *ngIf="category==='Property' && consumptionType === 'Sale' ">
+            <span class="bolder py-1">Offers Over</span>
+            <div class="input-group">
+                <div class="bg-light border jcc aic d-flex p-2 br-tl-7 br-bl-7">£</div>
+                <input [(ngModel)]="price" #ctrl="ngModel" type="number" min="0.00" step="1" value="1.00" id="propertySaleOffersOver" class="form-control" placeholder="Offers Over">
+            </div>
+        </div>
         <div class="flex-column my-2" *ngIf="category==='Property'">
             <span class="bolder">Date available</span>
             <div class="input-group">
-                <input class="form-control" [minDate]="minDate" placeholder="dd-mm-yyyy" name="dp"
-                    [(ngModel)]="dateAvailable" ngbDatepicker #d="ngbDatepicker" />
-                <fa-icon [icon]="faCalendar" (click)="d.toggle()"
-                    class="border br-tr-7 br-br-7 p-2 clickable-icon"></fa-icon>
+                <input type="text" class="form-control" [minDate]="minDate" placeholder="dd-mm-yyyy" name="dp" [(ngModel)]="dateAvailable" ngbDatepicker #d="ngbDatepicker" />
+                <fa-icon [icon]="faCalendar" (click)="d.toggle()" class="border br-tr-7 br-br-7 p-2 clickable-icon"></fa-icon>
             </div>
         </div>
 
-       
-
-        
-
         <div class="input-div">
-            <input class="_381fS" type="text" name="title" id="title" tabindex="1" autocomplete="off" value=""
-                [(ngModel)]="title" #ctrl="ngModel">
+            <input class="_381fS" type="text" name="title" id="title" tabindex="1" autocomplete="off" value [(ngModel)]="title" #ctrl="ngModel">
             <div class="_2EeI1 _26LFr"></div>
-            <label class="_1Cvlf _2tL9P" for="title">Give a title to your ad</label>
+            <label class="_1Cvlf _2tL9P" for="title">Give a title to your
+                ad</label>
+        </div>
+        <div class="flex-column">
+            <span class="bolder py-1">Description</span>
+            <textarea class="border br-7 p-2" name="description" id="description" value [(ngModel)]="description" tabindex="3" #ctrl="ngModel" style="height: 100px;" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
         </div>
         <div class="input-div">
-            <textarea rows="5" class="_381tA" name="description" id="description" value [(ngModel)]="description"
-                tabindex="3" #ctrl="ngModel" style="height: 100px;"></textarea>
+            <input class="_381fS" type="text" name="image" id="image" tabindex="1" autocomplete="off" value [(ngModel)]="image" #ctrl="ngModel">
             <div class="_2EeI1 _26LFr"></div>
-            <label class="_1CvtA _2tL9P" for="description">Description</label>
+            <label class="_1Cvlf _2tL9P" for="title">Image Url</label>
+        </div>
+        <div class="flex-column">
+            <span class="bolder py-1">Gallery (<small>Urls comma separated</small>)</span>
+            <textarea class="border br-7 p-2" name="gallery" id="gallery" value [(ngModel)]="gallery" tabindex="3" #ctrl="ngModel" style="height: 100px;" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
         </div>
     </div>
+    <button class="btn-11 my-2" (click)="postAd()">Post</button>
 </div>

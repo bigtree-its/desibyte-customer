@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { LocalChef } from 'src/app/model/all-foods';
 import { Address } from 'src/app/model/common';
 
@@ -6,6 +7,7 @@ import { Address } from 'src/app/model/common';
   providedIn: 'root',
 })
 export class Utils {
+  
   
   constructor() { }
 
@@ -81,6 +83,16 @@ export class Utils {
     }
     return true;
   }
+
+  static getJsDate(dateAvailable: NgbDateStruct) {
+    return new Date(dateAvailable.year, dateAvailable.month - 1, dateAvailable.day);
+  }
+
+  static getDateString(date: Date): string {
+    return date.getFullYear+"-"+date.getMonth+"-"+date.getDay;
+  }
+
+  
 
   public static isEquals(data1: string, data2: string): Boolean {
     console.log('Comparing ' + data1 + " and " + data2)

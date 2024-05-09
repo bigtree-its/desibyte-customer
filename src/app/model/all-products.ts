@@ -1,3 +1,5 @@
+import { NameValue } from "./common";
+
 export interface Group {
     _id: string;
     name: string;
@@ -6,11 +8,7 @@ export interface Group {
     active: Boolean;
   }
   
-  export interface NameValue {
-    name: string;
-    value: string;
-  }
-  
+ 
   export interface ProductInfo{
     title: string,
     details: string[],

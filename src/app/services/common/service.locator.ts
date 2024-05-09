@@ -40,6 +40,9 @@ export class ServiceLocator {
   SupplierUrl: string;
   PartyBundlesUrl: string;
   PostcodeDistrictsUrl: string;
+  
+  //Ads
+  AdPropertyUrl: string;
 
   constructor() {
     this.SupplierUrl = environment.SupplierUrl;
@@ -74,6 +77,9 @@ export class ServiceLocator {
     this.CreateOrUpdateCustomerPreferencesUrl = environment.CreateOrUpdateCustomerPreferencesUrl;
     this.CreateContactsUrl = environment.CreateContactsUrl;
     this.UpdatePersonalDetails = environment.UpdatePersonalDetails;
+
+
+    this.AdPropertyUrl = environment.AdPropertyUrl;
     
   }
 }

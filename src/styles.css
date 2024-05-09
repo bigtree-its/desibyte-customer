@@ -5,7 +5,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Monofett&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Train+One&display=swap');
-
 :root {
     --blue: #007bff;
     --indigo: #6610f2;
@@ -381,7 +380,6 @@ body {
     font-weight: 600;
 }
 
-
 .menu {
     color: #868080;
 }
@@ -406,6 +404,7 @@ body {
 .btn-11 {
     color: #081C15;
     padding: 5px 20px;
+    border: 1px solid #33e05c;
     background-color: #80ED99;
 }
 
@@ -414,7 +413,7 @@ body {
 }
 
 .btn-11::after {
-    content: '⟶';
+    /* content: '⟶'; */
 }
 
 .btn-12 {
@@ -439,6 +438,7 @@ body {
     color: #090909;
     transition: all 0.3s;
     border: none;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
 }
 
 .btn-13:hover {
@@ -585,7 +585,8 @@ body {
 .btn-lift-red:focus-visible {
     outline-offset: 1px;
 }
-.bg-light{
+
+.bg-light {
     background-color: #f9f9f9;
 }
 
@@ -672,8 +673,6 @@ body {
     justify-content: center;
     gap: 15px;
 }
-
-
 
 .chef-home-banner {
     background-image: linear-gradient(to right, #eef1e7, #e0f0bc, #cfef8f, #bded5f, #a8eb12);
@@ -975,18 +974,23 @@ select {
 .br-bl-7 {
     border-bottom-left-radius: 7px;
 }
-.br-tl-25{
+
+.br-tl-25 {
     border-top-left-radius: 25px;
 }
-.br-tr-25{
+
+.br-tr-25 {
     border-top-right-radius: 25px;
 }
-.br-bl-25{
+
+.br-bl-25 {
     border-bottom-left-radius: 25px;
 }
-.br-br-25{
+
+.br-br-25 {
     border-bottom-right-radius: 25px;
 }
+
 .hp-search-container {
     min-width: 350px;
     max-width: 820px;
@@ -1324,14 +1328,15 @@ select {
     white-space: nowrap;
     width: 24px;
 }
-.btn-text{
+
+.btn-text {
     color: #4a5652;
     font-weight: 900;
 }
-.btn-text:hover{
+
+.btn-text:hover {
     cursor: pointer;
     color: #000;
-    
 }
 
 .btn-trash {
@@ -1379,8 +1384,6 @@ select {
     cursor: pointer;
     opacity: 1;
 }
-
-
 
 .fb-input {
     width: 100%;
@@ -1476,6 +1479,14 @@ select {
     color: var(--white);
 }
 
+.card-img {
+    transition: 0.5s ease-in-out;
+}
+
+.card-img:hover {
+    transform: scale(1.08);
+}
+
 .chef-card {
     cursor: pointer;
 }
@@ -1493,7 +1504,6 @@ select {
     border: 1px solid var(--brand-color);
     background-color: var(--brand-color);
 }
-
 
 .link-button {
     color: #222;
@@ -2190,11 +2200,9 @@ select {
     0% {
         opacity: 0;
     }
-
     49% {
         opacity: 0;
     }
-
     50% {
         opacity: 1;
     }
@@ -2208,14 +2216,10 @@ select {
     .lg {
         display: flex;
     }
-
     .sm {
         display: none;
     }
-
     .md {
         display: none;
     }
-
-
 }
