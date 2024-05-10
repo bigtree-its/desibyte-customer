@@ -1,48 +1,89 @@
 <div class="container-fluid">
-  <div *ngIf="error" class="error-page alert alert-warning p-5 m-5">
-    <span>{{errorMessage}}</span>
-  </div>
-  <div class="flex-row py-2 aic px-3">
-    <fa-icon [icon]="faArrowLeft" (click)="goBack()" class="btn-circle mr-3"></fa-icon>
-    <span class="big-text fs-3 mr-2">{{property?.title}}</span>
-  </div>
-  <div class="lg row">
-    <div class="col-md-8 border flex-column" style="min-height: 100vh;overflow-y: auto; margin-bottom: 100px;">
-      <div class="flex-column jcc aic p-3">
-        <ngb-carousel style="width: 768px; height: 700px;">
-          <ng-template ngbSlide *ngFor="let gallery of property?.gallery">
-            <div class="w-100">
-              <img [src]="gallery" />
-            </div>
-          </ng-template>
+    <div *ngIf="error" class="error-page alert alert-warning p-5 m-5">
+        <span>{{errorMessage}}</span>
+    </div>
+    <div class="flex-row py-2 aic px-3">
+        <fa-icon [icon]="faArrowLeft" (click)="goBack()" class="btn-circle mr-3"></fa-icon>
+        <span class="bolder fs-3">{{property?.title}}</span>
+    </div>
+    <div class="sm flex-column">
+        <ngb-carousel style="width: 100%; height: 320px;">
+            <ng-template ngbSlide *ngFor="let gallery of property?.gallery">
+                <img [src]="gallery" style="object-fit: contain;height: 100%; width: 100%;" />
+            </ng-template>
         </ngb-carousel>
-      </div>
-      <div>
-        <div class="flex-row w-100 jcsb aic">
-          <span class="fs-6 bold">{{property.address?.addressLine2}}, {{property.address?.city}}</span>
-          <span class="fs-6 bold">{{property.price | currency:'GBP'}}</span>
+        <div class="flex-row jcsb aic">
+            <span class="fs-6 bolder my-1">{{property.price | currency:'GBP'}}</span>
+            <span><b>Posted</b> {{property.datePosted | dateAgo}}</span>
         </div>
-        <div class="flex-row w-100 jcsb aic">
-          <span><b>Posted</b> {{property.datePosted | dateAgo}}</span>
-          <span><b>Available from </b>{{property.dateAvailable | date: 'dd MMM'}}</span>
-        </div>
+        <span class="fs-6 bold">{{property.address?.addressLine2}},
+      {{property.address?.city}}</span>
+        <ng-container [ngTemplateOutlet]="infoSection"></ng-container>
         <div class="py-2 flex-column">
-          <span class="bolder py-2">Description</span>
-          <span class="py-1" *ngFor="let item of property.description">{{item}}</span>
+            <div class="flex-row gap-1 aic">
+                <span class="bolder py-2">Ad Posted By</span>
+                <span class="py-1">{{property.adOwner.name}}</span>
+            </div>
+            <button class="btn-11 bold br-7">Contact</button>
         </div>
-        <div class="py-2 flex-column">
-          <span class="bolder py-2">Key Features</span>
-          <span class="py-1" *ngFor="let item of property.keyFeatures">{{item}}</span>
+    </div>
+    <div class="lg row">
+        <div class="col-md-8 flex-column" style="min-height: 100vh;overflow-y: auto; margin-bottom: 100px;">
+            <div class="flex-column jcc aic p-3">
+                <ngb-carousel style="width: 768px; height: 700px;">
+                    <ng-template ngbSlide *ngFor="let gallery of property?.gallery">
+                        <div class="w-100">
+                            <img [src]="gallery" />
+                        </div>
+                    </ng-template>
+                </ngb-carousel>
+            </div>
+            <div class="flex-row w-100 jcsb aic">
+                <span class="fs-6 bold">{{property.address?.addressLine2}},
+          {{property.address?.city}}</span>
+                <span class="fs-6 bold">{{property.price | currency:'GBP'}}</span>
+            </div>
+            <div class="flex-row w-100 jcsb aic">
+                <span><b>Posted</b> {{property.datePosted | dateAgo}}</span>
+                <span><b>Available from </b>{{property.dateAvailable | date:
+          'dd MMM'}}</span>
+            </div>
+            <ng-container [ngTemplateOutlet]="infoSection"></ng-container>
         </div>
-      </div>
+        <div class="col-md-4 border" style="min-height: 100vh;overflow-y: auto; margin-bottom: 100px;">
+            <div class="py-2 flex-column flex-start">
+                <span class="bolder py-2">Ad Posted By</span>
+                <span class="py-1">{{property.adOwner.name}}</span>
+                <button class="btn-11 bold br-7">Contact</button>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4 border" style="min-height: 100vh;overflow-y: auto; margin-bottom: 100px;">
-      <div class="py-2 flex-column flex-start">
-        <span class="bolder py-2">Ad Posted By</span>
-        <span class="py-1">{{property.adOwner.name}}</span>
-        <button class="btn-11 bold br-7">Contact</button>
-      </div>
-
-    </div>
-  </div>
 </div>
+
+<ng-template #infoSection>
+    <div class="flex-column">
+        <div class="flex-row aic w-100 my-2">
+            <div class="flex-row mr-1 aic gap-1 border br-7 p-2">
+                <fa-icon [icon]="faHouse"></fa-icon>
+                <span class="bolder fs-7">{{property.type}}</span>
+            </div>
+            <div class="flex-row mr-1 aic gap-1  border br-7 p-2">
+                <fa-icon [icon]="faBed"></fa-icon>
+                <span>{{property.bedrooms}}</span>
+            </div>
+            <div class="flex-row mr-1 aic gap-1 border br-7 p-2">
+                <fa-icon [icon]="faBath"></fa-icon>
+                <span>{{property.bathrooms}}</span>
+            </div>
+        </div>
+        <div class="py-2 flex-column">
+            <span class="bolder py-2">Description</span>
+            <span class="py-1" *ngFor="let item of property.description">{{item}}</span>
+        </div>
+        <div class="py-2 flex-column">
+            <span class="bolder py-2">Key Features</span>
+            <span class="py-1" *ngFor="let item of property.keyFeatures">{{item}}</span>
+        </div>
+    </div>
+
+</ng-template>

@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { faArrowLeft, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faBath, faBed, faHouse, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { first } from 'rxjs/operators';
 import { PropertyAd } from 'src/app/model/all-ads';
 import { LoginResponse, User } from 'src/app/model/all-auth';
@@ -49,6 +49,9 @@ export class PropertyDetailComponent implements OnInit {
   faPlus = faPlus;
   faMinus = faMinus;
   faArrowLeft = faArrowLeft;
+  faHouse= faHouse;
+  faBed= faBed;
+  faBath= faBath;
 
   constructor(
     private activatedRoute: ActivatedRoute,
