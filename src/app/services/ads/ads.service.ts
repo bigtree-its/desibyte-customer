@@ -10,6 +10,7 @@ import { Utils } from '../common/utils';
 })
 export class AdsService {
  
+ 
   private httpClient = inject(HttpClient);
   private serviceLocator = inject(ServiceLocator);
 
@@ -49,6 +50,14 @@ export class AdsService {
     }
     if (query.lastMonth) {
       params = params.set('lastMonth',  true);
+    }
+    return this.httpClient.get<PropertyAd[]>(this.serviceLocator.AdPropertyUrl, { params });
+  }
+
+  getProperty(reference: string): Observable<PropertyAd[]>{
+    var params = new HttpParams();
+    if (reference) {
+      params = params.set('reference',  reference);
     }
     return this.httpClient.get<PropertyAd[]>(this.serviceLocator.AdPropertyUrl, { params });
   }

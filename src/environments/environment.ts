@@ -9,20 +9,20 @@ export const environment = {
   CURRENCY_SYMBOL: '£',
 
   // Ads
-  CollectionsUrl: "https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/collections",
-  ChefsUrl: "https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/chefs",
-  CuisinesUrl: "https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/cuisines",
-  DishesUrl: "https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/dishes",
-  ReviewsUrl: "https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/reviews",
-  ServiceAreasUrl: "https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/serviceareas",
-  MenusUrl: "https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/menus",
-  CalendersUrl: "https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/calendars",
-  GroupsUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/groups',
-  ProductsUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/products',
-  SupplierUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/suppliers',
-  FeedbacksUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/feedbacks',
-  PartyBundlesUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/party-bundles',
-  PostcodeDistrictsUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/postcode-districts',
+  CollectionsUrl: "https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/collections",
+  ChefsUrl: "https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/chefs",
+  CuisinesUrl: "https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/cuisines",
+  DishesUrl: "https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/dishes",
+  ReviewsUrl: "https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/reviews",
+  ServiceAreasUrl: "https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/serviceareas",
+  MenusUrl: "https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/menus",
+  CalendersUrl: "https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/calendars",
+  GroupsUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/groups',
+  ProductsUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/products',
+  SupplierUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/suppliers',
+  FeedbacksUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/feedbacks',
+  PartyBundlesUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/party-bundles',
+  PostcodeDistrictsUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/postcode-districts',
 
 // Orders
   FoodOrdersTrackingUrl: 'https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/foods-tracking',
@@ -48,7 +48,7 @@ export const environment = {
  
 
   //Ads
-  AdPropertyUrl: 'https://chef-service-1b2023ebc956.herokuapp.com/ads/v1/properties',
+  AdPropertyUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/properties',
 
   /** RapidAPI  */
   X_RapidAPI_Url:

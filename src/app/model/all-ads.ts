@@ -12,8 +12,8 @@ export interface PropertyAd {
     description: string[];
     keyFeatures: string[];
     gallery: string[];
-    propertyType: string;
-    propertyAddress: Address;
+    type: string;
+    address: Address;
     price: number;
     saleAmountOfferOver: boolean;
     rentPeriod: string;

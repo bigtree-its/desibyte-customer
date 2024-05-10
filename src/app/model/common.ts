@@ -22,17 +22,19 @@ export class Customer {
   name: string;
   email: string;
   mobile: string;
+  telephone?: string;
   address: Address;
 }
 
 export class Address {
+  propertyNumber?: string;
   addressLine1: string;
-  addressLine2: string;
+  addressLine2?: string;
   city: string;
   postcode: string;
-  country: string;
-  latitude: string;
-  longitude: string;
+  country?: string;
+  latitude?: string;
+  longitude?: string;
 }
 
 export class Contact {

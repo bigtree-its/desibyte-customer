@@ -1227,6 +1227,10 @@ select {
     justify-content: space-between;
     align-items: center;
 }
+.flex-start{
+    justify-content: flex-start;
+    align-items: flex-start;
+}
 
 .space-between {
     justify-content: space-between;
@@ -2210,6 +2214,9 @@ select {
 
 .sm {
     display: flex;
+}
+.fs-7{
+    font-size: 12px;
 }
 
 @media (min-width: 767px) {

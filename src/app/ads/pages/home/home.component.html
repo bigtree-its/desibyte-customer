@@ -51,14 +51,15 @@
             <app-property-card [property]="property" *ngFor="let property of properties"></app-property-card>
         </div> -->
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-            <div class="col mb-4 br-12" *ngFor="let property of properties " [routerLink]="[ '/ads', property.reference] ">
+            <div class="col mb-4 br-12" *ngFor="let property of properties " [routerLink]="[ '/ads/p', property.reference] ">
                 <div class="card br-12 chef-card" style="border:none;">
                     <img src="{{property.image}}" class="card-img br-top-14" alt="...">
                     <div class="card-body">
                         <h5 class="fs-6 bolder">{{property.title}}</h5>
+                        <h5 class="fs-7 bolder">{{property.address.addressLine2}}, {{property.address.city}}</h5>
                         <div class="flex-row jcsb aic">
                             <span>{{property.datePosted | dateAgo}}</span>
-                            <span>{{property.price | currency:'GBP'}}</span>
+                            <span class="bolder">{{property.price | currency:'GBP'}}</span>
                         </div>
                     </div>
                 </div>
