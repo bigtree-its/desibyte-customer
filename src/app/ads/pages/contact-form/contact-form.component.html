@@ -1,0 +1,15 @@
+<div>
+    <button type="button" class="btn-10" (click)="openModal(contactForm)">Contact</button>
+</div>
+<ng-template #contactForm let-modal>
+    <div class="modal-header d-flex jcsb aic">
+        <span class="bolder fs-6">Contact</span>
+        <button type="button" class="btn-modal-close" aria-label="Close" (click)="close()">X</button>
+    </div>
+    <div class="modal-body flex-column aic p-3">
+
+    </div>
+    <div class="modal-footer flex-row jcsb aic" style="margin: 10px;padding: 10px;gap:.6rem;">
+        <button type="button" class="btn-10">Send Enquiry</button>
+    </div>
+</ng-template>

@@ -3,8 +3,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Monofett&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Train+One&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Monofett&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Train+One&display=swap");
 :root {
     --blue: #007bff;
     --indigo: #6610f2;
@@ -252,36 +252,33 @@ body {
     cursor: pointer;
 }
 
-.btn-l2r {
-    color: #000;
-    display: inline-block;
-    padding: 6px 20px;
-    font-weight: 700;
-    border: 3px solid var(--brand-color);
+.btn-10 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
     cursor: pointer;
-    position: relative;
-    background-color: transparent;
-    text-decoration: none;
-    overflow: hidden;
-    z-index: 1;
-    font-family: inherit;
+    padding: 6px 0;
+    width: 150px;
+    background-image: linear-gradient(to top, #D8D9DB 0%, #fff 80%, #FDFDFD 100%);
+    border-radius: 30px;
+    border: 1px solid #8F9092;
+    transition: all 0.2s ease;
+    color: #606060;
+    text-shadow: 0 1px #fff;
 }
 
-.btn-l2r::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--brand-color);
-    transform: translateX(-100%);
-    transition: all 0.3s;
-    z-index: -1;
+.btn-10:hover {
+    font-weight: 900;
+    box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 3px 3px #CECFD1;
 }
 
-.btn-l2r:hover::before {
-    transform: translateX(0);
+.btn-10:active {
+    box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 5px 3px #999, inset 0 0 30px #aaa;
+}
+
+.btn-10:focus {
+    box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 5px 3px #999, inset 0 0 30px #aaa;
 }
 
 .btn-arrow {
@@ -318,7 +315,7 @@ body {
 
 .btn-grp {
     border-radius: 12px;
-    background-color: #1FB796;
+    background-color: #1fb796;
     border: 2px solid #009a79;
 }
 
@@ -348,7 +345,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     border-radius: 0.5rem;
-    background-color: #EEE;
+    background-color: #eee;
     box-sizing: border-box;
     box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
     padding: 0.25rem;
@@ -370,9 +367,9 @@ body {
     justify-content: center;
     border-radius: 0.5rem;
     border: none;
-    padding: .5rem 0;
+    padding: 0.5rem 0;
     color: rgba(51, 65, 85, 1);
-    transition: all .15s ease-in-out;
+    transition: all 0.15s ease-in-out;
 }
 
 .radio-inputs .radio input:checked+.name {
@@ -402,10 +399,10 @@ body {
 }
 
 .btn-11 {
-    color: #081C15;
+    color: #081c15;
     padding: 5px 20px;
     border: 1px solid #33e05c;
-    background-color: #80ED99;
+    background-color: #80ed99;
 }
 
 .btn-11:hover {
@@ -675,7 +672,7 @@ body {
 }
 
 .chef-home-banner {
-    background-image: linear-gradient(to right, #eef1e7, #e0f0bc, #cfef8f, #bded5f, #a8eb12);
+    background-image: linear-gradient( to right, #eef1e7, #e0f0bc, #cfef8f, #bded5f, #a8eb12);
 }
 
 .break-word {
@@ -1227,7 +1224,8 @@ select {
     justify-content: space-between;
     align-items: center;
 }
-.flex-start{
+
+.flex-start {
     justify-content: flex-start;
     align-items: flex-start;
 }
@@ -1526,9 +1524,9 @@ select {
 .clickable {
     border: none;
     background-color: #fdfcfc;
-    border-radius: 12px;
+    border-radius: 50%;
     font-weight: bold;
-    padding: 3px 12px;
+    padding: 5px 9px;
 }
 
 .clickable:hover {
@@ -2215,7 +2213,8 @@ select {
 .sm {
     display: flex;
 }
-.fs-7{
+
+.fs-7 {
     font-size: 12px;
 }
 

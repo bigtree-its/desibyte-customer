@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { PostAdComponent } from './pages/post-ad/post-ad.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgbCarouselModule, NgbDatepickerModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarouselModule, NgbDatepickerModule, NgbDropdownModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SharedModule } from '../shared';
 import { HomeComponent } from './pages/home/home.component';
 import { DateAgoPipe } from '../pipes/date-ago.pipe';
 import { PropertyDetailComponent } from './pages/property-detail/property-detail.component';
+import { ContactFormComponent } from './pages/contact-form/contact-form.component';
 
 const routes: Routes = [
   { path: 'ads/post', component: PostAdComponent },
@@ -20,7 +21,8 @@ const routes: Routes = [
   declarations: [
     PostAdComponent,
     HomeComponent,
-    PropertyDetailComponent
+    PropertyDetailComponent,
+    ContactFormComponent
   ],
   imports: [
     CommonModule,
@@ -31,6 +33,7 @@ const routes: Routes = [
     NgbTimepickerModule,
     FontAwesomeModule,
     NgbCarouselModule,
+    NgbDropdownModule,
     DateAgoPipe,
     RouterModule.forChild(routes)
   ]

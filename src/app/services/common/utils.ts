@@ -138,6 +138,26 @@ export class Utils {
     return address;
   }
 
+  static addressToShortString(customerAddress: Address): string {
+    var address: string = '';
+    if (!customerAddress) {
+      return address;
+    }
+    if (customerAddress.city) {
+      if (address.length > 0) {
+        address = address + ', ';
+      }
+      address = address + customerAddress.city;
+    }
+    if (customerAddress.postcode) {
+      if (address.length > 0) {
+        address = address + ', ';
+      }
+      address = address + customerAddress.postcode.toUpperCase();
+    }
+    return address;
+  }
+
   static getChefAddress(chef: LocalChef) {
     var address: string = '';
 

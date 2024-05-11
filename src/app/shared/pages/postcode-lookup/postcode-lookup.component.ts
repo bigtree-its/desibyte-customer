@@ -198,7 +198,7 @@ export class PostcodeLookupComponent {
     this.addressSelected = true;
     console.log('User clicked '+ JSON.stringify(this.customerAddress))
     this.addressEmitter.emit(this.customerAddress);
-    this.selectedAddress = Utils.addressToString(this.customerAddress);
+    this.selectedAddress = Utils.addressToShortString(this.customerAddress);
     this.showAddressList = false;
     this.postcodeAddressList = [];
   }

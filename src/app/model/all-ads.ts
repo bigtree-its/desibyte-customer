@@ -1,6 +1,6 @@
 import { Address, Customer, NameValue } from "./common";
 
-export interface PropertyAd {
+export class PropertyAd {
     title: string;
     tenure: string;
     consumptionType: string;
@@ -8,30 +8,31 @@ export interface PropertyAd {
     image: string;
     reference: string;
     size: string;
-    summary: string;
+    summary?: string;
     description: string[];
-    keyFeatures: string[];
+    keyFeatures?: string[];
     gallery: string[];
     type: string;
     address: Address;
     price: number;
-    saleAmountOfferOver: boolean;
-    rentPeriod: string;
+    saleAmountOfferOver?: boolean;
+    rentPeriod?: string;
     dateAvailable: Date;
     datePosted: Date;
     bedrooms: number;
     bathrooms: number;
     adOwner: Customer;
-    featured: boolean;
-    schools: School[],
-    superStores: SuperStore[],
-    stations: NameValue[],
-    hospitals: NameValue[],
-    shops: NameValue[],
-    parks: NameValue[],
-    malls: NameValue[],
-    leisureCenters: NameValue[],
-    floorPlan: String[],
+    featured?: boolean;
+    schools?: School[];
+    superStores?: SuperStore[];
+    stations?: NameValue[];
+    hospitals?: NameValue[];
+    shops?: NameValue[];
+    parks?: NameValue[];
+    malls?: NameValue[];
+    leisureCenters?: NameValue[];
+    floorPlan?: String[];
+    postcodeDistrict?: string;
 }
 
 export interface School {
