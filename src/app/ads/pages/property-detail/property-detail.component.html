@@ -2,7 +2,7 @@
     <div *ngIf="error" class="error-page alert alert-warning p-5 m-5">
         <span>{{errorMessage}}</span>
     </div>
-    <div class="flex-row py-2 aic px-3">
+    <div class="flex-row py-2 aic">
         <fa-icon [icon]="faArrowLeft" (click)="goBack()" class="btn-circle mr-3"></fa-icon>
         <span class="bolder fs-3">{{property?.title}}</span>
     </div>
@@ -13,11 +13,12 @@
             </ng-template>
         </ngb-carousel>
         <div class="flex-row jcsb aic">
-            <span class="fs-6 bolder my-1">{{property.price | currency:'GBP'}}</span>
+            <span class="fs-6 bolder my-1">{{property.price |
+                currency:'GBP'}}</span>
             <span><b>Posted</b> {{property.datePosted | dateAgo}}</span>
         </div>
         <span class="fs-6 bold">{{property.address?.addressLine2}},
-      {{property.address?.city}}</span>
+            {{property.address?.city}}</span>
         <ng-container [ngTemplateOutlet]="infoSection"></ng-container>
         <div class="py-2 flex-column">
             <div class="flex-row gap-1 aic">
@@ -40,13 +41,14 @@
             </div>
             <div class="flex-row w-100 jcsb aic">
                 <span class="fs-6 bold">{{property.address?.addressLine2}},
-          {{property.address?.city}}</span>
-                <span class="fs-6 bold">{{property.price | currency:'GBP'}}</span>
+                    {{property.address?.city}}</span>
+                <span class="fs-6 bold">{{property.price |
+                    currency:'GBP'}}</span>
             </div>
             <div class="flex-row w-100 jcsb aic">
                 <span><b>Posted</b> {{property.datePosted | dateAgo}}</span>
                 <span><b>Available from </b>{{property.dateAvailable | date:
-          'dd MMM'}}</span>
+                    'dd MMM'}}</span>
             </div>
             <ng-container [ngTemplateOutlet]="infoSection"></ng-container>
         </div>
@@ -80,7 +82,7 @@
             <span class="bolder py-2">Description</span>
             <span class="py-1" *ngFor="let item of property.description">{{item}}</span>
         </div>
-        <div class="py-2 flex-column">
+        <div class="py-2 flex-column" *ngIf="property.keyFeatures && property.keyFeatures.length > 0">
             <span class="bolder py-2">Key Features</span>
             <span class="py-1" *ngFor="let item of property.keyFeatures">{{item}}</span>
         </div>

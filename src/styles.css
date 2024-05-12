@@ -4,7 +4,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Monofett&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Train+One&display=swap");
+
+/** Logo **/
+
+@import url('https://fonts.googleapis.com/css2?family=Passero+One&display=swap');
 :root {
     --blue: #007bff;
     --indigo: #6610f2;
@@ -650,20 +653,13 @@ body {
 }
 
 .logo-text {
-    font-family: "Train One", system-ui;
+    font-family: "Passero One", sans-serif;
     font-weight: 900;
     cursor: pointer;
 }
 
 .spl-text {
     font-family: "Protest Revolution", sans-serif;
-}
-
-.title {
-    font-family: "Abril Fatface", serif;
-    font-weight: 900;
-    font-size: 30px;
-    padding: 10px 0;
 }
 
 .flex-vh-center {

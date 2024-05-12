@@ -1,0 +1,42 @@
+{
+    "title": "2 Bed Flat for Rent",
+    "description": [
+        "Ideally placed for a good range of local amenities, this well-presented McCarthy Stone retirement apartment is set on the preferred top floor position with lift access and provides pleasing accommodation throughout with attractive open outlooks.\n"
+    ],
+    "gallery": [
+        "https://media.onthemarket.com/properties/14832483/1489255990/image-1-480x320.webp"
+    ],
+    "type": "Flat",
+    "tenure": "Freehold",
+    "status": "Available",
+    "reference": "",
+    "image": "https://media.onthemarket.com/properties/14832483/1489255990/image-0-1024x1024.webp",
+    "schools": [],
+    "hospitals": [],
+    "shops": [],
+    "leisureCenters": [],
+    "superStores": [],
+    "consumptionType": "Rent",
+    "address": {
+        "city": "Glasgow",
+        "addressLine1": "359, Glasgow Road, Eaglesham",
+        "addressLine2": "Glasgow",
+        "country": "UK",
+        "postcode": "G760HE",
+        "latitude": "",
+        "longitude": ""
+    },
+    "price": 500,
+    "rentPeriod": "Monthly",
+    "dateAvailable": "2024-05-08T23:00:00.000Z",
+    "datePosted": "2024-05-12T07:23:31.059Z",
+    "bedrooms": "2",
+    "bathrooms": "2",
+    "featured": false,
+    "adOwner": {
+        "name": "Navaneethakrishnan Kannusamy",
+        "email": "nava.arul@gmail.com",
+        "mobile": "07979191176",
+        "address": null
+    }
+}

@@ -59,6 +59,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
   stations: NameValue[];
   parks: NameValue[];
   malls: NameValue[];
+  error: boolean;
 
   ngOnInit() {
     this.accountService.getData();
@@ -82,6 +83,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
   }
 
   private postPropertyAd(propertyAd: PropertyAd) {
+    this.error = false;
     let observable = this.adService.postProperty(propertyAd);
     observable.pipe(takeUntil(this.destroy$)).subscribe({
       next: () => {
@@ -90,6 +92,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
       },
       error: (err) => {
         console.error('Errors during posting ad.');
+        this.error = true;
         this.errorMessage = err.error.detail;
       },
     });
@@ -97,30 +100,37 @@ export class PostAdComponent implements OnInit, OnDestroy {
 
   private buildPropertyAd(): PropertyAd {
     if ( Utils.isEmpty(this.title)){
+      this.error = true;
       this.errorMessage = "Title is mandatory";
       return null;
     }
     if ( Utils.isEmpty(this.description) ||  this.description.length < 50){
+      this.error = true;
       this.errorMessage = "Description is mandatory and at least 50 chars in length";
       return null;
     }
     if (!this.adAddress){
+      this.error = true;
       this.errorMessage = "Property Address is mandatory";
       return null;
     }
     if (!this.propertyType){
+      this.error = true;
       this.errorMessage = "Property type is mandatory";
       return null;
     }
     if (!this.dateAvailable){
+      this.error = true;
       this.errorMessage = "Date available is mandatory";
       return null;
     }
     if (!this.bedrooms){
+      this.error = true;
       this.errorMessage = "Bedrooms must be selected";
       return null;
     }
     if (!this.bathrooms){
+      this.error = true;
       this.errorMessage = "Bathrooms must be selected";
       return null;
     }
