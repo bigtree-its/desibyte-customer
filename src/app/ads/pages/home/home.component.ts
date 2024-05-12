@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   location: string;
   category: string;
   propertyType: string;
+  consumptionType: string;
   minAmount: number;
   maxAmount: number;
   minBed: number;
@@ -53,6 +54,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   onChangeCategory(e: any) {
     this.category = e.target.value;
   }
+
+  onChangePropertyTypeList(e:any){
+    this.propertyType = e.target.value;
+  }
+
+  onChangeConsumptionType(e:any){
+    this.consumptionType = e.target.value;
+  }
+
 
   selectPropertyType(evt: any) {
     this.propertyType = evt.target.value;

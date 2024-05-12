@@ -1,4 +1,4 @@
-<div class="flex-column w-100" style="max-width: 426px;position:relative;">
+<div class="flex-column w-100" style="position:relative;">
     <div class="flex-row jcsb w-100 border p-1 br-25 aic">
         <input style="border: none;outline: none;" *ngIf="!selectedAddress" class="br-25 bg-white pl-2" type="text" name="postcode" id="postcode" tabindex="4" autocomplete="off" value [(ngModel)]="addressLookupPostcode" #ctrl="ngModel" placeholder="Enter your postcode"
             (keyup.enter)="onEnter()">

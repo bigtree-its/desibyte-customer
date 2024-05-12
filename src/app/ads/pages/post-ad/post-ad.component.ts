@@ -74,7 +74,10 @@ export class PostAdComponent implements OnInit, OnDestroy {
   postAd() {
     if (this.category === 'Property') {
       var propertyAd: PropertyAd = this.buildPropertyAd();
-      this.postPropertyAd(propertyAd);
+      if ( Utils.isValid(propertyAd)){
+        this.postPropertyAd(propertyAd);
+      }
+     
     }
   }
 
@@ -93,6 +96,34 @@ export class PostAdComponent implements OnInit, OnDestroy {
   }
 
   private buildPropertyAd(): PropertyAd {
+    if ( Utils.isEmpty(this.title)){
+      this.errorMessage = "Title is mandatory";
+      return null;
+    }
+    if ( Utils.isEmpty(this.description) ||  this.description.length < 50){
+      this.errorMessage = "Description is mandatory and at least 50 chars in length";
+      return null;
+    }
+    if (!this.adAddress){
+      this.errorMessage = "Property Address is mandatory";
+      return null;
+    }
+    if (!this.propertyType){
+      this.errorMessage = "Property type is mandatory";
+      return null;
+    }
+    if (!this.dateAvailable){
+      this.errorMessage = "Date available is mandatory";
+      return null;
+    }
+    if (!this.bedrooms){
+      this.errorMessage = "Bedrooms must be selected";
+      return null;
+    }
+    if (!this.bathrooms){
+      this.errorMessage = "Bathrooms must be selected";
+      return null;
+    }
     return {
       title: this.title,
       summary: this.summary,
@@ -138,6 +169,10 @@ export class PostAdComponent implements OnInit, OnDestroy {
 
   onChangeCategory(e: any) {
     this.category = e.target.value;
+    if (this.category === 'Property'){
+      this.consumptionType = "Rent";
+      this.rentPeriod = "Monthly";
+    }
   }
 
   onChangePropertyType(e: any) {
@@ -156,7 +191,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
     this.bathrooms = e.target.value;
   }
 
-  handlePropertyIntend(evt: any) {
+  changePropertyConsumptionType(evt: any) {
     this.consumptionType = evt.target.value;
   }
 

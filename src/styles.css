@@ -28,6 +28,8 @@
     --info: #17a2b8;
     --warning: #ffc107;
     --danger: #dc3545;
+    --l-danger: #efd2d5;
+    --b-danger: #dea3a9;
     --light: #f8f9fa;
     --dark: #343a40;
     --border: #22306d;
@@ -1287,6 +1289,12 @@ select {
 
 .italic {
     font-style: italic;
+}
+
+.box-error {
+    border: 1px solid var(--b-danger);
+    background-color: var(--l-danger);
+    color: var(--danger);
 }
 
 .bg-alert-success {

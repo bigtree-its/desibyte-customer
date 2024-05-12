@@ -25,7 +25,9 @@
                 <select class="form-select mb-3" (change)="onChangePropertyType($event)">
                     <option default>Please select</option>
                     <option value="Flat">Flat</option>
-                    <option value="Detached House">Detached House</option>
+                    <option value="Detached">Detached House</option>
+                    <option value="Semi-detached">Semi-detached</option>
+                    <option value="Terraced">Terraced House</option>
                     <option value="Garage">Garage</option>
                     <option value="Commercial">Commercial</option>
                 </select>
@@ -76,19 +78,19 @@
             <span class="bolder py-1">Whats your intend?</span>
             <div class="radio-buttons-container">
                 <div class="radio-button">
-                    <input name="radio-group" id="Rent" value="Rent" class="radio-button__input" type="radio" (change)="handlePropertyIntend($event)">
+                    <input name="radio-group" id="Rent" value="Rent" checked class="radio-button__input" type="radio" (change)="changePropertyConsumptionType($event)">
                     <label for="Rent" class="radio-button__label">
                         <span class="radio-button__custom"></span>Rent
                     </label>
                 </div>
                 <div class="radio-button">
-                    <input name="radio-group" id="Sale" value="Sale" class="radio-button__input" type="radio" (change)="handlePropertyIntend($event)">
+                    <input name="radio-group" id="Sale" value="Sale" class="radio-button__input" type="radio" (change)="changePropertyConsumptionType($event)">
                     <label for="Sale" class="radio-button__label">
                         <span class="radio-button__custom"></span>Sale
                     </label>
                 </div>
                 <div class="radio-button">
-                    <input name="radio-group" id="Share" value="Share" class="radio-button__input" type="radio" (change)="handlePropertyIntend($event)">
+                    <input name="radio-group" id="Share" value="Share" class="radio-button__input" type="radio" (change)="changePropertyConsumptionType($event)">
                     <label for="Share" class="radio-button__label">
                         <span class="radio-button__custom"></span>Share Room(s)
                         in a property
@@ -109,7 +111,7 @@
                 <span class="bolder py-1">Rental Period</span>
                 <div class="radio-buttons-container">
                     <div class="radio-button">
-                        <input name="rental-period" id="Monthly" value="Monthly" class="radio-button__input" type="radio" (change)="handleRentalPeriod($event)">
+                        <input name="rental-period" id="Monthly" value="Monthly" class="radio-button__input" checked type="radio" (change)="handleRentalPeriod($event)">
                         <label for="Monthly" class="radio-button__label">
                             <span class="radio-button__custom"></span>Monthly
                         </label>
@@ -158,5 +160,6 @@
             <textarea class="border br-7 p-2" name="gallery" id="gallery" value [(ngModel)]="gallery" tabindex="3" #ctrl="ngModel" style="height: 100px;" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
         </div>
     </div>
-    <button class="btn-11 my-2" (click)="postAd()">Post</button>
+    <span *ngIf="errorMessage" class="flex-row box-error jcc aic bolder my-3 p-3">{{errorMessage}}</span>
+    <button class="btn-13 br-25 px-5 my-2" (click)="postAd()">Post</button>
 </div>

@@ -1,13 +1,4 @@
-:focus {
-    outline: 0;
-    /* border-color: #2260ff; */
-    border-color: #52ff22;
-    box-shadow: 0 0 0 4px #c3fcb5;
-}
-
 .mydict div {
-    display: flex;
-    flex-direction: column;
     flex-wrap: wrap;
     margin-top: 0.5rem;
     justify-content: center;
@@ -47,15 +38,13 @@ label span {
 
 /** Left Radius **/
 
-
-/* label:first-child span {
+label:first-child span {
     border-radius: .375em 0 0 .375em;
-} */
+}
 
 
 /** Right Radius **/
 
-
-/* label:last-child span {
+label:last-child span {
     border-radius: 0 .375em .375em 0;
-} */
+}
