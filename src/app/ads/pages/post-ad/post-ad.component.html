@@ -1,4 +1,9 @@
 <div class="container mb-5">
+    <ng-container *ngIf="!user" [ngTemplateOutlet]="auth"></ng-container>
+    <ng-container *ngIf="user" [ngTemplateOutlet]="postAdTemplate"></ng-container>  
+</div>
+
+<ng-template #postAdTemplate>
     <div class="flex-column">
         <span class="bolder fs-1 mt-2 mb-4">Post an ad</span>
 
@@ -32,7 +37,7 @@
                     <option value="Commercial">Commercial</option>
                 </select>
             </div>
-            <div class="flex-column ml-3">
+            <div class="flex-column ml-3"  *ngIf="category==='Property' && propertyType !== 'Garage' && propertyType !== 'Commercial'">
                 <span class="bolder py-1">Property Tenure</span>
                 <select class="form-select mb-3" (change)="onChangePropertyTenure($event)">
                     <option default>Please select</option>
@@ -42,7 +47,7 @@
             </div>
         </div>
 
-        <div class="flex-row aic my-2 gap-1" *ngIf="category==='Property'">
+        <div class="flex-row aic my-2 gap-1" *ngIf="category==='Property' && propertyType !== 'Garage' && propertyType !== 'Commercial'">
             <div class="flex-column">
                 <span class="bolder py-1">Bedrooms</span>
                 <select class="form-select mb-3" (change)="onChangeBedrooms($event)">
@@ -60,7 +65,7 @@
                     <option value="10">10</option>
                 </select>
             </div>
-            <div class="flex-column ml-3">
+            <div class="flex-column ml-3"  *ngIf="category==='Property' && propertyType !== 'Garage' && propertyType !== 'Commercial'">
                 <span class="bolder py-1">Bathrooms</span>
                 <select class="form-select mb-3" (change)="onChangeBathrooms($event)">
                     <option default>Please select</option>
@@ -98,7 +103,7 @@
                 </div>
             </div>
         </div>
-        <div class="flex-row aic gap-1 my-2" *ngIf="category==='Property' && (consumptionType === 'Share' || consumptionType === 'Rent') ">
+        <div class="flex-row aic gap-1 my-2" *ngIf="category==='Property' && (consumptionType === 'Share' || consumptionType === 'Rent')">
             <div class="flex-column">
                 <span class="bolder py-1">Rental Amount</span>
                 <div class="input-group">
@@ -140,26 +145,49 @@
             </div>
         </div>
 
-        <div class="input-div">
-            <input class="_381fS" type="text" name="title" id="title" tabindex="1" autocomplete="off" value [(ngModel)]="title" #ctrl="ngModel">
-            <div class="_2EeI1 _26LFr"></div>
-            <label class="_1Cvlf _2tL9P" for="title">Give a title to your
-                ad</label>
+        <div class="flex-column">
+            <span class="bolder py-1">Ad Title</span>
+            <input class="border br-7 p-2"  type="text" name="title" id="title" tabindex="1" autocomplete="off" value [(ngModel)]="title" #ctrl="ngModel">
         </div>
         <div class="flex-column">
             <span class="bolder py-1">Description</span>
             <textarea class="border br-7 p-2" name="description" id="description" value [(ngModel)]="description" tabindex="3" #ctrl="ngModel" style="height: 100px;" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
         </div>
-        <div class="input-div">
-            <input class="_381fS" type="text" name="image" id="image" tabindex="1" autocomplete="off" value [(ngModel)]="image" #ctrl="ngModel">
-            <div class="_2EeI1 _26LFr"></div>
-            <label class="_1Cvlf _2tL9P" for="title">Image Url</label>
+        <div class="flex-column">
+            <span class="bolder py-1">Image Url</span>
+            <input class="border br-7 p-2" type="text" name="image" id="image" tabindex="1" autocomplete="off" value [(ngModel)]="image" #ctrl="ngModel">
         </div>
         <div class="flex-column">
             <span class="bolder py-1">Gallery (<small>Urls comma separated</small>)</span>
             <textarea class="border br-7 p-2" name="gallery" id="gallery" value [(ngModel)]="gallery" tabindex="3" #ctrl="ngModel" style="height: 100px;" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
         </div>
+        <div class="flex-row p-3 box-error my-2 aic jcc" *ngIf="error && errorMessage" >
+            <span>{{errorMessage}}</span>
+            <button type="button" class="btn-text ml-5"  (click)="closeAlert()">OK</button>
+        </div>
+        <div class="flex-row p-3 box-success my-2 aic jcc" *ngIf="adSubmitted" >
+            <span>Your ad has been submitted. It will appear on Posts once the it has been approved.</span>
+            <button type="button" class="btn-text ml-5"  (click)="closeAlert()">OK</button>
+        </div>
+        
+        <div class="flex-row jcc aic my-3">
+            <button class="btn-13 br-25 px-5 my-2" (click)="postAd()">Post</button>
+        </div>
+        
     </div>
-    <span *ngIf="error && errorMessage" class="flex-row box-error jcc aic bolder my-3 p-3">{{errorMessage}}</span>
-    <button class="btn-13 br-25 px-5 my-2" (click)="postAd()">Post</button>
-</div>
+</ng-template>
+
+<ng-template #auth>
+    <div class="flex-column p-3 border my-4">
+        <div class="flex-row mb-2 border-bottom py-2 aic">
+            <span>Do you have an account?</span>
+            <!-- <span [routerLink]="['/login']" [queryParams]="{returnUrl: 'checkout'}" class="clickable ml-2">Login</span> -->
+            <button type="button" [routerLink]="['/login']" [queryParams]="{returnUrl: '/ads/post'}" class="btn btn-outline-dark px-3 ml-3">Login</button>
+        </div>
+        <div class="flex-row py-2 aic">
+            <span>Don't have an account?</span>
+            <!-- <span [routerLink]="['/register']" class="clickable ml-2">Signup</span> -->
+            <button type="button" [routerLink]="['/register']" [queryParams]="{returnUrl: '/ads/post'}" class="btn btn-outline-dark px-3 ml-3">Signup</button>
+        </div>
+    </div>
+</ng-template>

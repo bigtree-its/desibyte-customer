@@ -1,0 +1,1 @@
+{"normalizedNames":{},"lazyUpdate":null},"status":400,"statusText":"Bad Request","url":"http://localhost:8083/ads/v1/properties","ok":false,"name":"HttpErrorResponse","message":"Http failure response for http://localhost:8083/ads/v1/properties: 400 Bad Request","error":"Error: fx1p1x"}

@@ -1185,6 +1185,13 @@ select {
 .aie {
     align-items: flex-end;
 }
+.asfe{
+    align-self: flex-end;
+}
+.asfs{
+    align-self: flex-start;
+}
+
 
 .flex-row {
     display: flex;
@@ -1227,6 +1234,7 @@ select {
     justify-content: flex-start;
     align-items: flex-start;
 }
+
 
 .space-between {
     justify-content: space-between;
@@ -1286,11 +1294,25 @@ select {
 .italic {
     font-style: italic;
 }
-
+.box-success{
+    background-color: var(--spring);
+    color: #000;
+    font-weight: 500;
+    border-radius: 8px;
+}
 .box-error {
-    border: 1px solid var(--b-danger);
     background-color: var(--l-danger);
     color: var(--danger);
+    font-weight: 500;
+    border-radius: 8px;
+}
+
+.alert-close{
+    cursor: pointer;
+}
+.alert-close:hover{
+    font-weight: 900;
+    cursor: pointer;
 }
 
 .bg-alert-success {
@@ -1335,14 +1357,18 @@ select {
     width: 24px;
 }
 
+
 .btn-text {
-    color: #4a5652;
-    font-weight: 900;
+    border: 1px solid #000a19;
+    background: transparent;
+    border-radius: 7px;
+    padding: 5px 10px;
 }
 
 .btn-text:hover {
     cursor: pointer;
-    color: #000;
+    background-color: #000;
+    color: #fff;
 }
 
 .btn-trash {

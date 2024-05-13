@@ -15,6 +15,7 @@ import { Utils } from 'src/app/services/common/utils';
   styleUrls: ['./post-ad.component.css'],
 })
 export class PostAdComponent implements OnInit, OnDestroy {
+
   destroy$ = new Subject<void>();
   accountService = inject(AccountService);
   adService = inject(AdsService);
@@ -60,6 +61,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
   parks: NameValue[];
   malls: NameValue[];
   error: boolean;
+  showLoginOptions: boolean;
 
   ngOnInit() {
     this.accountService.getData();
@@ -75,10 +77,9 @@ export class PostAdComponent implements OnInit, OnDestroy {
   postAd() {
     if (this.category === 'Property') {
       var propertyAd: PropertyAd = this.buildPropertyAd();
-      if ( Utils.isValid(propertyAd)){
+      if (Utils.isValid(propertyAd)) {
         this.postPropertyAd(propertyAd);
       }
-     
     }
   }
 
@@ -91,49 +92,60 @@ export class PostAdComponent implements OnInit, OnDestroy {
         this.adSubmitted = true;
       },
       error: (err) => {
-        console.error('Errors during posting ad.');
+        console.error('Errors during posting ad. ' + JSON.stringify(err));
         this.error = true;
-        this.errorMessage = err.error.detail;
+        this.errorMessage = "Oops. There was a problem when posting your ad. Please contact customer support quoting reference " + err.error.reference;
       },
     });
   }
 
   private buildPropertyAd(): PropertyAd {
-    if ( Utils.isEmpty(this.title)){
-      this.error = true;
-      this.errorMessage = "Title is mandatory";
-      return null;
-    }
-    if ( Utils.isEmpty(this.description) ||  this.description.length < 50){
-      this.error = true;
-      this.errorMessage = "Description is mandatory and at least 50 chars in length";
-      return null;
-    }
-    if (!this.adAddress){
+    if (!this.adAddress) {
       this.error = true;
       this.errorMessage = "Property Address is mandatory";
       return null;
     }
-    if (!this.propertyType){
+    if (!this.propertyType) {
       this.error = true;
       this.errorMessage = "Property type is mandatory";
       return null;
     }
-    if (!this.dateAvailable){
+    if (this.propertyType !== 'Garage' && this.propertyType !== 'Commercial' && !this.propertyTenure) {
       this.error = true;
-      this.errorMessage = "Date available is mandatory";
+      this.errorMessage = "Property tenure is mandatory";
       return null;
     }
-    if (!this.bedrooms){
+    if (this.propertyType !== 'Garage' && this.propertyType !== 'Commercial' && !this.bedrooms) {
       this.error = true;
       this.errorMessage = "Bedrooms must be selected";
       return null;
     }
-    if (!this.bathrooms){
+    if (this.propertyType !== 'Garage' && this.propertyType !== 'Commercial' && !this.bathrooms) {
       this.error = true;
       this.errorMessage = "Bathrooms must be selected";
       return null;
     }
+    if (!this.price) {
+      this.error = true;
+      this.errorMessage = "Price must be entered";
+      return null;
+    }
+    if (!this.dateAvailable) {
+      this.error = true;
+      this.errorMessage = "Date available is mandatory";
+      return null;
+    }
+    if (Utils.isEmpty(this.title)) {
+      this.error = true;
+      this.errorMessage = "Title is mandatory";
+      return null;
+    }
+    if (Utils.isEmpty(this.description) || this.description.length < 50) {
+      this.error = true;
+      this.errorMessage = "Description is mandatory and at least 50 chars in length";
+      return null;
+    }
+
     return {
       title: this.title,
       summary: this.summary,
@@ -179,7 +191,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
 
   onChangeCategory(e: any) {
     this.category = e.target.value;
-    if (this.category === 'Property'){
+    if (this.category === 'Property') {
       this.consumptionType = "Rent";
       this.rentPeriod = "Monthly";
     }
@@ -215,5 +227,11 @@ export class PostAdComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  closeAlert() {
+    this.adSubmitted = false;
+    this.error = false;
+    this.errorMessage = null;
   }
 }
