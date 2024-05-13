@@ -51,6 +51,11 @@ export const environment = {
   //Ads
   AdPropertyUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/properties',
 
+  /** API Tier**/
+  API_Tier_PRIVATE_KEY: 'NYdGEdtZDf7YaKcGhdtYm9D3uzIjau7Y6b1ISLns',
+  API_Tier_Baseurl: 'https://postcode.apitier.com',
+  API_Tier_Postcode: 'https://postcode.apitier.com/v1/postcodes/',
+
   /** RapidAPI  */
   X_RapidAPI_Url:
     'https://samsinfield-postcodes-4-u-uk-address-finder.p.rapidapi.com/ByPostcode/json',

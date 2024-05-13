@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { faClose, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { APITierAddress, APITierResponse } from 'src/app/model/all-address-lookup';
 import { Address, RapidApiByPostcodeResponse, RapidApiByPostcodeResponseSummary } from 'src/app/model/common';
 import { RapidApiService } from 'src/app/services/common/rapid-api.service';
 import { Utils } from 'src/app/services/common/utils';
+import { ApiTierService } from 'src/app/services/geo/api_tier.service';
 
 @Component({
   selector: 'app-postcode-lookup',
@@ -12,6 +14,7 @@ import { Utils } from 'src/app/services/common/utils';
 export class PostcodeLookupComponent {
 
   rapidApiService = inject(RapidApiService);
+  apiTierService = inject(ApiTierService);
   showAddressList: boolean;
   faSearch = faSearch;
   faClose = faClose;
@@ -24,6 +27,7 @@ export class PostcodeLookupComponent {
   rapidApiByPostcodeResponseSummary: RapidApiByPostcodeResponseSummary;
 
   @Output() addressEmitter = new EventEmitter<Address>;
+  addressLookupResponse: APITierResponse;
   
 
   onEnter() {
@@ -41,15 +45,36 @@ export class PostcodeLookupComponent {
 
   findAddress() {
     if (this.addressLookupPostcode &&this.addressLookupPostcode.length >= 5) {
-      this.doFakeLookup();
+      this.doApiTierPostcodeLookup();
     }
   }
 
   onSubmitPostcodeLookup() {
     console.log('Search address form submitted..');
     if (this.addressLookupPostcode &&this.addressLookupPostcode.length >= 5) {
-      this.doFakeLookup();
+      this.doApiTierPostcodeLookup();
     }
+  }
+
+  doApiTierPostcodeLookup(){
+    this.apiTierService
+    .lookupAddresses(this.addressLookupPostcode.trim())
+    // .pipe(first())
+    .subscribe(
+      (data: APITierResponse) => {
+        // this.postcodeAddressList = data.Summaries;
+        if ( data && data.noOfItems> 0){
+          this.addressSelected = false;
+          this.showAddressList = true;
+          this.addressLookupResponse = data;
+        }
+        
+        console.log('Address Lookup response ' +JSON.stringify(data));
+      },
+      (error) => {
+        console.log( 'Address Lookup resulted an error.' + JSON.stringify(error));
+      }
+    );
   }
 
   doFakeLookup(){
@@ -183,6 +208,7 @@ export class PostcodeLookupComponent {
       );
   }
 
+  
   onSelectDeliveryAddress(selectAddress: RapidApiByPostcodeResponseSummary) {
     
     // var city = selectAddress.Place.split(/[\s ]+/).pop();
@@ -201,5 +227,25 @@ export class PostcodeLookupComponent {
     this.selectedAddress = Utils.addressToShortString(this.customerAddress);
     this.showAddressList = false;
     this.postcodeAddressList = [];
+  }
+
+  onSelectApiTierAddress(address: APITierAddress) {
+    
+    // var city = selectAddress.Place.split(/[\s ]+/).pop();
+    this.customerAddress = {
+      city: address.post_town,
+      addressLine1: address.line_1,
+      addressLine2: address.line_2,
+      country: this.addressLookupResponse.result.country,
+      postcode: address.postcode,
+      latitude: this.addressLookupResponse.result.geocode.lattitude,
+      longitude: this.addressLookupResponse.result.geocode.longitude,
+    };
+    this.addressSelected = true;
+    console.log('User clicked '+ JSON.stringify(this.customerAddress))
+    this.addressEmitter.emit(this.customerAddress);
+    this.selectedAddress = Utils.addressToShortString(this.customerAddress);
+    this.showAddressList = false;
+    this.addressLookupResponse = undefined;
   }
 }

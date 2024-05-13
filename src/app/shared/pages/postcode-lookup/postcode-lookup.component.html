@@ -8,11 +8,11 @@
         <fa-icon class="mx-2 clickable" (click)="closeServiceLocations()" *ngIf="(postcodeAddressList && showAddressList) || selectedAddress" [icon]="faClose"></fa-icon>
         <!-- <button type="button" *ngIf="(postcodeAddressList && showAddressList) || selectedAddress" class="btn btn-close " (click)="closeServiceLocations()"></button> -->
     </div>
-    <div *ngIf="postcodeAddressList && showAddressList" class="address-list-container">
-        <span class="bolder p-2">{{postcodeAddressList.length}} addresses found</span>
+    <div *ngIf="addressLookupResponse && showAddressList" class="address-list-container">
+        <span class="bolder p-2">{{addressLookupResponse.noOfItems}} addresses found</span>
         <div class="addresslist-scroller">
-            <div class="address-item" *ngFor="let add of postcodeAddressList" (click)="onSelectDeliveryAddress(add)">
-                <span> {{add.StreetAddress }},{{add.Place}}</span>
+            <div class="address-item" *ngFor="let add of addressLookupResponse.result.addresses" (click)="onSelectApiTierAddress(add)">
+                <span> {{add.address}}</span>
             </div>
         </div>
 
