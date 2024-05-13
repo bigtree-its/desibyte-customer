@@ -10,20 +10,20 @@ export const environment = {
   AD_REMOTE: 'https://ad-service-bd07dee8092c.herokuapp.com',
 
   // Ads
-  CollectionsUrl: "http://localhost:8083/ads/v1/collections",
-  ChefsUrl: "http://localhost:8083/ads/v1/chefs",
-  CuisinesUrl: "http://localhost:8083/ads/v1/cuisines",
-  DishesUrl: "http://localhost:8083/ads/v1/dishes",
-  ReviewsUrl: "http://localhost:8083/ads/v1/reviews",
-  ServiceAreasUrl: "http://localhost:8083/ads/v1/serviceareas",
-  MenusUrl: "http://localhost:8083/ads/v1/menus",
-  CalendersUrl: "http://localhost:8083/ads/v1/calendars",
-  GroupsUrl: 'http://localhost:8083/ads/v1/groups',
-  ProductsUrl: 'http://localhost:8083/ads/v1/products',
-  SupplierUrl: 'http://localhost:8083/ads/v1/suppliers',
-  FeedbacksUrl: 'http://localhost:8083/ads/v1/feedbacks',
-  PartyBundlesUrl: 'http://localhost:8083/ads/v1/party-bundles',
-  PostcodeDistrictsUrl: 'http://localhost:8083/ads/v1/postcode-districts',
+  CollectionsUrl: "https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/collections",
+  ChefsUrl: "https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/chefs",
+  CuisinesUrl: "https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/cuisines",
+  DishesUrl: "https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/dishes",
+  ReviewsUrl: "https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/reviews",
+  ServiceAreasUrl: "https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/serviceareas",
+  MenusUrl: "https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/menus",
+  CalendersUrl: "https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/calendars",
+  GroupsUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/groups',
+  ProductsUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/products',
+  SupplierUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/suppliers',
+  FeedbacksUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/feedbacks',
+  PartyBundlesUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/party-bundles',
+  PostcodeDistrictsUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/postcode-districts',
 
 // Orders
   FoodOrdersTrackingUrl: 'https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/foods-tracking',
@@ -49,7 +49,7 @@ export const environment = {
  
 
   //Ads
-  AdPropertyUrl: 'http://localhost:8083/ads/v1/properties',
+  AdPropertyUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/properties',
 
   /** RapidAPI  */
   X_RapidAPI_Url:
