@@ -25,7 +25,7 @@ export class APITierGeocode{
 export class APITierAddress{
     building_name: string;
     premise: string;
-    building_number: string;
+    building_number: number;
     po_box: string;
     line_1: string;
     line_2: string;

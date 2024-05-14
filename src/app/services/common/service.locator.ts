@@ -43,6 +43,7 @@ export class ServiceLocator {
   
   //Ads
   AdPropertyUrl: string;
+  AdsUrl: string;
 
   constructor() {
     this.SupplierUrl = environment.SupplierUrl;
@@ -80,6 +81,7 @@ export class ServiceLocator {
 
 
     this.AdPropertyUrl = environment.AdPropertyUrl;
+    this.AdsUrl = environment.AdsUrl;
     
   }
 }

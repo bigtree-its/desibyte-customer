@@ -1,64 +1,93 @@
-import { Address, Customer, NameValue } from "./common";
+import { Address, Customer, NameValue } from './common';
+
+export class GeneralAd {
+  category: string;
+  title: string;
+  status: string;
+  image: string;
+  reference: string;
+  description: string[];
+  gallery: string[];
+  address: Address;
+  price: number;
+  dateAvailable: Date;
+  datePosted: Date;
+  adOwner: Customer;
+  featured?: boolean;
+  approved?: boolean;
+  active?: boolean;
+}
 
 export class PropertyAd {
-    title: string;
-    tenure: string;
-    consumptionType: string;
-    status: string;
-    image: string;
-    reference: string;
-    size: string;
-    summary?: string;
-    description: string[];
-    keyFeatures?: string[];
-    gallery: string[];
-    type: string;
-    address: Address;
-    price: number;
-    saleAmountOfferOver?: boolean;
-    rentPeriod?: string;
-    dateAvailable: Date;
-    datePosted: Date;
-    bedrooms: number;
-    bathrooms: number;
-    adOwner: Customer;
-    featured?: boolean;
-    schools?: School[];
-    superStores?: SuperStore[];
-    stations?: NameValue[];
-    hospitals?: NameValue[];
-    shops?: NameValue[];
-    parks?: NameValue[];
-    malls?: NameValue[];
-    leisureCenters?: NameValue[];
-    floorPlan?: String[];
-    postcodeDistrict?: string;
+  title: string;
+  tenure: string;
+  consumptionType: string;
+  status: string;
+  image: string;
+  reference: string;
+  size: string;
+  summary?: string;
+  description: string[];
+  keyFeatures?: string[];
+  gallery: string[];
+  type: string;
+  address: Address;
+  price: number;
+  saleAmountOfferOver?: boolean;
+  rentPeriod?: string;
+  dateAvailable: Date;
+  datePosted: Date;
+  bedrooms: number;
+  bathrooms: number;
+  adOwner: Customer;
+  featured?: boolean;
+  schools?: School[];
+  superStores?: SuperStore[];
+  stations?: NameValue[];
+  hospitals?: NameValue[];
+  shops?: NameValue[];
+  parks?: NameValue[];
+  malls?: NameValue[];
+  leisureCenters?: NameValue[];
+  floorPlan?: String[];
+  postcodeDistrict?: string;
 }
 
 export interface School {
-    name: string;
-    distance: string;
-    address: Address;
-    isPrimary: boolean;
-    isSecondary: boolean;
-    isStateSchool: boolean;
-  }
-  
-  export interface SuperStore {
-    name: string;
-    distance: string;
-    address: Address;
-  }
+  name: string;
+  distance: string;
+  address: Address;
+  isPrimary: boolean;
+  isSecondary: boolean;
+  isStateSchool: boolean;
+}
 
-  export class AdSearchQuery{
-    adOwner?: string;
-    location?: string;
-    category?: string;
-    reference?: string;
-    min?: number;
-    max?: number;
-    fromDate?: Date;
-    toDate?: Date;
-    lastWeek?: boolean;
-    lastMonth?: boolean;
-  }
+export interface SuperStore {
+  name: string;
+  distance: string;
+  address: Address;
+}
+
+export class AdSearchQuery {
+  category?: string;
+  adOwner?: string;
+  location?: string;
+  reference?: string;
+  minAmount?: number;
+  maxAmount?: number;
+  lastWeek?: boolean;
+  lastMonth?: boolean;
+}
+export class PropertySearchQuery {
+  adOwner?: string;
+  location?: string;
+  type?: string;
+  reference?: string;
+  minAmount?: number;
+  maxAmount?: number;
+  minBedroom?: number;
+  maxBedroom?: number;
+  consumptionType?: string;
+  lastWeek?: boolean;
+  lastMonth?: boolean;
+}

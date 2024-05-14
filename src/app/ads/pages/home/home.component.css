@@ -1,6 +1,5 @@
 .mydict div {
     flex-wrap: wrap;
-    margin-top: 0.5rem;
     justify-content: center;
     font-size: 13px;
 }
@@ -47,4 +46,23 @@ label:first-child span {
 
 label:last-child span {
     border-radius: 0 .375em .375em 0;
+}
+
+.category {
+    display: flex;
+    padding: 5px 20px;
+    font-size: 12px;
+    justify-content: center;
+    align-items: center;
+}
+
+.category:hover {
+    cursor: pointer;
+    color: white;
+    background-color: coral;
+}
+
+.selectedCategory {
+    color: white;
+    background-color: coral;
 }

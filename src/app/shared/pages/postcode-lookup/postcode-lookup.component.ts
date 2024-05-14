@@ -66,16 +66,7 @@ export class PostcodeLookupComponent {
           if (data && data.noOfItems > 0) {
             this.addressSelected = false;
             this.showAddressList = true;
-            
-            var sortedArray: APITierAddress[] = data.result.addresses.sort((n1, n2) => {
-              if (n1.building_number > n2.building_number) {
-                return 1;
-              }
-              if (n1.building_number < n2.building_number) {
-                return -1;
-              }
-              return 0;
-            });
+            const sortedArray = data.result.addresses.slice().sort((a, b) => a.building_number - b.building_number);
             console.log('Sorted address : '+ JSON.stringify(sortedArray))
             data.result.addresses = sortedArray;
             this.addressLookupResponse = data;

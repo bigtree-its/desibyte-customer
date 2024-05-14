@@ -1,9 +1,15 @@
 <div class="container-fluid overflow-y mb-5">
 
-    <div class="sm flex-column my-2 p-2">
+    <div class="full-screen mb-2 px-3 d-flex jcc aic">
+        <div class="flex-row-scrollable py-2">
+            <div *ngFor="let category of categories" class="category" (click)="onSelectCategory(category)" [class.selectedCategory]="isSelectedCategory(category)">
+                <span>{{category}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="sm my-2 p-2">
         <app-postcode-lookup></app-postcode-lookup>
         <div class="flex-row jcsb aic p-2 gap-1 w-100">
-            <ng-container [ngTemplateOutlet]="categoryList"></ng-container>
             <div class="flex-row border p-2 br-7 gap-1 px-3" (click)="openModal(filterModal)">
                 <fa-icon [icon]="faFilter"></fa-icon>
                 <span>Filters</span>
@@ -15,36 +21,153 @@
         </div>
     </div>
     <!-- Filter-->
-    <div class="lg flex-row gap-1 aic jcc my-3">
-        <app-postcode-lookup></app-postcode-lookup>
-        <ng-container [ngTemplateOutlet]="categoryList"></ng-container>
-        <ng-container *ngIf="category === 'Property'" [ngTemplateOutlet]="propertyTypeFilter"></ng-container>
-        <ng-container *ngIf="category === 'Property'" [ngTemplateOutlet]="consumptionTypeFilter"></ng-container>
-        <ng-container *ngIf="category === 'Property' || category === 'Car' || category === 'Books'" [ngTemplateOutlet]="priceFilter"></ng-container>
-        <ng-container *ngIf="category === 'Property'" [ngTemplateOutlet]="bedFilter"></ng-container>
-        <button type="button" class="btn-13 br-25">Go</button>
+    <div class="row">
+        <div class="lg col-md-3 flex-column gap-1 border-right">
+            <div class="flex-column mb-2">
+                <span class="bold">Location</span>
+                <app-postcode-lookup></app-postcode-lookup>
+            </div>
+            <ng-container *ngIf="category === 'Property'" [ngTemplateOutlet]="propertyTypeList"></ng-container>
+            <ng-container *ngIf="category === 'Property'" [ngTemplateOutlet]="consumptionTypeFilter"></ng-container>
+            <ng-container *ngIf="category === 'Property' || category === 'Cars' || category === 'Books' || category === 'Furniture'  || category === 'Electronics'   || category === 'Toys'" [ngTemplateOutlet]="priceRangeFilter"></ng-container>
+            <ng-container *ngIf="category === 'Property' && propertyType !=='Garage'  && propertyType !=='Commercial'" [ngTemplateOutlet]="bedroomsFilter"></ng-container>
+            <button *ngIf="category" type="button" class="btn-13 br-25" (click)="searchProperties()">Go</button>
+        </div>
+        <div class="col-md-9">
+            <div class="flex-column" *ngIf="showLandingPage">
+                <b class="bolder fs-5 ">Latest Properties</b>
+                <ng-container [ngTemplateOutlet]="propertyListScroller"></ng-container>
+                <button class="btn btn-sm btn-link asfe" (click)="onSelectCategory('Property')" title="Show more properties">Show more</button>
+                <b class="bolder fs-5 ">Latest Ads</b>
+                <ng-container [ngTemplateOutlet]="adListScroller"></ng-container>
+                <button class="btn btn-sm btn-link asfe" (click)="onSelectCategory('Ad')" title="Show more ads">Show more</button>
+            </div>
+            <div class="flex-column" *ngIf="!showLandingPage">
+                <ng-container *ngIf="category === 'Property'" [ngTemplateOutlet]="propertyList"></ng-container>
+                <ng-container *ngIf="category === '!Property'" [ngTemplateOutlet]="adList"></ng-container>
+            </div>
+        </div>
     </div>
-    <div class="flex-column">
-        <span class="bolder fs-5 my-3">Latest</span>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-            <div class="col mb-4" *ngFor="let property of properties " [routerLink]="[ '/ads/p', property.reference] ">
-                <div class="card chef-card" style="border:none;">
-                    <img src="{{property.image}}" class="card-img br-top-14" alt="...">
-                    <div class="card-body">
-                        <span class="bolder">{{property.title}}</span>
-                        <h5 class="fs-7 bolder">{{property.address.addressLine2}}, {{property.address.city}}
-                        </h5>
+    <!-- <div class="lg flex-row gap-1 aic jcc my-1">
+        <ng-container *ngIf="category === 'Property'" [ngTemplateOutlet]="propertyTypeList"></ng-container>
+        <ng-container *ngIf="category === 'Property'" [ngTemplateOutlet]="consumptionTypeFilter"></ng-container>
+        <div class="flex-row jcc aic gap-1 mx-2" *ngIf="category === 'Property' || category === 'Cars' || category === 'Books' || category === 'Furniture'  || category === 'Electronics'   || category === 'Toys'">
+            <fa-icon [icon]="faTag"></fa-icon>
+            <input type="number" style="width: 100px;border-radius: 0;height: 32px;" [(ngModel)]="minAmount" #ctrl="ngModel" id="minAmount" class="form-control" placeholder="Min">
+            <input type="number" style="width: 100px;border-radius: 0;height: 32px;" [(ngModel)]="maxAmount" #ctrl="ngModel" id="maxAmount" class="form-control" placeholder="Max">
+        </div>
+        <div class="flex-row jcc aic gap-1 mx-2" *ngIf="category === 'Property' && propertyType !=='Garage'  && propertyType !=='Commercial'">
+            <fa-icon [icon]="faBed"></fa-icon>
+            <input type="number" style="width: 100px;border-radius: 0;height: 32px;" [(ngModel)]="minBed" #ctrl="ngModel" id="minBed" class="form-control" placeholder="Min Bed">
+            <input type="number" style="width: 100px;border-radius: 0;height: 32px;" [(ngModel)]="maxBed" #ctrl="ngModel" id="maxBed" class="form-control" placeholder="Max Bed">
+        </div>
+        <button *ngIf="category" type="button" class="btn-13 br-25" (click)="searchProperties()">Go</button>
+    </div> -->
+
+</div>
+
+<ng-template #propertyListScroller>
+    <div class="full-screen mb-2 px-3">
+        <div class="flex-row-scrollable py-2 w-100 gap-1">
+            <div *ngFor="let property of properties" style="height:300px;min-width:300px;margin-right:10px;" [routerLink]="['/ads/p', property.reference]">
+                <div class="flex-column" style="border:none;cursor: pointer;">
+                    <img src="{{property.image}}" alt="...">
+                    <div class="flex-column">
+                        <div class="d-flex card-title p-2">
+                            <span class="bolder">{{property.title}}</span>
+                        </div>
+                        <span class="fs-7 bolder">{{property.address.addressLine2}},
+                            {{property.address.city}}
+                        </span>
                         <div class="flex-row jcsb aic">
-                            <span>{{property.datePosted | dateAgo}}</span>
                             <span class="bolder">{{property.price |
                                 currency:'GBP'}}</span>
+                            <span>{{property.datePosted |
+                                dateAgo}}</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</ng-template>
+
+<ng-template #adListScroller>
+    <div class="full-screen mb-2 px-3">
+        <div class="flex-row-scrollable py-2 w-100 gap-1">
+            <div *ngFor="let ad of ads" style="height:300px;min-width:300px;">
+                <div class="flex-column" style="border:none;cursor: pointer;">
+                    <img src="{{ad.image}}" alt="...">
+                    <div class="flex-column">
+                        <div class="d-flex card-title p-2">
+                            <span class="bolder">{{ad.title}}</span>
+                        </div>
+                        <span class="fs-7 bolder">{{ad.address.addressLine2}},
+                            {{ad.address.city}}
+                        </span>
+                        <div class="flex-row jcsb aic">
+                            <span class="bolder">{{ad.price |
+                                currency:'GBP'}}</span>
+                            <span>{{ad.datePosted |
+                                dateAgo}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #adList>
+    <div *ngIf="category !== 'Property'" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 gap-1">
+        <div class="col mb-4" *ngFor="let ad of ads">
+            <div class="flex-column" style="border:none;cursor: pointer;">
+                <img src="{{ad.image}}" class="card-img" alt="...">
+                <div class="flex-column">
+                    <div class="d-flex card-title p-2">
+                        <span class="bolder">{{ad.title}}</span>
+                    </div>
+                    <span class="fs-7 bolder">{{ad.address.addressLine2}},
+                        {{ad.address.city}}
+                    </span>
+                    <div class="flex-row jcsb aic">
+                        <span class="bolder">{{ad.price |
+                            currency:'GBP'}}</span>
+                        <span>{{ad.datePosted | dateAgo}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #propertyList>
+    <div class="flex-column">
+        <span class="bolder fs-5 my-3">Properties</span>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 gap-1">
+            <div class="col mb-4" *ngFor="let property of properties " [routerLink]="[ '/ads/p', property.reference] ">
+                <div class="flex-column" style="border:none;cursor: pointer;">
+                    <img src="{{property.image}}" class="card-img" alt="...">
+                    <div class="flex-column">
+                        <div class="d-flex card-title p-2">
+                            <span class="bolder">{{property.title}}</span>
+                        </div>
+                        <span class="fs-7 bolder">{{property.address.addressLine2}},
+                            {{property.address.city}}
+                        </span>
+                        <div class="flex-row jcsb aic">
+                            <span class="bolder">{{property.price |
+                                currency:'GBP'}}</span>
+                            <span>{{property.datePosted |
+                                dateAgo}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ng-template>
 
 <ng-template #categoryList>
     <div class="flex-column">
@@ -62,22 +185,26 @@
     </div>
 </ng-template>
 <ng-template #propertyTypeList>
-    <div class="flex-column my-1">
-        <span>Property Type</span>
-        <select class="form-select" (change)="onChangePropertyTypeList($event)">
-            <option default>Any</option>
-            <option value="Flat">Flat</option>
-            <option value="Detached">Detached</option>
-            <option value="Semi-detached">Semi-detached</option>
-            <option value="Bungalow">Bungalow</option>
-            <option value="Garage">Garage</option>
-            <option value="Commercial">Commercial</option>
-        </select>
+    <div class="flex-column mb-2">
+        <span class="bold">Property Type</span>
+        <div class="flex-row my-1 jcc aic gap-1">
+            <select class="form-select" (change)="onChangePropertyTypeList($event)">
+                <option default>Any</option>
+                <option value="Flat">Flat</option>
+                <option value="Detached">Detached</option>
+                <option value="Semi-detached">Semi-detached</option>
+                <option value="Bungalow">Bungalow</option>
+                <option value="Car Park">Car Park</option>
+                <option value="Garage">Garage</option>
+                <option value="Commercial">Commercial</option>
+            </select>
+        </div>
     </div>
 </ng-template>
 <ng-template #consumptionTypeFilter>
-    <div class="flex-column my-1">
-        <div class="mydict flex-row flex-wrap">
+    <div class="flex-column mb-2">
+        <span class="bold">Whats your intend?</span>
+        <div class="mydict flex-row">
             <div>
                 <label>
                     <input id="Sale" value="Sale" type="radio" name="radio"
@@ -97,28 +224,36 @@
             </div>
         </div>
     </div>
+
 </ng-template>
 <ng-template #priceRangeFilter>
-    <div class="flex-column w-100">
-        <span>Price Range</span>
-        <div class="flex-row w-100 flex-grow gap-1">
-            <div class="input-group flex-grow" style="width: 100px; font-size: 12px;">
-                <div class="bg-light border jcc aic d-flex p-2 br-tl-7 br-bl-7">£</div>
-                <input type="number" [(ngModel)]="minAmount" #ctrl="ngModel" min="0.00" step="1" value="1.00" id="minAmount" class="form-control" placeholder="Min">
-            </div>
-            <div class="input-group flex-grow" style="width: 100px; font-size: 12px;">
-                <div class="bg-light border jcc aic d-flex p-2 br-tl-7 br-bl-7">£</div>
-                <input type="number" [(ngModel)]="maxAmount" #ctrl="ngModel" min="0.00" step="1" value="1.00" id="maxAmount" class="form-control" placeholder="Max">
-            </div>
+    <div class="flex-column w-100 mb-2">
+        <span class="bold">Price Range</span>
+        <div class="flex-row aic gap-1" *ngIf="category === 'Property' || category === 'Cars' || category === 'Books' || category === 'Furniture'  || category === 'Electronics'   || category === 'Toys'">
+            <input type="number" style="width: 100px;border-radius: 0;height: 32px;" [(ngModel)]="minAmount" #ctrl="ngModel" id="minAmount" class="form-control" placeholder="Min">
+            <input type="number" style="width: 100px;border-radius: 0;height: 32px;" [(ngModel)]="maxAmount" #ctrl="ngModel" id="maxAmount" class="form-control" placeholder="Max">
         </div>
     </div>
 </ng-template>
 <ng-template #bedroomsFilter>
-    <div class="flex-column w-100 my-2">
-        <span>Bedrooms</span>
-        <div class="flex-row gap-1 flex-grow w-100">
-            <input style="width: 100px; font-size: 12px;" type="number" [(ngModel)]="minBed" #ctrl="ngModel" min="0.00" step="1" value="1.00" id="minBed" class="form-control" placeholder="Min Bed">
-            <input style="width: 100px; font-size: 12px;" type="number" [(ngModel)]="maxBed" #ctrl="ngModel" min="0.00" step="1" value="1.00" id="maxBed" class="form-control" placeholder="Max Bed">
+    <div class="flex-column w-100 mb-2">
+        <span class="bold">Bedrooms</span>
+        <div class="flex-row aic gap-1" *ngIf="category === 'Property' && propertyType !=='Garage'  && propertyType !=='Commercial'">
+            <input type="number" style="width: 100px;border-radius: 0;height: 32px;" [(ngModel)]="minBed" #ctrl="ngModel" id="minBed" class="form-control" placeholder="Min Bed">
+            <input type="number" style="width: 100px;border-radius: 0;height: 32px;" [(ngModel)]="maxBed" #ctrl="ngModel" id="maxBed" class="form-control" placeholder="Max Bed">
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #priceFilterRow>
+    <div class="flex-row gap-1 p-3 jcc aic">
+        <div class="input-group" style="width: 100px; font-size: 12px;">
+            <div class="bg-light border jcc aic d-flex p-2 br-tl-7 br-bl-7">£</div>
+            <input type="number" [(ngModel)]="minAmount" #ctrl="ngModel" min="0.00" step="1" value="1.00" id="minAmount" class="form-control" placeholder="Min">
+        </div>
+        <div class="input-group" style="width: 100px; font-size: 12px;">
+            <div class="bg-light border jcc aic d-flex p-2 br-tl-7 br-bl-7">£</div>
+            <input type="number" [(ngModel)]="maxAmount" #ctrl="ngModel" min="0.00" step="1" value="1.00" id="maxAmount" class="form-control" placeholder="Max">
         </div>
     </div>
 </ng-template>
@@ -143,6 +278,13 @@
                 <small>Clear</small>
             </div>
         </div>
+    </div>
+</ng-template>
+<ng-template #bedFilterRow>
+    <div class="flex-row gap-1 p-3 jcc aic">
+        <input style="width: 100px; font-size: 12px;" type="number" [(ngModel)]="minBed" #ctrl="ngModel" min="0.00" step="1" value="1.00" id="minBed" class="form-control" placeholder="Min Bed">
+        <input style="width: 100px; font-size: 12px;" type="number" [(ngModel)]="maxBed" #ctrl="ngModel" min="0.00" step="1" value="1.00" id="maxBed" class="form-control" placeholder="Max Bed">
+        <small>Clear</small>
     </div>
 </ng-template>
 <ng-template #bedFilter>

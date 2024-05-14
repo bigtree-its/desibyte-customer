@@ -1,6 +1,6 @@
 <div class="container mb-5">
     <ng-container *ngIf="!user" [ngTemplateOutlet]="auth"></ng-container>
-    <ng-container *ngIf="user" [ngTemplateOutlet]="postAdTemplate"></ng-container>  
+    <ng-container *ngIf="user" [ngTemplateOutlet]="postAdTemplate"></ng-container>
 </div>
 
 <ng-template #postAdTemplate>
@@ -33,11 +33,12 @@
                     <option value="Detached">Detached House</option>
                     <option value="Semi-detached">Semi-detached</option>
                     <option value="Terraced">Terraced House</option>
+                    <option value="Car Park">Car Park</option>
                     <option value="Garage">Garage</option>
                     <option value="Commercial">Commercial</option>
                 </select>
             </div>
-            <div class="flex-column ml-3"  *ngIf="category==='Property' && propertyType !== 'Garage' && propertyType !== 'Commercial'">
+            <div class="flex-column ml-3" *ngIf="category==='Property' && propertyType !== 'Garage' && propertyType !== 'Commercial'">
                 <span class="bolder py-1">Property Tenure</span>
                 <select class="form-select mb-3" (change)="onChangePropertyTenure($event)">
                     <option default>Please select</option>
@@ -65,7 +66,7 @@
                     <option value="10">10</option>
                 </select>
             </div>
-            <div class="flex-column ml-3"  *ngIf="category==='Property' && propertyType !== 'Garage' && propertyType !== 'Commercial'">
+            <div class="flex-column ml-3" *ngIf="category==='Property' && propertyType !== 'Garage' && propertyType !== 'Commercial'">
                 <span class="bolder py-1">Bathrooms</span>
                 <select class="form-select mb-3" (change)="onChangeBathrooms($event)">
                     <option default>Please select</option>
@@ -147,7 +148,7 @@
 
         <div class="flex-column">
             <span class="bolder py-1">Ad Title</span>
-            <input class="border br-7 p-2"  type="text" name="title" id="title" tabindex="1" autocomplete="off" value [(ngModel)]="title" #ctrl="ngModel">
+            <input class="border br-7 p-2" type="text" name="title" id="title" tabindex="1" autocomplete="off" value [(ngModel)]="title" #ctrl="ngModel">
         </div>
         <div class="flex-column">
             <span class="bolder py-1">Description</span>
@@ -161,19 +162,19 @@
             <span class="bolder py-1">Gallery (<small>Urls comma separated</small>)</span>
             <textarea class="border br-7 p-2" name="gallery" id="gallery" value [(ngModel)]="gallery" tabindex="3" #ctrl="ngModel" style="height: 100px;" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
         </div>
-        <div class="flex-row p-3 box-error my-2 aic jcc" *ngIf="error && errorMessage" >
+        <div class="flex-row p-3 box-error my-2 aic jcc" *ngIf="error && errorMessage">
             <span>{{errorMessage}}</span>
-            <button type="button" class="btn-text ml-5"  (click)="closeAlert()">OK</button>
+            <button type="button" class="btn-text ml-5" (click)="closeAlert()">OK</button>
         </div>
-        <div class="flex-row p-3 box-success my-2 aic jcc" *ngIf="adSubmitted" >
+        <div class="flex-row p-3 box-success my-2 aic jcc" *ngIf="adSubmitted">
             <span>Your ad has been submitted. It will appear on Posts once the it has been approved.</span>
-            <button type="button" class="btn-text ml-5"  (click)="closeAlert()">OK</button>
+            <button type="button" class="btn-text ml-5" (click)="closeAlert()">OK</button>
         </div>
-        
+
         <div class="flex-row jcc aic my-3">
             <button class="btn-13 br-25 px-5 my-2" (click)="postAd()">Post</button>
         </div>
-        
+
     </div>
 </ng-template>
 

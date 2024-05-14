@@ -6,6 +6,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Monofett&display=swap");
 
 /** Logo **/
+
 @import url('https://fonts.googleapis.com/css2?family=Rubik+Vinyl&display=swap');
 :root {
     --blue: #007bff;
@@ -99,6 +100,27 @@ html {
 input,
 select {
     width: 100%;
+}
+
+
+/* Chrome, Safari, Edge, Opera */
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.form-select {
+    height: 32px;
+    font-size: 12px;
+}
+
+
+/* Firefox */
+
+input[type=number] {
+    -moz-appearance: textfield;
 }
 
 .container {
@@ -655,7 +677,7 @@ body {
     font-family: "Rubik Vinyl", system-ui;
     font-weight: 900;
     cursor: pointer;
-    color: coral;
+    color: #1967d2;
 }
 
 .spl-text {
@@ -1185,13 +1207,14 @@ select {
 .aie {
     align-items: flex-end;
 }
-.asfe{
+
+.asfe {
     align-self: flex-end;
 }
-.asfs{
+
+.asfs {
     align-self: flex-start;
 }
-
 
 .flex-row {
     display: flex;
@@ -1234,7 +1257,6 @@ select {
     justify-content: flex-start;
     align-items: flex-start;
 }
-
 
 .space-between {
     justify-content: space-between;
@@ -1294,12 +1316,14 @@ select {
 .italic {
     font-style: italic;
 }
-.box-success{
+
+.box-success {
     background-color: var(--spring);
     color: #000;
     font-weight: 500;
     border-radius: 8px;
 }
+
 .box-error {
     background-color: var(--l-danger);
     color: var(--danger);
@@ -1307,10 +1331,11 @@ select {
     border-radius: 8px;
 }
 
-.alert-close{
+.alert-close {
     cursor: pointer;
 }
-.alert-close:hover{
+
+.alert-close:hover {
     font-weight: 900;
     cursor: pointer;
 }
@@ -1356,7 +1381,6 @@ select {
     white-space: nowrap;
     width: 24px;
 }
-
 
 .btn-text {
     border: 1px solid #000a19;
@@ -1511,6 +1535,10 @@ select {
     color: var(--white);
 }
 
+.card-title {
+    background-color: #f4e603;
+}
+
 .card-img {
     transition: 0.5s ease-in-out;
 }
@@ -1547,14 +1575,15 @@ select {
     color: #1967d2;
 }
 
-.icon{
+.icon {
     border: none;
     background-color: #fdfcfc;
     border-radius: 50%;
     font-weight: bold;
     padding: 5px 9px;
 }
-.icon:hover{
+
+.icon:hover {
     cursor: pointer;
     background-color: #dedede;
 }

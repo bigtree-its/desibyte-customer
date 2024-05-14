@@ -50,6 +50,7 @@ export const environment = {
 
   //Ads
   AdPropertyUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/properties',
+  AdsUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/ads',
 
   /** API Tier**/
   API_Tier_PRIVATE_KEY: 'NYdGEdtZDf7YaKcGhdtYm9D3uzIjau7Y6b1ISLns',
