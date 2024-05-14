@@ -1,6 +1,8 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import {
+  faAnglesRight,
   faBed,
+  faChevronRight,
   faFilter,
   faHome,
   faSort,
@@ -14,6 +16,7 @@ import {
   PropertyAd,
   PropertySearchQuery,
 } from 'src/app/model/all-ads';
+import { Address } from 'src/app/model/common';
 import { AdsService } from 'src/app/services/ads/ads.service';
 
 @Component({
@@ -27,7 +30,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   adService = inject(AdsService);
   modalService = inject(NgbModal);
 
-  location: string;
+  location: Address;
   category: string;
   propertyType: string;
   consumptionType: string;
@@ -43,8 +46,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   faTag = faTag;
   faBed = faBed;
   faHome = faHome;
+  faArrowRight = faChevronRight;
 
   categories: string[] = [
+    'All',
     'Property',
     'Cars',
     'Jobs',
@@ -56,11 +61,21 @@ export class HomeComponent implements OnInit, OnDestroy {
     'Books',
   ];
   showLandingPage: boolean;
+  searchRadius: any;
 
   ngOnInit(): void {
+    this.category = 'All';
+    this.getAll();
+  }
+
+  onEnterAddress(address: Address) {
+    this.location = address;
+    console.log('Address emitted '+ JSON.stringify(address))
+  }
+
+  private getAll() {
     var query: PropertySearchQuery = {};
     query.lastMonth = true;
-    this.showLandingPage = true;
     this.adService.getProperties(query).subscribe((d) => {
       this.properties = d;
       console.log('Result props ' + JSON.stringify(d));
@@ -79,10 +94,12 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   onSelectCategory(e: any) {
     this.category = e;
-    this.showLandingPage = false;
     var adQuery: AdSearchQuery = {};
     adQuery.lastMonth = true;
     switch (this.category) {
+      case 'All':
+        this.getAll();
+        break;
       case 'Property':
         var query: PropertySearchQuery = {};
         query.lastMonth = true;
@@ -134,7 +151,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   private getAds(adQuery: AdSearchQuery) {
     this.adService.getAds(adQuery).subscribe((d) => {
       this.ads = d;
-      console.log('Result ' + JSON.stringify(this.ads));
+      console.log(
+        'Result of ' + adQuery.category + ': ' + JSON.stringify(this.ads)
+      );
     });
   }
 
@@ -175,10 +194,17 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.modalService.dismissAll();
   }
 
+  handleSearchRadius(evt: any) {
+    this.searchRadius = evt.target.value;
+  }
+
   searchProperties() {
     var query: PropertySearchQuery = {};
     if (this.propertyType && this.propertyType !== 'Any') {
       query.type = this.propertyType;
+    }
+    if (this.location) {
+      query.location = this.location.city;
     }
     if (this.consumptionType) {
       query.consumptionType = this.consumptionType;

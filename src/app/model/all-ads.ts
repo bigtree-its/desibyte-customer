@@ -71,6 +71,7 @@ export interface SuperStore {
 export class AdSearchQuery {
   category?: string;
   adOwner?: string;
+  postcode?: string;
   location?: string;
   reference?: string;
   minAmount?: number;
@@ -81,6 +82,7 @@ export class AdSearchQuery {
 export class PropertySearchQuery {
   adOwner?: string;
   location?: string;
+  postcode?: string;
   type?: string;
   reference?: string;
   minAmount?: number;

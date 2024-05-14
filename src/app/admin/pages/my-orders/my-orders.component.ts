@@ -1,10 +1,27 @@
-import { Component, OnDestroy, OnInit, PipeTransform, inject } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  PipeTransform,
+  inject,
+} from '@angular/core';
 import { Router } from '@angular/router';
-import { faArrowLeft, faChevronDown, faChevronUp, faFaceSmile, faPeopleArrows, faStar } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowLeft,
+  faChevronDown,
+  faChevronUp,
+  faFaceSmile,
+  faPeopleArrows,
+  faStar,
+} from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject, map, startWith, takeUntil } from 'rxjs';
 import { User } from 'src/app/model/all-auth';
-import { FoodOrder, LocalChef, OrderSearchQuery } from 'src/app/model/all-foods';
+import {
+  FoodOrder,
+  LocalChef,
+  OrderSearchQuery,
+} from 'src/app/model/all-foods';
 import { PaymentIntentResponse } from 'src/app/model/common';
 import { AccountService } from 'src/app/services/auth/account.service';
 import { ToastService } from 'src/app/services/common/toast.service';
@@ -21,7 +38,6 @@ import { DecimalPipe } from '@angular/common';
   styleUrls: ['./my-orders.component.css'],
 })
 export class MyOrdersComponent implements OnInit, OnDestroy {
-
   // inject dependencies
   accountService = inject(AccountService);
   orderService = inject(FoodOrderService);
@@ -45,7 +61,6 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
   chevronDown = faChevronDown;
   chevronUp = faChevronUp;
 
-
   openSupplier: boolean = true;
   showSupplier: boolean = false;
 
@@ -61,8 +76,7 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   orderRefernce: any;
 
-  constructor() {
-	}
+  constructor() {}
 
   ngOnInit() {
     console.log('Init. Customer orders');
@@ -87,15 +101,17 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
       let observable = this.orderService.getFoodOrders(orderSearchQuery);
       observable.subscribe((e) => {
         if (Utils.isValid(e)) {
-          this.orders = e;
-          console.log('Orders ' + this.orders.length);
-          if ( this.orders){
-            this.myOrders$ = this.filter.valueChanges.pipe(
-              startWith(''),
-              map((text) => this.search(text, this.decimalPipe)),
-            );
-            console.log('My Orders$ '+ JSON.stringify(this.myOrders$))
-          }
+          const sortedArray = e
+            .slice()
+            .sort((a, b) => {
+              return <any>new Date(b.dateCreated) - <any>new Date(a.dateCreated);
+            });
+          this.orders = sortedArray;
+          this.myOrders$ = this.filter.valueChanges.pipe(
+            startWith(''),
+            map((text) => this.search(text, this.decimalPipe))
+          );
+          console.log('My Orders$ ' + JSON.stringify(this.myOrders$));
         }
       });
     }
@@ -106,8 +122,8 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
       const term = text.toLowerCase();
       return (
         order.reference.toLowerCase().includes(term) ||
-        pipe.transform(order.status).includes(term) || 
-        pipe.transform(order.total).includes(term) 
+        pipe.transform(order.status).includes(term) ||
+        pipe.transform(order.total).includes(term)
       );
     });
   }
@@ -156,7 +172,7 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
-        (result) => { },
+        (result) => {},
         (reason) => {
           // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         }
@@ -168,7 +184,7 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
   }
 
   submit() {
-    this.performAction("Submit");
+    this.performAction('Submit');
   }
 
   private performAction(action: string) {
@@ -195,22 +211,27 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
   }
 
   cancel() {
-    this.performAction("Cancel");
+    this.performAction('Cancel');
   }
 
   delete() {
-    this.performAction("Delete");
+    this.performAction('Delete');
   }
 
-  update() { }
+  update() {}
 
   pay() {
-    let observable = this.orderService.fetchPaymentIntent(this.viewOrder.reference, null);
+    let observable = this.orderService.fetchPaymentIntent(
+      this.viewOrder.reference,
+      null
+    );
     observable.pipe(takeUntil(this.destroy$)).subscribe({
       next: (e) => {
         if (Utils.isValid(e)) {
           var paymentIntent: PaymentIntentResponse[] = e;
-          this.router.navigateByUrl("/make_payment?intent=" + paymentIntent[0].intentId);
+          this.router.navigateByUrl(
+            '/make_payment?intent=' + paymentIntent[0].intentId
+          );
         }
         console.log('Payment Intent ' + JSON.stringify(e));
       },

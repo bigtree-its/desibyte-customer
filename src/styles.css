@@ -677,7 +677,7 @@ body {
     font-family: "Rubik Vinyl", system-ui;
     font-weight: 900;
     cursor: pointer;
-    color: #1967d2;
+    color: #d21919;
 }
 
 .spl-text {
@@ -1536,7 +1536,7 @@ select {
 }
 
 .card-title {
-    background-color: #f4e603;
+    background-color: #f4f4f1;
 }
 
 .card-img {

@@ -54,6 +54,8 @@ label:last-child span {
     font-size: 12px;
     justify-content: center;
     align-items: center;
+    font-weight: 900;
+    opacity: 0.6;
 }
 
 .category:hover {
@@ -64,5 +66,6 @@ label:last-child span {
 
 .selectedCategory {
     color: white;
+    opacity: 1.0;
     background-color: coral;
 }
