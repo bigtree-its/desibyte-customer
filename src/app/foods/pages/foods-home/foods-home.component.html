@@ -13,25 +13,7 @@
                 <div class="slider-text3">Made with love</div>
             </div>
         </div>
-        <div class="flex-column mt-5 w-100" style="max-width: 426px;position:relative;">
-            <div class="flex-row jcsb w-100" >
-                <input class="fb-input" type="text" name="postcode" id="postcode" tabindex="4" autocomplete="off" value
-                    [(ngModel)]="addressLookupPostcode" #ctrl="ngModel" placeholder="Enter your postcode"
-                    (keyup.enter)="onEnter(content)">
-                <button class="btn-12 py-2" (click)="findAddress()">Find</button>
-            </div>
-            <div *ngIf="postcodeAddressList && showAddressList" class="bg-light flex-column"
-                style="border: 1px solid #f3f3f3;overflow-y: auto;max-height: 200px;padding: 5px;position: absolute;left: 3.5%;top: 100%;">
-                <div class="flex-row jcsb aic p-2 my-1">
-                    <span class="bolder">{{postcodeAddressList.length}} addresses found</span>
-                    <fa-icon [icon]="faClose" class="btn-circle" (click)="closeServiceLocations()"></fa-icon>
-                </div>
-                <div class="address-item" *ngFor="let add of postcodeAddressList" (click)="onSelectDeliveryAddress(add)">
-                    <span> {{add.StreetAddress }},
-                        {{add.Place}}</span>
-                </div>
-            </div>
-        </div>
+        <app-postcode-lookup></app-postcode-lookup>
         
         <!-- <div class="hp-search-container">
             <div class="flex-row jcsb w-100">
@@ -47,7 +29,7 @@
         <strong style="font-size: 22px;font-weight: 800;" class="color-navy">Top
             Locations</strong>
         <div class="flex-row flex-wrap aic gap-1 jcc aic">
-            <span class="clickable border my-2 py-3 px-5" *ngFor="let pd of postcodeDistricts"
+            <span class="btn-text my-2 py-3 px-5" *ngFor="let pd of postcodeDistricts"
                 [routerLink]="['/f/area', pd.slug]">{{pd.area}}</span>
         </div>
     </div>

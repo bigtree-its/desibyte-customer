@@ -28,13 +28,13 @@ export class PostcodeLookupComponent {
 
   @Output() addressEmitter = new EventEmitter<Address>;
   addressLookupResponse: APITierResponse;
-  
+
 
   onEnter() {
-    if (this.addressLookupPostcode &&this.addressLookupPostcode.length >= 5) {
+    if (this.addressLookupPostcode && this.addressLookupPostcode.length >= 5) {
       this.doFakeLookup();
     }
-   
+
   }
   closeServiceLocations() {
     this.showAddressList = false;
@@ -44,40 +44,50 @@ export class PostcodeLookupComponent {
   }
 
   findAddress() {
-    if (this.addressLookupPostcode &&this.addressLookupPostcode.length >= 5) {
+    if (this.addressLookupPostcode && this.addressLookupPostcode.length >= 5) {
       this.doApiTierPostcodeLookup();
     }
   }
 
   onSubmitPostcodeLookup() {
     console.log('Search address form submitted..');
-    if (this.addressLookupPostcode &&this.addressLookupPostcode.length >= 5) {
+    if (this.addressLookupPostcode && this.addressLookupPostcode.length >= 5) {
       this.doApiTierPostcodeLookup();
     }
   }
 
-  doApiTierPostcodeLookup(){
+  doApiTierPostcodeLookup() {
     this.apiTierService
-    .lookupAddresses(this.addressLookupPostcode.trim())
-    // .pipe(first())
-    .subscribe(
-      (data: APITierResponse) => {
-        // this.postcodeAddressList = data.Summaries;
-        if ( data && data.noOfItems> 0){
-          this.addressSelected = false;
-          this.showAddressList = true;
-          this.addressLookupResponse = data;
+      .lookupAddresses(this.addressLookupPostcode.trim())
+      // .pipe(first())
+      .subscribe(
+        (data: APITierResponse) => {
+          console.log('Address Lookup response ' + JSON.stringify(data));
+          if (data && data.noOfItems > 0) {
+            this.addressSelected = false;
+            this.showAddressList = true;
+            
+            var sortedArray: APITierAddress[] = data.result.addresses.sort((n1, n2) => {
+              if (n1.building_number > n2.building_number) {
+                return 1;
+              }
+              if (n1.building_number < n2.building_number) {
+                return -1;
+              }
+              return 0;
+            });
+            console.log('Sorted address : '+ JSON.stringify(sortedArray))
+            data.result.addresses = sortedArray;
+            this.addressLookupResponse = data;
+          }
+        },
+        (error) => {
+          console.log('Address Lookup resulted an error.' + JSON.stringify(error));
         }
-        
-        console.log('Address Lookup response ' +JSON.stringify(data));
-      },
-      (error) => {
-        console.log( 'Address Lookup resulted an error.' + JSON.stringify(error));
-      }
-    );
+      );
   }
 
-  doFakeLookup(){
+  doFakeLookup() {
     this.postcodeAddressList = [{
       Id: 0,
       StreetAddress: '359, Glasgow Road, Eaglesham',
@@ -88,19 +98,19 @@ export class PostcodeLookupComponent {
       StreetAddress: '361, Glasgow Road, Eaglesham',
       Place: 'Glasgow'
     }
-    ,
+      ,
     {
       Id: 1,
       StreetAddress: '361, Glasgow Road, Eaglesham',
       Place: 'Glasgow'
     }
-    ,
+      ,
     {
       Id: 1,
       StreetAddress: '361, Glasgow Road, Eaglesham',
       Place: 'Glasgow'
     }
-    ,
+      ,
     {
       Id: 1,
       StreetAddress: '361, Glasgow Road, Eaglesham',
@@ -131,62 +141,62 @@ export class PostcodeLookupComponent {
       StreetAddress: '361, Glasgow Road, Eaglesham',
       Place: 'Glasgow'
     }
-    ,
+      ,
     {
       Id: 1,
       StreetAddress: '361, Glasgow Road, Eaglesham',
       Place: 'Glasgow'
     }
-    ,
+      ,
     {
       Id: 1,
       StreetAddress: '361, Glasgow Road, Eaglesham',
       Place: 'Glasgow'
     }
-    ,
+      ,
     {
       Id: 1,
       StreetAddress: '361, Glasgow Road, Eaglesham',
       Place: 'Glasgow'
     }
-    ,
+      ,
     {
       Id: 1,
       StreetAddress: '361, Glasgow Road, Eaglesham',
       Place: 'Glasgow'
     }
-    ,
+      ,
     {
       Id: 1,
       StreetAddress: '361, Glasgow Road, Eaglesham',
       Place: 'Glasgow'
     }
-    ,
+      ,
     {
       Id: 1,
       StreetAddress: '361, Glasgow Road, Eaglesham',
       Place: 'Glasgow'
     }
-    ,
+      ,
     {
       Id: 1,
       StreetAddress: '361, Glasgow Road, Eaglesham',
       Place: 'Glasgow'
     }
-    ,
+      ,
     {
       Id: 1,
       StreetAddress: '361, Glasgow Road, Eaglesham',
       Place: 'Glasgow'
     }
-    ,
+      ,
     {
       Id: 1,
       StreetAddress: '361, Glasgow Road, Eaglesham',
       Place: 'Glasgow'
     }
 
-  ]
+    ]
     this.addressSelected = false;
     this.showAddressList = true;
   }
@@ -200,17 +210,17 @@ export class PostcodeLookupComponent {
           this.postcodeAddressList = data.Summaries;
           this.addressSelected = false;
           this.showAddressList = true;
-          console.log('Address Lookup response ' +JSON.stringify(this.postcodeAddressList));
+          console.log('Address Lookup response ' + JSON.stringify(this.postcodeAddressList));
         },
         (error) => {
-          console.log( 'Address Lookup resulted an error.' + JSON.stringify(error));
+          console.log('Address Lookup resulted an error.' + JSON.stringify(error));
         }
       );
   }
 
-  
+
   onSelectDeliveryAddress(selectAddress: RapidApiByPostcodeResponseSummary) {
-    
+
     // var city = selectAddress.Place.split(/[\s ]+/).pop();
     this.customerAddress = {
       city: selectAddress.Place,
@@ -222,7 +232,7 @@ export class PostcodeLookupComponent {
       longitude: '',
     };
     this.addressSelected = true;
-    console.log('User clicked '+ JSON.stringify(this.customerAddress))
+    console.log('User clicked ' + JSON.stringify(this.customerAddress))
     this.addressEmitter.emit(this.customerAddress);
     this.selectedAddress = Utils.addressToShortString(this.customerAddress);
     this.showAddressList = false;
@@ -230,7 +240,7 @@ export class PostcodeLookupComponent {
   }
 
   onSelectApiTierAddress(address: APITierAddress) {
-    
+
     // var city = selectAddress.Place.split(/[\s ]+/).pop();
     this.customerAddress = {
       city: address.post_town,
@@ -242,7 +252,7 @@ export class PostcodeLookupComponent {
       longitude: this.addressLookupResponse.result.geocode.longitude,
     };
     this.addressSelected = true;
-    console.log('User clicked '+ JSON.stringify(this.customerAddress))
+    console.log('User clicked ' + JSON.stringify(this.customerAddress))
     this.addressEmitter.emit(this.customerAddress);
     this.selectedAddress = Utils.addressToShortString(this.customerAddress);
     this.showAddressList = false;

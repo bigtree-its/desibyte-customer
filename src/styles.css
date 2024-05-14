@@ -6,8 +6,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Monofett&display=swap");
 
 /** Logo **/
-
-@import url('https://fonts.googleapis.com/css2?family=Passero+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Vinyl&display=swap');
 :root {
     --blue: #007bff;
     --indigo: #6610f2;
@@ -653,9 +652,10 @@ body {
 }
 
 .logo-text {
-    font-family: "Passero One", sans-serif;
+    font-family: "Rubik Vinyl", system-ui;
     font-weight: 900;
     cursor: pointer;
+    color: coral;
 }
 
 .spl-text {
@@ -1547,6 +1547,18 @@ select {
     color: #1967d2;
 }
 
+.icon{
+    border: none;
+    background-color: #fdfcfc;
+    border-radius: 50%;
+    font-weight: bold;
+    padding: 5px 9px;
+}
+.icon:hover{
+    cursor: pointer;
+    background-color: #dedede;
+}
+
 .pointer {
     cursor: pointer;
 }
@@ -1554,7 +1566,7 @@ select {
 .clickable {
     border: none;
     background-color: #fdfcfc;
-    border-radius: 50%;
+    border-radius: 25px;
     font-weight: bold;
     padding: 5px 9px;
 }

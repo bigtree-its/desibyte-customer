@@ -1,7 +1,7 @@
 <div class="container-fluid overflow-y mb-5">
 
     <div class="sm flex-column my-2 p-2">
-        <app-postcode-lookup class="w-100"></app-postcode-lookup>
+        <app-postcode-lookup></app-postcode-lookup>
         <div class="flex-row jcsb aic p-2 gap-1 w-100">
             <ng-container [ngTemplateOutlet]="categoryList"></ng-container>
             <div class="flex-row border p-2 br-7 gap-1 px-3" (click)="openModal(filterModal)">
@@ -27,8 +27,8 @@
     <div class="flex-column">
         <span class="bolder fs-5 my-3">Latest</span>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-            <div class="col mb-4 br-12" *ngFor="let property of properties " [routerLink]="[ '/ads/p', property.reference] ">
-                <div class="card br-12 chef-card" style="border:none;">
+            <div class="col mb-4" *ngFor="let property of properties " [routerLink]="[ '/ads/p', property.reference] ">
+                <div class="card chef-card" style="border:none;">
                     <img src="{{property.image}}" class="card-img br-top-14" alt="...">
                     <div class="card-body">
                         <span class="bolder">{{property.title}}</span>
