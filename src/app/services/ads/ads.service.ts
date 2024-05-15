@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { AdSearchQuery, GeneralAd, PropertyAd, PropertySearchQuery } from 'src/app/model/all-ads';
+import { AdEnquiry, AdEnquiryResponse, AdSearchQuery, GeneralAd, PropertyAd, PropertySearchQuery } from 'src/app/model/all-ads';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ServiceLocator } from '../common/service.locator';
 import { Observable, tap } from 'rxjs';
@@ -13,6 +13,17 @@ export class AdsService {
  
   private httpClient = inject(HttpClient);
   private serviceLocator = inject(ServiceLocator);
+
+  sendEnquiry(enquiry: AdEnquiry): Observable<AdEnquiryResponse>{
+    console.log('Posting a enquiry for ad '+ JSON.stringify(enquiry));
+    return this.httpClient
+      .post<AdEnquiryResponse>(this.serviceLocator.AdEnquiryUrl, enquiry)
+      .pipe(
+        tap((result) => {
+          console.log('Ad enquiry response ' + JSON.stringify(result));
+        })
+      );
+  }
 
   postProperty(propertyAd: PropertyAd) {
     console.log('Posting a property ad '+ JSON.stringify(propertyAd));

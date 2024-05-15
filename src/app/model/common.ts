@@ -26,6 +26,15 @@ export class Customer {
   address: Address;
 }
 
+export class AdOwner {
+  _id: string;
+  name: string;
+  email: string;
+  mobile: string;
+  telephone?: string;
+  address: Address;
+}
+
 export class Address {
   propertyNumber?: string;
   addressLine1: string;

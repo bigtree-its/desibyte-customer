@@ -42,6 +42,7 @@ export class ServiceLocator {
   PostcodeDistrictsUrl: string;
   
   //Ads
+  AdEnquiryUrl: string;
   AdPropertyUrl: string;
   AdsUrl: string;
 
@@ -82,6 +83,7 @@ export class ServiceLocator {
 
     this.AdPropertyUrl = environment.AdPropertyUrl;
     this.AdsUrl = environment.AdsUrl;
+    this.AdEnquiryUrl = environment.AdEnquiryUrl;
     
   }
 }

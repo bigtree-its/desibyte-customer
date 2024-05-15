@@ -44,7 +44,7 @@
     </div>
     <!-- Filter-->
     <div class="row">
-        <div class="lg col-md-3 flex-column gap-1 border-right">
+        <div class="lg col-md-1 col-lg-2 col-xl-3 flex-column gap-1">
             <span class="bolder fs-6 pb-3">Filters</span>
             <div class="flex-column mb-2">
                 <span class="bolder">Location</span>
@@ -56,17 +56,22 @@
             <ng-container *ngIf="category === 'Property' && propertyType !=='Garage'  && propertyType !=='Commercial'" [ngTemplateOutlet]="bedroomsFilter"></ng-container>
             <button *ngIf="category" type="button" class="btn-13 br-25" (click)="searchProperties()">Go</button>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-11 col-lg-10 col-xl-9 ">
             <div class="flex-column" *ngIf="category==='All'">
-                <div (click)="onSelectCategory('Property')" class="d-flex aic gap-1">
+                <div class="d-flex jcsb aic gap-1">
                     <b class="bolder fs-5 ">Latest Properties </b>
-                    <fa-icon [icon]="faArrowRight" class="cursor-pointer"></fa-icon>
+                    <b (click)="onSelectCategory('Property')" class="cursor-pointer link">See all</b>
+                    <!-- <fa-icon [icon]="faArrowRight" class="cursor-pointer"></fa-icon> -->
                 </div>
                 <ng-container [ngTemplateOutlet]="propertyListScroller"></ng-container>
                 <!-- <button class="btn btn-sm btn-link asfe" title="Show more properties">Show more</button> -->
-                <b class="bolder fs-5 ">Latest Ads</b>
+                <div class="d-flex jcsb aic gap-1">
+                    <b class="bolder fs-5 ">Latest Ads </b>
+                    <b (click)="onSelectCategory('Ad')" class="cursor-pointer link">See all</b>
+                    <!-- <fa-icon [icon]="faArrowRight" class="cursor-pointer"></fa-icon> -->
+                </div>
                 <ng-container [ngTemplateOutlet]="adListScroller"></ng-container>
-                <button class="btn btn-sm btn-link asfe" (click)="onSelectCategory('Ad')" title="Show more ads">Show more</button>
+                <!-- <button class="btn btn-sm btn-link asfe" (click)="onSelectCategory('Ad')" title="Show more ads">Show more</button> -->
             </div>
             <div class="flex-column" *ngIf="category!=='All'">
                 <ng-container *ngIf="category === 'Property'" [ngTemplateOutlet]="propertyList"></ng-container>

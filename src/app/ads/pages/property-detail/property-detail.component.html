@@ -52,11 +52,12 @@
             </div>
             <ng-container [ngTemplateOutlet]="infoSection"></ng-container>
         </div>
-        <div class="col-md-4 border" style="min-height: 100vh;overflow-y: auto; margin-bottom: 100px;">
-            <div class="py-2 flex-column flex-start">
+        <div class="col-md-4 border asfs py-3 bg-light">
+            <div class="py-2 flex-column asfs">
                 <span class="bolder py-2">Ad Posted By</span>
-                <span class="py-1">{{property.adOwner.name}}</span>
-                <app-contact-form></app-contact-form>
+                <span class="py-1 mb-3">{{property.adOwner.name}}</span>
+                <span *ngIf="!user" [routerLink]="['/login']" [queryParams]="{returnUrl: returnUrl}" class="btn-link cursor-pointer">Login to send enquiry</span>
+                <app-contact-form *ngIf="user" [user]="user" [property]="property"></app-contact-form>
             </div>
         </div>
     </div>

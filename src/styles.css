@@ -1539,6 +1539,15 @@ select {
     background-color: #f4f4f1;
 }
 
+.link {
+    color: #000;
+}
+
+.link:hover {
+    cursor: pointer;
+    color: #1967d2;
+}
+
 .card-img {
     transition: 0.5s ease-in-out;
 }

@@ -1,4 +1,4 @@
-import { Address, Customer, NameValue } from './common';
+import { Address, AdOwner, Customer, NameValue } from './common';
 
 export class GeneralAd {
   category: string;
@@ -12,7 +12,7 @@ export class GeneralAd {
   price: number;
   dateAvailable: Date;
   datePosted: Date;
-  adOwner: Customer;
+  adOwner: AdOwner;
   featured?: boolean;
   approved?: boolean;
   active?: boolean;
@@ -39,7 +39,7 @@ export class PropertyAd {
   datePosted: Date;
   bedrooms: number;
   bathrooms: number;
-  adOwner: Customer;
+  adOwner: AdOwner;
   featured?: boolean;
   schools?: School[];
   superStores?: SuperStore[];
@@ -92,4 +92,18 @@ export class PropertySearchQuery {
   consumptionType?: string;
   lastWeek?: boolean;
   lastMonth?: boolean;
+}
+
+export class AdEnquiry {
+  adOwner: AdOwner;
+  reference: string;
+  category: string;
+  message: string;
+  customer: Customer;
+  date: Date;
+}
+export class AdEnquiryResponse {
+  adEnquiry: AdEnquiry;
+  response: string;
+  date: Date;
 }

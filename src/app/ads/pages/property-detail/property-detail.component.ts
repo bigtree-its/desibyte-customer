@@ -52,6 +52,9 @@ export class PropertyDetailComponent implements OnInit {
   faHouse= faHouse;
   faBed= faBed;
   faBath= faBath;
+  user: User;
+  propertyId: any;
+  returnUrl: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -66,10 +69,19 @@ export class PropertyDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.accountService.getData();
+    this.accountService.loginSession$.subscribe({
+      next: (value) => {
+        this.user = value;
+      },
+      error: (err) => console.error('User$ emitted an error: ' + err),
+      complete: () => console.log('User$ emitted the complete notification'),
+    });
     this.activatedRoute.params.subscribe(params => {
-      const propertyId = params['id'];
+      this.propertyId = params['id'];
+      this.returnUrl = '/ads/p/'+ this.propertyId;
       console.log(`Property Reference: ${params['id']}`);
-      this.propertyService.getProperty(propertyId).subscribe(result => {
+      this.propertyService.getProperty(this.propertyId).subscribe(result => {
         if ( result && result.length > 0){
           this.property = result[0];
           console.log('The property : ' + JSON.stringify(this.property));
@@ -84,7 +96,6 @@ export class PropertyDetailComponent implements OnInit {
           //   this.gallery.push(p);
           // })
         }
-        
       });
     })
 
