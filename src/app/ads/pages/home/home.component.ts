@@ -1,6 +1,8 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   faAnglesRight,
+  faArrowLeft,
+  faArrowRight,
   faBed,
   faChevronRight,
   faFilter,
@@ -26,6 +28,8 @@ import { AdsService } from 'src/app/services/ads/ads.service';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<void>();
+  @ViewChild('widgetsContent', { read: ElementRef })
+  public widgetsContent: ElementRef<any>;
 
   adService = inject(AdsService);
   modalService = inject(NgbModal);
@@ -46,7 +50,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   faTag = faTag;
   faBed = faBed;
   faHome = faHome;
-  faArrowRight = faChevronRight;
+  // faArrowRight = faChevronRight;
+  faArrowLeft = faArrowLeft;
+  faArrowRight = faArrowRight;
 
   categories: string[] = [
     'All',
@@ -68,9 +74,23 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.getAll();
   }
 
-  onEnterAddress(address: Address) {
+  onEmitAddress(address: Address) {
     this.location = address;
     console.log('Address emitted '+ JSON.stringify(address))
+  }
+
+  public scrollRight(): void {
+    this.widgetsContent.nativeElement.scrollTo({
+      left: this.widgetsContent.nativeElement.scrollLeft + 150,
+      behavior: 'smooth',
+    });
+  }
+
+  public scrollLeft(): void {
+    this.widgetsContent.nativeElement.scrollTo({
+      left: this.widgetsContent.nativeElement.scrollLeft - 150,
+      behavior: 'smooth',
+    });
   }
 
   private getAll() {
@@ -78,13 +98,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     query.lastMonth = true;
     this.adService.getProperties(query).subscribe((d) => {
       this.properties = d;
-      console.log('Result props ' + JSON.stringify(d));
     });
     var adQuery: AdSearchQuery = {};
     adQuery.lastMonth = true;
     this.adService.getAds(adQuery).subscribe((d) => {
       this.ads = d;
-      console.log('Result Ads ' + JSON.stringify(d));
     });
   }
 
@@ -105,7 +123,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         query.lastMonth = true;
         this.adService.getProperties(query).subscribe((d) => {
           this.properties = d;
-          console.log('Result ' + JSON.stringify(this.properties));
         });
         break;
       case 'Cars':

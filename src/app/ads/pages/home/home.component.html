@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="sm my-2 p-2 flex-column">
-        <app-postcode-lookup (addressEmitter)="onEnterAddress($event)"></app-postcode-lookup>
+        <app-postcode-lookup (addressEmitter)="onEmitAddress($event)"></app-postcode-lookup>
         <div class="flex-column" *ngIf="location">
             <div class="radio-buttons-container">
                 <div class="radio-button">
@@ -48,7 +48,7 @@
             <span class="bolder fs-6 pb-3">Filters</span>
             <div class="flex-column mb-2">
                 <span class="bolder">Location</span>
-                <app-postcode-lookup (addressEmitter)="onEnterAddress($event)"></app-postcode-lookup>
+                <app-postcode-lookup (addressEmitter)="onEmitAddress($event)"></app-postcode-lookup>
             </div>
             <ng-container *ngIf="category === 'Property'" [ngTemplateOutlet]="propertyTypeList"></ng-container>
             <ng-container *ngIf="category === 'Property'" [ngTemplateOutlet]="consumptionTypeFilter"></ng-container>
@@ -81,8 +81,27 @@
     </div>
 </div>
 
+
+
 <ng-template #propertyListScroller>
-    <div class="full-screen mb-2 px-3">
+     <div class="scroll-container">
+        <div class="arrow-icon-div" (click)="scrollLeft()">
+            <fa-icon [icon]="faArrowLeft"></fa-icon>
+        </div>
+        <div #widgetsContent style="display: flex;padding: 10px;overflow-x: hidden;white-space: nowrap;gap: 10px;">
+            <div class="card" style="width: 18rem;" *ngFor="let property of properties" >
+                <img src="{{property.image}}" class="card-img-top" style="object-fit: cover;" alt="...">
+                <div class="card-body">
+                  <p class="card-text">{{property.title}}</p>
+                </div>
+              </div>
+            <!-- <div *ngFor="let property of properties" style="height:300px ;min-width:300px;margin-right:20px;" class="d-flex jcc aic border bolder">{{property.title}}</div> -->
+        </div>
+        <div class="arrow-icon-div" (click)="scrollRight()">
+            <fa-icon [icon]="faArrowRight"></fa-icon>
+        </div>
+    </div>
+    <!-- <div class="full-screen mb-2 px-3">
         <div class="flex-row-scrollable py-2 w-100 gap-1">
             <div *ngFor="let property of properties" style="height:300px;min-width:300px;margin-right:10px;" [routerLink]="['/ads/p', property.reference]">
                 <div class="flex-column" style="border:none;cursor: pointer;">
@@ -104,12 +123,12 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </ng-template>
 
 <ng-template #adListScroller>
     <div class="full-screen mb-2 px-3">
-        <div class="flex-row-scrollable py-2 w-100 gap-1">
+        <div class="flex-row-scrollable py-2 w-100 gap-1  align-items-stretch">
             <div *ngFor="let ad of ads" style="height:300px;min-width:300px;max-width: 300px;">
                 <div class="flex-column" style="border:none;cursor: pointer;">
                     <img src="{{ad.image}}" style="object-fit: contain;" alt="...">
@@ -163,7 +182,7 @@
 <ng-template #propertyList>
     <div class="flex-column">
         <span class="bolder pb-3 fs-5">Properties</span>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3  align-items-stretch">
             <div class="col mb-4" *ngFor="let property of properties " [routerLink]="[ '/ads/p', property.reference] ">
                 <div class="flex-column" style="border:none;cursor: pointer;">
                     <img src="{{property.image}}" class="card-img" alt="...">
