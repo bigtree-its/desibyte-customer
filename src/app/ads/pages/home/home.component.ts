@@ -28,8 +28,11 @@ import { AdsService } from 'src/app/services/ads/ads.service';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<void>();
-  @ViewChild('widgetsContent', { read: ElementRef })
-  public widgetsContent: ElementRef<any>;
+  @ViewChild('pScroller', { read: ElementRef })
+  public pScroller: ElementRef<any>;
+
+  @ViewChild('adScroller', { read: ElementRef })
+  public adScroller: ElementRef<any>;
 
   adService = inject(AdsService);
   modalService = inject(NgbModal);
@@ -79,18 +82,34 @@ export class HomeComponent implements OnInit, OnDestroy {
     console.log('Address emitted '+ JSON.stringify(address))
   }
 
-  public scrollRight(): void {
-    this.widgetsContent.nativeElement.scrollTo({
-      left: this.widgetsContent.nativeElement.scrollLeft + 150,
-      behavior: 'smooth',
-    });
+  public scrollRight(e: string): void {
+    if ( e === 'pScroller'){
+      this.pScroller.nativeElement.scrollTo({
+        left: this.pScroller.nativeElement.scrollLeft + 150,
+        behavior: 'smooth',
+      });
+    }else{
+      this.adScroller.nativeElement.scrollTo({
+        left: this.adScroller.nativeElement.scrollLeft + 150,
+        behavior: 'smooth',
+      });
+    }
+    
   }
 
-  public scrollLeft(): void {
-    this.widgetsContent.nativeElement.scrollTo({
-      left: this.widgetsContent.nativeElement.scrollLeft - 150,
-      behavior: 'smooth',
-    });
+  public scrollLeft(e: string): void {
+    if ( e === 'pScroller'){
+      this.pScroller.nativeElement.scrollTo({
+        left: this.pScroller.nativeElement.scrollLeft - 150,
+        behavior: 'smooth',
+      });
+    }else{
+      this.adScroller.nativeElement.scrollTo({
+        left: this.adScroller.nativeElement.scrollLeft - 150,
+        behavior: 'smooth',
+      });
+    }
+    
   }
 
   private getAll() {

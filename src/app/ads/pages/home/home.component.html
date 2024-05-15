@@ -14,7 +14,8 @@
                 <div class="radio-button">
                     <input name="rental-period" id="Monthly" value="Monthly" class="radio-button__input" checked type="radio" (change)="handleSearchRadius($event)">
                     <label for="Monthly" class="radio-button__label">
-                        <span class="radio-button__custom"></span>This postcode only
+                        <span class="radio-button__custom"></span>This postcode
+                        only
                     </label>
                 </div>
                 <div class="radio-button">
@@ -61,17 +62,13 @@
                 <div class="d-flex jcsb aic gap-1">
                     <b class="bolder fs-5 ">Latest Properties </b>
                     <b (click)="onSelectCategory('Property')" class="cursor-pointer link">See all</b>
-                    <!-- <fa-icon [icon]="faArrowRight" class="cursor-pointer"></fa-icon> -->
                 </div>
                 <ng-container [ngTemplateOutlet]="propertyListScroller"></ng-container>
-                <!-- <button class="btn btn-sm btn-link asfe" title="Show more properties">Show more</button> -->
                 <div class="d-flex jcsb aic gap-1">
                     <b class="bolder fs-5 ">Latest Ads </b>
                     <b (click)="onSelectCategory('Ad')" class="cursor-pointer link">See all</b>
-                    <!-- <fa-icon [icon]="faArrowRight" class="cursor-pointer"></fa-icon> -->
                 </div>
                 <ng-container [ngTemplateOutlet]="adListScroller"></ng-container>
-                <!-- <button class="btn btn-sm btn-link asfe" (click)="onSelectCategory('Ad')" title="Show more ads">Show more</button> -->
             </div>
             <div class="flex-column" *ngIf="category!=='All'">
                 <ng-container *ngIf="category === 'Property'" [ngTemplateOutlet]="propertyList"></ng-container>
@@ -81,95 +78,80 @@
     </div>
 </div>
 
-
-
 <ng-template #propertyListScroller>
-     <div class="scroll-container">
-        <div class="arrow-icon-div" (click)="scrollLeft()">
+    <div class="lg scroll-container">
+        <div class="arrow-icon-div" (click)="scrollLeft('pScroller')">
             <fa-icon [icon]="faArrowLeft"></fa-icon>
         </div>
-        <div #widgetsContent style="display: flex;padding: 10px;overflow-x: hidden;white-space: nowrap;gap: 10px;">
-            <div class="card" style="width: 18rem;" *ngFor="let property of properties" >
-                <img src="{{property.image}}" class="card-img-top" style="object-fit: cover;" alt="...">
-                <div class="card-body">
-                  <p class="card-text">{{property.title}}</p>
-                </div>
-              </div>
-            <!-- <div *ngFor="let property of properties" style="height:300px ;min-width:300px;margin-right:20px;" class="d-flex jcc aic border bolder">{{property.title}}</div> -->
+        <div #pScroller style="display: flex;padding: 10px;overflow-x: hidden;white-space: nowrap;gap: 10px;">
+            <ng-container *ngFor="let property of properties" [ngTemplateOutlet]="theCard" [ngTemplateOutletContext]="{ item: property, link: '/ads/p/' }"></ng-container>
         </div>
-        <div class="arrow-icon-div" (click)="scrollRight()">
+        <div class="arrow-icon-div" (click)="scrollRight('pScroller')">
             <fa-icon [icon]="faArrowRight"></fa-icon>
         </div>
     </div>
-    <!-- <div class="full-screen mb-2 px-3">
+    <div class="sm full-screen mb-2 px-3">
         <div class="flex-row-scrollable py-2 w-100 gap-1">
-            <div *ngFor="let property of properties" style="height:300px;min-width:300px;margin-right:10px;" [routerLink]="['/ads/p', property.reference]">
-                <div class="flex-column" style="border:none;cursor: pointer;">
-                    <img src="{{property.image}}" alt="...">
-                    <div class="flex-column">
-                        <div class="d-flex card-title p-2">
-                            <span class="bolder">{{property.title}}</span>
-                        </div>
-                        <span class="fs-7 bold px-2">{{property.address.addressLine2}},
-                            {{property.address.city}}
-                        </span>
-                        <div class="flex-row jcsb aic px-2">
-                            <span class="bolder">{{property.price |
-                                currency:'GBP'}}</span>
-                            <span>{{property.datePosted |
-                                dateAgo}}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <ng-container *ngFor="let property of properties" [ngTemplateOutlet]="theCard" [ngTemplateOutletContext]="{ item: property , link: '/ads/p'}"></ng-container>
         </div>
-    </div> -->
+    </div>
 </ng-template>
 
 <ng-template #adListScroller>
-    <div class="full-screen mb-2 px-3">
-        <div class="flex-row-scrollable py-2 w-100 gap-1  align-items-stretch">
-            <div *ngFor="let ad of ads" style="height:300px;min-width:300px;max-width: 300px;">
-                <div class="flex-column" style="border:none;cursor: pointer;">
-                    <img src="{{ad.image}}" style="object-fit: contain;" alt="...">
-                    <div class="flex-column">
-                        <div class="d-flex card-title p-2">
-                            <span class="bolder">{{ad.title}}</span>
-                        </div>
-                        <span class="fs-7 bold px-2">{{ad.address.addressLine2}},
-                            {{ad.address.city}}
-                        </span>
-                        <div class="flex-row jcsb aic px-2">
-                            <span class="bolder">{{ad.price |
-                                currency:'GBP'}}</span>
-                            <span>{{ad.datePosted |
-                                dateAgo}}</span>
-                        </div>
-                    </div>
-                </div>
+    <div class="lg scroll-container">
+        <div class="arrow-icon-div" (click)="scrollLeft('adScroller')">
+            <fa-icon [icon]="faArrowLeft"></fa-icon>
+        </div>
+        <div #adScroller style="display: flex;padding: 10px;overflow-x: hidden;white-space: nowrap;gap: 10px;">
+            <ng-container *ngFor="let ad of ads" [ngTemplateOutlet]="theCard" [ngTemplateOutletContext]="{ item: ad, link: '/ads/p' }"></ng-container>
+        </div>
+        <div class="arrow-icon-div" (click)="scrollRight('adScroller')">
+            <fa-icon [icon]="faArrowRight"></fa-icon>
+        </div>
+    </div>
+    <div class="sm full-screen mb-2 px-3">
+        <div class="flex-row-scrollable py-2 w-100 gap-1">
+            <ng-container *ngFor="let ad of ads" [ngTemplateOutlet]="theCard" [ngTemplateOutletContext]="{ item: ad, link: '/ads/p' }"></ng-container>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #theCard let-item="item" let-link="link">
+    <div class="flex-column" style="max-width: 300px;min-width: 300px;height: 320px;margin-right: 10px;" [routerLink]="[link, item.reference]">
+        <img src="{{item.image}}" style="height: 290px;width:100%;object-fit: cover;">
+        <div class="flex-column bg-light p-2">
+            <span class="bolder py-2">{{item.title}}</span>
+            <span class="fs-7 bold">{{item.address.addressLine2}},
+                {{item.address.city}}
+            </span>
+            <div class="flex-row jcsb aic">
+                <span class="bolder">{{item.price |
+                    currency:'GBP'}}</span>
+                <span>{{item.datePosted |
+                    dateAgo}}</span>
             </div>
         </div>
     </div>
 </ng-template>
+
 
 <ng-template #adList>
     <div class="flex-column">
         <span class="bolder pb-3 fs-5">{{category}}</span>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 gap-1">
-            <div class="col mb-4" *ngFor="let ad of ads">
+            <div class="col mb-4" *ngFor="let item of ads">
                 <div class="flex-column" style="border:none;cursor: pointer;">
-                    <img src="{{ad.image}}" class="card-img" alt="...">
-                    <div class="flex-column">
-                        <div class="d-flex card-title p-2">
-                            <span class="bolder">{{ad.title}}</span>
-                        </div>
-                        <span class="fs-7 bold px-2">{{ad.address.addressLine2}},
-                            {{ad.address.city}}
+                    <img src="{{item.image}}" class="card-img" alt="...">
+                    <div class="flex-column bg-light p-2">
+                        <span class="bolder py-2">{{item.title}}</span>
+                        <span class="fs-7 bold">{{item.address.addressLine2}},
+                            {{item.address.city}}
                         </span>
-                        <div class="flex-row jcsb aic px-2">
-                            <span class="bolder">{{ad.price |
+                        <div class="flex-row jcsb aic">
+                            <span class="bolder">{{item.price |
                                 currency:'GBP'}}</span>
-                            <span>{{ad.datePosted | dateAgo}}</span>
+                            <span>{{item.datePosted |
+                                dateAgo}}</span>
                         </div>
                     </div>
                 </div>
@@ -183,20 +165,18 @@
     <div class="flex-column">
         <span class="bolder pb-3 fs-5">Properties</span>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3  align-items-stretch">
-            <div class="col mb-4" *ngFor="let property of properties " [routerLink]="[ '/ads/p', property.reference] ">
+            <div class="col mb-4" *ngFor="let item of properties " [routerLink]="[ '/ads/p', item.reference] ">
                 <div class="flex-column" style="border:none;cursor: pointer;">
-                    <img src="{{property.image}}" class="card-img" alt="...">
-                    <div class="flex-column">
-                        <div class="d-flex card-title p-2">
-                            <span class="bolder">{{property.title}}</span>
-                        </div>
-                        <span class="fs-7 bold px-2">{{property.address.addressLine2}},
-                            {{property.address.city}}
+                    <img src="{{item.image}}" alt="...">
+                    <div class="flex-column bg-light p-2">
+                        <span class="bolder py-2">{{item.title}}</span>
+                        <span class="fs-7 bold">{{item.address.addressLine2}},
+                            {{item.address.city}}
                         </span>
-                        <div class="flex-row jcsb aic px-2">
-                            <span class="bolder">{{property.price |
+                        <div class="flex-row jcsb aic">
+                            <span class="bolder">{{item.price |
                                 currency:'GBP'}}</span>
-                            <span>{{property.datePosted |
+                            <span>{{item.datePosted |
                                 dateAgo}}</span>
                         </div>
                     </div>
@@ -255,7 +235,8 @@
                     <span>Rent</span>
                 </label>
                 <label>
-                    <input id="Share" value="Share" type="radio" name="radio"
+                    <input id="Share" value="Share" type="radio"
+                        name="radio"
                         (change)="onChangeConsumptionType($event)">
                     <span>Share</span>
                 </label>
@@ -366,7 +347,8 @@
                             <span>Flat</span>
                         </label>
                         <label>
-                            <input id="Detached House" value="Detached House"
+                            <input id="Detached House"
+                                value="Detached House"
                                 type="radio" name="radio"
                                 (change)="selectPropertyType($event)">
                             <span>Detached House</span>

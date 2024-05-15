@@ -53,10 +53,6 @@ export class ContactFormComponent implements OnInit, OnDestroy{
     }
   }
 
-  login(){
-    
-  }
-
   contactOwner(){
     var adEnquiry: AdEnquiry = {
       adOwner: this.adOwner,
