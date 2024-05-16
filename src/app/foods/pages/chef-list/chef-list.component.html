@@ -2,8 +2,7 @@
 
     <div class="full-screen mb-2 px-3">
         <div class="flex-row-scrollable py-3">
-            <div *ngFor="let cuisine of cuisines" class="cuisine" (click)="onSelectCuisine(cuisine)"
-                [class.selectedCuisine]="isSelectedCuisine(cuisine)">
+            <div *ngFor="let cuisine of cuisines" class="cuisine" (click)="onSelectCuisine(cuisine)" [class.selectedCuisine]="isSelectedCuisine(cuisine)">
                 <img src={{cuisine.logo}} class="cuisine-logo" height="90px" width="120px">
                 <span>{{cuisine.name}}</span>
             </div>
@@ -13,8 +12,7 @@
     <div class="flex-column w-100 mb-2 px-3 sm">
         <h4 class="big-text">Whats on your mind ?</h4>
         <div class="flex-row-scrollable py-3">
-            <div *ngFor="let d of dishes" class="border d-flex jcc aic px-3 mr-1" (click)="onSelectDish(d)"
-                [class.clicked]="isDishSelected(d)">
+            <div *ngFor="let d of dishes" class="border d-flex jcc aic px-3 mr-1" (click)="onSelectDish(d)" [class.clicked]="isDishSelected(d)">
                 <span class="big-text">{{d.name}}</span>
             </div>
         </div>
@@ -23,8 +21,7 @@
     <div class="flex-column w-100 mb-2 px-3 lg">
         <h4 class="big-text">Whats on your mind ?</h4>
         <div class="flex-row-scrollable">
-            <div *ngFor="let d of dishes" class="selectable mr-1" (click)="onSelectDish(d)"
-                [class.selected]="isDishSelected(d)">
+            <div *ngFor="let d of dishes" class="selectable mr-1" (click)="onSelectDish(d)" [class.selected]="isDishSelected(d)">
                 <fa-icon [icon]="faCheck"></fa-icon>
                 <span class="pl-1">{{d.name}}</span>
             </div>
@@ -32,8 +29,7 @@
     </div>
 
     <div class="full-screen mb-2 px-3">
-        <div class="flex-row-space-between mb-1 md bg-light p-2 mx-1"
-            *ngIf="serviceLocation != null && serviceLocation !== undefined">
+        <div class="flex-row-space-between mb-1 md bg-light p-2 mx-1" *ngIf="serviceLocation != null && serviceLocation !== undefined">
             <span>{{serviceLocation.name}}, {{serviceLocation.city}}</span>
             <span class="change-area" routerLink="/f/home">Change</span>
         </div>
@@ -51,13 +47,5 @@
         </div>
     </div>
 
-    <div class="flex-column bg-light p-3 mt-5">
-        <span class="logo-text bolder fs-4 mb-2">deziio</span>
-        <span>For any support or help you can contact us contact.deziio&#64;gmail.com</span>
-        
-        <div class="copyright-div">
-            <fa-icon [icon]="faCopyright "></fa-icon>
-            <span>2024 <span class="logo-text">Desio</span></span>
-        </div>
-    </div>
+    <app-footer></app-footer>
 </div>

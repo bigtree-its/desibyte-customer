@@ -1,6 +1,6 @@
 import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { AdEnquiry, GeneralAd, PropertyAd } from 'src/app/model/all-ads';
 import { User } from 'src/app/model/all-auth';
 import { AdOwner, Customer } from 'src/app/model/common';
@@ -62,7 +62,16 @@ export class ContactFormComponent implements OnInit, OnDestroy{
       customer: this.customer,
       date: new Date
     };
-    
+    let observable = this.adService.sendEnquiry(adEnquiry);
+    observable.pipe(takeUntil(this.destroy$)).subscribe({
+      next: () => {
+        console.log('Property ad has been posted');
+      },
+      error: (err) => {
+        console.error('Errors during posting enquiry. ' + JSON.stringify(err));
+      },
+    });
+
     this.adService.sendEnquiry(adEnquiry).subscribe(e=>{});
   }
 

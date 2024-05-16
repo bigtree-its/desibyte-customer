@@ -1,14 +1,32 @@
-import { Component, ElementRef, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import {
   faAnglesRight,
   faArrowLeft,
   faArrowRight,
   faBed,
+  faBolt,
+  faBook,
+  faCalendarDays,
+  faCar,
+  faChair,
   faChevronRight,
   faFilter,
+  faGamepad,
   faHome,
+  faList,
+  faPersonChalkboard,
+  faPersonDigging,
   faSort,
+  faSpa,
   faTag,
+  IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
@@ -52,22 +70,66 @@ export class HomeComponent implements OnInit, OnDestroy {
   faSort = faSort;
   faTag = faTag;
   faBed = faBed;
-  faHome = faHome;
+  faHomes = faHome;
+  faCars = faCar;
+  faGames = faGamepad;
+  faBooks = faBook;
+  faElectronics = faBolt;
+  faJobs = faPersonDigging;
+  faServices = faSpa;
+  faClasses = faPersonChalkboard;
+  faEvents = faCalendarDays;
+  faFurniture = faChair;
+  faAll = faList;
   // faArrowRight = faChevronRight;
   faArrowLeft = faArrowLeft;
   faArrowRight = faArrowRight;
 
-  categories: string[] = [
-    'All',
-    'Property',
-    'Cars',
-    'Jobs',
-    'Toys',
-    'Furniture',
-    'Services',
-    'Events',
-    'Electronics',
-    'Books',
+  categories: Category[] = [
+    {
+      name: 'All',
+      icon: this.faAll,
+    },
+    {
+      name: 'Property',
+      icon: this.faHomes,
+    },
+    {
+      name: 'Cars',
+      icon: this.faCars,
+    },
+    {
+      name: 'Toys',
+      icon: this.faGames,
+    },
+    {
+      name: 'Electronics',
+      icon: this.faElectronics,
+    },
+    {
+      name: 'Books',
+      icon: this.faBooks,
+    },
+    {
+      name: 'Jobs',
+      icon: this.faJobs,
+    },
+    {
+      name: 'Furniture',
+      icon: this.faFurniture,
+    },
+    {
+      name: 'Services',
+      icon: this.faServices,
+    },
+    {
+      name: 'Events',
+      icon: this.faEvents,
+    },
+    {
+      name: 'Classes',
+      icon: this.faClasses,
+    },
   ];
   showLandingPage: boolean;
   searchRadius: any;
@@ -79,37 +141,35 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   onEmitAddress(address: Address) {
     this.location = address;
-    console.log('Address emitted '+ JSON.stringify(address))
+    console.log('Address emitted ' + JSON.stringify(address));
   }
 
   public scrollRight(e: string): void {
-    if ( e === 'pScroller'){
+    if (e === 'pScroller') {
       this.pScroller.nativeElement.scrollTo({
         left: this.pScroller.nativeElement.scrollLeft + 150,
         behavior: 'smooth',
       });
-    }else{
+    } else {
       this.adScroller.nativeElement.scrollTo({
         left: this.adScroller.nativeElement.scrollLeft + 150,
         behavior: 'smooth',
       });
     }
-    
   }
 
   public scrollLeft(e: string): void {
-    if ( e === 'pScroller'){
+    if (e === 'pScroller') {
       this.pScroller.nativeElement.scrollTo({
         left: this.pScroller.nativeElement.scrollLeft - 150,
         behavior: 'smooth',
       });
-    }else{
+    } else {
       this.adScroller.nativeElement.scrollTo({
         left: this.adScroller.nativeElement.scrollLeft - 150,
         behavior: 'smooth',
       });
     }
-    
   }
 
   private getAll() {
@@ -125,11 +185,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
+  getIcon(arg0: string): import('@fortawesome/fontawesome-svg-core').IconProp {
+    throw new Error('Method not implemented.');
+  }
+
   onChangeLocation(e: any) {
     this.location = e.target.value;
   }
 
-  onSelectCategory(e: any) {
+  onSelectCategory(e: string) {
     this.category = e;
     var adQuery: AdSearchQuery = {};
     adQuery.lastMonth = true;
@@ -175,8 +239,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       case 'Ads':
         this.getAds(adQuery);
         break;
-      case 'Toys':
-        adQuery.category = 'Toys';
+      case 'Games':
+        adQuery.category = 'Games';
         this.getAds(adQuery);
         break;
       default:
@@ -193,8 +257,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  isSelectedCategory(c: string) {
-    return this.category === c;
+  isSelectedCategory(c: Category) {
+    return this.category === c.name;
   }
   onChangeCategory(e: any) {
     this.category = e.target.value;
@@ -268,4 +332,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
+}
+
+export class Category {
+  name: string;
+  icon: IconDefinition;
 }

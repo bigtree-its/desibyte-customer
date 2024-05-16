@@ -1,9 +1,10 @@
 <div class="container-fluid overflow-y mb-5">
 
-    <div class="full-screen mb-2 px-3 d-flex jcc aic">
-        <div class="flex-row-scrollable py-2">
-            <div *ngFor="let category of categories" class="category" (click)="onSelectCategory(category)" [class.selectedCategory]="isSelectedCategory(category)">
-                <span>{{category}}</span>
+    <div class="full-screen my-1 px-2 flex-row jcc border-top border-bottom pt-2">
+        <div class="flex-row-scrollable">
+            <div *ngFor="let category of categories" class="category" (click)="onSelectCategory(category.name)" [class.selectedCategory]="isSelectedCategory(category)">
+                <fa-icon [icon]="category.icon"></fa-icon>
+                <span>{{category.name}}</span>
             </div>
         </div>
     </div>
@@ -118,8 +119,8 @@
 
 <ng-template #theCard let-item="item" let-link="link">
     <div class="flex-column" style="max-width: 300px;min-width: 300px;height: 320px;margin-right: 10px;" [routerLink]="[link, item.reference]">
-        <img src="{{item.image}}" style="height: 290px;width:100%;object-fit: cover;">
-        <div class="flex-column bg-light p-2">
+        <img src="{{item.image}}" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
+        <div class="flex-column p-1">
             <span class="bolder py-2">{{item.title}}</span>
             <span class="fs-7 bold">{{item.address.addressLine2}},
                 {{item.address.city}}
@@ -167,8 +168,8 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3  align-items-stretch">
             <div class="col mb-4" *ngFor="let item of properties " [routerLink]="[ '/ads/p', item.reference] ">
                 <div class="flex-column" style="border:none;cursor: pointer;">
-                    <img src="{{item.image}}" alt="...">
-                    <div class="flex-column bg-light p-2">
+                    <img src="{{item.image}}" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
+                    <div class="flex-column p-1">
                         <span class="bolder py-2">{{item.title}}</span>
                         <span class="fs-7 bold">{{item.address.addressLine2}},
                             {{item.address.city}}
@@ -326,7 +327,7 @@
 
     <div class="nav-item mr-2" ngbDropdown #myDrop="ngbDropdown">
         <div class="flex-row gap-1 jcc aic mx-1">
-            <fa-icon class="btn-circle" [icon]="faHome"></fa-icon>
+            <fa-icon class="btn-circle" [icon]="faHomes"></fa-icon>
             <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdown1" role="button"></a>
             <span class="bolder">Property Type</span>
         </div>

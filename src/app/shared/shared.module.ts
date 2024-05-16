@@ -38,6 +38,7 @@ const routes: Routes = [
   ],
   exports: [
     HeaderComponent,
+    FooterComponent,
     PostcodeLookupComponent,
     PaymentFormComponent,
     ReviewItemComponent

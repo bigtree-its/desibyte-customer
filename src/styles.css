@@ -46,7 +46,7 @@
     --font-size-small: 0.75rem;
     --font-size-default: 0.875rem;
     --brand-color-light: #f2fbb8;
-    --brand-color: #deff08;
+    --brand-color: #4B4;
     --brand-color-dark: #53d900;
     margin: 0;
     padding: 0;
@@ -238,7 +238,6 @@ body {
 
 .tag-success {
     background-color: var(--brand-color);
-    color: #000a19;
     padding: 0 20px;
     border-radius: 7px;
     font-weight: 900;
@@ -314,7 +313,8 @@ body {
     transition: all 0.2s;
     padding: 5px 20px;
     border-radius: 100px;
-    background: #cfef00;
+    background: var(--brand-color);
+    color: #fff;
     border: 1px solid transparent;
     display: flex;
     align-items: center;
@@ -322,7 +322,8 @@ body {
 }
 
 .btn-arrow:hover {
-    background: #c4e201;
+    background: #222;
+    color: #fff;
 }
 
 .btn-arrow>svg {
@@ -408,12 +409,12 @@ body {
 }
 
 .menu:hover {
-    color: #3e1ecd;
+    color: var(--brand-color);
     cursor: pointer;
 }
 
 .selectedMenu {
-    color: #3e1ecd;
+    color: var(--brand-color);
     cursor: pointer;
 }
 
@@ -424,41 +425,26 @@ body {
     cursor: pointer;
 }
 
-.btn-11 {
-    color: #081c15;
-    padding: 5px 20px;
-    border: 1px solid #33e05c;
-    background-color: #80ed99;
-}
-
-.btn-11:hover {
-    background-color: #33e05c;
-}
-
-.btn-11::after {
-    /* content: '⟶'; */
-}
-
 .btn-12 {
     padding: 5px 13px;
     cursor: pointer;
-    background-color: #000a19;
-    color: var(--brand-color);
+    background-color: var(--brand-color);
+    color: #fff;
     transition: all 0.3s;
     border: none;
 }
 
 .btn-12:hover {
     cursor: pointer;
-    background-color: var(--brand-color);
-    color: #090909;
+    color: var(--brand-color);
+    color: #222;
 }
 
 .btn-13 {
     padding: 5px 13px;
     border-radius: 0.5em;
     background-color: var(--brand-color);
-    color: #090909;
+    color: #fff;
     transition: all 0.3s;
     border: none;
     box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
@@ -466,8 +452,8 @@ body {
 
 .btn-13:hover {
     cursor: pointer;
-    background-color: #000a19;
     color: var(--brand-color);
+    background-color: #222;
 }
 
 .btn-14 {
@@ -674,10 +660,10 @@ body {
 }
 
 .logo-text {
-    font-family: "Rubik Vinyl", system-ui;
+    /* font-family: "Rubik Vinyl", system-ui; */
     font-weight: 900;
     cursor: pointer;
-    color: #d21919;
+    color: var(--brand-color);
 }
 
 .spl-text {
@@ -2228,9 +2214,7 @@ select {
 }
 
 .flex-row-scrollable {
-    /* justify-content: center; */
     display: flex;
-    /* padding: 0 20px; */
     overflow-x: scroll;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;

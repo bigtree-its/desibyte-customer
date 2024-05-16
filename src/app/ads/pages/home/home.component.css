@@ -50,22 +50,23 @@ label:last-child span {
 
 .category {
     display: flex;
-    padding: 5px 20px;
-    font-size: 12px;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-weight: 900;
-    opacity: 0.6;
+    color: #545454;
+    height: 100%;
+    border-bottom: 2px solid #fff;
+    margin: 0 15px;
+    padding: 0 10px;
 }
 
 .category:hover {
     cursor: pointer;
-    color: white;
-    background-color: coral;
+    color: #111;
+    border-bottom: 2px solid #111;
 }
 
 .selectedCategory {
-    color: white;
-    opacity: 1.0;
-    background-color: coral;
+    color: #111;
+    border-bottom: 2px solid #111;
 }
