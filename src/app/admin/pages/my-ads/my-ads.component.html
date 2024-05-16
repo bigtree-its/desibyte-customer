@@ -1,0 +1,111 @@
+<div class="container-fluid">
+    <div class="flex-column">
+        <div class="flex-row jcsb aic border-bottom ">
+            <div class="flex-row aic">
+                <div *ngIf="viewAd" class="arrow-icon-div" (click)="goBack()">
+                    <fa-icon [icon]="faArrowLeft"></fa-icon>
+                </div>
+                <span class="py-2 fs-1 big-text">{{viewAd?
+                    viewAd.reference: 'My Ads'}}</span>
+            </div>
+            <span class="color-red f-size-md bold" *ngIf="viewAd">{{viewAd.price | currency: 'GBP'}}</span>
+        </div>
+
+        <div class="flex-column" *ngIf="!viewAd">
+            <form>
+                <div class="my-2 row">
+                    <label for="table-filtering-search" class="col-xs-3 col-sm-auto col-form-label">Full text search:</label>
+                    <div class="col-xs-3 col-sm-auto">
+                        <input id="table-filtering-search" class="form-control" type="text" [formControl]="filter" />
+                    </div>
+                </div>
+            </form>
+            <div class="overflow-y height-500 w-100">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Reference</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Date Posted</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let ad of myAds$ | async; index as i" (click)="open(ad)">
+                            <th scope="row">{{ i + 1 }}</th>
+                            <td>
+                                <ngb-highlight [result]="ad.category" [term]="filter.value" />
+                            </td>
+                            <td>
+                                <ngb-highlight [result]="ad.reference" [term]="filter.value" />
+                            </td>
+                            <td>
+                                <ngb-highlight [result]="ad.price | currency: 'GBP' " [term]="filter.value" />
+                            </td>
+                            <td>
+                                <ngb-highlight [result]="ad.datePosted | date " [term]="filter.value" />
+                            </td>
+                            <td>
+                                <ngb-highlight [result]="ad.status | titlecase" [term]="filter.value" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- <table class="styled-table">
+                <thead>
+                    <tr>
+                      <th>Reference</th>
+                      <th>Total</th>
+                      <th>Date</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr (click)="open(order)" *ngFor="let order of orders | orderByDate:'dateCreated':'desc'">
+                        <td class="pl-2">{{order.reference}}</td>
+                        <td class="pl-2">{{order.total | currency: 'GBP'}}</td>
+                        <td class="pl-2">{{order.dateCreated | date }}</td>
+                        <td class="pl-2">{{order.status | titlecase}}</td>
+                    </tr>
+                  </tbody>
+            </table> -->
+        </div>
+        <div class="flex-column" *ngIf="viewAd">
+
+            <div class="bg-light p-3 my-2">
+                <span class="bolder fs-7">Order Summary</span>
+                <div class="flex-row py-2 align-items-center">
+                    <span *ngIf="!loading" class="bold fs-3 big-text">{{viewAd.status |
+                        titlecase}}</span>
+                    <div *ngIf="loading" class="d-flex jcc aic p-3">
+                        <div class="loader"></div>
+                    </div>
+                    <!-- <button class="btn btn-11 ml-2 " *ngIf="viewAd?.status==='Draft' " (click)="cancel()">Cancel</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #orderLayout>
+    <div class="py-2">
+        <table style="width: 100%;">
+            <tr>
+                <th>Ref#</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Category</th>
+            </tr>
+            <tr>
+                <td>{{viewAd?.reference}}</td>
+                <td>{{viewAd?.datePosted | date}}</td>
+                <td>{{viewAd?.status | titlecase}}</td>
+                <td>{{viewAd?.category | titlecase}}</td>
+            </tr>
+        </table>
+    </div>
+</ng-template>

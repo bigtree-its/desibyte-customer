@@ -9,7 +9,8 @@
         <span *ngIf="!user" class="navItem" routerLink="/login">Login</span>
         <span *ngIf="!user" class="navItem" routerLink="/register">Signup</span>
         <span *ngIf="user" class="navItem" (click)="logout()">Logout</span>
-        <span *ngIf="user" class="navItem" routerLink="/my_orders">Orders</span>
+        <span *ngIf="user" class="navItem" routerLink="/my_orders">My Orders</span>
+        <span *ngIf="user" class="navItem" routerLink="/my_ads">My Ads</span>
         <span class="navItem" routerLink="/contact_us">Become a partner</span>
         <span *ngIf="user" class="navItem" routerLink="/my_profile">Profile</span>
     </div>

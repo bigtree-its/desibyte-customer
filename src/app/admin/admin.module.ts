@@ -10,10 +10,15 @@ import { ManageOrderComponent } from './pages/manage-order/manage-order.componen
 import { SharedModule } from '../shared';
 import { OrderByDatePipe } from '../pipes/order-by-date.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MyAdsComponent } from './pages/my-ads/my-ads.component';
 
 const routes: Routes = [
   {
     path: 'my_orders', component: MyOrdersComponent, loadChildren: () =>
+      import('./admin.module').then((m) => m.AdminModule),
+  },
+  {
+    path: 'my_ads', component: MyAdsComponent, loadChildren: () =>
       import('./admin.module').then((m) => m.AdminModule),
   },
   {
@@ -37,7 +42,8 @@ const routes: Routes = [
     MyProfileComponent,
     BecomeAPartnerComponent,
     OrderByDatePipe,
-    ManageOrderComponent
+    ManageOrderComponent,
+    MyAdsComponent
   ],
   imports: [
     CommonModule,
