@@ -5,7 +5,7 @@
                 <div *ngIf="viewAd" class="arrow-icon-div" (click)="goBack()">
                     <fa-icon [icon]="faArrowLeft"></fa-icon>
                 </div>
-                <span class="py-2 fs-1 big-text">{{viewAd?
+                <span class="py-2 fs-3 bolder">{{viewAd?
                     viewAd.reference: 'My Ads'}}</span>
             </div>
             <span class="color-red f-size-md bold" *ngIf="viewAd">{{viewAd.price | currency: 'GBP'}}</span>
@@ -79,7 +79,7 @@
             <div class="bg-light p-3 my-2">
                 <span class="bolder fs-7">Order Summary</span>
                 <div class="flex-row py-2 align-items-center">
-                    <span *ngIf="!loading" class="bold fs-3 big-text">{{viewAd.status |
+                    <span *ngIf="!loading" class="bold fs-3 ">{{viewAd.status |
                         titlecase}}</span>
                     <div *ngIf="loading" class="d-flex jcc aic p-3">
                         <div class="loader"></div>

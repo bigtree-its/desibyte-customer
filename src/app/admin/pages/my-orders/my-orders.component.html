@@ -5,7 +5,7 @@
                 <div *ngIf="viewOrder" class="arrow-icon-div" (click)="goBack()">
                     <fa-icon [icon]="faArrowLeft"></fa-icon>
                 </div>
-                <span class="py-2 fs-1 big-text">{{viewOrder?
+                <span class="py-2 fs-3 bolder">{{viewOrder?
                     viewOrder.reference: 'My Orders'}}</span>
             </div>
             <span class="color-red f-size-md bold" *ngIf="viewOrder">{{viewOrder.total | currency: 'GBP'}}</span>
@@ -34,15 +34,23 @@
                     <tbody>
                         <tr *ngFor="let order of myOrders$ | async; index as i" (click)="open(order)">
                             <th scope="row">{{ i + 1 }}</th>
-                            <td><ngb-highlight [result]="order.reference" [term]="filter.value" /></td>
-                            <td><ngb-highlight [result]="order.total | currency: 'GBP' " [term]="filter.value" /></td>
-                            <td><ngb-highlight [result]="order.dateCreated | date " [term]="filter.value" /></td>
-                            <td><ngb-highlight [result]="order.status | titlecase" [term]="filter.value" /></td>
+                            <td>
+                                <ngb-highlight [result]="order.reference" [term]="filter.value" />
+                            </td>
+                            <td>
+                                <ngb-highlight [result]="order.total | currency: 'GBP' " [term]="filter.value" />
+                            </td>
+                            <td>
+                                <ngb-highlight [result]="order.dateCreated | date " [term]="filter.value" />
+                            </td>
+                            <td>
+                                <ngb-highlight [result]="order.status | titlecase" [term]="filter.value" />
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            
+
             <!-- <table class="styled-table">
                 <thead>
                     <tr>
@@ -67,13 +75,13 @@
             <div class="bg-light p-3 my-2">
                 <span class="bolder fs-7">Order Summary</span>
                 <div class="flex-row py-2 align-items-center">
-                    <span *ngIf="!loading" class="bold fs-3 big-text">{{viewOrder.status |
+                    <span *ngIf="!loading" class="bolder fs-5 ">{{viewOrder.status |
                         titlecase}}</span>
                     <div *ngIf="loading" class="d-flex jcc aic p-3">
                         <div class="loader"></div>
                     </div>
-                    <button class="btn btn-11 ml-2 " *ngIf="viewOrder?.status==='Draft' " (click)="makePayment(paymentForm)">Pay</button>
-                    <button class="btn btn-11 ml-2 " *ngIf="viewOrder?.status==='Draft' " (click)="cancel()">Cancel</button>
+                    <button class="btn-9 ml-2 " *ngIf="viewOrder?.status==='Draft' " (click)="makePayment(paymentForm)">Pay</button>
+                    <button class="btn-9 ml-2 " *ngIf="viewOrder?.status==='Draft' " (click)="cancel()">Cancel</button>
                 </div>
 
                 <div class="progress_container">
