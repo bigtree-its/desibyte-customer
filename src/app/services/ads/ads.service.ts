@@ -25,7 +25,19 @@ export class AdsService {
       );
   }
 
-  postProperty(propertyAd: PropertyAd) {
+  postAd(ad: GeneralAd): Observable<GeneralAd>{
+    console.log('Posting an ad '+ JSON.stringify(ad));
+    return this.httpClient
+      .post<GeneralAd>(this.serviceLocator.AdsUrl, ad)
+      .pipe(
+        tap((result) => {
+          console.log('Post Ad response ' + JSON.stringify(result));
+        })
+      );
+  }
+ 
+
+  postProperty(propertyAd: PropertyAd) :Observable<PropertyAd>{
     console.log('Posting a property ad '+ JSON.stringify(propertyAd));
     return this.httpClient
       .post<PropertyAd>(this.serviceLocator.AdPropertyUrl, propertyAd)

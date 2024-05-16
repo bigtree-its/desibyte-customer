@@ -12,7 +12,6 @@ export class ApiTierService {
   private APITier_Url = environment.API_Tier_Postcode;
   private APITier_Key = environment.API_Tier_PRIVATE_KEY;
 
-
   constructor(
     private http: HttpClient
   ) { }
@@ -28,5 +27,9 @@ export class ApiTierService {
     params = params.set('x-api-key', this.APITier_Key);
 
     return this.http.get<APITierResponse>(this.APITier_Url +postcode, { headers: headers, params: params }) as Observable<APITierResponse>;
+  }
+
+  doFakeLookup(postcode: string) : Observable<APITierResponse>{
+    return this.http.get<APITierResponse>("./assets/data/dummy_address.json" ) as Observable<APITierResponse>;
   }
 }

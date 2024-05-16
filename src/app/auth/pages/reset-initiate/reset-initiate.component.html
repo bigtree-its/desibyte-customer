@@ -11,10 +11,9 @@
                 </p>
             </div>
             <div class="y-flex" style="margin: 10px 0;">
-                <div class="input-div">
-                    <input class="_381fS" type="email" name="email" id="email" tabindex="1" autocomplete="off" value="" [(ngModel)]="email" #ctrl="ngModel">
-                    <div class="_2EeI1 _26LFr"></div>
-                    <label class="_1Cvlf _2tL9P" for="email">Email Address</label>
+                <div class="input-group my-1">
+                    <input required="" type="text" name="email" autocomplete="off" class="input" formControlName="email" required>
+                    <label class="user-label">Email address</label>
                 </div>
                 <br>
                 <button class="btn-arrow mt-3 d-flex jcc aic w-100" (click)="submit()">

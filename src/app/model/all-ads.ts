@@ -5,7 +5,7 @@ export class GeneralAd {
   title: string;
   status: string;
   image: string;
-  reference: string;
+  reference?: string;
   description: string[];
   gallery: string[];
   address: Address;

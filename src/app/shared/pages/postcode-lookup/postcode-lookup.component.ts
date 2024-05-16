@@ -45,7 +45,7 @@ export class PostcodeLookupComponent {
 
   findAddress() {
     if (this.addressLookupPostcode && this.addressLookupPostcode.length >= 5) {
-      this.doApiTierPostcodeLookup();
+      this.doFakeLookup();
     }
   }
 
@@ -79,117 +79,25 @@ export class PostcodeLookupComponent {
   }
 
   doFakeLookup() {
-    this.postcodeAddressList = [{
-      Id: 0,
-      StreetAddress: '359, Glasgow Road, Eaglesham',
-      Place: 'Glasgow'
-    },
-    {
-      Id: 1,
-      StreetAddress: '361, Glasgow Road, Eaglesham',
-      Place: 'Glasgow'
-    }
-      ,
-    {
-      Id: 1,
-      StreetAddress: '361, Glasgow Road, Eaglesham',
-      Place: 'Glasgow'
-    }
-      ,
-    {
-      Id: 1,
-      StreetAddress: '361, Glasgow Road, Eaglesham',
-      Place: 'Glasgow'
-    }
-      ,
-    {
-      Id: 1,
-      StreetAddress: '361, Glasgow Road, Eaglesham',
-      Place: 'Glasgow'
-    },
-    {
-      Id: 1,
-      StreetAddress: '361, Glasgow Road, Eaglesham',
-      Place: 'Glasgow'
-    },
-    {
-      Id: 1,
-      StreetAddress: '361, Glasgow Road, Eaglesham',
-      Place: 'Glasgow'
-    },
-    {
-      Id: 1,
-      StreetAddress: '361, Glasgow Road, Eaglesham',
-      Place: 'Glasgow'
-    },
-    {
-      Id: 1,
-      StreetAddress: '361, Glasgow Road, Eaglesham',
-      Place: 'Glasgow'
-    },
-    {
-      Id: 1,
-      StreetAddress: '361, Glasgow Road, Eaglesham',
-      Place: 'Glasgow'
-    }
-      ,
-    {
-      Id: 1,
-      StreetAddress: '361, Glasgow Road, Eaglesham',
-      Place: 'Glasgow'
-    }
-      ,
-    {
-      Id: 1,
-      StreetAddress: '361, Glasgow Road, Eaglesham',
-      Place: 'Glasgow'
-    }
-      ,
-    {
-      Id: 1,
-      StreetAddress: '361, Glasgow Road, Eaglesham',
-      Place: 'Glasgow'
-    }
-      ,
-    {
-      Id: 1,
-      StreetAddress: '361, Glasgow Road, Eaglesham',
-      Place: 'Glasgow'
-    }
-      ,
-    {
-      Id: 1,
-      StreetAddress: '361, Glasgow Road, Eaglesham',
-      Place: 'Glasgow'
-    }
-      ,
-    {
-      Id: 1,
-      StreetAddress: '361, Glasgow Road, Eaglesham',
-      Place: 'Glasgow'
-    }
-      ,
-    {
-      Id: 1,
-      StreetAddress: '361, Glasgow Road, Eaglesham',
-      Place: 'Glasgow'
-    }
-      ,
-    {
-      Id: 1,
-      StreetAddress: '361, Glasgow Road, Eaglesham',
-      Place: 'Glasgow'
-    }
-      ,
-    {
-      Id: 1,
-      StreetAddress: '361, Glasgow Road, Eaglesham',
-      Place: 'Glasgow'
-    }
-
-    ]
-    this.addressSelected = false;
-    this.showAddressList = true;
+    this.apiTierService
+    .doFakeLookup(this.addressLookupPostcode.trim())
+    // .pipe(first())
+    .subscribe(
+      (data: APITierResponse) => {
+        console.log('Address Lookup response ' + JSON.stringify(data));
+        if (data && data.noOfItems > 0) {
+          this.addressSelected = false;
+          this.showAddressList = true;
+          const sortedArray = data.result.addresses.slice().sort((a, b) => a.building_number - b.building_number);
+          console.log('Sorted address : '+ JSON.stringify(sortedArray))
+          data.result.addresses = sortedArray;
+          this.addressLookupResponse = data;
+        }
+      },
+      (error) => {
+        console.log('Address Lookup resulted an error.' + JSON.stringify(error));
+      }
+    );
   }
 
   doPostcodeLookup() {

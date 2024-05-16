@@ -4,43 +4,33 @@
             <span class="py-2 bolder fs-1">Signup</span>
             <div class="py-1">
                 <p>
-                    Create your account with Desiland. For security reasons, do not share your login credentials with
-                    anyone
+                    Create your account with Gulfi. For security reasons, do not share your login credentials with anyone
                 </p>
             </div>
             <form (ngSubmit)="registerUser()" [formGroup]="registerForm" *ngIf="!signupSuccess">
                 <div class="h-flex">
-                    <div class="input-div">
-                        <input type="text" id="firstName" class="form-control _381fS" formControlName="firstName"
-                            required />
-                        <div class="_2EeI1 _26LFr"></div>
-                        <label class="_1Cvlf _2tL9P" for="firstName">First name</label>
+                    <div class="input-group my-1">
+                        <input required="" type="text" name="firstName" autocomplete="off" class="input" formControlName="firstName" required>
+                        <label class="user-label">First name</label>
                     </div>
-                    <div class="input-div">
-                        <input type="text" id="lastName" class="form-control _381fS" formControlName="lastName"
-                            required />
-                        <div class="_2EeI1 _26LFr"></div>
-                        <label class="_1Cvlf _2tL9P" for="firstName">Last name</label>
+                    <div class="input-group my-1">
+                        <input required="" type="text" name="lastName" autocomplete="off" class="input" formControlName="lastName" required>
+                        <label class="user-label">Last name</label>
                     </div>
                 </div>
                 <div class="h-flex">
-                    <div class="input-div">
-                        <input type="text" id="email" class="form-control _381fS" formControlName="email" required />
-                        <div class="_2EeI1 _26LFr"></div>
-                        <label class="_1Cvlf _2tL9P" for="email">Email address</label>
+                    <div class="input-group my-1">
+                        <input required="" type="text" name="email" autocomplete="off" class="input" formControlName="email" required>
+                        <label class="user-label">Email address</label>
                     </div>
-                    <div class="input-div">
-                        <input type="text" id="mobile" class="form-control _381fS" formControlName="mobile" required />
-                        <div class="_2EeI1 _26LFr"></div>
-                        <label class="_1Cvlf _2tL9P" for="mobile">Mobile</label>
+                    <div class="input-group my-1">
+                        <input required="" type="text" name="mobile" autocomplete="off" class="input" formControlName="mobile" required>
+                        <label class="user-label">Mobile</label>
                     </div>
                 </div>
-
-                <div class="input-div">
-                    <input type="password" id="password" class="form-control _381fS" formControlName="password"
-                        required />
-                    <div class="_2EeI1 _26LFr"></div>
-                    <label class="_1Cvlf _2tL9P" for="mobile">Password</label>
+                <div class="input-group my-1">
+                    <input required="" type="password" name="password" autocomplete="off" class="input" formControlName="password" required>
+                    <label class="user-label">Password</label>
                 </div>
                 <button type="submit" class="btn-arrow mt-3 d-flex jcc aic w-100" [class.disabled]="loading">
                     <span>Create Account</span>

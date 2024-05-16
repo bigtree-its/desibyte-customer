@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "Desio-customer": {
+        "Gulfi-customer": {
             "projectType": "application",
             "schematics": {},
             "root": "",
@@ -13,7 +13,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/Desio-customer",
+                        "outputPath": "dist/Gulfi-customer",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": [
@@ -30,8 +30,8 @@
                         ],
                         "scripts": [],
                         "allowedCommonJsDependencies": [
-                            "lodash","crypto-js"
-                         ]
+                            "lodash", "crypto-js"
+                        ]
                     },
                     "configurations": {
                         "production": {
@@ -71,13 +71,13 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "browserTarget": "Desio-customer:build:production"
+                            "browserTarget": "Gulfi-customer:build:production"
                         },
                         "development": {
-                            "browserTarget": "Desio-customer:build:development"
+                            "browserTarget": "Gulfi-customer:build:development"
                         },
                         "local": {
-                            "browserTarget": "Desio-customer:build:local"
+                            "browserTarget": "Gulfi-customer:build:local"
                         }
                     },
                     "defaultConfiguration": "local"
@@ -85,7 +85,7 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "Desio-customer:build"
+                        "browserTarget": "Gulfi-customer:build"
                     }
                 },
                 "test": {

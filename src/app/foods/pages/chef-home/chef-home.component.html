@@ -1,8 +1,8 @@
 <div *ngIf="chef !== null && chef !== undefined && !incorrectLanding">
 
-    <div class="flex-row jcsb py-2 aic px-3 chef-home-banner">
+    <div class="flex-row jcsb py-2 aic px-3">
         <fa-icon [icon]="faArrowLeft" class="btn-circle" (click)="goback()"></fa-icon>
-        <span class="big-text fs-3 mr-2">{{chef.kitchenName}}</span>
+        <span class="bolder fs-3">{{chef.kitchenName}}</span>
         <span [class.open]="chef.open" [class.closed]="!chef.open">{{chef.open?
             "Open":"Closed"}}</span>
     </div>
@@ -75,26 +75,28 @@
                             <span *ngIf="chef.preOrderOnly" class="attribute">PrefoodOrder Only</span>
                         </div>
                         <span class="py-1 px-1 f-size-s lg">{{chef.description}}</span>
-                        <div class="my-1">
-                            <div class="gap-1 flex-row-wrap">
-                                <span class="big-text mr-3" *ngFor="let cuisine of chef.cuisines | slice:0:3">{{
-                                    cuisine.name }}
-                                </span>
-                            </div>
-                        </div>
-                        <div class="flex-column gap-1" *ngIf="chef.doDelivery">
-                            <div class="flex-row">
-                                <span class="bolder">Delivery Distance</span>
-                                <span class="pl-2">{{chef.deliveryDistance}}
-                                    miles</span>
-                            </div>
-                            <div class="flex-row">
-                                <span class="bolder">Free Delivery</span>
-                                <span class="pl-2">Order over
+                        <table>
+                            <tr>
+                                <th>Cuisines</th>
+                                <td>
+                                    <div class="gap-1 flex-row-wrap">
+                                        <span class="mr-1" *ngFor="let cuisine of chef.cuisines | slice:0:3">{{
+                                        cuisine.name }}
+                                    </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr *ngIf="chef.doDelivery">
+                                <th>Delivery Distance</th>
+                                <td><span>{{chef.deliveryDistance}} miles</span></td>
+                            </tr>
+                            <tr *ngIf="chef.doDelivery">
+                                <th>Free Delivery</th>
+                                <td><span>Order over
                                     {{chef.freeDeliveryOver |
-                                    currency: 'GBP'}}</span>
-                            </div>
-                        </div>
+                                    currency: 'GBP'}}</span></td>
+                            </tr>
+                        </table>
                         <div *ngIf="!chef.doDelivery" style="padding: 5px 0;">
                             <span class="attribute">Collection Only</span>
                         </div>

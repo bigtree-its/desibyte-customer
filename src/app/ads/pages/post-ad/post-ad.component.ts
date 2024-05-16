@@ -2,7 +2,12 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { NgbDate, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Subject, takeUntil } from 'rxjs';
-import { PropertyAd, School, SuperStore } from 'src/app/model/all-ads';
+import {
+  GeneralAd,
+  PropertyAd,
+  School,
+  SuperStore,
+} from 'src/app/model/all-ads';
 import { User } from 'src/app/model/all-auth';
 import { Address, NameValue } from 'src/app/model/common';
 import { AdsService } from 'src/app/services/ads/ads.service';
@@ -15,7 +20,6 @@ import { Utils } from 'src/app/services/common/utils';
   styleUrls: ['./post-ad.component.css'],
 })
 export class PostAdComponent implements OnInit, OnDestroy {
-
   destroy$ = new Subject<void>();
   accountService = inject(AccountService);
   adService = inject(AdsService);
@@ -63,6 +67,10 @@ export class PostAdComponent implements OnInit, OnDestroy {
   error: boolean;
   showLoginOptions: boolean;
 
+  postedAd: GeneralAd;
+  postedProperty: PropertyAd;
+  postSuccessful: boolean = false;
+
   ngOnInit() {
     this.accountService.getData();
     this.accountService.loginSession$.subscribe({
@@ -80,21 +88,103 @@ export class PostAdComponent implements OnInit, OnDestroy {
       if (Utils.isValid(propertyAd)) {
         this.postPropertyAd(propertyAd);
       }
+    } else {
+      var ad: GeneralAd = this.buildGeneralAd();
+      if ( ad){
+        this.postGeneralAd(ad);
+      }
+      
     }
+  }
+
+  buildGeneralAd(): GeneralAd {
+    if (!this.category) {
+      this.error = true;
+      this.errorMessage = 'Ad category is mandatory';
+      return null;
+    }
+    if (!this.adAddress) {
+      this.error = true;
+      this.errorMessage = 'Ad Location is mandatory';
+      return null;
+    }
+    if (!this.price) {
+      this.error = true;
+      this.errorMessage = 'Price must be entered';
+      return null;
+    }
+    if (!this.dateAvailable) {
+      this.error = true;
+      this.errorMessage = 'Date available is mandatory';
+      return null;
+    }
+    if (Utils.isEmpty(this.title)) {
+      this.error = true;
+      this.errorMessage = 'Title is mandatory';
+      return null;
+    }
+    if (Utils.isEmpty(this.description) || this.description.length < 50) {
+      this.error = true;
+      this.errorMessage =
+        'Description is mandatory and at least 50 chars in length';
+      return null;
+    }
+
+    return {
+      title: this.title,
+      category: this.category,
+      description: this.description?.split('[n]'),
+      gallery: this.gallery?.trim().split(','),
+      status: 'Available',
+      image: this.image,
+      address: this.adAddress,
+      price: this.price,
+      dateAvailable: Utils.getJsDate(this.dateAvailable),
+      datePosted: new Date(),
+      adOwner: {
+        _id: this.user.id,
+        name: this.user.firstName + ' ' + this.user.lastName,
+        email: this.user.email,
+        mobile: this.user.mobile,
+        address: null,
+      },
+    };
+  }
+
+  private postGeneralAd(ad: GeneralAd) {
+    this.error = false;
+    let observable = this.adService.postAd(ad);
+    observable.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (e) => {
+        console.log('Ad has been posted');
+        this.postSuccessful = true;
+        this.postedAd = e;
+      },
+      error: (err) => {
+        console.error('Errors during posting ad. ' + JSON.stringify(err));
+        this.error = true;
+        this.errorMessage =
+          'Oops. There was a problem when posting your ad. Please contact customer support quoting reference ' +
+          err.error.reference;
+      },
+    });
   }
 
   private postPropertyAd(propertyAd: PropertyAd) {
     this.error = false;
     let observable = this.adService.postProperty(propertyAd);
     observable.pipe(takeUntil(this.destroy$)).subscribe({
-      next: () => {
+      next: (e) => {
         console.log('Property ad has been posted');
-        this.adSubmitted = true;
+        this.postSuccessful = true;
+        this.postedProperty = e;
       },
       error: (err) => {
         console.error('Errors during posting ad. ' + JSON.stringify(err));
         this.error = true;
-        this.errorMessage = "Oops. There was a problem when posting your ad. Please contact customer support quoting reference " + err.error.reference;
+        this.errorMessage =
+          'Oops. There was a problem when posting your ad. Please contact customer support quoting reference ' +
+          err.error.reference;
       },
     });
   }
@@ -102,60 +192,73 @@ export class PostAdComponent implements OnInit, OnDestroy {
   private buildPropertyAd(): PropertyAd {
     if (!this.adAddress) {
       this.error = true;
-      this.errorMessage = "Property Address is mandatory";
+      this.errorMessage = 'Property Address is mandatory';
       return null;
     }
     if (!this.propertyType) {
       this.error = true;
-      this.errorMessage = "Property type is mandatory";
+      this.errorMessage = 'Property type is mandatory';
       return null;
     }
-    if (this.propertyType !== 'Garage' && this.propertyType !== 'Commercial' && !this.propertyTenure) {
+    if (
+      this.propertyType !== 'Garage' &&
+      this.propertyType !== 'Commercial' &&
+      !this.propertyTenure
+    ) {
       this.error = true;
-      this.errorMessage = "Property tenure is mandatory";
+      this.errorMessage = 'Property tenure is mandatory';
       return null;
     }
-    if (this.propertyType !== 'Garage' && this.propertyType !== 'Commercial' && !this.bedrooms) {
+    if (
+      this.propertyType !== 'Garage' &&
+      this.propertyType !== 'Commercial' &&
+      !this.bedrooms
+    ) {
       this.error = true;
-      this.errorMessage = "Bedrooms must be selected";
+      this.errorMessage = 'Bedrooms must be selected';
       return null;
     }
-    if (this.propertyType !== 'Garage' && this.propertyType !== 'Commercial' && !this.bathrooms) {
+    if (
+      this.propertyType !== 'Garage' &&
+      this.propertyType !== 'Commercial' &&
+      !this.bathrooms
+    ) {
       this.error = true;
-      this.errorMessage = "Bathrooms must be selected";
+      this.errorMessage = 'Bathrooms must be selected';
       return null;
     }
     if (!this.price) {
       this.error = true;
-      this.errorMessage = "Price must be entered";
+      this.errorMessage = 'Price must be entered';
       return null;
     }
     if (!this.dateAvailable) {
       this.error = true;
-      this.errorMessage = "Date available is mandatory";
+      this.errorMessage = 'Date available is mandatory';
       return null;
     }
     if (Utils.isEmpty(this.title)) {
       this.error = true;
-      this.errorMessage = "Title is mandatory";
+      this.errorMessage = 'Title is mandatory';
       return null;
     }
     if (Utils.isEmpty(this.description) || this.description.length < 50) {
       this.error = true;
-      this.errorMessage = "Description is mandatory and at least 50 chars in length";
+      this.errorMessage =
+        'Description is mandatory and at least 50 chars in length';
       return null;
     }
 
     return {
       title: this.title,
       summary: this.summary,
-      description: this.description?.split("[n]"),
-      keyFeatures: this.keyFeatures?.split("[n]"),
-      gallery: this.gallery?.trim().split(","),
+      description: this.description?.split('[n]'),
+      keyFeatures: this.keyFeatures?.split('[n]'),
+      gallery: this.gallery?.trim().split(','),
       type: this.propertyType,
       tenure: this.propertyTenure,
-      status: "Available",
-      reference: "",
+      status: 'Available',
+      reference: '',
       image: this.image,
       size: this.size,
       schools: this.schools,
@@ -165,7 +268,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
       hospitals: this.hospitals,
       shops: this.shops,
       leisureCenters: this.leisureCenters,
-      floorPlan: this.floorPlan?.split(","),
+      floorPlan: this.floorPlan?.split(','),
       superStores: this.superStores,
       consumptionType: this.consumptionType,
       address: this.adAddress,
@@ -185,15 +288,13 @@ export class PostAdComponent implements OnInit, OnDestroy {
         address: null,
       },
     };
-
-
   }
 
   onChangeCategory(e: any) {
     this.category = e.target.value;
     if (this.category === 'Property') {
-      this.consumptionType = "Rent";
-      this.rentPeriod = "Monthly";
+      this.consumptionType = 'Rent';
+      this.rentPeriod = 'Monthly';
     }
   }
 

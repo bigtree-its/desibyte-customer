@@ -1,6 +1,7 @@
 <div class="container mb-5">
     <ng-container *ngIf="!user" [ngTemplateOutlet]="auth"></ng-container>
-    <ng-container *ngIf="user" [ngTemplateOutlet]="postAdTemplate"></ng-container>
+    <ng-container *ngIf="user && !postSuccessful" [ngTemplateOutlet]="postAdTemplate"></ng-container>
+    <ng-container *ngIf="user && postSuccessful" [ngTemplateOutlet]="postConfirmation"></ng-container>
 </div>
 
 <ng-template #postAdTemplate>
@@ -19,7 +20,7 @@
             <option value="Books">Books</option>
             <option value="Jobs">Jobs</option>
         </select>
-        <div class="flex-column my-2" *ngIf="category==='Property'">
+        <div class="flex-column my-2">
             <span class="bolder py-1">Property Postcode</span>
             <app-postcode-lookup (addressEmitter)="onSelectAddress($event)"></app-postcode-lookup>
         </div>
@@ -131,6 +132,13 @@
                 </div>
             </div>
         </div>
+        <div class="flex-column my-2" *ngIf="category!=='Property'">
+            <span class="bolder py-1">Your Price</span>
+            <div class="input-group">
+                <div class="bg-light border jcc aic d-flex p-2 br-tl-7 br-bl-7">£</div>
+                <input [(ngModel)]="price" #ctrl="ngModel" type="number" min="0.00" step="1" value="1.00" id="propertySaleOffersOver" class="form-control" placeholder="Offers Over">
+            </div>
+        </div>
         <div class="flex-column my-2" *ngIf="category==='Property' && consumptionType === 'Sale' ">
             <span class="bolder py-1">Offers Over</span>
             <div class="input-group">
@@ -138,7 +146,7 @@
                 <input [(ngModel)]="price" #ctrl="ngModel" type="number" min="0.00" step="1" value="1.00" id="propertySaleOffersOver" class="form-control" placeholder="Offers Over">
             </div>
         </div>
-        <div class="flex-column my-2" *ngIf="category==='Property'">
+        <div class="flex-column my-2">
             <span class="bolder">Date available</span>
             <div class="input-group">
                 <input type="text" class="form-control" [minDate]="minDate" placeholder="dd-mm-yyyy" name="dp" [(ngModel)]="dateAvailable" ngbDatepicker #d="ngbDatepicker" />
@@ -175,6 +183,22 @@
             <button class="btn-13 br-25 px-5 my-2" (click)="postAd()">Post</button>
         </div>
 
+    </div>
+</ng-template>
+<ng-template #postConfirmation>
+
+    <div class="flex-column gap-1 p-3">
+        <span class="bolder fs-4">Thanks for posting you ad</span>
+        <span>
+            Your ad reference {{postedAd.reference}}
+        </span>
+        <span>
+            We moderate listings in order to follow safety practices, which can sometimes take a few hours. Once your ad has been approved, it will be available to view <a href="/my_ads">here</a>
+        </span>
+        <span>
+            We will send a confirmation email to {{user.email}} which you can use to edit or delete your ad in future.
+        </span>
+        <button class="btn-13" [routerLink]="['/my_ads']">Manage My Ads</button>
     </div>
 </ng-template>
 

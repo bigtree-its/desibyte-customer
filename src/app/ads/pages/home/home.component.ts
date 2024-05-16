@@ -20,6 +20,7 @@ import {
   faFilter,
   faGamepad,
   faHome,
+  faImage,
   faList,
   faPersonChalkboard,
   faPersonDigging,
@@ -81,6 +82,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   faEvents = faCalendarDays;
   faFurniture = faChair;
   faAll = faList;
+  faImage=  faImage;
   // faArrowRight = faChevronRight;
   faArrowLeft = faArrowLeft;
   faArrowRight = faArrowRight;
