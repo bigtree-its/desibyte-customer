@@ -85,7 +85,7 @@
             <fa-icon [icon]="faArrowLeft"></fa-icon>
         </div>
         <div #pScroller style="display: flex;padding: 10px;overflow-x: hidden;white-space: nowrap;gap: 10px;">
-            <ng-container *ngFor="let property of properties" [ngTemplateOutlet]="theCard" [ngTemplateOutletContext]="{ item: property, link: '/ads/p/' }"></ng-container>
+            <ng-container *ngFor="let property of properties" [ngTemplateOutlet]="propertyCard" [ngTemplateOutletContext]="{ item: property }"></ng-container>
         </div>
         <div class="arrow-icon-div" (click)="scrollRight('pScroller')">
             <fa-icon [icon]="faArrowRight"></fa-icon>
@@ -93,7 +93,7 @@
     </div>
     <div class="sm full-screen mb-2 px-3">
         <div class="flex-row-scrollable py-2 w-100 gap-1">
-            <ng-container *ngFor="let property of properties" [ngTemplateOutlet]="theCard" [ngTemplateOutletContext]="{ item: property , link: '/ads/p'}"></ng-container>
+            <ng-container *ngFor="let property of properties" [ngTemplateOutlet]="propertyCard" [ngTemplateOutletContext]="{ item: property}"></ng-container>
         </div>
     </div>
 </ng-template>
@@ -104,7 +104,7 @@
             <fa-icon [icon]="faArrowLeft"></fa-icon>
         </div>
         <div #adScroller style="display: flex;padding: 10px;overflow-x: hidden;white-space: nowrap;gap: 10px;">
-            <ng-container *ngFor="let ad of ads" [ngTemplateOutlet]="theCard" [ngTemplateOutletContext]="{ item: ad, link: '/ads/p' }"></ng-container>
+            <ng-container *ngFor="let ad of ads" [ngTemplateOutlet]="adCard" [ngTemplateOutletContext]="{ item: ad }"></ng-container>
         </div>
         <div class="arrow-icon-div" (click)="scrollRight('adScroller')">
             <fa-icon [icon]="faArrowRight"></fa-icon>
@@ -112,13 +112,31 @@
     </div>
     <div class="sm full-screen mb-2 px-3">
         <div class="flex-row-scrollable py-2 w-100 gap-1">
-            <ng-container *ngFor="let ad of ads" [ngTemplateOutlet]="theCard" [ngTemplateOutletContext]="{ item: ad, link: '/ads/p' }"></ng-container>
+            <ng-container *ngFor="let ad of ads" [ngTemplateOutlet]="adCard" [ngTemplateOutletContext]="{ item: ad }"></ng-container>
         </div>
     </div>
 </ng-template>
 
-<ng-template #theCard let-item="item" let-link="link">
-    <div class="flex-column" style="max-width: 300px;min-width: 300px;height: 320px;margin-right: 10px;" [routerLink]="[link, item.reference]">
+<ng-template #propertyCard let-item="item">
+    <div class="flex-column" style="max-width: 300px;min-width: 300px;height: 320px;margin-right: 10px;" [routerLink]="['/ads/p', item.reference]">
+        <fa-icon *ngIf="!item.image" [icon]="faImage" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;"></fa-icon>
+        <img *ngIf="item.image" src="{{item.image}}" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
+        <div class="flex-column p-1">
+            <span class="bolder py-2">{{item.title}}</span>
+            <span class="fs-7 bold">{{item.address.addressLine2}},
+                {{item.address.city}}
+            </span>
+            <div class="flex-row jcsb aic">
+                <span class="bolder">{{item.price |
+                    currency:'GBP'}}</span>
+                <span>{{item.datePosted |
+                    dateAgo}}</span>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #adCard let-item="item">
+    <div class="flex-column" style="max-width: 300px;min-width: 300px;height: 320px;margin-right: 10px;" [routerLink]="['/ads/g', item.reference]">
         <fa-icon *ngIf="!item.image" [icon]="faImage" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;"></fa-icon>
         <img *ngIf="item.image" src="{{item.image}}" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
         <div class="flex-column p-1">
@@ -136,12 +154,11 @@
     </div>
 </ng-template>
 
-
 <ng-template #adList>
     <div class="flex-column">
         <span class="bolder pb-3 fs-5">{{category}}</span>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 gap-1">
-            <div class="col mb-4" *ngFor="let item of ads">
+            <div class="col mb-4" *ngFor="let item of ads" [routerLink]="[ '/ads/g', item.reference] ">
                 <div class="flex-column" style="border:none;cursor: pointer;">
                     <!-- <img src="{{item.image}}" class="card-img" alt="..."> -->
                     <img *ngIf="item.image" src="{{item.image}}" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">

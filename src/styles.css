@@ -46,7 +46,12 @@
     --font-size-small: 0.75rem;
     --font-size-default: 0.875rem;
     --brand-color-light: #f2fbb8;
-    --brand-color: #4b4;
+    --brand-color-green: #4b4;
+    --brand-color-navy: #44B;
+    --brand-color-blue: #08F;
+    --brand-color-: #0F8;
+    --brand-color: rgb(241, 122, 2);
+    --brand-color-black: rgb(34, 35, 34);
     --brand-color-dark: #53d900;
     margin: 0;
     padding: 0;
@@ -125,6 +130,7 @@ input[type="number"] {
 
 .input-group {
     position: relative;
+    display: flex;
 }
 
 .input {
@@ -149,7 +155,7 @@ input[type="number"] {
 .input:focus,
 input:valid {
     outline: none;
-    border: 1px solid var(--brand-color);
+    /* border: 1px solid var(--brand-color); */
 }
 
 .input:focus~label,
@@ -2120,6 +2126,10 @@ select {
 
 .mb-5 {
     margin-bottom: 50px;
+}
+
+.mb-100 {
+    margin-bottom: 100px;
 }
 
 .h-1 {

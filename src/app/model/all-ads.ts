@@ -5,6 +5,7 @@ export class GeneralAd {
   title: string;
   status: string;
   image: string;
+  views?: number;
   reference?: string;
   description: string[];
   gallery: string[];
@@ -19,6 +20,7 @@ export class GeneralAd {
 }
 
 export class PropertyAd {
+  views?: number;
   title: string;
   tenure: string;
   consumptionType: string;

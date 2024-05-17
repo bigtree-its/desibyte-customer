@@ -5,16 +5,19 @@
                 <div *ngIf="viewAd" class="arrow-icon-div" (click)="goBack()">
                     <fa-icon [icon]="faArrowLeft"></fa-icon>
                 </div>
-                <span class="py-2 fs-3 bolder">{{viewAd?
-                    viewAd.reference: 'My Ads'}}</span>
+                <span *ngIf="viewAd" class="py-2 fs-3 bolder">Your Ad
+                    #{{viewAd.reference}}</span>
+                <span *ngIf="!viewAd" class="py-2 fs-3 bolder">My Ads</span>
             </div>
-            <span class="color-red f-size-md bold" *ngIf="viewAd">{{viewAd.price | currency: 'GBP'}}</span>
+            <span class="color-red f-size-md bold" *ngIf="viewAd">{{viewAd.price
+                | currency: 'GBP'}}</span>
         </div>
 
         <div class="flex-column" *ngIf="!viewAd">
             <form>
                 <div class="my-2 row">
-                    <label for="table-filtering-search" class="col-xs-3 col-sm-auto col-form-label">Full text search:</label>
+                    <label for="table-filtering-search" class="col-xs-3 col-sm-auto col-form-label">Full text
+                        search:</label>
                     <div class="col-xs-3 col-sm-auto">
                         <input id="table-filtering-search" class="form-control" type="text" [formControl]="filter" />
                     </div>
@@ -28,8 +31,8 @@
                             <th scope="col">Category</th>
                             <th scope="col">Reference</th>
                             <th scope="col">Price</th>
-                            <th scope="col">Date Posted</th>
-                            <th scope="col">Status</th>
+                            <th scope="col">Posted</th>
+                            <th scope="col">Views</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -74,38 +77,36 @@
                   </tbody>
             </table> -->
         </div>
-        <div class="flex-column" *ngIf="viewAd">
-
-            <div class="bg-light p-3 my-2">
-                <span class="bolder fs-7">Order Summary</span>
-                <div class="flex-row py-2 align-items-center">
-                    <span *ngIf="!loading" class="bold fs-3 ">{{viewAd.status |
-                        titlecase}}</span>
-                    <div *ngIf="loading" class="d-flex jcc aic p-3">
-                        <div class="loader"></div>
-                    </div>
-                    <!-- <button class="btn btn-11 ml-2 " *ngIf="viewAd?.status==='Draft' " (click)="cancel()">Cancel</button> -->
+        <div class="container mb-100" *ngIf="viewAd">
+            <div class="row flex-row gap-1 mt-3">
+                <div class="col-md-3">
+                    <img *ngIf="!viewAd.image" src="/assets/images/default-image.jpeg" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
+                    <img *ngIf="viewAd.image" src="{{viewAd.image}}" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
                 </div>
+                <div class="col-md-9 flex-column p-1">
+                    <span class="bolder fs-4 py-2">{{viewAd.title}}</span>
+                    <table>
+                        <tr>
+                            <th>Posted</th>
+                            <td><span>{{viewAd.datePosted | date : 'EE d LLL' }}</span></td>
+                        </tr>
+                        <tr>
+                            <th>Address</th>
+                            <td><span class="fs-7 bold">{{viewAd.address.addressLine2}},
+                                {{viewAd.address.city}}</span></td>
+                        </tr>
+                    </table>
+                    <p class="mt-2">
+                        {{viewAd.description}}
+                    </p>
+                </div>
+            </div>
+            <div class="sm footer d-flex jcsb aic py-3 px-2 border-top">
+                <div class="flex-row">
+                    <fa-icon [icon]="faEye">{{viewAd.views}}</fa-icon>
+                </div>
+                <button class="btn-9">Edit</button>
             </div>
         </div>
     </div>
 </div>
-
-<ng-template #orderLayout>
-    <div class="py-2">
-        <table style="width: 100%;">
-            <tr>
-                <th>Ref#</th>
-                <th>Date</th>
-                <th>Status</th>
-                <th>Category</th>
-            </tr>
-            <tr>
-                <td>{{viewAd?.reference}}</td>
-                <td>{{viewAd?.datePosted | date}}</td>
-                <td>{{viewAd?.status | titlecase}}</td>
-                <td>{{viewAd?.category | titlecase}}</td>
-            </tr>
-        </table>
-    </div>
-</ng-template>

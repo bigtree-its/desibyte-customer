@@ -1,7 +1,7 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit, PipeTransform } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { faArrowLeft, faChevronDown, faChevronUp, faFaceSmile, faPeopleArrows, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faChevronDown, faChevronUp, faEye, faFaceSmile, faPeopleArrows, faStar } from '@fortawesome/free-solid-svg-icons';
 import { map, Observable, startWith, Subject } from 'rxjs';
 import { AdSearchQuery, GeneralAd } from 'src/app/model/all-ads';
 import { User } from 'src/app/model/all-auth';
@@ -33,7 +33,10 @@ export class MyAdsComponent implements OnInit, OnDestroy {
   faFaceSmile = faFaceSmile;
   chevronDown = faChevronDown;
   chevronUp = faChevronUp;
+  faEye=faEye;
+  
   loading: boolean = false;
+
   ngOnInit(): void {
     this.accountService.getData();
     this.accountService.loginSession$.subscribe({

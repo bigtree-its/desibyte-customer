@@ -11,6 +11,7 @@ import { SharedModule } from '../shared';
 import { OrderByDatePipe } from '../pipes/order-by-date.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MyAdsComponent } from './pages/my-ads/my-ads.component';
+import { DateAgoPipe } from '../pipes/date-ago.pipe';
 
 const routes: Routes = [
   {
@@ -52,6 +53,7 @@ const routes: Routes = [
     FontAwesomeModule,
     SharedModule,
     NgbModule,
+    DateAgoPipe,
     RouterModule.forChild(routes)
   ]
 })

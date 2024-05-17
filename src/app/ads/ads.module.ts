@@ -10,11 +10,13 @@ import { HomeComponent } from './pages/home/home.component';
 import { DateAgoPipe } from '../pipes/date-ago.pipe';
 import { PropertyDetailComponent } from './pages/property-detail/property-detail.component';
 import { ContactFormComponent } from './pages/contact-form/contact-form.component';
+import { AdDetailComponent } from './pages/ad-detail/ad-detail.component';
 
 const routes: Routes = [
   { path: 'ads/post', component: PostAdComponent },
   { path: 'ads/home', component: HomeComponent },
-  { path: 'ads/p/:id', component: PropertyDetailComponent }
+  { path: 'ads/p/:id', component: PropertyDetailComponent },
+  { path: 'ads/g/:id', component: AdDetailComponent }
 ]
 
 @NgModule({
@@ -22,7 +24,8 @@ const routes: Routes = [
     PostAdComponent,
     HomeComponent,
     PropertyDetailComponent,
-    ContactFormComponent
+    ContactFormComponent,
+    AdDetailComponent
   ],
   imports: [
     CommonModule,
