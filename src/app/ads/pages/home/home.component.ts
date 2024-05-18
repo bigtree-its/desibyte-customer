@@ -16,9 +16,8 @@ import {
   faCalendarDays,
   faCar,
   faChair,
-  faChevronRight,
+  faChild,
   faFilter,
-  faGamepad,
   faHome,
   faImage,
   faList,
@@ -73,7 +72,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   faBed = faBed;
   faHomes = faHome;
   faCars = faCar;
-  faGames = faGamepad;
+  faKids = faChild;
   faBooks = faBook;
   faElectronics = faBolt;
   faJobs = faPersonDigging;
@@ -101,8 +100,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       icon: this.faCars,
     },
     {
-      name: 'Toys',
-      icon: this.faGames,
+      name: 'Kids',
+      icon: this.faKids,
     },
     {
       name: 'Electronics',
@@ -135,6 +134,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ];
   showLandingPage: boolean;
   searchRadius: any;
+  groupedAds: Map<string, GeneralAd[]>;
 
   ngOnInit(): void {
     this.category = 'All';
@@ -184,18 +184,19 @@ export class HomeComponent implements OnInit, OnDestroy {
     adQuery.lastMonth = true;
     this.adService.getAds(adQuery).subscribe((d) => {
       this.ads = d;
+      this.groupedAds = this.ads.reduce(
+        (result:any, currentValue:any) => { 
+          (result[currentValue['category']] = result[currentValue['category']] || []).push(currentValue);
+          return result;
+        }, {});
     });
-  }
-
-  getIcon(arg0: string): import('@fortawesome/fontawesome-svg-core').IconProp {
-    throw new Error('Method not implemented.');
   }
 
   onChangeLocation(e: any) {
     this.location = e.target.value;
   }
 
-  onSelectCategory(e: string) {
+  onSelectCategory(e: any) {
     this.category = e;
     var adQuery: AdSearchQuery = {};
     adQuery.lastMonth = true;
@@ -241,8 +242,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       case 'Ads':
         this.getAds(adQuery);
         break;
-      case 'Games':
-        adQuery.category = 'Games';
+      case 'Kids':
+        adQuery.category = 'Kids';
         this.getAds(adQuery);
         break;
       default:

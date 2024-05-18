@@ -60,16 +60,18 @@
         </div>
         <div class="col-md-11 col-lg-10 col-xl-9 ">
             <div class="flex-column" *ngIf="category==='All'">
-                <div class="d-flex jcsb aic gap-1">
-                    <b class="bolder fs-5 ">Latest Properties </b>
+                <div class="d-flex jcsb aic gap-1 my-2">
+                    <b class="bolder fs-5 ">Properties </b>
                     <b (click)="onSelectCategory('Property')" class="cursor-pointer link">See all</b>
                 </div>
                 <ng-container [ngTemplateOutlet]="propertyListScroller"></ng-container>
-                <div class="d-flex jcsb aic gap-1">
-                    <b class="bolder fs-5 ">Latest Ads </b>
-                    <b (click)="onSelectCategory('Ad')" class="cursor-pointer link">See all</b>
+                <div class="div" *ngFor="let group of groupedAds | keyvalue">
+                    <div class="d-flex jcsb aic gap-1 my-2">
+                        <b class="bolder fs-5 ">{{group.key}} </b>
+                        <b (click)="onSelectCategory(group.key)" class="cursor-pointer link">See all</b>
+                    </div>
+                    <ng-container [ngTemplateOutlet]="adListScroller" [ngTemplateOutletContext]="{ items: group.value }"></ng-container>
                 </div>
-                <ng-container [ngTemplateOutlet]="adListScroller"></ng-container>
             </div>
             <div class="flex-column" *ngIf="category!=='All'">
                 <ng-container *ngIf="category === 'Property'" [ngTemplateOutlet]="propertyList"></ng-container>
@@ -98,13 +100,13 @@
     </div>
 </ng-template>
 
-<ng-template #adListScroller>
+<ng-template #adListScroller let-items="items">
     <div class="lg scroll-container">
         <div class="arrow-icon-div" (click)="scrollLeft('adScroller')">
             <fa-icon [icon]="faArrowLeft"></fa-icon>
         </div>
         <div #adScroller style="display: flex;padding: 10px;overflow-x: hidden;white-space: nowrap;gap: 10px;">
-            <ng-container *ngFor="let ad of ads" [ngTemplateOutlet]="adCard" [ngTemplateOutletContext]="{ item: ad }"></ng-container>
+            <ng-container *ngFor="let ad of items" [ngTemplateOutlet]="adCard" [ngTemplateOutletContext]="{ item: ad }"></ng-container>
         </div>
         <div class="arrow-icon-div" (click)="scrollRight('adScroller')">
             <fa-icon [icon]="faArrowRight"></fa-icon>
@@ -156,7 +158,10 @@
 
 <ng-template #adList>
     <div class="flex-column">
-        <span class="bolder pb-3 fs-5">{{category}}</span>
+        <div class="flex-row gap-1">
+            <fa-icon [icon]="faArrowLeft" class="btn-circle" (click)="onSelectCategory('All')"></fa-icon>
+            <span class="bolder pb-3 fs-5">{{category}}</span>
+        </div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 gap-1">
             <div class="col mb-4" *ngFor="let item of ads" [routerLink]="[ '/ads/g', item.reference] ">
                 <div class="flex-column" style="border:none;cursor: pointer;">
@@ -184,7 +189,11 @@
 
 <ng-template #propertyList>
     <div class="flex-column">
-        <span class="bolder pb-3 fs-5">Properties</span>
+        <div class="flex-row gap-1">
+            <fa-icon [icon]="faArrowLeft" class="btn-circle" (click)="onSelectCategory('All')"></fa-icon>
+            <span class="bolder pb-3 fs-5">Properties</span>
+        </div>
+
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3  align-items-stretch">
             <div class="col mb-4" *ngFor="let item of properties " [routerLink]="[ '/ads/p', item.reference] ">
                 <div class="flex-column" style="border:none;cursor: pointer;">

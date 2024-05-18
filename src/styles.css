@@ -7,7 +7,7 @@
 
 /** Logo **/
 
-@import url("https://fonts.googleapis.com/css2?family=Rubik+Vinyl&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap');
 :root {
     --blue: #007bff;
     --indigo: #6610f2;
@@ -737,7 +737,7 @@ body {
 }
 
 .logo-text {
-    /* font-family: "Rubik Vinyl", system-ui; */
+    font-family: "Major Mono Display", monospace;
     font-weight: 900;
     cursor: pointer;
     color: var(--brand-color);

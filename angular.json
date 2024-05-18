@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "Gulfi-customer": {
+        "LungiDance-customer": {
             "projectType": "application",
             "schematics": {},
             "root": "",
@@ -13,7 +13,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/Gulfi-customer",
+                        "outputPath": "dist/LungiDance-customer",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": [
@@ -71,13 +71,13 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "browserTarget": "Gulfi-customer:build:production"
+                            "browserTarget": "LungiDance-customer:build:production"
                         },
                         "development": {
-                            "browserTarget": "Gulfi-customer:build:development"
+                            "browserTarget": "LungiDance-customer:build:development"
                         },
                         "local": {
-                            "browserTarget": "Gulfi-customer:build:local"
+                            "browserTarget": "LungiDance-customer:build:local"
                         }
                     },
                     "defaultConfiguration": "local"
@@ -85,7 +85,7 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "Gulfi-customer:build"
+                        "browserTarget": "LungiDance-customer:build"
                     }
                 },
                 "test": {

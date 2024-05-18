@@ -1,0 +1,147 @@
+{
+    "Cars": [{
+        "address": {
+            "propertyNumber": "18",
+            "addressLine1": "Forrestfield Crescent",
+            "addressLine2": "Newton Mearns",
+            "city": "Glasgow",
+            "postcode": "G77 6DZ",
+            "country": "SCOTLAND",
+            "latitude": 55.7784237,
+            "longitude": -4.3277167
+        },
+        "adOwner": {
+            "name": "Nava",
+            "email": "nava.arul@gmail.com",
+            "mobile": "07979191176",
+            "telephone": "0416440995"
+        },
+        "description": [
+            "Our Nissan X-Trail comes with a range of fantastic features including Parking Sensor(s), Climate Control, Leather Trim, Space Saver Wheel, 19 Alloy Wheels, Panoramic Roof, Privacy Glass. Please click the  button to view features, high-quality 360-degree images and check availability on [Website URL removed] To provide you with complete peace of mind, this Nissan X-Trail has successfully undergone a multi-point inspection check. Moreover, extended warranty options, spanning from 3 to 36 months available. We also offer paint protection with leading warranty products from AutoProtect and 12 months of AA roadside assistance, ensuring that you have added protection and support"
+        ],
+        "keyFeatures": [
+            "Privacy Glass",
+            "Leather seats",
+            "Full Air conditioned",
+            "Exellant tyres"
+        ],
+        "gallery": [
+            "https://imagedelivery.net/ePR8PyKf84wPHx7_RYmEag/3f4a9b0e-7498-4761-3b18-ff0276840c00/86",
+            "https://imagedelivery.net/ePR8PyKf84wPHx7_RYmEag/26154b40-9561-4a29-d776-f10ffb745d00/86",
+            "https://imagedelivery.net/ePR8PyKf84wPHx7_RYmEag/5bffb6f8-5dd7-4fb0-7cfc-2fa2313c1800/86"
+        ],
+        "_id": "664507aab29a7beedc7b4d2a",
+        "title": "2017 Nissan X-Trail 1.6",
+        "category": "Cars",
+        "reference": "ZMWHZUMRC",
+        "price": 14999,
+        "dateAvailable": "2022-02-22T00:00:00.000Z",
+        "datePosted": "2024-05-15T19:06:18.753Z",
+        "image": "https://imagedelivery.net/ePR8PyKf84wPHx7_RYmEag/d85f022a-ffcc-480e-f7f6-ec7f43669500/86",
+        "active": false,
+        "approved": false,
+        "createdAt": "2024-05-15T19:06:18.791Z",
+        "updatedAt": "2024-05-15T19:06:18.791Z",
+        "__v": 0
+    }],
+    "Toys": [{
+            "address": {
+                "city": "GLASGOW",
+                "addressLine1": "5 Galston Avenue",
+                "addressLine2": "Newton Mearns",
+                "country": "Scotland",
+                "postcode": "G77 5SF",
+                "latitude": 55.76664,
+                "longitude": -4.282884
+            },
+            "adOwner": {
+                "name": "Navaneethakrishnan Kannusamy",
+                "email": "nava.arul@gmail.com",
+                "mobile": "07979191176"
+            },
+            "description": [
+                "I have an xbox console for sale and yo be colelcted from this address"
+            ],
+            "keyFeatures": [],
+            "gallery": [],
+            "_id": "66466ba0f944cd00157861f0",
+            "title": "XBOX console for sale",
+            "category": "Toys",
+            "reference": "I6LQYNITF",
+            "price": 200,
+            "dateAvailable": "2024-11-10T00:00:00.000Z",
+            "datePosted": "2024-05-16T20:25:04.206Z",
+            "active": false,
+            "approved": false,
+            "createdAt": "2024-05-16T20:25:04.938Z",
+            "updatedAt": "2024-05-16T20:25:04.938Z",
+            "__v": 0
+        },
+        {
+            "address": {
+                "city": "GLASGOW",
+                "addressLine1": "1 Galston Avenue",
+                "addressLine2": "Newton Mearns",
+                "country": "Scotland",
+                "postcode": "G77 5SF",
+                "latitude": 55.76664,
+                "longitude": -4.282884
+            },
+            "adOwner": {
+                "name": "Navaneethakrishnan Kannusamy",
+                "email": "nava.arul@gmail.com",
+                "mobile": "07979191176"
+            },
+            "description": [
+                "Nitando in good condition and the device is absolutely perfect "
+            ],
+            "keyFeatures": [],
+            "gallery": [],
+            "_id": "66478bad3e31d00015eeae09",
+            "title": "Nintendo for sale",
+            "category": "Toys",
+            "reference": "GI2ETI2FA",
+            "price": 20,
+            "dateAvailable": "2024-05-09T23:00:00.000Z",
+            "datePosted": "2024-05-17T16:54:06.124Z",
+            "active": false,
+            "approved": false,
+            "createdAt": "2024-05-17T16:54:05.471Z",
+            "updatedAt": "2024-05-17T16:54:05.471Z",
+            "__v": 0
+        }
+    ],
+    "Furniture": [{
+        "address": {
+            "city": "GLASGOW",
+            "addressLine1": "1 Galston Avenue",
+            "addressLine2": "Newton Mearns",
+            "country": "Scotland",
+            "postcode": "G77 5SF",
+            "latitude": 55.76664,
+            "longitude": -4.282884
+        },
+        "adOwner": {
+            "name": "Navaneethakrishnan Kannusamy",
+            "email": "nava.arul@gmail.com",
+            "mobile": "07979191176"
+        },
+        "description": [
+            "Me farty farty farty farty farty farty farty farty farty farty farty farty farty farty farty farty farty farty farty you can be farty"
+        ],
+        "keyFeatures": [],
+        "gallery": [],
+        "_id": "66478c3b3e31d00015eeae0a",
+        "title": "Me bum itchy",
+        "category": "Furniture",
+        "reference": "B53LKAQWX",
+        "price": 19.0525,
+        "dateAvailable": "2024-05-23T23:00:00.000Z",
+        "datePosted": "2024-05-17T16:56:28.528Z",
+        "active": false,
+        "approved": false,
+        "createdAt": "2024-05-17T16:56:27.960Z",
+        "updatedAt": "2024-05-17T16:56:27.960Z",
+        "__v": 0
+    }]
+}

@@ -1,5 +1,5 @@
 <div>
-    <button type="button" class="btn-10" (click)="openModal(contactForm)">Enquire Now</button>
+    <button type="button" class="btn-9" (click)="openModal(contactForm)">Enquire Now</button>
 </div>
 <ng-template #contactForm let-modal>
     <div class="modal-header d-flex jcsb aic">
@@ -11,6 +11,6 @@
         <textarea class="border br-7 p-2" name="message" id="message" value [(ngModel)]="message" tabindex="3" #ctrl="ngModel" style="height: 100px;" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
     </div>
     <div class="modal-footer flex-row jcsb aic" style="margin: 10px;padding: 10px;gap:.6rem;">
-        <button *ngIf="user" type="button" class="btn-10" (click)="contactOwner()">Send Enquiry</button>
+        <button *ngIf="user" type="button" class="btn-9" (click)="contactOwner()">Send Enquiry</button>
     </div>
 </ng-template>

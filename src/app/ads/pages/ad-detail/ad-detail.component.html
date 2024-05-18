@@ -22,7 +22,7 @@
         <ng-container [ngTemplateOutlet]="infoSection"></ng-container>
         <div class="p-2 flex-row jcsb footer border-top">
             <div class="flex-row gap-1 aic">
-                <span class="bolder py-2">ad Posted By</span>
+                <span class="bolder py-2">Posted By</span>
                 <span class="py-1">{{ad.adOwner.name}}</span>
             </div>
             <span *ngIf="!user" [routerLink]="['/login']" [queryParams]="{returnUrl: returnUrl}" class="btn-link cursor-pointer">Login to send enquiry</span>
