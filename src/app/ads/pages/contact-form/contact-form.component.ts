@@ -27,6 +27,8 @@ export class ContactFormComponent implements OnInit, OnDestroy{
   @Input() ad: GeneralAd;
   @Input() property: PropertyAd;
 
+  enquirySubmitted: boolean;
+
   ngOnInit(): void {
     if ( this.ad){
       this.adOwner = this.ad.adOwner;
@@ -64,15 +66,15 @@ export class ContactFormComponent implements OnInit, OnDestroy{
     };
     let observable = this.adService.sendEnquiry(adEnquiry);
     observable.pipe(takeUntil(this.destroy$)).subscribe({
-      next: () => {
-        console.log('Property ad has been posted');
+      next: (data) => {
+        console.log('Enquiry has been sent');
+        this.enquirySubmitted = true;
       },
       error: (err) => {
         console.error('Errors during posting enquiry. ' + JSON.stringify(err));
       },
     });
 
-    this.adService.sendEnquiry(adEnquiry).subscribe(e=>{});
   }
 
   ngOnDestroy(): void {

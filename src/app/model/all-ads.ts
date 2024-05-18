@@ -103,9 +103,10 @@ export class AdEnquiry {
   message: string;
   customer: Customer;
   date: Date;
+  responses?: [AdEnquiryResponse]
 }
 export class AdEnquiryResponse {
   adEnquiry: AdEnquiry;
-  response: string;
+  message: string;
   date: Date;
 }

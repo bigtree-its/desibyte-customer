@@ -24,12 +24,16 @@
                     <span class="bolder cursor-pointer">{{user.firstName.trim().substring(0,10)}}</span>
                     <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdown1" role="button"></a>
                 </div>
-                <div ngbDropdownMenu aria-labelledby="navbarDropdown1" class="dropdown-menu">
-                    <a ngbDropdownItem (click)="logout()">Logout</a>
+                <div ngbDropdownMenu aria-labelledby="navbarDropdown1" class="dropdown-menu py-2">
                     <a ngbDropdownItem routerLink="/my_orders">My Orders</a>
                     <a ngbDropdownItem routerLink="/my_ads">My Ads</a>
+                    <a ngbDropdownItem routerLink="/my_messages">My Messages</a>
+                    <a ngbDropdownItem routerLink="/my_profile">Account Settings</a>
+                    <div class="dropdown-divider"></div>
                     <a ngbDropdownItem routerLink="/contact_us">Contact Us</a>
-                    <a ngbDropdownItem routerLink="/my_profile">My Profile</a>
+                    <div class="dropdown-divider"></div>
+                    <a ngbDropdownItem (click)="logout()">Logout</a>
+
                 </div>
             </div>
             <button type="button" class="btn-13 br-25" routerLink="/ads/post">Post an Ad</button>

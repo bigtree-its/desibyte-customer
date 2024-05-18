@@ -25,6 +25,20 @@ export class AdsService {
       );
   }
 
+  getEnquiries(reference: string, category: string): Observable<AdEnquiry[]>{
+    var params = new HttpParams();
+    if (reference) {
+      params = params.set('reference',  reference);
+    }
+    if (category) {
+      params = params.set('category',  category);
+    }
+   
+    console.log('Fetching enquiries for ad  '+ JSON.stringify(params));
+    return this.httpClient.get<AdEnquiry[]>(this.serviceLocator.AdEnquiryUrl, { params });
+  }
+
+
   postAd(ad: GeneralAd): Observable<GeneralAd>{
     console.log('Posting an ad '+ JSON.stringify(ad));
     return this.httpClient

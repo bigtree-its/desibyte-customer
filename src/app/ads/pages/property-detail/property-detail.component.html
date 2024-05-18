@@ -7,11 +7,12 @@
         <span class="bolder fs-3">{{property?.title}}</span>
     </div>
     <div class="sm flex-column" style="margin-bottom: 100px;">
-        <ngb-carousel>
+        <ngb-carousel *ngIf="property.gallery && property.gallery.length > 0">
             <ng-template ngbSlide *ngFor="let gallery of property?.gallery">
                 <img [src]="gallery" style="object-fit: contain;height: 100%; width: 100%;" />
             </ng-template>
         </ngb-carousel>
+
         <div class="flex-row jcsb aic">
             <span class="fs-6 bolder my-1">{{property.price |
                 currency:'GBP'}}</span>
@@ -22,7 +23,7 @@
         <ng-container [ngTemplateOutlet]="infoSection"></ng-container>
         <div class="p-2 flex-row jcsb footer border-top">
             <div class="flex-row gap-1 aic">
-                <span class="bolder py-2">Ad Posted By</span>
+                <span class="bolder py-2">Posted By</span>
                 <span class="py-1">{{property.adOwner.name}}</span>
             </div>
             <span *ngIf="!user" [routerLink]="['/login']" [queryParams]="{returnUrl: returnUrl}" class="btn-link cursor-pointer">Login to send enquiry</span>
@@ -31,7 +32,7 @@
     </div>
     <div class="lg row">
         <div class="col-md-8 flex-column" style="min-height: 100vh;overflow-y: auto; margin-bottom: 100px;">
-            <div class="flex-column jcc aic p-3">
+            <div class="flex-column jcc aic p-3" *ngIf="property.gallery && property.gallery.length > 0">
                 <ngb-carousel style="width: 768px; height: 700px;">
                     <ng-template ngbSlide *ngFor="let gallery of property?.gallery">
                         <div class="w-100">
@@ -40,6 +41,7 @@
                     </ng-template>
                 </ngb-carousel>
             </div>
+            <img *ngIf="!property.image" src="/assets/images/default-image.jpeg" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
             <div class="flex-row w-100 jcsb aic">
                 <span class="fs-6 bold">{{property.address?.addressLine2}},
                     {{property.address?.city}}</span>
@@ -55,7 +57,7 @@
         </div>
         <div class="col-md-4 border asfs py-3 bg-light">
             <div class="py-2 flex-column asfs">
-                <span class="bolder py-2">Ad Posted By</span>
+                <span class="bolder py-2">Posted By</span>
                 <span class="py-1 mb-3">{{property.adOwner.name}}</span>
                 <span *ngIf="!user" [routerLink]="['/login']" [queryParams]="{returnUrl: returnUrl}" class="btn-link cursor-pointer">Login to send enquiry</span>
                 <app-contact-form *ngIf="user" [user]="user" [property]="property"></app-contact-form>

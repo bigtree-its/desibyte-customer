@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
-
 .page {
     display: flex;
     flex-direction: column;
@@ -52,7 +50,7 @@
 }
 
 .selected {
-    background-color: #25b58d;
+    background-color: #191a19;
     color: #fff;
     box-shadow: 0 1px 0 rgba(0, 0, 0, .3);
 }

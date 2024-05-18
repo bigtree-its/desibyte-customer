@@ -1,16 +1,25 @@
 <div>
-    <button type="button" class="btn-9" (click)="openModal(contactForm)">Enquire Now</button>
+    <button type="button" class="btn-10" (click)="openModal(contactForm)">Enquire
+        Now</button>
 </div>
 <ng-template #contactForm let-modal>
     <div class="modal-header d-flex jcsb aic">
         <span class="bolder fs-6">Contact</span>
         <button type="button" class="btn-modal-close" aria-label="Close" (click)="close()">X</button>
     </div>
-    <div class="modal-body flex-column p-3 w-100">
-        <span class="bolder py-1">Description</span>
-        <textarea class="border br-7 p-2" name="message" id="message" value [(ngModel)]="message" tabindex="3" #ctrl="ngModel" style="height: 100px;" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
+    <div class="modal-body">
+        <div *ngIf="enquirySubmitted" class="flex-column p-2 br-12 w-100">
+            <span class="bolder border-bottom py-2 w-100">Success</span>
+            <span class="py-3 px-1">Your message has been sent</span>
+        </div>
+        <div *ngIf="!enquirySubmitted" class="flex-column w-100">
+            <span class="bolder py-1">Your message</span>
+            <textarea class="border br-7 p-2" name="message" id="message" value [(ngModel)]="message" tabindex="3" #ctrl="ngModel" style="height: 100px;" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
+        </div>
     </div>
+
     <div class="modal-footer flex-row jcsb aic" style="margin: 10px;padding: 10px;gap:.6rem;">
-        <button *ngIf="user" type="button" class="btn-9" (click)="contactOwner()">Send Enquiry</button>
+        <button *ngIf="user && !enquirySubmitted" type="button" class="btn-10" (click)="contactOwner()">Send Enquiry</button>
+        <button *ngIf="enquirySubmitted" type="button" class="btn-10" (click)="close()">Close</button>
     </div>
 </ng-template>

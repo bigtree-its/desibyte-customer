@@ -2,111 +2,211 @@
     <div class="flex-column">
         <div class="flex-row jcsb aic border-bottom ">
             <div class="flex-row aic">
-                <div *ngIf="viewAd" class="arrow-icon-div" (click)="goBack()">
-                    <fa-icon [icon]="faArrowLeft"></fa-icon>
+                <div *ngIf="viewAd || viewProperty" class="arrow-icon-div" (click)="goBack()">
+                    <fa-icon [icon]="faArrowLeft" (click)="goHome()"></fa-icon>
                 </div>
                 <span *ngIf="viewAd" class="py-2 fs-3 bolder">Your Ad
                     #{{viewAd.reference}}</span>
-                <span *ngIf="!viewAd" class="py-2 fs-3 bolder">My Ads</span>
+                <span *ngIf="viewProperty" class="py-2 fs-3 bolder">Your Ad
+                    #{{viewProperty.reference}}</span>
+                <span *ngIf="!viewAd && !viewProperty" class="py-2 fs-3 bolder">My Ads</span>
             </div>
             <span class="color-red f-size-md bold" *ngIf="viewAd">{{viewAd.price
                 | currency: 'GBP'}}</span>
         </div>
 
-        <div class="flex-column" *ngIf="!viewAd">
-            <form>
-                <div class="my-2 row">
-                    <label for="table-filtering-search" class="col-xs-3 col-sm-auto col-form-label">Full text
-                        search:</label>
-                    <div class="col-xs-3 col-sm-auto">
-                        <input id="table-filtering-search" class="form-control" type="text" [formControl]="filter" />
-                    </div>
-                </div>
-            </form>
-            <div class="overflow-y height-500 w-100">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Reference</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Posted</th>
-                            <th scope="col">Views</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let ad of myAds$ | async; index as i" (click)="open(ad)">
-                            <th scope="row">{{ i + 1 }}</th>
-                            <td>
-                                <ngb-highlight [result]="ad.category" [term]="filter.value" />
-                            </td>
-                            <td>
-                                <ngb-highlight [result]="ad.reference" [term]="filter.value" />
-                            </td>
-                            <td>
-                                <ngb-highlight [result]="ad.price | currency: 'GBP' " [term]="filter.value" />
-                            </td>
-                            <td>
-                                <ngb-highlight [result]="ad.datePosted | date " [term]="filter.value" />
-                            </td>
-                            <td>
-                                <ngb-highlight [result]="ad.status | titlecase" [term]="filter.value" />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- <table class="styled-table">
-                <thead>
-                    <tr>
-                      <th>Reference</th>
-                      <th>Total</th>
-                      <th>Date</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr (click)="open(order)" *ngFor="let order of orders | orderByDate:'dateCreated':'desc'">
-                        <td class="pl-2">{{order.reference}}</td>
-                        <td class="pl-2">{{order.total | currency: 'GBP'}}</td>
-                        <td class="pl-2">{{order.dateCreated | date }}</td>
-                        <td class="pl-2">{{order.status | titlecase}}</td>
-                    </tr>
-                  </tbody>
-            </table> -->
+        <div *ngIf="!viewAd && !viewProperty" class="flex-row gap-1 border-bottom py-2">
+            <span class="tabHeader" [class.tabSelected]="selectedTab === 'Ads'" (click)="selectTab('Ads')">Ads</span>
+            <span class="tabHeader" [class.tabSelected]="selectedTab === 'Properties'" (click)="selectTab('Properties')">Properties</span>
         </div>
-        <div class="container mb-100" *ngIf="viewAd">
-            <div class="row flex-row gap-1 mt-3">
-                <div class="col-md-3">
-                    <img *ngIf="!viewAd.image" src="/assets/images/default-image.jpeg" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
-                    <img *ngIf="viewAd.image" src="{{viewAd.image}}" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
-                </div>
-                <div class="col-md-9 flex-column p-1">
-                    <span class="bolder fs-4 py-2">{{viewAd.title}}</span>
-                    <table>
-                        <tr>
-                            <th>Posted</th>
-                            <td><span>{{viewAd.datePosted | date : 'EE d LLL' }}</span></td>
-                        </tr>
-                        <tr>
-                            <th>Address</th>
-                            <td><span class="fs-7 bold">{{viewAd.address.addressLine2}},
-                                {{viewAd.address.city}}</span></td>
-                        </tr>
-                    </table>
-                    <p class="mt-2">
-                        {{viewAd.description}}
-                    </p>
-                </div>
+        <div *ngIf="!viewAd && !viewProperty">
+            <ng-container [ngSwitch]="selectedTab">
+                <ng-container *ngSwitchCase="'Ads'" [ngTemplateOutlet]="adsTable"></ng-container>
+                <ng-container *ngSwitchCase="'Properties'" [ngTemplateOutlet]="propertiesTable"></ng-container>
+            </ng-container>
+        </div>
+        <ng-container *ngIf="viewAd" [ngTemplateOutlet]="detail" [ngTemplateOutletContext]="{item: viewAd}"></ng-container>
+        <ng-container *ngIf="viewProperty" [ngTemplateOutlet]="detail" [ngTemplateOutletContext]="{item: viewProperty}"></ng-container>
+    </div>
+</div>
+
+
+
+<ng-template #detail let-item="item">
+    <div class="container mb-100">
+        <ng-container [ngSwitch]="selectedAdTab">
+            <ng-container *ngSwitchCase="'AdDetailTab'" [ngTemplateOutlet]="adDetailTab" [ngTemplateOutletContext]="{item:item}"></ng-container>
+            <ng-container *ngSwitchCase="'AdEnquiriesTab'" [ngTemplateOutlet]="adEnquiryListTab"></ng-container>
+        </ng-container>
+        <div class="sm footer d-flex jcsb aic py-3 px-2 border-top">
+            <fa-icon [icon]="faAd" class="fa-2x " (click)="selectAdTab('AdDetailTab')"></fa-icon>
+            <div class="flex-row">
+                <fa-icon [icon]="faEye" class="fa-2x clickableIcon"></fa-icon>
+                <span class="btn-circle" style="position: relative;
+                    top: -8px;
+                    left: -11px;
+                    background: #f5f5f5;">{{item.views}}</span>
             </div>
-            <div class="sm footer d-flex jcsb aic py-3 px-2 border-top">
-                <div class="flex-row">
-                    <fa-icon [icon]="faEye">{{viewAd.views}}</fa-icon>
-                </div>
-                <button class="btn-9">Edit</button>
+            <div class="flex-row">
+                <fa-icon [icon]="faEnvelop" class="fa-2x clickableIcon" (click)="selectAdTab('AdEnquiriesTab')"></fa-icon>
+                <span class="btn-circle" style="position: relative;
+                    top: -8px;
+                    left: -11px;
+                    background: #f5f5f5;">{{enquiries?.length}}</span>
+            </div>
+            <button class="btn-9">Edit</button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #adDetailTab let-item="item">
+    <div class="row flex-row gap-1 mt-3" ngi>
+        <div class="col-md-3">
+            <img *ngIf="!item.image" src="/assets/images/default-image.jpeg" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
+            <img *ngIf="item.image" src="{{item.image}}" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
+        </div>
+        <div class="col-md-9 flex-column p-1">
+            <span class="bolder fs-4 py-2">{{item.title}}</span>
+            <table>
+                <tr>
+                    <th>Posted</th>
+                    <td><span>{{item.datePosted | date : 'EE d LLL'
+                            }}</span></td>
+                </tr>
+                <tr>
+                    <th>Address</th>
+                    <td><span class="fs-7 bold">{{item.address.addressLine2}},
+                            {{item.address.city}}</span></td>
+                </tr>
+            </table>
+            <p class="mt-2">
+                {{item.description}}
+            </p>
+        </div>
+    </div>
+</ng-template>
+<ng-template #adEnquiryListTab>
+    <div class="flex-column" *ngIf="!enquiry">
+        <div *ngFor="let enq of enquiries" class="flex-column border p-2 my-1 br-12" (click)="selectEnquiry(enq)">
+            <div class="flex-row jcsb aic py-2">
+                <span class="bolder">{{enq.customer.name}}</span>
+                <span>{{enq.date | date: 'dd MMM, yyyy'}}</span>
+            </div>
+            <p>
+                {{enq.message}}
+            </p>
+        </div>
+    </div>
+    <ng-container *ngIf="enquiry" [ngTemplateOutlet]="adEnquiryTab"></ng-container>
+</ng-template>
+<ng-template #adEnquiryTab>
+    <div class="flex-column">
+        <div class="flex-column asfs p-2 mt-3 mb-1 br-top-14 br-br-12 bg-light">
+            <div class="flex-row jcsb aic py-2">
+                <span class="bolder">{{enquiry.customer.name}}</span>
+                <span>{{enquiry.date | date: 'dd MMM, yyyy'}}</span>
+            </div>
+            <p>
+                {{enquiry.message}}
+            </p>
+        </div>
+        <div *ngFor="let resp of enquiry.responses" class="flex-column">
+            <div class="flex-column asfe p-2 br-top-14 br-bl-12 bg-blue">
+                <p>{{resp.message}}</p>
+                <span>{{resp.date | date: 'dd MMM, yyyy'}}</span>
             </div>
         </div>
     </div>
-</div>
+</ng-template>
+<ng-template #adsTable>
+    <div class="flex-column">
+        <form>
+            <div class="my-2 row">
+                <label for="table-filtering-search" class="col-xs-3 col-sm-auto col-form-label">Full text
+                    search:</label>
+                <div class="col-xs-3 col-sm-auto">
+                    <input id="table-filtering-search" class="form-control" type="text" [formControl]="adFilter" />
+                </div>
+            </div>
+        </form>
+        <div class="overflow-y height-500 w-100">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Reference</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Posted</th>
+                        <th scope="col">Views</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let ad of myAds$ | async; index as i" (click)="open(ad)">
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td>
+                            <ngb-highlight [result]="ad.category" [term]="adFilter.value" />
+                        </td>
+                        <td>
+                            <ngb-highlight [result]="ad.reference" [term]="adFilter.value" />
+                        </td>
+                        <td>
+                            <ngb-highlight [result]="ad.price | currency: 'GBP' " [term]="adFilter.value" />
+                        </td>
+                        <td>
+                            <ngb-highlight [result]="ad.datePosted | date " [term]="adFilter.value" />
+                        </td>
+                        <td>
+                            <span>{{ad.views}}</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #propertiesTable>
+    <div class="flex-column">
+        <form>
+            <div class="my-2 row">
+                <label for="table-filtering-search" class="col-xs-3 col-sm-auto col-form-label">Full text
+                    search:</label>
+                <div class="col-xs-3 col-sm-auto">
+                    <input id="table-filtering-search" class="form-control" type="text" [formControl]="propertyFilter" />
+                </div>
+            </div>
+        </form>
+        <div class="overflow-y height-500 w-100">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Reference</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Posted</th>
+                        <th scope="col">Views</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let property of myPropertyAds$ | async; index as i" (click)="openProperty(property)">
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td>
+                            <ngb-highlight [result]="property.reference" [term]="propertyFilter.value" />
+                        </td>
+                        <td>
+                            <ngb-highlight [result]="property.price | currency: 'GBP' " [term]="propertyFilter.value" />
+                        </td>
+                        <td>
+                            <ngb-highlight [result]="property.datePosted | date " [term]="propertyFilter.value" />
+                        </td>
+                        <td>
+                            <span>{{property.views? property.views:
+                                'No Views'}}</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</ng-template>

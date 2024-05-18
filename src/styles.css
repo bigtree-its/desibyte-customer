@@ -48,9 +48,9 @@
     --brand-color-light: #f2fbb8;
     --brand-color-green: #4b4;
     --brand-color-navy: #44B;
-    --brand-color-blue: #08F;
-    --brand-color-: #0F8;
-    --brand-color: rgb(241, 122, 2);
+    --brand-color: rgb(2, 77, 223);
+    --brand-color-g: #0A0;
+    --brand-color--: rgb(241, 122, 2);
     --brand-color-black: rgb(34, 35, 34);
     --brand-color-dark: #53d900;
     margin: 0;
@@ -681,7 +681,7 @@ body {
 }
 
 .bg-blue {
-    background-color: #007bff;
+    background-color: #9cccff;
 }
 
 .bg-success {
@@ -1055,6 +1055,14 @@ select {
     border-bottom-left-radius: 7px;
 }
 
+.br-bl-12 {
+    border-bottom-left-radius: 12px;
+}
+
+.br-bl-25 {
+    border-bottom-left-radius: 25px;
+}
+
 .br-tl-25 {
     border-top-left-radius: 25px;
 }
@@ -1063,8 +1071,12 @@ select {
     border-top-right-radius: 25px;
 }
 
-.br-bl-25 {
-    border-bottom-left-radius: 25px;
+.br-br-7 {
+    border-bottom-right-radius: 7px;
+}
+
+.br-br-12 {
+    border-bottom-right-radius: 14px;
 }
 
 .br-br-25 {
@@ -1129,6 +1141,7 @@ select {
     background-color: transparent;
     border-radius: 50%;
     justify-content: center;
+    margin-right: 30px;
 }
 
 .arrow-icon-div:hover {

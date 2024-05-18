@@ -1,0 +1,23 @@
+.tabHeader {
+    border-bottom: 3px solid #fff;
+    color: #222;
+    margin-right: 20px;
+}
+
+.tabHeader:hover {
+    cursor: pointer;
+    border-bottom: 3px solid #111;
+    color: #111;
+}
+
+.tabSelected {
+    border-bottom: 3px solid #111;
+    color: #111;
+}
+
+.clickableIcon {}
+
+.clickableIcon:hover {
+    cursor: pointer;
+    color: #2661f6;
+}
