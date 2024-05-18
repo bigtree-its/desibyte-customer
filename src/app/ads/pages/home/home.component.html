@@ -119,7 +119,7 @@
 
 <ng-template #propertyCard let-item="item">
     <div class="flex-column" style="max-width: 300px;min-width: 300px;height: 320px;margin-right: 10px;" [routerLink]="['/ads/p', item.reference]">
-        <fa-icon *ngIf="!item.image" [icon]="faImage" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;"></fa-icon>
+        <img *ngIf="!item.image" src="/assets/images/default-image.jpeg" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
         <img *ngIf="item.image" src="{{item.image}}" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
         <div class="flex-column p-1">
             <span class="bolder py-2">{{item.title}}</span>
@@ -137,7 +137,7 @@
 </ng-template>
 <ng-template #adCard let-item="item">
     <div class="flex-column" style="max-width: 300px;min-width: 300px;height: 320px;margin-right: 10px;" [routerLink]="['/ads/g', item.reference]">
-        <fa-icon *ngIf="!item.image" [icon]="faImage" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;"></fa-icon>
+        <img *ngIf="!item.image" src="/assets/images/default-image.jpeg" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
         <img *ngIf="item.image" src="{{item.image}}" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
         <div class="flex-column p-1">
             <span class="bolder py-2">{{item.title}}</span>
@@ -162,7 +162,7 @@
                 <div class="flex-column" style="border:none;cursor: pointer;">
                     <!-- <img src="{{item.image}}" class="card-img" alt="..."> -->
                     <img *ngIf="item.image" src="{{item.image}}" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
-                    <fa-icon *ngIf="!item.image" [icon]="faImage"></fa-icon>
+                    <img *ngIf="!item.image" src="/assets/images/default-image.jpeg" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
                     <div class="flex-column bg-light p-2">
                         <span class="bolder py-2">{{item.title}}</span>
                         <span class="fs-7 bold">{{item.address.addressLine2}},
@@ -189,7 +189,7 @@
             <div class="col mb-4" *ngFor="let item of properties " [routerLink]="[ '/ads/p', item.reference] ">
                 <div class="flex-column" style="border:none;cursor: pointer;">
                     <img *ngIf="item.image" src="{{item.image}}" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
-                    <fa-icon *ngIf="!item.image" [icon]="faImage"></fa-icon>
+                    <img *ngIf="!item.image" src="/assets/images/default-image.jpeg" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
                     <div class="flex-column p-1">
                         <span class="bolder py-2">{{item.title}}</span>
                         <span class="fs-7 bold">{{item.address.addressLine2}},

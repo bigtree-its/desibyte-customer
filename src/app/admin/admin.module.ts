@@ -12,23 +12,24 @@ import { OrderByDatePipe } from '../pipes/order-by-date.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MyAdsComponent } from './pages/my-ads/my-ads.component';
 import { DateAgoPipe } from '../pipes/date-ago.pipe';
+import { AuthGuard } from '../services/auth/auth-guard.service';
 
 const routes: Routes = [
   {
     path: 'my_orders', component: MyOrdersComponent, loadChildren: () =>
-      import('./admin.module').then((m) => m.AdminModule),
+      import('./admin.module').then((m) => m.AdminModule),canActivate: [AuthGuard]
   },
   {
     path: 'my_ads', component: MyAdsComponent, loadChildren: () =>
-      import('./admin.module').then((m) => m.AdminModule),
+      import('./admin.module').then((m) => m.AdminModule),canActivate: [AuthGuard]
   },
   {
     path: 'my_orders/manage', component: ManageOrderComponent, loadChildren: () =>
-      import('./admin.module').then((m) => m.AdminModule),
+      import('./admin.module').then((m) => m.AdminModule),canActivate: [AuthGuard]
   },
   {
     path: 'my_profile', component: MyProfileComponent, loadChildren: () =>
-      import('./admin.module').then((m) => m.AdminModule),
+      import('./admin.module').then((m) => m.AdminModule), canActivate: [AuthGuard]
   },
   {
     path: 'contact_us', component: BecomeAPartnerComponent, loadChildren: () =>
