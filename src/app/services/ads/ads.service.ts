@@ -9,18 +9,28 @@ import { Utils } from '../common/utils';
   providedIn: 'root',
 })
 export class AdsService {
- 
- 
+  
   private httpClient = inject(HttpClient);
   private serviceLocator = inject(ServiceLocator);
 
-  sendEnquiry(enquiry: AdEnquiry): Observable<AdEnquiryResponse>{
+  sendEnquiry(enquiry: AdEnquiry): Observable<AdEnquiry> {
     console.log('Posting a enquiry for ad '+ JSON.stringify(enquiry));
     return this.httpClient
-      .post<AdEnquiryResponse>(this.serviceLocator.AdEnquiryUrl, enquiry)
+      .post<AdEnquiry>(this.serviceLocator.AdEnquiryUrl, enquiry)
       .pipe(
         tap((result) => {
           console.log('Ad enquiry response ' + JSON.stringify(result));
+        })
+      );
+  }
+
+  respondEnquiry(enquiry: AdEnquiry): Observable<AdEnquiry> {
+    console.log('Posting a response to enquiry '+ JSON.stringify(enquiry));
+    return this.httpClient
+      .put<AdEnquiry>(this.serviceLocator.AdEnquiryUrl + "/"+enquiry._id, enquiry)
+      .pipe(
+        tap((result) => {
+          console.log('Posted response to enquiry ' + JSON.stringify(result));
         })
       );
   }

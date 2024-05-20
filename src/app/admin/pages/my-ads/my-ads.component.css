@@ -15,7 +15,9 @@
     color: #111;
 }
 
-.clickableIcon {}
+.clickableIcon {
+    color: #858383;
+}
 
 .clickableIcon:hover {
     cursor: pointer;

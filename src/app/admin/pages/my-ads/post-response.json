@@ -1,0 +1,36 @@
+{
+    "customer": {
+        "name": "Navaneetha Krishnan",
+        "email": "nava.arul@gmail.com",
+        "mobile": "07979191176"
+    },
+    "adOwner": {
+        "name": "Peter Krishnan",
+        "email": "peter.arul@gmail.com",
+        "mobile": "07979191176"
+    },
+    "_id": "6645f9df65a14800151a9ba9",
+    "reference": "ZMWHZUMRC",
+    "category": "Cars",
+    "message": "Hello I am interested in this Ad.",
+    "responses": [{
+            "_id": "6645fa0ba39e3b0015eedeac",
+            "message": "Are you willing to view this item",
+            "date": "2024-05-16T12:20:27.551Z"
+        },
+        {
+            "_id": "6645fa0ba39e3b0015eedeac",
+            "message": "Are you willing to view this item",
+            "date": "2024-05-16T12:20:27.551Z"
+        },
+        {
+            "_id": "664a60e914db0200158c96ca",
+            "date": "2024-05-19T20:28:25.762Z",
+            "message": "I have not heared from you yet. This property still available"
+        }
+    ],
+    "date": "2024-05-16T12:19:43.222Z",
+    "createdAt": "2024-05-16T12:19:43.226Z",
+    "updatedAt": "2024-05-19T20:28:25.947Z",
+    "__v": 0
+}

@@ -97,16 +97,16 @@ export class PropertySearchQuery {
 }
 
 export class AdEnquiry {
-  adOwner: AdOwner;
-  reference: string;
-  category: string;
-  message: string;
-  customer: Customer;
-  date: Date;
+  _id?: string;
+  adOwner?: AdOwner;
+  reference?: string;
+  category?: string;
+  message?: string;
+  customer?: Customer;
+  date?: Date;
   responses?: [AdEnquiryResponse]
 }
 export class AdEnquiryResponse {
-  adEnquiry: AdEnquiry;
-  message: string;
-  date: Date;
+  message?: string;
+  date?: Date;
 }

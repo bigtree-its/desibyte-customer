@@ -7,20 +7,21 @@ import {
   PipeTransform,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import {
   faArrowLeft,
   faChevronDown,
   faChevronUp,
-  faEnvelope,
   faEye,
   faFaceSmile,
   faPeopleArrows,
   faRectangleAd,
   faStar,
 } from '@fortawesome/free-solid-svg-icons';
-import { map, Observable, startWith, Subject } from 'rxjs';
+import { map, Observable, startWith, Subject, takeUntil } from 'rxjs';
 import {
   AdEnquiry,
+  AdEnquiryResponse,
   AdSearchQuery,
   GeneralAd,
   PropertyAd,
@@ -63,6 +64,7 @@ export class MyAdsComponent implements OnInit, OnDestroy {
 
   selectedTab: string;
   selectedAdTab: string;
+  responseMessage: string;
 
   loading: boolean = false;
   properties: PropertyAd[] = [];
@@ -122,6 +124,9 @@ export class MyAdsComponent implements OnInit, OnDestroy {
     });
   }
 
+  goBackToEnquiries(){
+    this.enquiry = null;
+  }
   goHome() {
     this.viewAd = null;
     this.viewProperty = null;
@@ -144,6 +149,28 @@ export class MyAdsComponent implements OnInit, OnDestroy {
         pipe.transform(ad.price).includes(term)
       );
     });
+  }
+
+  respondToEnquiry() {
+    if (Utils.isEmpty(this.responseMessage)){
+      return;
+    }
+    if (this.enquiry.responses){
+      var resp: AdEnquiryResponse = {};
+      resp.date = new Date();
+      resp.message = this.responseMessage;
+      this.enquiry.responses.push(resp);
+      let observable = this.adService.respondEnquiry(this.enquiry);
+      observable.pipe(takeUntil(this.destroy$)).subscribe({
+        next: (e) => {
+          this.responseMessage = null;
+        },
+        error: (err) => {
+          this.loading = false;
+          console.error('Errors when posting response' + JSON.stringify(err));
+        },
+      });
+    }
   }
 
   searchPropertyAd(text: string, pipe: PipeTransform): PropertyAd[] {

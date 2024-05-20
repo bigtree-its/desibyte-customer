@@ -7,7 +7,7 @@
 
 /** Logo **/
 
-@import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Neonderthaw&display=swap');
 :root {
     --blue: #007bff;
     --indigo: #6610f2;
@@ -47,9 +47,9 @@
     --font-size-default: 0.875rem;
     --brand-color-light: #f2fbb8;
     --brand-color-green: #4b4;
-    --brand-color-navy: #44B;
+    --brand-color-navy: #44b;
     --brand-color: rgb(2, 77, 223);
-    --brand-color-g: #0A0;
+    --brand-color-g: #0a0;
     --brand-color--: rgb(241, 122, 2);
     --brand-color-black: rgb(34, 35, 34);
     --brand-color-dark: #53d900;
@@ -212,6 +212,21 @@ body {
     border: none;
     z-index: 9999999;
     border-radius: 0;
+}
+
+.big-text {
+    font-family: "Bebas Neue", sans-serif;
+}
+
+.logo-text {
+    font-family: "Neonderthaw", cursive;
+    font-weight: 900;
+    cursor: pointer;
+    color: var(--brand-color);
+}
+
+.spl-text {
+    font-family: "Protest Revolution", sans-serif;
 }
 
 .scroll-container {
@@ -519,8 +534,8 @@ body {
 
 .btn-13 {
     padding: 5px 13px;
-    border-radius: 0.5em;
-    background-color: var(--brand-color);
+    border-radius: 12px;
+    background-color: var(--brand-color-g);
     color: #fff;
     transition: all 0.3s;
     border: none;
@@ -529,7 +544,7 @@ body {
 
 .btn-13:hover {
     cursor: pointer;
-    color: var(--brand-color);
+    color: #fff;
     background-color: #222;
 }
 
@@ -692,6 +707,43 @@ body {
     font-family: "Londrina Outline", sans-serif;
 }
 
+.msg-their {
+    max-width: 80%;
+    width: fit-content;
+    padding: 4px 16px;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    white-space: pre-wrap;
+    background-color: rgb(241, 241, 241);
+    border-radius: 16px 16px 16px 0px;
+    display: flex;
+    flex-flow: column wrap;
+    align-items: flex-start;
+}
+
+.msg-mine-div {
+    margin: 10px 0px;
+    padding: 0px 12px;
+    display: flex;
+    flex-flow: column wrap;
+    align-items: flex-end;
+}
+
+.msg-mine {
+    max-width: 80%;
+    width: fit-content;
+    padding: 4px 16px;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    white-space: pre-wrap;
+    background-color: rgba(0, 57, 243, 0.661);
+    /* color: rgb(60, 50, 65); */
+    color: #fff;
+    align-self: flex-end;
+    border-radius: 16px 16px 0px;
+    float: right;
+}
+
 .no-br {
     border: none;
 }
@@ -730,21 +782,6 @@ body {
     border-radius: 7px;
     color: #fff;
     padding: 0px 20px;
-}
-
-.big-text {
-    font-family: "Bebas Neue", sans-serif;
-}
-
-.logo-text {
-    font-family: "Major Mono Display", monospace;
-    font-weight: 900;
-    cursor: pointer;
-    color: var(--brand-color);
-}
-
-.spl-text {
-    font-family: "Protest Revolution", sans-serif;
 }
 
 .flex-vh-center {
@@ -961,6 +998,15 @@ select {
 .footer {
     position: fixed;
     bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    z-index: 99;
+}
+
+.sub-footer {
+    position: fixed;
+    bottom: 55;
     left: 0;
     right: 0;
     background: #fff;
@@ -1480,6 +1526,7 @@ select {
     color: var(--red);
 }
 
+.badge,
 .btn-circle,
 .btn-qty-g,
 .btn-qty-d {
@@ -1491,6 +1538,12 @@ select {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.badge {
+    height: 20px;
+    width: 20px;
+    background-color: #000a19;
 }
 
 .btn-qty-g,
