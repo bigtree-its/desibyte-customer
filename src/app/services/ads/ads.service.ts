@@ -48,6 +48,16 @@ export class AdsService {
     return this.httpClient.get<AdEnquiry[]>(this.serviceLocator.AdEnquiryUrl, { params });
   }
 
+  getMyMessages(customerEmail: string): Observable<AdEnquiry[]>{
+    var params = new HttpParams();
+    if (customerEmail) {
+      params = params.set('customer',  customerEmail);
+    }
+   
+    console.log('Fetching messages for customer  '+ JSON.stringify(params));
+    return this.httpClient.get<AdEnquiry[]>(this.serviceLocator.AdEnquiryUrl, { params });
+  }
+
 
   postAd(ad: GeneralAd): Observable<GeneralAd>{
     console.log('Posting an ad '+ JSON.stringify(ad));

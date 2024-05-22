@@ -1,1 +1,29 @@
-<p>my-messages works!</p>
+<div class="container mt-3 mb-100">
+    <div class="row">
+        <div class="col-md-2 border-right h-100">
+            <div class="flex-column jcc aic">
+                <fa-icon [icon]="faArrowLeft" class="btn-circle" (click)="goBack()"></fa-icon>
+                <span class="bolder py-3 fs-4">My Messages</span>
+            </div>
+        </div>
+        <div class="col-md-10 flex-column">
+            <span class="bold py-2 border-bottom fs-6">You have got
+                {{messages?.length}} messages</span>
+            <div class="flex-column bg-light my-1" style="min-height: 100px;max-height: 100px;" *ngFor="let m of messages">
+                <div class="flex-row w-100">
+                    <div style="width: 20%;">
+                        <img src>
+                    </div>
+                    <div class="flex-column" style="width: 70%;">
+                        <div class="flex-row jcsb aic p-2 bolder">
+                            <span>Ad #{{m.reference}} </span>
+                            <span>{{m.date | date: 'dd MMM yy'}} </span>
+                        </div>
+                        <span class="p-2 bold">{{m.message}}</span>
+                        <span class="p-2">{{m.responses.length}} Responses</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

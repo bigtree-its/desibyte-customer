@@ -25,6 +25,10 @@ const routes: Routes = [
       import('./admin.module').then((m) => m.AdminModule),canActivate: [AuthGuard]
   },
   {
+    path: 'my_messages', component: MyMessagesComponent, loadChildren: () =>
+      import('./admin.module').then((m) => m.AdminModule),canActivate: [AuthGuard]
+  },
+  {
     path: 'my_orders/manage', component: ManageOrderComponent, loadChildren: () =>
       import('./admin.module').then((m) => m.AdminModule),canActivate: [AuthGuard]
   },
