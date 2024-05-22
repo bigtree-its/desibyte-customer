@@ -1,13 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Monofett&display=swap");
 
 /** Logo **/
-
-@import url('https://fonts.googleapis.com/css2?family=Neonderthaw&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Shade&display=swap');
 :root {
     --blue: #007bff;
     --indigo: #6610f2;
@@ -219,7 +216,7 @@ body {
 }
 
 .logo-text {
-    font-family: "Neonderthaw", cursive;
+    font-family: "Bungee Shade", sans-serif;
     font-weight: 900;
     cursor: pointer;
     color: var(--brand-color);
@@ -1505,15 +1502,15 @@ select {
 }
 
 .btn-text {
-    border: 1px solid #000a19;
+    border: 1px solid #e1e3e4;
     background: transparent;
-    border-radius: 7px;
     padding: 5px 10px;
 }
 
 .btn-text:hover {
     cursor: pointer;
-    background-color: #000;
+    border: 1px solid coral;
+    background-color: coral;
     color: #fff;
 }
 

@@ -9,11 +9,14 @@
         </div>
     </div>
 
-    <div class="flex-column w-100 mb-2 px-3 sm">
-        <h4 class="big-text">Whats on your mind ?</h4>
-        <div class="flex-row-scrollable py-3">
-            <div *ngFor="let d of dishes" class="border d-flex jcc aic px-3 mr-1" (click)="onSelectDish(d)" [class.clicked]="isDishSelected(d)">
-                <span class="big-text">{{d.name}}</span>
+    
+    <div class="flex-column w-100 mb-2 sm">
+        <span class="bolder fs-5">Whats on your mind ?</span>
+        <div class="full-screen mb-2 px-3">
+            <div class="flex-row-scrollable py-3">
+                <div *ngFor="let d of dishes" class="btn-text d-flex jcc aic mr-1 px-3" (click)="onSelectDish(d)" [class.clicked]="isDishSelected(d)">
+                    <span>{{d.name}}</span>
+                </div>
             </div>
         </div>
     </div>
