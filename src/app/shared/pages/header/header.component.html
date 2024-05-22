@@ -16,8 +16,8 @@
 
         </div>
         <div class="flex-row jcc aic gap-1">
-            <span *ngIf="!user" class="btn-text mx-1" routerLink="/login">Login</span>
-            <span *ngIf="!user" class="btn-text mx-2" routerLink="/register">Signup</span>
+            <span *ngIf="!user" class="btn-plain mx-1" routerLink="/login">Login</span>
+            <span *ngIf="!user" class="btn-bold mx-2" routerLink="/register">Signup</span>
             <div *ngIf="user" class="nav-item mr-2  br-25 border p-2" ngbDropdown #myDrop="ngbDropdown">
                 <div class="flex-row gap-1 jcc aic mx-1" (click)="$event.stopPropagation(); myDrop.open()">
                     <fa-icon [icon]="faUser"></fa-icon>

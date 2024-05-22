@@ -1,11 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+/** Special Fonts **/
+@import url('https://fonts.googleapis.com/css2?family=Ruslan+Display&display=swap');
 
 @import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap');
+/** Default font **/
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
 /** Logo **/
-
 @import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
+
+
 :root {
     --blue: #007bff;
     --indigo: #6610f2;
@@ -224,7 +228,7 @@ body {
 }
 
 .spl-text {
-    font-family: "Major Mono Display", monospace;
+    font-family: "Ruslan Display", sans-serif;
 }
 
 .scroll-container {
@@ -1500,6 +1504,32 @@ select {
     margin-right: 8px;
     white-space: nowrap;
     width: 24px;
+}
+
+.btn-plain {
+    background: transparent;
+    padding: 5px 10px;
+    font-weight: 900;
+}
+
+.btn-plain:hover {
+    cursor: pointer;
+    border: 1px solid coral;
+    background-color: coral;
+    color: #fff;
+}
+.btn-bold {
+    border: 1px solid #e1e3e4;
+    background: transparent;
+    padding: 5px 10px;
+    font-weight: 900;
+}
+
+.btn-bold:hover {
+    cursor: pointer;
+    border: 1px solid coral;
+    background-color: coral;
+    color: #fff;
 }
 
 .btn-text {

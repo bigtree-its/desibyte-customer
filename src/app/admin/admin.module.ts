@@ -13,6 +13,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MyAdsComponent } from './pages/my-ads/my-ads.component';
 import { DateAgoPipe } from '../pipes/date-ago.pipe';
 import { AuthGuard } from '../services/auth/auth-guard.service';
+import { MyMessagesComponent } from './pages/my-messages/my-messages.component';
 
 const routes: Routes = [
   {
@@ -45,7 +46,8 @@ const routes: Routes = [
     BecomeAPartnerComponent,
     OrderByDatePipe,
     ManageOrderComponent,
-    MyAdsComponent
+    MyAdsComponent,
+    MyMessagesComponent
   ],
   imports: [
     CommonModule,
