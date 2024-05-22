@@ -1,29 +1,29 @@
-<div class="container-fluid">
+<div class="container-fluid ">
     <div class="flex-column jcc aic">
-        <span class="spl-text bolder my-5 fs-3" style="text-align: center;">A market place for homegrown local products</span>
+        <span class="spl-text bolder my-5 fs-3" style="text-align: center;">A local market place</span>
     </div>
-    <div class="container">
+    <div class="container mb-200 ">
         <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3 mt-3">
-            <div class="flex-row"  [routerLink]="['/f/home']">
+            <div class="flex-row" [routerLink]="['/f/home']">
                 <div class="flex-column jcc aic" style="width: 30%;background-color: rgb(80, 252, 255);min-height: 100px;max-height: 100px;">
                     <span class="bolder fs-1">F</span>
                     <span class="bold">Foods</span>
                 </div>
-                <div class="flex-column jcc aic p-3 bg-light" style="width: 70%;word-break: keep-all;">
-                    <p>
-                        Neighbourhood Home Chefs
-                    </p>
+                <div class="flex-column jcc aic p-3 bg-light" style="width: 70%;min-height: 100px;max-height: 100px;font-weight: 600;;">
+                    <span>
+                        From your neighbourhood Chefs
+                    </span>
                     <div class="d-flex jcc asfe moving-arrow mt-1">
                         <fa-icon [icon]="faRight" [routerLink]="['/p/groups/fashion']"></fa-icon>
                     </div>
                 </div>
             </div>
-            <div class="flex-row"  [routerLink]="['/ads/home']"  >
+            <div class="flex-row" [routerLink]="['/ads/home']">
                 <div class="flex-column jcc aic" style="width: 30%;background-color: coral;color: #fff;min-height: 100px;max-height: 100px;">
                     <span class="bolder fs-1">P</span>
                     <span class="bold">Properties</span>
                 </div>
-                <div class="flex-column jcc aic p-3 bg-light bold" style="width: 70%;">
+                <div class="flex-column jcc aic p-3 bg-light" style="width: 70%;min-height: 100px;max-height: 100px;font-weight: 600;">
                     Buy, Rent or share Properties
                     <div class="d-flex jcc asfe moving-arrow mt-1">
                         <fa-icon [icon]="faRight" [routerLink]="['/p/groups/fashion']"></fa-icon>
@@ -31,12 +31,12 @@
                 </div>
             </div>
 
-            <div class="flex-row"  [routerLink]="['/ads/home']"  >
+            <div class="flex-row" [routerLink]="['/ads/home']">
                 <div class="flex-column jcc aic" style="width: 30%;background-color: rgb(235, 231, 3);min-height: 100px;max-height: 100px;">
                     <span class="bolder fs-1">A</span>
                     <span class="bold">Fee Ads</span>
                 </div>
-                <div class="flex-column jcc aic p-3 bg-light bold" style="width: 70%;">
+                <div class="flex-column jcc aic p-3 bg-light" style="width: 70%;min-height: 100px;max-height: 100px;font-weight: 600;">
                     Post free ads
                     <div class="d-flex jcc asfe moving-arrow mt-1">
                         <fa-icon [icon]="faRight" [routerLink]="['/p/groups/fashion']"></fa-icon>

@@ -1,10 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 
-
+@import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap');
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
 /** Logo **/
-@import url('https://fonts.googleapis.com/css2?family=Bungee+Shade&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
 :root {
     --blue: #007bff;
     --indigo: #6610f2;
@@ -216,14 +217,14 @@ body {
 }
 
 .logo-text {
-    font-family: "Bungee Shade", sans-serif;
+    font-family: "Shadows Into Light", cursive;
     font-weight: 900;
     cursor: pointer;
     color: var(--brand-color);
 }
 
 .spl-text {
-    font-family: "Protest Revolution", sans-serif;
+    font-family: "Major Mono Display", monospace;
 }
 
 .scroll-container {
@@ -2193,6 +2194,14 @@ select {
 
 .mb-100 {
     margin-bottom: 100px;
+}
+
+.mb-150 {
+    margin-bottom: 150px;
+}
+
+.mb-200 {
+    margin-bottom: 200px;
 }
 
 .h-1 {

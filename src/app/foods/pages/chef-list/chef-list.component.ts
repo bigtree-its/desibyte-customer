@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -7,7 +8,7 @@ import {
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { faCheck, faCopyright, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faCheck, faCopyright, faStar } from '@fortawesome/free-solid-svg-icons';
 import { Subject, takeUntil } from 'rxjs';
 import { Cuisine, Dish, LocalChef, LocalChefSearchQuery } from 'src/app/model/all-foods';
 import { PostcodeDistrict, ServiceLocation } from 'src/app/model/common';
@@ -56,6 +57,8 @@ export class ChefListComponent implements OnDestroy {
   faStar = faStar;
   faCopyright = faCopyright;
   faCheck = faCheck;
+  faArrowLeft = faArrowLeft;
+
   areaQuery: string;
   cuisineQuery: string;
   postcodeDistrict: PostcodeDistrict;
@@ -66,7 +69,8 @@ export class ChefListComponent implements OnDestroy {
     private chefService: ChefService,
     private locationService: LocationService,
     private cuisinesService: CuisinesService,
-    private router: Router
+    private router: Router,
+    private _location: Location
   ) {}
 
   ngOnInit(): void {
@@ -118,6 +122,10 @@ export class ChefListComponent implements OnDestroy {
         this.invalidPostcodeDistrict = true;
       }
     });
+  }
+
+  goBack() {
+    this._location.back();
   }
 
 

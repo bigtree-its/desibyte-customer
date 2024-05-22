@@ -1,4 +1,9 @@
-<div class="container-fluid">
+<div class="container-fluid mb-150">
+
+    <div class="flex-row py-2 aic">
+        <fa-icon [icon]="faArrowLeft" (click)="goBack()" class="btn-circle mr-3"></fa-icon>
+        <span class="bolder fs-3">{{postcodeDistrict?.prefix}}</span>
+    </div>
 
     <div class="full-screen mb-2 px-3">
         <div class="flex-row-scrollable py-3">
@@ -9,7 +14,7 @@
         </div>
     </div>
 
-    
+
     <div class="flex-column w-100 mb-2 sm">
         <span class="bolder fs-5">Whats on your mind ?</span>
         <div class="full-screen mb-2 px-3">
