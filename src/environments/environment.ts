@@ -4,6 +4,9 @@
 
 export const environment = {
   production: true,
+
+  ImageKitUrlEndpoint: 'https://ik.imagekit.io/kikysfekf/',
+  ImageKitPublicKey: 'public_lZUoTdhXv3WpkWzuim951yu10PM=',
   
   CURRENCY: 'GBP',
   CURRENCY_SYMBOL: '£',

@@ -15,6 +15,8 @@ import { FoodsModule } from './foods';
 import { AdminModule } from './admin';
 import { DecimalPipe } from '@angular/common';
 import { AdsModule } from './ads/ads.module';
+import { ImagekitioAngularModule } from 'imagekitio-angular';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,11 @@ import { AdsModule } from './ads/ads.module';
     HttpClientModule,
     AppRoutingModule,
     NgbModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ImagekitioAngularModule.forRoot({
+      publicKey: environment.ImageKitPublicKey,
+      urlEndpoint: environment.ImageKitUrlEndpoint,
+    })
   ],
   providers: [ 
     DecimalPipe,
