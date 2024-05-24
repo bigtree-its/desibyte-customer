@@ -55,7 +55,8 @@
     --brand-color-navy: #44b;
     --brand-color-b: rgb(2, 77, 223);
     --brand-color-g: #0a0;
-    --brand-color: rgb(241, 122, 2);
+    --brand-color: #ff9000;
+    --brand-color-o: rgb(241, 122, 2);
     --brand-color-black: rgb(34, 35, 34);
     --brand-color-dark: #53d900;
     margin: 0;
@@ -338,6 +339,18 @@ body {
     background-color: #868080;
     color: var(--brand-color);
     cursor: pointer;
+}
+
+.btn-delete{
+    border: none;
+    color: #fff;
+    padding: -1 0;
+    border-radius: 6px;
+    background-color: var(--red);
+}
+.btn-delete:hover{
+    cursor: pointer;
+    background-color: red;
 }
 
 .btn-9 {
@@ -977,6 +990,10 @@ select {
 .header-font {
     font-family: "Abril Fatface", serif;
     color: #162127;
+}
+
+.f-dim{
+    color: #656c72;
 }
 
 .font-abril-fatface {

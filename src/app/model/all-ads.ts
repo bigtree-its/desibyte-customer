@@ -110,3 +110,7 @@ export class AdEnquiryResponse {
   message?: string;
   date?: Date;
 }
+
+export class ImagekitAuthReq{
+
+}

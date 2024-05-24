@@ -15,6 +15,7 @@ import { DateCalcPipe } from '../pipes/date-calc.pipe';
 import { DateAgoPipe } from '../pipes/date-ago.pipe';
 import { NgbDatepickerModule, NgbDropdownModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { FOrderItemComponent } from './pages/f-order-item/f-order-item.component';
+import { ImagekitioAngularModule } from 'imagekitio-angular';
 
 const routes: Routes = [
   { path: 'f/home', component: FoodsHomeComponent },
@@ -47,6 +48,7 @@ const routes: Routes = [
     NgbTimepickerModule,
     FontAwesomeModule,
     NgbDropdownModule,
+    ImagekitioAngularModule,
     RouterModule.forChild(routes)
   ]
 })

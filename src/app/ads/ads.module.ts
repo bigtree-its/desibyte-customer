@@ -11,6 +11,7 @@ import { DateAgoPipe } from '../pipes/date-ago.pipe';
 import { PropertyDetailComponent } from './pages/property-detail/property-detail.component';
 import { ContactFormComponent } from './pages/contact-form/contact-form.component';
 import { AdDetailComponent } from './pages/ad-detail/ad-detail.component';
+import { ImagekitioAngularModule } from 'imagekitio-angular';
 
 const routes: Routes = [
   { path: 'ads/post', component: PostAdComponent },
@@ -38,6 +39,7 @@ const routes: Routes = [
     NgbCarouselModule,
     NgbDropdownModule,
     DateAgoPipe,
+    ImagekitioAngularModule,
     RouterModule.forChild(routes)
   ]
 })

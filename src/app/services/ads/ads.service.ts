@@ -9,7 +9,7 @@ import { Utils } from '../common/utils';
   providedIn: 'root',
 })
 export class AdsService {
-  
+   
   private httpClient = inject(HttpClient);
   private serviceLocator = inject(ServiceLocator);
 
@@ -46,6 +46,16 @@ export class AdsService {
    
     console.log('Fetching enquiries for ad  '+ JSON.stringify(params));
     return this.httpClient.get<AdEnquiry[]>(this.serviceLocator.AdEnquiryUrl, { params });
+  }
+
+  getImagekitToken(req: any): Observable<any>{
+    return this.httpClient
+      .post<any>(this.serviceLocator.ImagekitTokenUrl, req)
+      .pipe(
+        tap((result) => {
+          console.log('Imagekit Token ' + JSON.stringify(result));
+        })
+      );
   }
 
   getMyMessages(customerEmail: string): Observable<AdEnquiry[]>{

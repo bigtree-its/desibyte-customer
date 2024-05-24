@@ -1,5 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { faCalendar } from '@fortawesome/free-solid-svg-icons';
+import { faCalendar, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { NgbDate, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Subject, takeUntil } from 'rxjs';
 import {
@@ -12,6 +13,7 @@ import { User } from 'src/app/model/all-auth';
 import { Address, NameValue } from 'src/app/model/common';
 import { AdsService } from 'src/app/services/ads/ads.service';
 import { AccountService } from 'src/app/services/auth/account.service';
+import { ServiceLocator } from 'src/app/services/common/service.locator';
 import { Utils } from 'src/app/services/common/utils';
 
 @Component({
@@ -20,9 +22,14 @@ import { Utils } from 'src/app/services/common/utils';
   styleUrls: ['./post-ad.component.css'],
 })
 export class PostAdComponent implements OnInit, OnDestroy {
+
+  faTrash= faTrash;
+
   destroy$ = new Subject<void>();
   accountService = inject(AccountService);
   adService = inject(AdsService);
+  serviceLocator = inject(ServiceLocator);
+  http = inject(HttpClient);
 
   submitted: boolean = false;
   loading: boolean = false;
@@ -71,6 +78,10 @@ export class PostAdComponent implements OnInit, OnDestroy {
   postedProperty: PropertyAd;
   postSuccessful: boolean = false;
 
+  // Upload
+  uploadedImages: ImagekitImage[] = [];
+  status: string;
+
   ngOnInit() {
     this.accountService.getData();
     this.accountService.loginSession$.subscribe({
@@ -90,10 +101,10 @@ export class PostAdComponent implements OnInit, OnDestroy {
       }
     } else {
       var ad: GeneralAd = this.buildGeneralAd();
-      if ( ad){
+      if (ad) {
         this.postGeneralAd(ad);
       }
-      
+
     }
   }
 
@@ -325,6 +336,61 @@ export class PostAdComponent implements OnInit, OnDestroy {
     this.adAddress = address;
   }
 
+  authenticator = async () => {
+    try {
+      const response = await fetch(this.serviceLocator.ImagekitTokenUrl);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Request failed with status ${response.status}: ${errorText}`);
+      }
+
+      const data = await response.json();
+      const { signature, expire, token } = data;
+      return { signature, expire, token };
+    } catch (error) {
+      throw new Error(`Authentication request failed: ${error.message}`);
+    }
+  };
+
+  validateFileFunction(res: File) {
+    console.log("Validating");
+    if (res.size < 1000000) { // Less than 1mb file size
+      return true;
+    }
+    this.status = "1MB exceeded"
+    return false;
+  }
+
+  onUploadStartFunction(res: Event) {
+    this.status = "Starting to upload";
+  }
+
+  onUploadProgressFunction(res: ProgressEvent) {
+    this.status = "Progressing..";
+  }
+
+  handleUploadError = (event: any) => {
+    console.log('Error');
+    console.log(event);
+  };
+
+  handleUploadSuccess = (event: any) => {
+    this.status = "Success";
+    console.log(event.$ResponseMetadata.statusCode); // 200
+    console.log(event.$ResponseMetadata.headers); // headers
+    console.log(event);
+    if (event.url) {
+      var img: ImagekitImage = {};
+      img.fileId = event.fileId
+      img.filePath = event.filePath
+      img.thumbnailUrl = event.thumbnailUrl
+      img.name = event.name
+      img.url = event.url
+      this.uploadedImages.push(img);
+    }
+  };
+
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
@@ -335,4 +401,28 @@ export class PostAdComponent implements OnInit, OnDestroy {
     this.error = false;
     this.errorMessage = null;
   }
+
+  deleteFile(_t67: ImagekitImage) {
+    var idx = -1;
+    for (var i = 0; i < this.uploadedImages.length; i++) {
+      var fi = this.uploadedImages[i];
+      if (fi.fileId === _t67.fileId) {
+        idx = i;
+        break;
+      }
+    }
+    console.log('Deleting '+ _t67.fileId+ ' at index '+ idx)
+    if ( idx !== -1){
+      this.uploadedImages.splice(idx, 1);
+    }
+
+  }
+}
+
+class ImagekitImage {
+  fileId?: string;
+  name?: string;
+  url?: string;
+  filePath?: string;
+  thumbnailUrl?: string;
 }
