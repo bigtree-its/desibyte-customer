@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { faCopyright } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -7,6 +7,8 @@ import { faCopyright } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent {
+
+  @Input("sticky") sticky:boolean;
 
   faCopyright = faCopyright;
 }

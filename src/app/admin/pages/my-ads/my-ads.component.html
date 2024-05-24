@@ -36,7 +36,7 @@
             <ng-container *ngSwitchCase="'AdDetailTab'" [ngTemplateOutlet]="adDetailTab" [ngTemplateOutletContext]="{item:item}"></ng-container>
             <ng-container *ngSwitchCase="'AdEnquiriesTab'" [ngTemplateOutlet]="adEnquiryListTab"></ng-container>
         </ng-container>
-        <div *ngIf="!enquiry" class="sm footer d-flex jcsb aic py-2 px-2 border-top">
+        <div *ngIf="!enquiry" class="sm sticky-footer d-flex jcsb aic py-2 px-2 border-top">
             <fa-icon [icon]="faAd" class="clickableIcon" (click)="selectAdTab('AdDetailTab')"></fa-icon>
             <div class="flex-row">
                 <fa-icon [icon]="faEye" class="clickableIcon"></fa-icon>
@@ -124,7 +124,7 @@
                     'd/M/yy, h:mm a'}}</span>
             </div>
         </div>
-        <div class="flex-row footer jcsb aic border w-100 bg-light" style="padding: 5px 20px;">
+        <div class="flex-row sticky-footer jcsb aic border w-100 bg-light" style="padding: 5px 20px;">
             <div style="width: 90%;">
                 <!-- <textarea type="text" class="border br-7 p-2 w-100" name="responseMessage" id="responseMessage" value [(ngModel)]="responseMessage" tabindex="3" #ctrl="ngModel" style="height: 100px;" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea> -->
                 <input type="text" name="responseMessage" id="responseMessage" value [(ngModel)]="responseMessage" tabindex="1" #ctrl="ngModel" style="height: 40px;" class="input-group">

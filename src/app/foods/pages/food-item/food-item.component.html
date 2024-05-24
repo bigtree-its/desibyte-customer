@@ -4,13 +4,11 @@
 <ng-template #content let-modal>
     <div class="modal-header">
         <span></span>
-        <button type="button" class="btn-modal-close" aria-label="Close"
-            (click)="modal.dismiss('Cross click')">X</button>
+        <button type="button" class="btn-modal-close" aria-label="Close" (click)="modal.dismiss('Cross click')">X</button>
     </div>
     <div class="modal-body justify-content-center">
         <h4 class="modal-title" id="modal-basic-title">{{menu.name}}</h4>
-        <span class="flex-row justify-content-center"
-            style="font-size: 15px;font-weight: normal;margin: 10px 0;"><b>{{menu.price
+        <span class="flex-row justify-content-center" style="font-size: 15px;font-weight: normal;margin: 10px 0;"><b>{{menu.price
                 | currency: 'GBP'}}</b></span>
         <p class="menu-desc">{{menu.description}}</p>
         <div class="flex-row-space-between">
@@ -26,12 +24,9 @@
             </div>
 
             <div style="margin-left: 15px;width: 50px;" class="flex-row">
-                <fa-icon [icon]="faPepperHot" [class.selectedSpice]="menu.spice > 0" class="spice" placement="top"
-                    ngbTooltip="Mild"></fa-icon>
-                <fa-icon [icon]="faPepperHot" [class.selectedSpice]="menu.spice > 1" class="spice" placement="top"
-                    ngbTooltip="Hot"></fa-icon>
-                <fa-icon [icon]="faPepperHot" [class.selectedSpice]="menu.spice > 2" class="spice" placement="top"
-                    ngbTooltip="Extra Hot"></fa-icon>
+                <fa-icon [icon]="faPepperHot" [class.selectedSpice]="menu.spice > 0" class="spice" placement="top" ngbTooltip="Mild"></fa-icon>
+                <fa-icon [icon]="faPepperHot" [class.selectedSpice]="menu.spice > 1" class="spice" placement="top" ngbTooltip="Hot"></fa-icon>
+                <fa-icon [icon]="faPepperHot" [class.selectedSpice]="menu.spice > 2" class="spice" placement="top" ngbTooltip="Extra Hot"></fa-icon>
             </div>
         </div>
         <div class="flex-column" *ngIf="menu.choices !== null && menu.choices !== undefined && menu.choices.length > 0">
@@ -40,8 +35,7 @@
             <div class="flex-column" *ngFor="let choice of menu.choices">
                 <div class="flex-row-space-between" style="margin: 5px 0;">
                     <div class="ng-form-control">
-                        <input type="radio" name="favorite_pet" value="{{choice.name}}" id="{{choice.name}}"
-                            (change)="handleChoiceSelection($event)">
+                        <input type="radio" name="favorite_pet" value="{{choice.name}}" id="{{choice.name}}" (change)="handleChoiceSelection($event)">
                         <label for="{{choice.name}}">{{choice.name}}</label>
                     </div>
                     <span class="model-extra-price ml-5">{{choice.price |
@@ -57,8 +51,7 @@
             <div class="flex-column" *ngFor="let extra of menu.extras">
                 <div class="flex-row-space-between" style="margin: 5px 0;">
                     <div class="ng-form-control">
-                        <input type="checkbox" name="favorite_pet" value="{{extra.name}}" id="{{extra.name}}"
-                            (change)="selectExtra(extra.name,$event)">
+                        <input type="checkbox" name="favorite_pet" value="{{extra.name}}" id="{{extra.name}}" (change)="selectExtra(extra.name,$event)">
                         <label for="{{extra.name}}">{{extra.name}}</label>
                     </div>
                     <span class="model-extra-price ml-5">{{extra.price |
@@ -69,8 +62,8 @@
         </div>
 
     </div>
-    <!-- <div class="modal-footer"> -->
-    <div class="modal-footer flex-column" style="margin: 10px;padding: 10px;gap:.6rem;">
+    <!-- <div class="modal-sticky-footer"> -->
+    <div class="modal-sticky-footer flex-column" style="margin: 10px;padding: 10px;gap:.6rem;">
         <div style="display: flex;justify-content: center;">
             <div style="padding: 5px;display: flex;justify-content: space-around;align-items: center;">
                 <div class="qty-btn-container" (click)="decreaseQuantity()">
@@ -105,8 +98,7 @@
                 </div>
             </div>
         </div>
-        <button type="button" class="btn-modal-close" aria-label="Close"
-            (click)="modal.dismiss('Cross click')">X</button>
+        <button type="button" class="btn-modal-close" aria-label="Close" (click)="modal.dismiss('Cross click')">X</button>
     </div>
     <div class="modal-body flex-column jcc aic" style="overflow-y: auto;">
         <h4 class="modal-title" id="modal-basic-title">{{pb.price | currency :'GBP'}}
@@ -115,8 +107,7 @@
         <div class="flex-column w-100 bg-light my-2 p-2" *ngFor="let candidate of pb.partyBundleCandidates">
             <div class="d-flex jcsb  w-100 px-2">
                 <span class="bolder fs-7">{{candidate.name}}</span>
-                <span class="tag-primary"
-                    [class.tag-success]="getRequiredText(candidate)==='All Set'">{{getRequiredText(candidate)}}</span>
+                <span class="tag-primary" [class.tag-success]="getRequiredText(candidate)==='All Set'">{{getRequiredText(candidate)}}</span>
                 <!-- <fa-icon *ngIf="selectedStarters.length === 2" [icon]="faCheck"></fa-icon> -->
             </div>
             <div class="flex-column" style="max-height: 80px;overflow-y: auto;">
@@ -138,8 +129,8 @@
             </div>
         </div>
     </div>
-    <!-- <div class="modal-footer"> -->
-    <div class="modal-footer flex-column" style="margin: 10px;padding: 10px;gap:.6rem;">
+    <!-- <div class="modal-sticky-footer"> -->
+    <div class="modal-sticky-footer flex-column" style="margin: 10px;padding: 10px;gap:.6rem;">
         <div style="display: flex;justify-content: center;">
             <div style="padding: 5px;display: flex;justify-content: space-around;align-items: center;">
                 <div class="qty-btn-container" (click)="decreaseQuantity()">
@@ -189,8 +180,7 @@
                 <div class="flex-row jcsb">
                     <div class="flex-row jcc aic">
                         <span class="bolder fs-7">{{menu.name}}</span>
-                        <fa-icon [icon]="faCircle" style="color: #46bb4c;margin-left: 5px;"
-                            *ngIf="menu.vegetarian"></fa-icon>
+                        <fa-icon [icon]="faCircle" style="color: #46bb4c;margin-left: 5px;" *ngIf="menu.vegetarian"></fa-icon>
                     </div>
                     <span class="price"><b>from {{menu.price |
                             currency:'GBP'}}</b></span>

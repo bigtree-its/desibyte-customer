@@ -31,7 +31,7 @@
             <ng-container *ngSwitchCase="'Party'" [ngTemplateOutlet]="partyLayout"></ng-container>
         </ng-container>
     </div>
-    <div class="sm footer flex-row jcsb aic px-3 py-2" *ngIf="(foodOrder?.items && foodOrder.items.length > 0) || (foodOrder?.partyItems && foodOrder.partyItems.length > 0)">
+    <div class="sm sticky-footer flex-row jcsb aic px-3 py-2" *ngIf="(foodOrder?.items && foodOrder.items.length > 0) || (foodOrder?.partyItems && foodOrder.partyItems.length > 0)">
 
         <div class="flex-row">
             <fa-icon [icon]="faBag" class="fa-2x basket" [routerLink]="['/f/basket']"></fa-icon>
@@ -361,7 +361,7 @@
         </div>
 
     </div>
-    <div *ngIf="eventDate" class="modal-footer flex-column" style="margin: 10px;padding: 10px;gap:.6rem;">
+    <div *ngIf="eventDate" class="modal-sticky-footer flex-column" style="margin: 10px;padding: 10px;gap:.6rem;">
         <button type="button" class="btn-32" (click)="selectLayout('Party')">Check our Party Menu</button>
     </div>
 

@@ -341,14 +341,15 @@ body {
     cursor: pointer;
 }
 
-.btn-delete{
+.btn-delete {
     border: none;
     color: #fff;
     padding: -1 0;
     border-radius: 6px;
     background-color: var(--red);
 }
-.btn-delete:hover{
+
+.btn-delete:hover {
     cursor: pointer;
     background-color: red;
 }
@@ -992,7 +993,7 @@ select {
     color: #162127;
 }
 
-.f-dim{
+.f-dim {
     color: #656c72;
 }
 
@@ -1017,7 +1018,7 @@ select {
     flex-direction: column;
 }
 
-.footer {
+.sticky-footer {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -1026,7 +1027,12 @@ select {
     z-index: 99;
 }
 
-.sub-footer {
+.footer {
+    background: #fff;
+    z-index: 99;
+}
+
+.sub-sticky-footer {
     position: fixed;
     bottom: 55;
     left: 0;

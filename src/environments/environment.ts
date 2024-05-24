@@ -5,6 +5,7 @@
 export const environment = {
   production: true,
 
+  ImageKitFileDelete: 'https://api.imagekit.io/v1/files/',
   ImageKitUrlEndpoint: 'https://ik.imagekit.io/kikysfekf/',
   ImageKitPublicKey: 'public_lZUoTdhXv3WpkWzuim951yu10PM=',
   
@@ -56,6 +57,7 @@ export const environment = {
   AdsUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/ads',
   AdEnquiryUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/ad-enquiries',
   ImagekitTokenUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/imagekit-token',
+  ImageKitDeleteFileUrl: 'http://localhost:8083/ads/v1/imagekit-delete-file',
 
   /** API Tier**/
   API_Tier_PRIVATE_KEY: 'NYdGEdtZDf7YaKcGhdtYm9D3uzIjau7Y6b1ISLns',

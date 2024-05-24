@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FooterComponent } from './footer.component';
+import { sticky-footerComponent } from './sticky-footer.component';
 
-describe('FooterComponent', () => {
-  let component: FooterComponent;
-  let fixture: ComponentFixture<FooterComponent>;
+describe('sticky-footerComponent', () => {
+  let component: sticky-footerComponent;
+  let fixture: ComponentFixture<sticky-footerComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [FooterComponent]
+      declarations: [sticky-footerComponent]
     });
-    fixture = TestBed.createComponent(FooterComponent);
+    fixture = TestBed.createComponent(sticky-footerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -428,7 +428,7 @@
         <ng-container *ngIf="category === 'Property' || category === 'Car' || category === 'Books'" [ngTemplateOutlet]="priceRangeFilter"></ng-container>
         <ng-container *ngIf="category === 'Property'" [ngTemplateOutlet]="bedroomsFilter"></ng-container>
     </div>
-    <div class="modal-footer flex-row jcsb aic" style="margin: 10px;padding: 10px;gap:.6rem;">
+    <div class="modal-sticky-footer flex-row jcsb aic" style="margin: 10px;padding: 10px;gap:.6rem;">
         <button type="button" class="btn-10" (click)="searchProperties()">Apply</button>
         <button type="button" class="btn-10" (click)="close()">Cancel</button>
     </div>

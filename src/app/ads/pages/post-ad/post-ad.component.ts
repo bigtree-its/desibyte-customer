@@ -412,10 +412,11 @@ export class PostAdComponent implements OnInit, OnDestroy {
       }
     }
     console.log('Deleting '+ _t67.fileId+ ' at index '+ idx)
-    if ( idx !== -1){
-      this.uploadedImages.splice(idx, 1);
-    }
-
+    this.adService.deleteImage(_t67.fileId).subscribe(e=>{
+      if ( idx !== -1){
+        this.uploadedImages.splice(idx, 1);
+      }
+    });
   }
 }
 

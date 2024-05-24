@@ -3,9 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './pages/header/header.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
-import { FooterComponent } from './pages/footer/footer.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { AuthModule } from '../auth';
 import { ReviewItemComponent } from './pages/review-item/review-item.component';
 import { DateAgoPipe } from '../pipes/date-ago.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -13,6 +11,7 @@ import { PaymentFormComponent } from './pages/payment-form/payment-form.componen
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { PostcodeLookupComponent } from './pages/postcode-lookup/postcode-lookup.component';
 import { ImagekitioAngularModule } from 'imagekitio-angular';
+import { FooterComponent } from './pages/footer/footer.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent }
@@ -22,10 +21,10 @@ const routes: Routes = [
   declarations: [
     HeaderComponent,
     HomeComponent,
-    FooterComponent,
     ReviewItemComponent,
     PaymentFormComponent,
     PostcodeLookupComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,

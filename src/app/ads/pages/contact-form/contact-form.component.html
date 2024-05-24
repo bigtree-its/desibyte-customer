@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <div class="modal-footer flex-row jcsb aic" style="margin: 10px;padding: 10px;gap:.6rem;">
+    <div class="modal-sticky-footer flex-row jcsb aic" style="margin: 10px;padding: 10px;gap:.6rem;">
         <button *ngIf="user && !enquirySubmitted" type="button" class="btn-10" (click)="contactOwner()">Send Enquiry</button>
         <button *ngIf="enquirySubmitted" type="button" class="btn-10" (click)="close()">Close</button>
     </div>

@@ -73,7 +73,7 @@
         </div>
     </div>
 
-    <div class="sm footer flex-row p-2 jcc">
+    <div class="sm sticky-footer flex-row p-2 jcc">
         <button *ngIf="canShowPlaceOrderButton()" class="btn-arrow mt-1 d-flex jcc aic" (click)="placeOrder(paymentForm)">
             <span>{{loading? 'Please wait...': "I'm Ready to Pay"}}</span>
             <svg width="34" height="34" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">

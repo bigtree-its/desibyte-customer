@@ -58,6 +58,20 @@ export class AdsService {
       );
   }
 
+  deleteImage(fileId: string) :Observable<any>{
+    var params = new HttpParams();
+    if (fileId) {
+      params = params.set('fileId',  fileId);
+    }
+    return this.httpClient
+      .delete<any>(this.serviceLocator.ImageKitDeleteFileUrl, { params })
+      .pipe(
+        tap((result) => {
+          console.log('Image deleted ' + result);
+        })
+      );
+  }
+
   getMyMessages(customerEmail: string): Observable<AdEnquiry[]>{
     var params = new HttpParams();
     if (customerEmail) {

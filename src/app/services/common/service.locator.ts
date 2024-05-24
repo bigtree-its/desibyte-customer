@@ -46,6 +46,7 @@ export class ServiceLocator {
   AdEnquiryUrl: string;
   AdPropertyUrl: string;
   AdsUrl: string;
+  ImageKitDeleteFileUrl: string;
 
   constructor() {
     this.SupplierUrl = environment.SupplierUrl;
@@ -86,6 +87,7 @@ export class ServiceLocator {
     this.AdsUrl = environment.AdsUrl;
     this.AdEnquiryUrl = environment.AdEnquiryUrl;
     this.ImagekitTokenUrl = environment.ImagekitTokenUrl;
+    this.ImageKitDeleteFileUrl = environment.ImageKitDeleteFileUrl;
     
   }
 }
