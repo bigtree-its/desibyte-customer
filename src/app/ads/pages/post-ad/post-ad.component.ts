@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { faCalendar, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { NgbDate, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil, throwError } from 'rxjs';
 import {
   GeneralAd,
   PropertyAd,
@@ -13,6 +13,7 @@ import { User } from 'src/app/model/all-auth';
 import { Address, NameValue } from 'src/app/model/common';
 import { AdsService } from 'src/app/services/ads/ads.service';
 import { AccountService } from 'src/app/services/auth/account.service';
+import { FileUploadService } from 'src/app/services/common/image-upload.service';
 import { ServiceLocator } from 'src/app/services/common/service.locator';
 import { Utils } from 'src/app/services/common/utils';
 
@@ -22,14 +23,18 @@ import { Utils } from 'src/app/services/common/utils';
   styleUrls: ['./post-ad.component.css'],
 })
 export class PostAdComponent implements OnInit, OnDestroy {
+  faTrash = faTrash;
 
-  faTrash= faTrash;
+  status: 'initial' | 'uploading' | 'success' | 'fail' = 'initial'; // Variable to store file status
+  file: File | null = null; // Variable to store file
+  files: File[] = [];
 
   destroy$ = new Subject<void>();
   accountService = inject(AccountService);
   adService = inject(AdsService);
   serviceLocator = inject(ServiceLocator);
   http = inject(HttpClient);
+  uploadService = inject(FileUploadService);
 
   submitted: boolean = false;
   loading: boolean = false;
@@ -79,8 +84,16 @@ export class PostAdComponent implements OnInit, OnDestroy {
   postSuccessful: boolean = false;
 
   // Upload
-  uploadedImages: ImagekitImage[] = [];
-  status: string;
+  uploadedImages: ImageKitImage[] = [];
+  uploading: boolean = false;
+
+  selectedFiles?: FileList;
+  currentFile?: File;
+  progress = 0;
+  message = '';
+  preview = '';
+
+  imageInfos?: Observable<any>;
 
   ngOnInit() {
     this.accountService.getData();
@@ -91,6 +104,70 @@ export class PostAdComponent implements OnInit, OnDestroy {
       error: (err) => console.error('User$ emitted an error: ' + err),
       complete: () => console.log('User$ emitted the complete notification'),
     });
+
+    // this.imageInfos = this.uploadService.getFiles();
+  }
+
+  selectFile(event: any): void {
+    this.message = '';
+    this.preview = '';
+    this.progress = 0;
+    this.selectedFiles = event.target.files;
+
+    if (this.selectedFiles) {
+      const file: File | null = this.selectedFiles.item(0);
+
+      if (file) {
+        this.preview = '';
+        this.currentFile = file;
+
+        const reader = new FileReader();
+
+        reader.onload = (e: any) => {
+          // console.log(e.target.result);
+          this.preview = e.target.result;
+        };
+
+        reader.readAsDataURL(this.currentFile);
+      }
+    }
+  }
+
+  upload(): void {
+    this.progress = 0;
+
+    if (this.selectedFiles) {
+      const file: File | null = this.selectedFiles.item(0);
+
+      if (file) {
+        this.currentFile = file;
+
+        this.uploadService.upload(this.currentFile).subscribe({
+          next: (event: any) => {
+            if (event.type === HttpEventType.UploadProgress) {
+              this.progress = Math.round((100 * event.loaded) / event.total);
+            } else if (event instanceof HttpResponse) {
+              this.message = event.body.message;
+              this.imageInfos = this.uploadService.getFiles();
+            }
+          },
+          error: (err: any) => {
+            console.log(err);
+            this.progress = 0;
+
+            if (err.error && err.error.message) {
+              this.message = err.error.message;
+            } else {
+              this.message = 'Could not upload the image!';
+            }
+
+            this.currentFile = undefined;
+          },
+        });
+      }
+
+      this.selectedFiles = undefined;
+    }
   }
 
   postAd() {
@@ -104,7 +181,6 @@ export class PostAdComponent implements OnInit, OnDestroy {
       if (ad) {
         this.postGeneralAd(ad);
       }
-
     }
   }
 
@@ -338,11 +414,13 @@ export class PostAdComponent implements OnInit, OnDestroy {
 
   authenticator = async () => {
     try {
-      const response = await fetch(this.serviceLocator.ImagekitTokenUrl);
+      const response = await fetch(this.serviceLocator.ImageKitTokenUrl);
 
       if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(`Request failed with status ${response.status}: ${errorText}`);
+        throw new Error(
+          `Request failed with status ${response.status}: ${errorText}`
+        );
       }
 
       const data = await response.json();
@@ -354,39 +432,44 @@ export class PostAdComponent implements OnInit, OnDestroy {
   };
 
   validateFileFunction(res: File) {
-    console.log("Validating");
-    if (res.size < 1000000) { // Less than 1mb file size
+    this.uploading = true;
+    console.log('Upload validating');
+    if (res.size < 1000000) {
+      // Less than 1mb file size
       return true;
     }
-    this.status = "1MB exceeded"
     return false;
   }
 
   onUploadStartFunction(res: Event) {
-    this.status = "Starting to upload";
+    this.uploading = true;
+    console.log('Upload starting');
   }
 
   onUploadProgressFunction(res: ProgressEvent) {
-    this.status = "Progressing..";
+    this.uploading = true;
+    console.log('Upload in progress');
   }
 
   handleUploadError = (event: any) => {
+    this.uploading = false;
     console.log('Error');
     console.log(event);
   };
 
   handleUploadSuccess = (event: any) => {
-    this.status = "Success";
+    this.uploading = false;
     console.log(event.$ResponseMetadata.statusCode); // 200
     console.log(event.$ResponseMetadata.headers); // headers
-    console.log(event);
+    console.log(event); // headers
+    console.log('Upload Success');
     if (event.url) {
-      var img: ImagekitImage = {};
-      img.fileId = event.fileId
-      img.filePath = event.filePath
-      img.thumbnailUrl = event.thumbnailUrl
-      img.name = event.name
-      img.url = event.url
+      var img: ImageKitImage = {};
+      img.fileId = event.fileId;
+      img.filePath = event.filePath;
+      img.thumbnailUrl = event.thumbnailUrl;
+      img.name = event.name;
+      img.url = event.url;
       this.uploadedImages.push(img);
     }
   };
@@ -402,7 +485,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
     this.errorMessage = null;
   }
 
-  deleteFile(_t67: ImagekitImage) {
+  deleteFile(_t67: ImageKitImage) {
     var idx = -1;
     for (var i = 0; i < this.uploadedImages.length; i++) {
       var fi = this.uploadedImages[i];
@@ -411,16 +494,51 @@ export class PostAdComponent implements OnInit, OnDestroy {
         break;
       }
     }
-    console.log('Deleting '+ _t67.fileId+ ' at index '+ idx)
-    this.adService.deleteImage(_t67.fileId).subscribe(e=>{
-      if ( idx !== -1){
+    console.log('Deleting ' + _t67.fileId + ' at index ' + idx);
+    this.adService.deleteImage(_t67.fileId).subscribe((e) => {
+      if (idx !== -1) {
         this.uploadedImages.splice(idx, 1);
       }
     });
   }
+
+  // On file Select
+  onChange(event: any) {
+    const files = event.target.files;
+
+    if (files.length) {
+      this.status = 'initial';
+      this.files = files;
+    }
+  }
+
+  onUpload() {
+    if (this.files.length) {
+      const formData = new FormData();
+
+      //We deconstruct this.files to convert the FileList to an array, enabling us to utilize array methods like map or forEach.
+      [...this.files].forEach((file) => {
+        formData.append('file', file, file.name);
+      });
+
+      const upload$ = this.http.post('https://httpbin.com/post', formData);
+
+      this.status = 'uploading';
+
+      upload$.subscribe({
+        next: () => {
+          this.status = 'success';
+        },
+        error: (error: any) => {
+          this.status = 'fail';
+          return throwError(() => error);
+        },
+      });
+    }
+  }
 }
 
-class ImagekitImage {
+class ImageKitImage {
   fileId?: string;
   name?: string;
   url?: string;
