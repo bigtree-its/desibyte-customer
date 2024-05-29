@@ -28,7 +28,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
 
   status: 'initial' | 'uploading' | 'success' | 'fail' = 'initial'; // Variable to store file status
   file: File | null = null; // Variable to store file
-  files: File[] = [];
+  files: any[] = [];
   fileMap: Map<string, File> = new Map<string, File>();
   myMap: Map<string, string> = new Map<string, string>();
 
@@ -517,8 +517,10 @@ export class PostAdComponent implements OnInit, OnDestroy {
     const files = event.target.files;
     if (files.length) {
       this.status = 'initial';
-      // this.files = files;
+      // this.files = this.files.concat(files);
+
       [...files].forEach((file) => {
+        this.files.push(file);
         const reader = new FileReader();
         reader.onload = (e: any) => {
           this.myMap.set(file.name, e.target.result);
@@ -535,7 +537,8 @@ export class PostAdComponent implements OnInit, OnDestroy {
 
       //We deconstruct this.files to convert the FileList to an array, enabling us to utilize array methods like map or forEach.
       [...this.files].forEach((file) => {
-        formData.append('file', file, file.name);
+        console.log('Uploading image '+ file.name)
+        formData.append("image", file, file.name);
       });
       const upload$ = this.adService.uploadImages(ad, formData);
       // const upload$ = this.http.post('https://httpbin.com/post', formData);
@@ -549,6 +552,8 @@ export class PostAdComponent implements OnInit, OnDestroy {
           return throwError(() => error);
         },
       });
+    }else{
+      console.error('No images files selected.')
     }
   }
 }
