@@ -22,11 +22,13 @@
             <option value="Services">Services</option>
             <option value="Classes">Classes</option>
         </select>
-        <div class="flex-column my-2">
+        <div class="flex-column my-1">
             <span class="bolder py-1">Ad Location</span>
             <app-postcode-lookup (addressEmitter)="onSelectAddress($event)"></app-postcode-lookup>
         </div>
-        <div class="flex-column my-2">
+
+        <!-- ImageKit Client Side Upload Working example-->
+        <!-- <div class="flex-column my-2">
             <span class="bolder py-2">Upload Images <small
                     class="f-dim"><i>(Upto 5, Max file size
                         1MB)</i></small></span>
@@ -38,41 +40,60 @@
                 <div *ngIf="uploadedImages.length > 0" class="full-screen my-1 px-2 flex-row jcc pt-2">
                     <div class="flex-row-scrollable">
                         <div class="flex-column br-12 mr-1" style="width: 130px;height: 130px;border:1px solid #e2e2e2;" *ngFor="let img of uploadedImages">
-                            <!-- <fa-icon [icon]="faTrash" class="asfe m-1" (click)="deleteFile(img)"></fa-icon> -->
+                            <fa-icon [icon]="faTrash" class="asfe m-1" (click)="deleteFile(img)"></fa-icon>
                             <img src={{img.thumbnailUrl}} class="thumbnail">
-                            <button class="btn-delete my-1" (click)="deleteFile(img)">Delete</button>
+                            <button class="btn-delete my-1" (click)="deleteImageKitFile(img)">Delete</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="flex-column my-2">
             <span class="bolder py-2">Upload Images <small
                     class="f-dim"><i>(Upto 5, Max file size
                         1MB)</i></small></span>
-            <input type="file" class="file-input" (change)="onChange($event)" #fileUpload />
-            <div *ngIf="file">
-                <section class="file-info">
+            <div class="flex-column p-3" style="border: 1px dashed #c3c0c0; border-radius: 12px;">
+                <input type="file" accept="image/png,image/gif,image/jpg,image/jpeg" class="file-input" (change)="onChange($event)" #fileUpload />
+                <div class="flex-column" *ngIf="myMap.size > 0">
+                    <div class="full-screen my-1 px-2 flex-row jcc pt-2">
+                        <div class="flex-row-scrollable">
+                            <div class="br-12 mr-1" style="position:relative;min-width: 130px;min-height: 130px;max-width:130px;max-height: 130px;border:1px solid #e2e2e2;padding: 10px;" *ngFor="let file of myMap | keyvalue">
+
+                                <div class="d-flex trashIcon">
+                                    <fa-icon [icon]="faTrash" (click)="deleteFile(file.key)"></fa-icon>
+                                </div>
+
+                                <!-- <img src={{img.thumbnailUrl}} class="thumbnail"> -->
+                                <img [src]="file.value" class="preview">
+                                <!-- <button class="btn-delete my-1" (click)="deleteFile(img)">Delete</button> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="myMap.size > 0">
+                <!-- <section class="file-info">
                     File details:
                     <ul>
                         <li>Name: {{file.name}}</li>
                         <li>Type: {{file.type}}</li>
                         <li>Size: {{file.size}} bytes</li>
                     </ul>
-                </section>
+                </section> -->
 
-                <button (click)="onUpload()">Upload the file</button>
+                <!-- <button (click)="onUpload()">Upload the file</button> -->
 
                 <section [ngSwitch]="status">
                     <p *ngSwitchCase="'uploading'">⏳ Uploading...</p>
                     <p *ngSwitchCase="'success'">✅ Done!</p>
                     <p *ngSwitchCase="'fail'">❌ Error!</p>
-                    <p *ngSwitchDefault>😶 Waiting to upload...</p>
+                    <p *ngSwitchDefault>😶 Ads with Images stands out</p>
                 </section>
             </div>
         </div>
 
-        <div class="flex-column p-2 border">
+        <!-- <div class="flex-column p-2 border">
             <div class="row">
                 <div class="col-md-8">
                     <label class="btn btn-default p-0">
@@ -111,7 +132,7 @@
                     </li>
                 </ul>
             </div>
-        </div>
+        </div> -->
         <div class="flex-row aic my-2 gap-1" *ngIf="category==='Property'">
             <div class="flex-column">
                 <span class="bolder py-1">Property Type</span>
@@ -219,25 +240,27 @@
                 </div>
             </div>
         </div>
-        <div class="flex-column my-2" *ngIf="category!=='Property'">
-            <span class="bolder py-1">Your Price</span>
-            <div class="input-group">
-                <div class="bg-light border jcc aic d-flex p-2 br-tl-7 br-bl-7">£</div>
-                <input [(ngModel)]="price" #ctrl="ngModel" type="number" min="0.00" step="1" value="1.00" id="propertySaleOffersOver" class="form-control" placeholder="Offers Over">
+        <div class="flex-row aic py-2 gap-2">
+            <div class="flex-column my-2" *ngIf="category!=='Property'">
+                <span class="bolder py-1">Your Price</span>
+                <div class="input-group">
+                    <div class="bg-light border jcc aic d-flex p-2 br-tl-7 br-bl-7">£</div>
+                    <input [(ngModel)]="price" #ctrl="ngModel" type="number" min="0.00" step="1" value="1.00" id="propertySaleOffersOver" class="form-control" placeholder="Offers Over">
+                </div>
             </div>
-        </div>
-        <div class="flex-column my-2" *ngIf="category==='Property' && consumptionType === 'Sale' ">
-            <span class="bolder py-1">Offers Over</span>
-            <div class="input-group">
-                <div class="bg-light border jcc aic d-flex p-2 br-tl-7 br-bl-7">£</div>
-                <input [(ngModel)]="price" #ctrl="ngModel" type="number" min="0.00" step="1" value="1.00" id="propertySaleOffersOver" class="form-control" placeholder="Offers Over">
+            <div class="flex-column my-2" *ngIf="category==='Property' && consumptionType === 'Sale' ">
+                <span class="bolder py-1">Offers Over</span>
+                <div class="input-group">
+                    <div class="bg-light border jcc aic d-flex p-2 br-tl-7 br-bl-7">£</div>
+                    <input [(ngModel)]="price" #ctrl="ngModel" type="number" min="0.00" step="1" value="1.00" id="propertySaleOffersOver" class="form-control" placeholder="Offers Over">
+                </div>
             </div>
-        </div>
-        <div class="flex-column my-2">
-            <span class="bolder">Date available</span>
-            <div class="input-group">
-                <input type="text" class="form-control" [minDate]="minDate" placeholder="dd-mm-yyyy" name="dp" [(ngModel)]="dateAvailable" ngbDatepicker #d="ngbDatepicker" />
-                <fa-icon [icon]="faCalendar" (click)="d.toggle()" class="border br-tr-7 br-br-7 p-2 clickable-icon"></fa-icon>
+            <div class="flex-column my-2">
+                <span class="bolder py-1">Date available</span>
+                <div class="input-group">
+                    <input type="text" class="form-control" [minDate]="minDate" placeholder="dd-mm-yyyy" name="dp" [(ngModel)]="dateAvailable" ngbDatepicker #d="ngbDatepicker" />
+                    <fa-icon [icon]="faCalendar" (click)="d.toggle()" class="border br-tr-7 br-br-7 p-2 clickable-icon"></fa-icon>
+                </div>
             </div>
         </div>
 
@@ -249,7 +272,7 @@
             <span class="bolder py-1">Description</span>
             <textarea class="border br-7 p-2" name="description" id="description" value [(ngModel)]="description" tabindex="3" #ctrl="ngModel" style="height: 100px;" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
         </div>
-        <div class="flex-column">
+        <!-- <div class="flex-column">
             <span class="bolder py-1">Image Url</span>
             <input class="border br-7 p-2" type="text" name="image" id="image" tabindex="1" autocomplete="off" value [(ngModel)]="image" #ctrl="ngModel">
         </div>
@@ -257,7 +280,7 @@
             <span class="bolder py-1">Gallery (<small>Urls comma
                     separated</small>)</span>
             <textarea class="border br-7 p-2" name="gallery" id="gallery" value [(ngModel)]="gallery" tabindex="3" #ctrl="ngModel" style="height: 100px;" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
-        </div>
+        </div> -->
         <div class="flex-row p-3 box-error my-2 aic jcc" *ngIf="error && errorMessage">
             <span>{{errorMessage}}</span>
             <button type="button" class="btn-text ml-5" (click)="closeAlert()">OK</button>

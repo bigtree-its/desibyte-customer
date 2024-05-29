@@ -1,3 +1,4 @@
+import { KeyValue } from '@angular/common';
 import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { faCalendar, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -28,6 +29,8 @@ export class PostAdComponent implements OnInit, OnDestroy {
   status: 'initial' | 'uploading' | 'success' | 'fail' = 'initial'; // Variable to store file status
   file: File | null = null; // Variable to store file
   files: File[] = [];
+  fileMap: Map<string, File> = new Map<string, File>();
+  myMap: Map<string, string> = new Map<string, string>();
 
   destroy$ = new Subject<void>();
   accountService = inject(AccountService);
@@ -89,6 +92,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
 
   selectedFiles?: FileList;
   currentFile?: File;
+  imageFiles?: File[] = [];
   progress = 0;
   message = '';
   preview = '';
@@ -246,6 +250,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
         console.log('Ad has been posted');
         this.postSuccessful = true;
         this.postedAd = e;
+        this.uploadImages(this.postedAd);
       },
       error: (err) => {
         console.error('Errors during posting ad. ' + JSON.stringify(err));
@@ -485,7 +490,12 @@ export class PostAdComponent implements OnInit, OnDestroy {
     this.errorMessage = null;
   }
 
-  deleteFile(_t67: ImageKitImage) {
+  deleteFile(name: string) {
+    this.myMap.delete(name);
+    // window.alert('Deleting '+ name)
+  }
+
+  deleteImageKitFile(_t67: ImageKitImage) {
     var idx = -1;
     for (var i = 0; i < this.uploadedImages.length; i++) {
       var fi = this.uploadedImages[i];
@@ -505,14 +515,21 @@ export class PostAdComponent implements OnInit, OnDestroy {
   // On file Select
   onChange(event: any) {
     const files = event.target.files;
-
     if (files.length) {
       this.status = 'initial';
-      this.files = files;
+      // this.files = files;
+      [...files].forEach((file) => {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.myMap.set(file.name, e.target.result);
+        };
+        reader.readAsDataURL(file);
+      });
     }
   }
 
-  onUpload() {
+  uploadImages(ad: GeneralAd) {
+    console.log('Now upload the files')
     if (this.files.length) {
       const formData = new FormData();
 
@@ -520,11 +537,9 @@ export class PostAdComponent implements OnInit, OnDestroy {
       [...this.files].forEach((file) => {
         formData.append('file', file, file.name);
       });
-
-      const upload$ = this.http.post('https://httpbin.com/post', formData);
-
+      const upload$ = this.adService.uploadImages(ad, formData);
+      // const upload$ = this.http.post('https://httpbin.com/post', formData);
       this.status = 'uploading';
-
       upload$.subscribe({
         next: () => {
           this.status = 'success';

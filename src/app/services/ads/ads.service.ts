@@ -100,6 +100,22 @@ export class AdsService {
     );
   }
 
+  uploadImages(ad: GeneralAd, formData: FormData): Observable<GeneralAd> {
+    console.log('Uploading images for an ad ' + ad.reference);
+    var params = new HttpParams();
+    params = params.set('adReference', ad.reference);
+    params = params.set('adCategory', ad.category);
+    return this.httpClient
+      .post<GeneralAd>(this.serviceLocator.AdImagesUrl, formData, {
+        params,
+      })
+      .pipe(
+        tap((result) => {
+          console.log('Upload image response ' + JSON.stringify(result));
+        })
+      );
+  }
+
   postProperty(propertyAd: PropertyAd): Observable<PropertyAd> {
     console.log('Posting a property ad ' + JSON.stringify(propertyAd));
     return this.httpClient
