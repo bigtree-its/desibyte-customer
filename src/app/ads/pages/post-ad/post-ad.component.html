@@ -314,7 +314,11 @@
             We will send a confirmation email to {{user.email}} which you can
             use to edit or delete your ad in future.
         </span>
-        <button class="btn-13" [routerLink]="['/my_ads']">Manage My Ads</button>
+        <div class="flex-row">
+            <button class="btn-13" [routerLink]="['/my_ads']">Manage My Ads</button>
+            <button class="btn-10" (click)="postNewAd()">Post new ad</button>
+        </div>
+
     </div>
 </ng-template>
 

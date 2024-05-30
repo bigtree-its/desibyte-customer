@@ -12,9 +12,11 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { PostcodeLookupComponent } from './pages/postcode-lookup/postcode-lookup.component';
 import { ImagekitioAngularModule } from 'imagekitio-angular';
 import { FooterComponent } from './pages/footer/footer.component';
+import { SandboxComponent } from './pages/sandbox/sandbox.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent }
+  { path: '', component: HomeComponent },
+  { path: 'sandbox', component: SandboxComponent }
 ]
 
 @NgModule({
@@ -24,7 +26,8 @@ const routes: Routes = [
     ReviewItemComponent,
     PaymentFormComponent,
     PostcodeLookupComponent,
-    FooterComponent
+    FooterComponent,
+    SandboxComponent
   ],
   imports: [
     CommonModule,

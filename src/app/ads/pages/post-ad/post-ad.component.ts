@@ -242,6 +242,11 @@ export class PostAdComponent implements OnInit, OnDestroy {
     };
   }
 
+  postNewAd(){
+    this.postSuccessful = false;
+    this.postedAd = null;
+  }
+
   private postGeneralAd(ad: GeneralAd) {
     this.error = false;
     let observable = this.adService.postAd(ad);
@@ -538,10 +543,10 @@ export class PostAdComponent implements OnInit, OnDestroy {
       //We deconstruct this.files to convert the FileList to an array, enabling us to utilize array methods like map or forEach.
       [...this.files].forEach((file) => {
         console.log('Uploading image '+ file.name)
-        formData.append("image", file, file.name);
+        formData.append("files", file, file.name);
       });
-      const upload$ = this.adService.uploadImages(ad, formData);
-      // const upload$ = this.http.post('https://httpbin.com/post', formData);
+      // const upload$ = this.adService.uploadImages(ad, formData);
+      const upload$ = this.http.post('http://localhost:8083/ads/v1/imagekit/upload', formData);
       this.status = 'uploading';
       upload$.subscribe({
         next: () => {
