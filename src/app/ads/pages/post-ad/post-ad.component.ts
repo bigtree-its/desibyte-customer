@@ -169,7 +169,6 @@ export class PostAdComponent implements OnInit, OnDestroy {
           },
         });
       }
-
       this.selectedFiles = undefined;
     }
   }
@@ -225,9 +224,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
       title: this.title,
       category: this.category,
       description: this.description?.split('[n]'),
-      gallery: this.gallery?.trim().split(','),
       status: 'Available',
-      image: this.image,
       address: this.adAddress,
       price: this.price,
       dateAvailable: Utils.getJsDate(this.dateAvailable),
@@ -253,7 +250,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
     observable.pipe(takeUntil(this.destroy$)).subscribe({
       next: (e) => {
         console.log('Ad has been posted');
-        this.postSuccessful = true;
+        // this.postSuccessful = true;
         this.postedAd = e;
         this.uploadImages(this.postedAd);
       },
@@ -351,12 +348,12 @@ export class PostAdComponent implements OnInit, OnDestroy {
       summary: this.summary,
       description: this.description?.split('[n]'),
       keyFeatures: this.keyFeatures?.split('[n]'),
-      gallery: this.gallery?.trim().split(','),
+      // gallery: this.gallery?.trim().split(','),
       type: this.propertyType,
       tenure: this.propertyTenure,
       status: 'Available',
       reference: '',
-      image: this.image,
+      // image: this.image,
       size: this.size,
       schools: this.schools,
       stations: this.stations,
@@ -463,7 +460,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
 
   handleUploadError = (event: any) => {
     this.uploading = false;
-    console.log('Error');
+    console.log('Upload resulted in Error');
     console.log(event);
   };
 
@@ -545,16 +542,17 @@ export class PostAdComponent implements OnInit, OnDestroy {
         console.log('Uploading image '+ file.name)
         formData.append("files", file, file.name);
       });
-      // const upload$ = this.adService.uploadImages(ad, formData);
-      const upload$ = this.http.post('http://localhost:8083/ads/v1/imagekit/upload', formData);
-      this.status = 'uploading';
-      upload$.subscribe({
-        next: () => {
+
+      let observable = this.adService.uploadImages(ad, formData);
+      observable.pipe(takeUntil(this.destroy$)).subscribe({
+        next: (e) => {
+          console.log('Upload image complete.')
           this.status = 'success';
+          this.postSuccessful = true;
         },
-        error: (error: any) => {
+        error: (err) => {
+          console.error('Errors during posting images. ' + JSON.stringify(err));
           this.status = 'fail';
-          return throwError(() => error);
         },
       });
     }else{

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 
 @Component({
@@ -32,13 +32,17 @@ export class SandboxComponent {
 
   upload(){
     var formData = new FormData();
-
+  var params = new HttpParams();
     [...this.files].forEach((file) => {
       console.log('Uploading image '+ file.name)
-      formData.append("files", file, file.name);
+      formData.append("name", file.name);
+      formData.append("image", file, file.name);
+      params = params.set('filename', file.name);
     });
     // const upload$ = this.adService.uploadImages(ad, formData);
-    const upload$ = this.http.post('http://localhost:8083/ads/v1/imagekit/upload', formData);
+  
+
+    const upload$ = this.http.post('http://localhost:8083/ads/v1/imagekit/upload', formData, {params});
     upload$.subscribe({
       next: () => {
         console.log('Success')

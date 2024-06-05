@@ -32,16 +32,16 @@
     </div>
     <div class="lg row">
         <div class="col-md-8 flex-column" style="min-height: 100vh;overflow-y: auto; margin-bottom: 100px;">
-            <div class="flex-column jcc aic p-3" *ngIf="property.gallery && property.gallery.length > 0">
-                <ngb-carousel style="width: 768px; height: 700px;">
-                    <ng-template ngbSlide *ngFor="let gallery of property?.gallery">
-                        <div class="w-100">
-                            <img [src]="gallery" />
+            <div class="flex-column jcc aic mb-2" style="max-height: 700px;max-width: 768px;" *ngIf="property.gallery && property.gallery.length > 0">
+                <ngb-carousel style="width: 100%;height:100%;object-fit: scale-down;">
+                    <ng-template ngbSlide *ngFor="let gallery of property?.gallery ">
+                        <div>
+                            <img [src]="gallery.url" style="object-fit: fill;height: 100%;width: 100%;" />
                         </div>
                     </ng-template>
                 </ngb-carousel>
             </div>
-            <img *ngIf="!property.image" src="/assets/images/default-image.jpeg" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
+            <img *ngIf="!property.gallery" src="/assets/images/default-image.jpeg" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
             <div class="flex-row w-100 jcsb aic">
                 <span class="fs-6 bold">{{property.address?.addressLine2}},
                     {{property.address?.city}}</span>

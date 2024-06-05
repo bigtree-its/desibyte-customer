@@ -4,11 +4,11 @@ export class GeneralAd {
   category: string;
   title: string;
   status: string;
-  image: string;
+  image?: ImageKitImg;
   views?: number;
   reference?: string;
   description: string[];
-  gallery: string[];
+  gallery?: ImageKitImg[];
   address: Address;
   price: number;
   dateAvailable: Date;
@@ -19,19 +19,31 @@ export class GeneralAd {
   active?: boolean;
 }
 
+export class ImageKitImg{
+  fileId: string;
+  name: string;
+  size: string;
+  filePath: string;
+  url: string;
+  fileType: string;
+  height: string;
+  width: string;
+  thumbnailUrl: string;
+}
+
 export class PropertyAd {
   views?: number;
   title: string;
   tenure: string;
   consumptionType: string;
   status: string;
-  image: string;
+  image?: ImageKitImg;
   reference: string;
   size: string;
   summary?: string;
   description: string[];
   keyFeatures?: string[];
-  gallery: string[];
+  gallery?: ImageKitImg[];
   type: string;
   address: Address;
   price: number;

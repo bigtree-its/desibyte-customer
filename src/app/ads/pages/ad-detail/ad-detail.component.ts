@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { faArrowLeft, faBath, faBed, faHouse, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { first } from 'rxjs/operators';
-import { GeneralAd } from 'src/app/model/all-ads';
+import { GeneralAd, ImageKitImg } from 'src/app/model/all-ads';
 import { LoginResponse, User } from 'src/app/model/all-auth';
 import { AdsService } from 'src/app/services/ads/ads.service';
 import { AccountService } from 'src/app/services/auth/account.service';
@@ -27,8 +27,8 @@ export class AdDetailComponent implements OnInit {
   customer: User;
   ad: GeneralAd;
   category: string;
-  display_picture: string;
-  gallery: string[] = [];
+  display_picture: ImageKitImg;
+  gallery: ImageKitImg[] = [];
   @ViewChild('widgetsContent') widgetsContent: ElementRef;
   // @ViewChild('googleMap') googleMap: google.maps.Map;
 
@@ -139,8 +139,8 @@ export class AdDetailComponent implements OnInit {
   //   if (this.zoom > this.options.minZoom) this.zoom--
   // }
 
-  displayPicture(url: string) {
-    this.display_picture = url;
+  displayPicture(img: ImageKitImg) {
+    this.display_picture = img;
   }
   scrollLeft() {
     this.widgetsContent.nativeElement.scrollLeft -= 150;

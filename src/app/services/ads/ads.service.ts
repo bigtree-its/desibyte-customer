@@ -106,7 +106,7 @@ export class AdsService {
     params = params.set('adReference', ad.reference);
     params = params.set('adCategory', ad.category);
     return this.httpClient
-      .post<GeneralAd>(this.serviceLocator.AdImagesUrl, formData, {
+      .post<GeneralAd>(this.serviceLocator.UploadImagesUrl, formData, {
         params,
       })
       .pipe(

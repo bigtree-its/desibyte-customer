@@ -53,10 +53,10 @@ export const environment = {
  
 
   //Ads
-  AdPropertyUrl: 'http://localhost:8083/ads/v1/properties',
-  AdsUrl: 'http://localhost:8083/ads/v1/ads',
-  AdImagesUrl: 'http://localhost:8083/ads/v1/imagekit/upload',
-  AdEnquiryUrl: 'http://localhost:8083/ads/v1/ad-enquiries',
+  AdPropertyUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/properties',
+  AdsUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/ads',
+  UploadImagesUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/imagekit/upload_images',
+  AdEnquiryUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/ad-enquiries',
   ImageKitTokenUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/imagekit/token',
   ImageKitFilesUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/imagekit/files',
 

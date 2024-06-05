@@ -45,7 +45,7 @@ export class ServiceLocator {
   AdEnquiryUrl: string;
   AdPropertyUrl: string;
   AdsUrl: string;
-  AdImagesUrl: string;
+  UploadImagesUrl: string;
   ImageKitTokenUrl: string;
   ImageKitFilesUrl: string;
 
@@ -86,7 +86,7 @@ export class ServiceLocator {
 
     this.AdPropertyUrl = environment.AdPropertyUrl;
     this.AdsUrl = environment.AdsUrl;
-    this.AdImagesUrl = environment.AdImagesUrl;
+    this.UploadImagesUrl = environment.UploadImagesUrl;
     this.AdEnquiryUrl = environment.AdEnquiryUrl;
     this.ImageKitTokenUrl = environment.ImageKitTokenUrl;
     this.ImageKitFilesUrl = environment.ImageKitFilesUrl;
