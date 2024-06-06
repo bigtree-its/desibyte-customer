@@ -198,6 +198,7 @@ export class AccountService {
       name: tokenClaims.firstName + ' ' + tokenClaims.lastName,
       email: tokenClaims.sub,
       mobile: tokenClaims.mobile,
+      userType: tokenClaims.userType,
     };
     return user;
   }

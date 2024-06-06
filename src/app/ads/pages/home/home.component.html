@@ -56,7 +56,7 @@
             <ng-container *ngIf="category === 'Property'" [ngTemplateOutlet]="consumptionTypeFilter"></ng-container>
             <ng-container *ngIf="category === 'Property' || category === 'Cars' || category === 'Books' || category === 'Furniture'  || category === 'Electronics'   || category === 'Toys'" [ngTemplateOutlet]="priceRangeFilter"></ng-container>
             <ng-container *ngIf="category === 'Property' && propertyType !=='Garage'  && propertyType !=='Commercial'" [ngTemplateOutlet]="bedroomsFilter"></ng-container>
-            <button *ngIf="category" type="button" class="btn-13 br-25" (click)="searchProperties()">Go</button>
+            <button *ngIf="category" type="button" class="btn-7" (click)="searchProperties()">Go</button>
         </div>
         <div class="col-md-11 col-lg-10 col-xl-9 ">
             <div class="flex-column" *ngIf="category==='All'">

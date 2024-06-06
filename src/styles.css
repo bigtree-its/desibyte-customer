@@ -12,7 +12,7 @@
 
 /** Logo **/
 
-@import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Vinyl&display=swap');
 :root {
     --blue: #007bff;
     --indigo: #6610f2;
@@ -55,8 +55,8 @@
     --brand-color-navy: #44b;
     --brand-color-b: rgb(2, 77, 223);
     --brand-color-g: #0a0;
-    --brand-color: #ff9000;
-    --brand-color-o: rgb(241, 122, 2);
+    --brand-color: #ff5f1f;
+    --brand-color-o: #F4BB44;
     --brand-color-black: rgb(34, 35, 34);
     --brand-color-dark: #53d900;
     margin: 0;
@@ -167,9 +167,9 @@ input:valid {
 .input:focus~label,
 input:valid~label {
     transform: translateY(-50%) scale(0.8);
-    background-color: var(--brand-color);
+    /* background-color: var(--brand-color); */
     padding: 0 0.2em;
-    color: #fff;
+    /* color: #fff; */
 }
 
 .container {
@@ -221,11 +221,12 @@ body {
 }
 
 .big-text {
-    font-family: "Bebas Neue", sans-serif;
+    /* font-family: "Bebas Neue", sans-serif; */
+    font-family: "Rubik Vinyl", system-ui;
 }
 
 .logo-text {
-    font-family: "Righteous", sans-serif;
+    font-family: "Rubik Vinyl", system-ui;
     font-weight: 900;
     cursor: pointer;
     color: var(--brand-color);
@@ -551,10 +552,36 @@ body {
     color: #222;
 }
 
+.btn-8 {
+    padding: 5px 13px;
+    background-color: var(--brand-color);
+    border: 1px dashed var(--brand-color-o);
+    color: #fff;
+}
+
+.btn-8:hover {
+    cursor: pointer;
+    background-color: var(--brand-color-o);
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
+}
+
+.btn-7 {
+    padding: 5px 13px;
+    background-color: var(--brand-color-g);
+    border: 1px dashed var(--brand-color-green);
+    color: #fff;
+}
+
+.btn-7:hover {
+    cursor: pointer;
+    background-color: var(--brand-color-green);
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
+}
+
 .btn-13 {
     padding: 5px 13px;
     border-radius: 12px;
-    background-color: var(--brand-color-g);
+    background-color: var(--brand-color);
     color: #fff;
     transition: all 0.3s;
     border: none;
@@ -1093,6 +1120,10 @@ select {
     cursor: pointer;
     background-color: var(--white);
     /* border: 2px solid rgb(0, 0, 0); */
+}
+
+.br-0 {
+    border-radius: 0%;
 }
 
 .br-7 {

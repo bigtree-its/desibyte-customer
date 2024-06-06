@@ -9,7 +9,7 @@
         <span class="bolder fs-1 mt-2 mb-4">Post an ad</span>
 
         <span class="bolder py-1">Tell us what you are posting</span>
-        <select class="form-select mb-3" (change)="onChangeCategory($event)">
+        <select class="form-select mb-3 br-0" (change)="onChangeCategory($event)">
             <option default>Please select</option>
             <option value="Car">Car</option>
             <option value="Property">Property</option>
@@ -52,7 +52,7 @@
             <span class="bolder py-2">Upload Images <small
                     class="f-dim"><i>(Upto 5, Max file size
                         1MB)</i></small></span>
-            <div class="flex-column p-3" style="border: 1px dashed #c3c0c0; border-radius: 12px;">
+            <div class="flex-column p-3" style="border: 1px dashed #c3c0c0;">
                 <input type="file" accept="image/png,image/gif,image/jpg,image/jpeg" class="file-input" (change)="onChange($event)" #fileUpload />
                 <div class="flex-column" *ngIf="myMap.size > 0">
                     <div class="full-screen my-1 px-2 flex-row jcc pt-2">
@@ -191,24 +191,26 @@
 
         <div class="flex-column" *ngIf="category==='Property'">
             <span class="bolder py-1">Whats your intend?</span>
-            <div class="radio-buttons-container">
+            <div class="radio-button-container my-2">
                 <div class="radio-button">
-                    <input name="radio-group" id="Rent" value="Rent" checked class="radio-button__input" type="radio" (change)="changePropertyConsumptionType($event)">
-                    <label for="Rent" class="radio-button__label">
-                        <span class="radio-button__custom"></span>Rent
+                    <input type="radio" checked class="radio-button__input" id="Rent" name="radio-group" (change)="changePropertyConsumptionType($event)">
+                    <label class="radio-button__label" for="Rent">
+                        <span class="radio-button__custom"></span>
+                        Rent
                     </label>
                 </div>
                 <div class="radio-button">
-                    <input name="radio-group" id="Sale" value="Sale" class="radio-button__input" type="radio" (change)="changePropertyConsumptionType($event)">
-                    <label for="Sale" class="radio-button__label">
-                        <span class="radio-button__custom"></span>Sale
+                    <input type="radio" class="radio-button__input" id="Sale" name="radio-group" (change)="changePropertyConsumptionType($event)">
+                    <label class="radio-button__label" for="Sale">
+                        <span class="radio-button__custom"></span>
+                        Sale
                     </label>
                 </div>
                 <div class="radio-button">
-                    <input name="radio-group" id="Share" value="Share" class="radio-button__input" type="radio" (change)="changePropertyConsumptionType($event)">
-                    <label for="Share" class="radio-button__label">
-                        <span class="radio-button__custom"></span>Share Room(s)
-                        in a property
+                    <input type="radio" class="radio-button__input" id="Share" name="radio-group" (change)="changePropertyConsumptionType($event)">
+                    <label class="radio-button__label" for="Share">
+                        <span class="radio-button__custom"></span>
+                        Share
                     </label>
                 </div>
             </div>
@@ -224,17 +226,19 @@
 
             <div class="flex-column  w-50 ml-5">
                 <span class="bolder py-1">Rental Period</span>
-                <div class="radio-buttons-container">
+                <div class="radio-button-container my-2">
                     <div class="radio-button">
-                        <input name="rental-period" id="Monthly" value="Monthly" class="radio-button__input" checked type="radio" (change)="handleRentalPeriod($event)">
-                        <label for="Monthly" class="radio-button__label">
-                            <span class="radio-button__custom"></span>Monthly
+                        <input type="radio" checked class="radio-button__input" id="Monthly" name="radio-group" (change)="handleRentalPeriod($event)">
+                        <label class="radio-button__label" for="Monthly">
+                            <span class="radio-button__custom"></span>
+                            Monthly
                         </label>
                     </div>
                     <div class="radio-button">
-                        <input name="rental-period" id="Weekly" value="Weekly" class="radio-button__input" type="radio" (change)="handleRentalPeriod($event)">
-                        <label for="Weekly" class="radio-button__label">
-                            <span class="radio-button__custom"></span>Weekly
+                        <input type="radio" class="radio-button__input" id="Weekly" name="radio-group" (change)="handleRentalPeriod($event)">
+                        <label class="radio-button__label" for="Weekly">
+                            <span class="radio-button__custom"></span>
+                            Weekly
                         </label>
                     </div>
                 </div>
@@ -272,15 +276,6 @@
             <span class="bolder py-1">Description</span>
             <textarea class="border br-7 p-2" name="description" id="description" value [(ngModel)]="description" tabindex="3" #ctrl="ngModel" style="height: 100px;" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
         </div>
-        <!-- <div class="flex-column">
-            <span class="bolder py-1">Image Url</span>
-            <input class="border br-7 p-2" type="text" name="image" id="image" tabindex="1" autocomplete="off" value [(ngModel)]="image" #ctrl="ngModel">
-        </div>
-        <div class="flex-column">
-            <span class="bolder py-1">Gallery (<small>Urls comma
-                    separated</small>)</span>
-            <textarea class="border br-7 p-2" name="gallery" id="gallery" value [(ngModel)]="gallery" tabindex="3" #ctrl="ngModel" style="height: 100px;" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
-        </div> -->
         <div class="flex-row p-3 box-error my-2 aic jcc" *ngIf="error && errorMessage">
             <span>{{errorMessage}}</span>
             <button type="button" class="btn-text ml-5" (click)="closeAlert()">OK</button>
@@ -292,7 +287,7 @@
         </div>
 
         <div class="flex-row jcc aic my-3">
-            <button class="btn-13 br-25 px-5 my-2" (click)="postAd()">Post</button>
+            <button class="btn-8 my-2" (click)="postAd()">Post</button>
         </div>
 
     </div>
@@ -315,8 +310,9 @@
             use to edit or delete your ad in future.
         </span>
         <div class="flex-row">
-            <button class="btn-13" [routerLink]="['/my_ads']">Manage My Ads</button>
-            <button class="btn-10" (click)="postNewAd()">Post new ad</button>
+            <button class="btn-7" [routerLink]="['/my_ads']">Manage My
+                Ads</button>
+            <button class="btn-8 ml-3" (click)="postNewAd()">Post new ad</button>
         </div>
 
     </div>

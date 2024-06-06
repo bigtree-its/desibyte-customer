@@ -7,7 +7,7 @@
 }
 
 .hero {
-    height: 400px;
+    height: 200px;
     width: 100%;
     background-color: rgb(254, 238, 12);
     object-position: left center;
@@ -76,13 +76,12 @@
 }
 
 .slider-text2 {
-    color: #2237f3;
+    color: #1b40fa;
 }
 
 .slider-text3 {
     color: #141414;
 }
-
 
 @keyframes slide {
     0% {

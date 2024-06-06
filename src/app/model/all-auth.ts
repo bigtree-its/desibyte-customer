@@ -37,6 +37,11 @@ export class User{
     name: string;
     email: string;
     mobile: string;
+    userType: string;
+}
+
+export class Role{
+    name: string;
 }
 
 export interface PasswordResetInitiate {
