@@ -1,14 +1,13 @@
 <div class="flex-column w-100" style="position:relative;">
-    <div class="flex-row jcsb w-100 border p-1 aic">
-        <input style="border: none;outline: none;background: none;" *ngIf="!selectedAddress" class="br-25 pl-2" type="text" name="postcode" id="postcode" tabindex="4" autocomplete="off" value [(ngModel)]="addressLookupPostcode" #ctrl="ngModel" placeholder="Enter your postcode"
-            (keyup.enter)="findAddress()">
+    <div class="flex-row jcsb w-100 border p-1 aic bg-d">
+        <input *ngIf="!selectedAddress" class="input-postcode" type="text" name="postcode" id="postcode" tabindex="4" autocomplete="off" value [(ngModel)]="addressLookupPostcode" #ctrl="ngModel" placeholder="Enter your postcode" (keyup.enter)="findAddress()">
         <span *ngIf="selectedAddress" class="px-2">{{selectedAddress}}</span>
         <!-- <button *ngIf="!showAddressList && !selectedAddress" class="btn-12 py-2 ml-2 br-25" (click)="findAddress()">Find</button> -->
-        <fa-icon class="mx-2 icon" (click)="findAddress()" *ngIf="!showAddressList && !selectedAddress" [icon]="faSearch"></fa-icon>
-        <fa-icon class="mx-2 icon" (click)="closeServiceLocations()" *ngIf="(addressLookupResponse && showAddressList) || selectedAddress" [icon]="faClose"></fa-icon>
+        <fa-icon class="mx-2 postcode-search-icon" (click)="findAddress()" *ngIf="!showAddressList && !selectedAddress" [icon]="faSearch"></fa-icon>
+        <fa-icon class="mx-2 postcode-search-icon" (click)="closeServiceLocations()" *ngIf="(addressLookupResponse && showAddressList) || selectedAddress" [icon]="faClose"></fa-icon>
         <!-- <button type="button" *ngIf="(postcodeAddressList && showAddressList) || selectedAddress" class="btn btn-close " (click)="closeServiceLocations()"></button> -->
     </div>
-    <div *ngIf="addressLookupResponse && showAddressList" class="address-list-container">
+    <div *ngIf="addressLookupResponse && showAddressList" class="address-list-container" style="color: #222;">
         <span class="bolder p-2">{{addressLookupResponse.noOfItems}} addresses found</span>
         <div class="addresslist-scroller">
             <div class="address-item" *ngFor="let add of addressLookupResponse.result.addresses" (click)="onSelectApiTierAddress(add)">

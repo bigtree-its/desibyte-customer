@@ -18,12 +18,12 @@ import { FOrderItemComponent } from './pages/f-order-item/f-order-item.component
 import { ImagekitioAngularModule } from 'imagekitio-angular';
 
 const routes: Routes = [
-  { path: 'f/home', component: FoodsHomeComponent },
-  { path: 'f/area/:area', component: ChefListComponent },
-  { path: 'f/chef/:id', component: ChefHomeComponent },
-  { path: 'f/basket', component: FoodBasketComponent },
-  { path: 'f/checkout', component: FoodCheckoutComponent },
-  { path: 'f/confirmation', component: FoodOrderConfirmationComponent },
+  { path: 'foods/home', component: FoodsHomeComponent },
+  { path: 'foods/area/:area', component: ChefListComponent },
+  { path: 'foods/chef/:id', component: ChefHomeComponent },
+  { path: 'foods/basket', component: FoodBasketComponent },
+  { path: 'foods/checkout', component: FoodCheckoutComponent },
+  { path: 'foods/confirmation', component: FoodOrderConfirmationComponent },
 ]
 
 @NgModule({

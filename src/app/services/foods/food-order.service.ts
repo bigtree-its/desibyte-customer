@@ -1,9 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { tap, Observable, BehaviorSubject, of, Subject } from 'rxjs';
-import { FoodOrder, FoodOrderItem, LocalChef, OrderSearchQuery, OrderTracking, OrderUpdateRequest, Orders, PartyOrderItem, SupplierOrders } from 'src/app/model/all-foods';
+import { CloudKitchen, FoodOrder, FoodOrderItem, OrderSearchQuery, OrderTracking, OrderUpdateRequest, PartyOrderItem } from 'src/app/model/all-foods';
 import { Utils } from '../common/utils';
-import { ChefService } from './chef.service';
+import { CloudKitchenService } from './cloudkitchen.service';
 import { LocalService } from '../common/local.service';
 import { ServiceLocator } from '../common/service.locator';
 import { PaymentIntentRequest, PaymentIntentResponse } from 'src/app/model/common';
@@ -16,7 +16,7 @@ import { Constants } from '../common/constants';
 export class FoodOrderService {
  
   ipAddress: any;
-  supplier: LocalChef;
+  cloudKitchen: CloudKitchen;
   foodOrderKey: string;
   private foodOrder?: FoodOrder;
   private partyOrder?: FoodOrder;
@@ -26,15 +26,15 @@ export class FoodOrderService {
 
   constructor(
     private http: HttpClient,
-    private chefService: ChefService,
+    private cloudKitchenService: CloudKitchenService,
     private localService: LocalService,
     private serviceLocator: ServiceLocator
   ) {
-    this.chefService.chefSubject$.subscribe((e) => {
+    this.cloudKitchenService.cloudKitchenSubject$.subscribe((e) => {
       if (e !== undefined) {
-        console.log('Supplier object emitted a value ' + e._id);
-        this.supplier = e;
-        this.setupSupplier();
+        console.log('CloudKitchen object emitted a value ' + e._id);
+        this.cloudKitchen = e;
+        this.setupCloudKitchen();
       }
     });
   }
@@ -89,25 +89,25 @@ export class FoodOrderService {
       );
   }
 
-  setupSupplier() {
-    if (this.supplier) {
-      console.log('Current supplier ' + this.supplier._id);
+  setupCloudKitchen() {
+    if (this.cloudKitchen) {
+      console.log('Current cloudKitchen ' + this.cloudKitchen._id);
       if (this.foodOrder  ) {
         if (this.foodOrder.status === 'Completed'  ) {
           return;
         }
-        if (this.foodOrder.total === 0 && (!this.foodOrder.supplier || this.foodOrder.supplier._id !== this.supplier._id) ){
-          this.setSupplierInFoodOrder();
-          console.log('Updated supplier in the food order');
+        if (this.foodOrder.total === 0 && (!this.foodOrder.cloudKitchen || this.foodOrder.cloudKitchen._id !== this.cloudKitchen._id) ){
+          this.setCloudKitchenInFoodOrder();
+          console.log('Updated cloudKitchen in the food order');
           this.setData(this.foodOrder);
           return;
         }
-        if (this.foodOrder.supplier._id === this.supplier._id){
-          console.log('The food order has current supplier')
+        if (this.foodOrder.cloudKitchen._id === this.cloudKitchen._id){
+          console.log('The food order has current cloudKitchen')
           return;
         }
-        if (this.foodOrder.total > 0 && (this.foodOrder.supplier._id !== this.supplier._id) ){
-          console.log('You have changed the supplier. Flushing the existing food order')
+        if (this.foodOrder.total > 0 && (this.foodOrder.cloudKitchen._id !== this.cloudKitchen._id) ){
+          console.log('You have changed the cloudKitchen. Flushing the existing food order')
           this.createFoodOrder();
           return;
         }
@@ -116,18 +116,18 @@ export class FoodOrderService {
         if (this.partyOrder.status === 'Completed'  ) {
           return;
         }
-        if (this.partyOrder.total === 0 && (!this.partyOrder.supplier || this.partyOrder.supplier._id !== this.supplier._id) ){
-          this.setSupplierInPartyOrder();
-          console.log('Updated supplier in the party order');
+        if (this.partyOrder.total === 0 && (!this.partyOrder.cloudKitchen || this.partyOrder.cloudKitchen._id !== this.cloudKitchen._id) ){
+          this.setCloudKitchenInPartyOrder();
+          console.log('Updated cloudKitchen in the party order');
           this.setData(this.partyOrder);
           return;
         }
-        if (this.partyOrder.supplier._id === this.supplier._id){
-          console.log('The party order has current supplier')
+        if (this.partyOrder.cloudKitchen._id === this.cloudKitchen._id){
+          console.log('The party order has current cloudKitchen')
           return;
         }
-        if (this.partyOrder.total > 0 && (this.partyOrder.supplier._id !== this.supplier._id) ){
-          console.log('You have changed the supplier. Flushing the existing party order')
+        if (this.partyOrder.total > 0 && (this.partyOrder.cloudKitchen._id !== this.cloudKitchen._id) ){
+          console.log('You have changed the cloudKitchen. Flushing the existing party order')
           this.createPartyOrder();
           return;
         }
@@ -216,9 +216,9 @@ export class FoodOrderService {
     );
   }
 
-  getSupplierOrders(
+  getCloudKitchenOrders(
     orderSearchQuery: OrderSearchQuery
-  ): Observable<SupplierOrders> {
+  ): Observable<FoodOrder[]> {
     var params = new HttpParams();
     if (
       orderSearchQuery.reference !== null &&
@@ -233,10 +233,10 @@ export class FoodOrderService {
       params = params.set('customerEmail', orderSearchQuery.customerEmail);
     }
     if (
-      orderSearchQuery.chefId !== null &&
-      orderSearchQuery.chefId !== undefined
+      orderSearchQuery.cloudKitchenId !== null &&
+      orderSearchQuery.cloudKitchenId !== undefined
     ) {
-      params = params.set('chefId', orderSearchQuery.chefId);
+      params = params.set('cloudKitchenId', orderSearchQuery.cloudKitchenId);
     }
     if (
       orderSearchQuery.orderId !== null &&
@@ -253,13 +253,13 @@ export class FoodOrderService {
     if (orderSearchQuery.all) {
       params = params.set('all', 'true');
     }
-    return this.http.get<SupplierOrders>(
+    return this.http.get<FoodOrder[]>(
       this.serviceLocator.FoodOrderSearchUrl,
       { params }
     );
   }
 
-  getOrders(orderSearchQuery: OrderSearchQuery): Observable<Orders> {
+  getOrders(orderSearchQuery: OrderSearchQuery): Observable<FoodOrder[]> {
     var params = new HttpParams();
     if (
       orderSearchQuery.reference !== null &&
@@ -274,10 +274,10 @@ export class FoodOrderService {
       params = params.set('customerEmail', orderSearchQuery.customerEmail);
     }
     if (
-      orderSearchQuery.chefId !== null &&
-      orderSearchQuery.chefId !== undefined
+      orderSearchQuery.cloudKitchenId !== null &&
+      orderSearchQuery.cloudKitchenId !== undefined
     ) {
-      params = params.set('chefId', orderSearchQuery.chefId);
+      params = params.set('cloudKitchenId', orderSearchQuery.cloudKitchenId);
     }
     if (
       orderSearchQuery.orderId !== null &&
@@ -294,7 +294,7 @@ export class FoodOrderService {
     if (orderSearchQuery.all) {
       params = params.set('all', 'true');
     }
-    return this.http.get<Orders>(this.serviceLocator.FoodOrderSearchUrl, {
+    return this.http.get<FoodOrder[]>(this.serviceLocator.FoodOrderSearchUrl, {
       params,
     });
   }
@@ -317,10 +317,10 @@ export class FoodOrderService {
       params = params.set('customer', orderSearchQuery.customerEmail);
     }
     if (
-      orderSearchQuery.chefId !== null &&
-      orderSearchQuery.chefId !== undefined
+      orderSearchQuery.cloudKitchenId !== null &&
+      orderSearchQuery.cloudKitchenId !== undefined
     ) {
-      params = params.set('chefId', orderSearchQuery.chefId);
+      params = params.set('cloudKitchenId', orderSearchQuery.cloudKitchenId);
     }
     if (orderSearchQuery.thisMonth) {
       params = params.set('thisMonth', 'true');
@@ -541,8 +541,8 @@ export class FoodOrderService {
 
   public createOrder(partyOrder: boolean) {
     console.log('Creating empty new order');
-    if (Utils.isValid(this.supplier)) {
-      this.supplier = this.chefService.getData();
+    if (Utils.isValid(this.cloudKitchen)) {
+      this.cloudKitchen = this.cloudKitchenService.getData();
     }
     if (partyOrder) {
       this.createPartyOrder();
@@ -556,21 +556,20 @@ export class FoodOrderService {
       id: '',
       paymentIntentId: '',
       clientSecret: '',
-      supplier: {
-        _id: this.supplier?._id,
-        name: this.supplier?.name,
-        tradingName: this.supplier?.kitchenName,
-        image: this.supplier?.image,
-        mobile: this.supplier?.contact.mobile,
-        email: this.supplier?.contact.email,
+      cloudKitchen: {
+        _id: this.cloudKitchen?._id,
+        name: this.cloudKitchen?.name,
+        image: this.cloudKitchen?.image,
+        mobile: this.cloudKitchen?.contact.mobile,
+        email: this.cloudKitchen?.contact.email,
         address: {
-          addressLine1: this.supplier?.address.addressLine1,
-          addressLine2: this.supplier?.address.addressLine2,
-          city: this.supplier?.address.city,
-          country: this.supplier?.address.country,
-          postcode: this.supplier?.address.postcode,
-          latitude: this.supplier?.address.latitude,
-          longitude: this.supplier?.address.longitude,
+          addressLine1: this.cloudKitchen?.address.addressLine1,
+          addressLine2: this.cloudKitchen?.address.addressLine2,
+          city: this.cloudKitchen?.address.city,
+          country: this.cloudKitchen?.address.country,
+          postcode: this.cloudKitchen?.address.postcode,
+          latitude: this.cloudKitchen?.address.latitude,
+          longitude: this.cloudKitchen?.address.longitude,
         },
       },
       customer: {
@@ -619,21 +618,20 @@ export class FoodOrderService {
       id: '',
       paymentIntentId: '',
       clientSecret: '',
-      supplier: {
-        _id: this.supplier?._id,
-        name: this.supplier?.name,
-        tradingName: this.supplier?.kitchenName,
-        image: this.supplier?.image,
-        mobile: this.supplier?.contact.mobile,
-        email: this.supplier?.contact.email,
+      cloudKitchen: {
+        _id: this.cloudKitchen?._id,
+        name: this.cloudKitchen?.name,
+        image: this.cloudKitchen?.image,
+        mobile: this.cloudKitchen?.contact.mobile,
+        email: this.cloudKitchen?.contact.email,
         address: {
-          addressLine1: this.supplier?.address.addressLine1,
-          addressLine2: this.supplier?.address.addressLine2,
-          city: this.supplier?.address.city,
-          country: this.supplier?.address.country,
-          postcode: this.supplier?.address.postcode,
-          latitude: this.supplier?.address.latitude,
-          longitude: this.supplier?.address.longitude,
+          addressLine1: this.cloudKitchen?.address.addressLine1,
+          addressLine2: this.cloudKitchen?.address.addressLine2,
+          city: this.cloudKitchen?.address.city,
+          country: this.cloudKitchen?.address.country,
+          postcode: this.cloudKitchen?.address.postcode,
+          latitude: this.cloudKitchen?.address.latitude,
+          longitude: this.cloudKitchen?.address.longitude,
         },
       },
       customer: {
@@ -679,16 +677,16 @@ export class FoodOrderService {
 
   getDeliveryFee(): number {
     var deliveryFee = 0.0;
-    if (this.supplier !== null && this.supplier !== undefined) {
-      this.supplier.deliveryFee;
+    if (this.cloudKitchen !== null && this.cloudKitchen !== undefined) {
+      this.cloudKitchen.deliveryFee;
     }
     return deliveryFee;
   }
 
   getPackagingFee(): number {
     var packagingFee = 0.0;
-    if (this.supplier !== null && this.supplier !== undefined) {
-      this.supplier.packagingFee;
+    if (this.cloudKitchen !== null && this.cloudKitchen !== undefined) {
+      this.cloudKitchen.packagingFee;
     }
     return packagingFee;
   }
@@ -814,41 +812,39 @@ export class FoodOrderService {
     this.partyOrderSubject$.next(null);
   }
 
-  setSupplierInFoodOrder() {
-    this.foodOrder.supplier = {
-      _id: this.supplier?._id,
-      name: this.supplier?.name,
-      tradingName: this.supplier?.kitchenName,
-      image: this.supplier?.image,
-      mobile: this.supplier?.contact.mobile,
-      email: this.supplier?.contact.email,
+  setCloudKitchenInFoodOrder() {
+    this.foodOrder.cloudKitchen = {
+      _id: this.cloudKitchen?._id,
+      name: this.cloudKitchen?.name,
+      image: this.cloudKitchen?.image,
+      mobile: this.cloudKitchen?.contact.mobile,
+      email: this.cloudKitchen?.contact.email,
       address: {
-        addressLine1: this.supplier?.address.addressLine1,
-        addressLine2: this.supplier?.address.addressLine2,
-        city: this.supplier?.address.city,
-        country: this.supplier?.address.country,
-        postcode: this.supplier?.address.postcode,
-        latitude: this.supplier?.address.latitude,
-        longitude: this.supplier?.address.longitude,
+        addressLine1: this.cloudKitchen?.address.addressLine1,
+        addressLine2: this.cloudKitchen?.address.addressLine2,
+        city: this.cloudKitchen?.address.city,
+        country: this.cloudKitchen?.address.country,
+        postcode: this.cloudKitchen?.address.postcode,
+        latitude: this.cloudKitchen?.address.latitude,
+        longitude: this.cloudKitchen?.address.longitude,
       }
     }
   }
-  setSupplierInPartyOrder() {
-    this.foodOrder.supplier = {
-      _id: this.supplier?._id,
-      name: this.supplier?.name,
-      tradingName: this.supplier?.kitchenName,
-      image: this.supplier?.image,
-      mobile: this.supplier?.contact.mobile,
-      email: this.supplier?.contact.email,
+  setCloudKitchenInPartyOrder() {
+    this.foodOrder.cloudKitchen = {
+      _id: this.cloudKitchen?._id,
+      name: this.cloudKitchen?.name,
+      image: this.cloudKitchen?.image,
+      mobile: this.cloudKitchen?.contact.mobile,
+      email: this.cloudKitchen?.contact.email,
       address: {
-        addressLine1: this.supplier?.address.addressLine1,
-        addressLine2: this.supplier?.address.addressLine2,
-        city: this.supplier?.address.city,
-        country: this.supplier?.address.country,
-        postcode: this.supplier?.address.postcode,
-        latitude: this.supplier?.address.latitude,
-        longitude: this.supplier?.address.longitude,
+        addressLine1: this.cloudKitchen?.address.addressLine1,
+        addressLine2: this.cloudKitchen?.address.addressLine2,
+        city: this.cloudKitchen?.address.city,
+        country: this.cloudKitchen?.address.country,
+        postcode: this.cloudKitchen?.address.postcode,
+        latitude: this.cloudKitchen?.address.latitude,
+        longitude: this.cloudKitchen?.address.longitude,
       }
     }
   }

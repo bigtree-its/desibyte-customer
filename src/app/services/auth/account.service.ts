@@ -32,7 +32,6 @@ export class AccountService {
     private http: HttpClient,
     private jwtService: JwtService,
     private localService: LocalService,
-    private foodOrderSvc: FoodOrderService,
     private serviceLocator: ServiceLocator,
     private readonly router: Router
   ) { }
@@ -153,14 +152,6 @@ export class AccountService {
       .pipe(
         tap((result) => {
           console.log('Login response ' + JSON.stringify(result));
-          if (this.redirectUrl) {
-            console.log('redirecting to ' + this.redirectUrl);
-            // this.router.navigate([this.redirectUrl]);
-            this.router.navigateByUrl(this.redirectUrl);
-            this.redirectUrl = null;
-          } else {
-            this.router.navigate(['/']);
-          }
           this.setUser(result);
         })
       );
@@ -186,21 +177,31 @@ export class AccountService {
     this.user = user;
     // this.fetchCustomerPreferences(user.id);
     this.loginSession$.next(this.user);
-    this.foodOrderSvc.retrieveFoodOrders(this.user.email);
+    if (this.redirectUrl) {
+      console.log('redirecting to ' + this.redirectUrl);
+      this.router.navigateByUrl(this.redirectUrl);
+      this.redirectUrl = null;
+    } else {
+      this.router.navigate(['/']);
+    }
   }
 
   private buildUser(token: string) {
     var tokenClaims = this.jwtService.getDecodedAccessToken(token);
-    var user: User = {
-      id: tokenClaims.customerId,
-      firstName: tokenClaims.firstName,
-      lastName: tokenClaims.lastName,
-      name: tokenClaims.firstName + ' ' + tokenClaims.lastName,
-      email: tokenClaims.sub,
-      mobile: tokenClaims.mobile,
-      userType: tokenClaims.userType,
-    };
-    return user;
+    if ( tokenClaims){
+      var user: User = {
+        _id: tokenClaims.recordId,
+        firstName: tokenClaims.firstName,
+        lastName: tokenClaims.lastName,
+        name: tokenClaims.firstName + ' ' + tokenClaims.lastName,
+        email: tokenClaims.sub,
+        mobile: tokenClaims.mobile,
+        userType: tokenClaims.userType,
+      };
+      return user;
+    }
+    
+    return null;
   }
 
   public passwordResetInitiate(req: PasswordResetInitiate): Observable<ApiResponse> {
@@ -246,7 +247,7 @@ export class AccountService {
     console.log('Customer preferences in storage ' + json)
     if (json === undefined || json === null || json === '') {
       if (this.user !== null && this.user !== undefined) {
-        this.fetchCustomerPreferences(this.user.id);
+        this.fetchCustomerPreferences(this.user._id);
       }
     }
     if (json !== '' && json !== null && json !== undefined) {

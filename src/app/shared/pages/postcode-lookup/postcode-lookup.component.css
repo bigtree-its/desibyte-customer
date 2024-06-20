@@ -14,8 +14,6 @@
 
 .address-list-container {
     background-color: #f9f9f9;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
     display: flex;
     flex-direction: column;
     border-left: 1px solid #f3f3f3;

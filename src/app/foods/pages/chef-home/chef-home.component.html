@@ -1,21 +1,21 @@
-<div *ngIf="chef !== null && chef !== undefined && !incorrectLanding">
+<div *ngIf="cloudKitchen !== null && cloudKitchen !== undefined && !incorrectLanding">
 
     <div class="flex-row jcsb py-2 aic px-3">
         <fa-icon [icon]="faArrowLeft" class="btn-circle" (click)="goback()"></fa-icon>
-        <span class="bolder fs-3">{{chef.kitchenName}}</span>
-        <span [class.open]="chef.open" [class.closed]="!chef.open">{{chef.open?
+        <span class="bolder fs-3">{{cloudKitchen.name}}</span>
+        <span [class.open]="cloudKitchen.open" [class.closed]="!cloudKitchen.open">{{cloudKitchen.open?
             "Open":"Closed"}}</span>
     </div>
     <div class="sm flex-row jcc aic w-100 my-1">
         <div class="clickable-row" style="font-size: 12px;" (click)="selectLayout('Reviews')">
             <fa-icon [icon]="faStar"></fa-icon>
-            <span style="padding-left: 6px;">{{chef.rating}}</span>
-            <span style="padding-left: 6px;">({{chef.reviews}}
+            <span style="padding-left: 6px;">{{cloudKitchen.rating}}</span>
+            <span style="padding-left: 6px;">({{cloudKitchen.reviews}}
                 reviews)</span>
         </div>
     </div>
     <div class="sm flex-row jcc aic w-100 my-1 gap-1">
-        <span style="font-size: 16px;" class="big-text mx-2" *ngFor="let cuisine of chef.cuisines | slice:0:3">{{
+        <span style="font-size: 16px;" class="big-text mx-2" *ngFor="let cuisine of cloudKitchen.cuisines | slice:0:3">{{
             cuisine.name }}
         </span>
     </div>
@@ -34,7 +34,7 @@
     <div class="sm sticky-footer flex-row jcsb aic px-3 py-2" *ngIf="(foodOrder?.items && foodOrder.items.length > 0) || (partyOrder?.partyItems && partyOrder.partyItems.length > 0)">
 
         <div class="flex-row">
-            <fa-icon [icon]="faBag" class="fa-2x basket" [routerLink]="['/f/basket']"></fa-icon>
+            <fa-icon [icon]="faBag" class="fa-2x basket" [routerLink]="['/foods/basket']"></fa-icon>
             <span class="btn-circle" style="position: relative;
                 top: -8px;
                 left: -11px;
@@ -60,44 +60,40 @@
             <div class="py-1">
                 <div class="flex-row jcc aic border br-7">
                     <div style="height: 220px;width: 200px;">
-                        <img src="{{chef.image}}" style="object-fit: contain;height: 100%; width: 100%;border-radius: 12px;">
+                        <img src="{{cloudKitchen.image}}" style="object-fit: contain;height: 100%; width: 100%;border-radius: 12px;">
                     </div>
                     <div class="flex-column gap-1 ml-2">
                         <div class="title-section">
                             <div class="clickable-row" style="font-size: 12px;" (click)="selectLayout('Reviews')">
                                 <fa-icon [icon]="faStar"></fa-icon>
-                                <span style="padding-left: 6px;">{{chef.rating}}</span>
-                                <span style="padding-left: 6px;">({{chef.reviews}}
+                                <span style="padding-left: 6px;">{{cloudKitchen.rating}}</span>
+                                <span style="padding-left: 6px;">({{cloudKitchen.reviews}}
                                     reviews)</span>
                             </div>
                         </div>
                         <div class="flex-row">
-                            <span *ngIf="chef.preOrderOnly" class="attribute">PrefoodOrder Only</span>
+                            <span *ngIf="cloudKitchen.preOrderOnly" class="attribute">PrefoodOrder Only</span>
                         </div>
-                        <span class="py-1 px-1 f-size-s lg">{{chef.description}}</span>
+                        <span class="py-1 px-1 f-size-s lg">{{cloudKitchen.description}}</span>
                         <table>
                             <tr>
                                 <th>Cuisines</th>
                                 <td>
                                     <div class="gap-1 flex-row-wrap">
-                                        <span class="mr-1" *ngFor="let cuisine of chef.cuisines | slice:0:3">{{
+                                        <span class="mr-1" *ngFor="let cuisine of cloudKitchen.cuisines | slice:0:3">{{
                                         cuisine.name }}
                                     </span>
                                     </div>
                                 </td>
                             </tr>
-                            <tr *ngIf="chef.doDelivery">
-                                <th>Delivery Distance</th>
-                                <td><span>{{chef.deliveryDistance}} miles</span></td>
-                            </tr>
-                            <tr *ngIf="chef.doDelivery">
+                            <tr *ngIf="cloudKitchen.doDelivery">
                                 <th>Free Delivery</th>
                                 <td><span>Order over
-                                    {{chef.freeDeliveryOver |
+                                    {{cloudKitchen.freeDeliveryOver |
                                     currency: 'GBP'}}</span></td>
                             </tr>
                         </table>
-                        <div *ngIf="!chef.doDelivery" style="padding: 5px 0;">
+                        <div *ngIf="!cloudKitchen.doDelivery" style="padding: 5px 0;">
                             <span class="attribute">Collection Only</span>
                         </div>
                         <ng-container [ngTemplateOutlet]="menuBar"></ng-container>
@@ -123,7 +119,7 @@
     <div class="p-5 my-3 flex-column jcc aic bg-dark br-12">
         <span class="fs-1 color-brand">Sorry, we didn't catch that...</span>
         <p class="color-white">We couldn't find that page. Please enter your area and search for a HomeChef – we have plenty to choose from
-            <a href="/f/home">Lets Go</a>
+            <a href="/foods/home">Lets Go</a>
         </p>
     </div>
 </div>
@@ -212,7 +208,7 @@
     <div class="flex-column">
         <div class="flex-row my-2 jcc aic">
             <strong class="ml-2">Want to write a review ? </strong>
-            <button class="btn-lift btn-sm mx-3" [routerLink]="['/write_review']" [queryParams]="{chef: supplierId}">Write
+            <button class="btn-lift btn-sm mx-3" [routerLink]="['/write_review']" [queryParams]="{kitchen: supplierId}">Write
                 Review</button>
         </div>
         <div *ngIf="reviews !== null && reviews !== undefined &&  reviews.length > 0" style="max-height: 300px;overflow-y: auto;">
@@ -247,30 +243,30 @@
         </div>
         <div class="border flex-column py-2 px-3 br-12 my-2">
             <b class="fs-6 py-2">A little bit about us</b>
-            <p>{{chef.description}}</p>
+            <p>{{cloudKitchen.description}}</p>
         </div>
         <div class="border flex-column py-2 px-3 br-12 my-2">
             <b class="fs-6 py-2">Where to find us</b>
             <div class="flex-row fs-7">
-                <span>{{chef.address.addressLine1}}</span>
-                <span class="pl-1">{{chef.address.addressLine2}}</span>
+                <span>{{cloudKitchen.address.addressLine1}}</span>
+                <span class="pl-1">{{cloudKitchen.address.addressLine2}}</span>
             </div>
             <div class="flex-row fs-7">
-                <span>{{chef.address.city}}</span>
-                <span class="pl-1">{{chef.address.postcode}}</span>
+                <span>{{cloudKitchen.address.city}}</span>
+                <span class="pl-1">{{cloudKitchen.address.postcode}}</span>
             </div>
         </div>
         <div class="border flex-column py-2 px-3 br-12 my-2">
             <b class="fs-6 py-2">Allergen Advice</b>
-            <span class="py-1" *ngFor="let item of chef.allergenAdvice">{{item}}</span>
+            <span class="py-1" *ngFor="let item of cloudKitchen.allergenAdvice">{{item}}</span>
         </div>
         <div class="border flex-column py-2 px-3 br-12 my-2">
             <b class="fs-6 py-2">Collection Timings</b>
-            <span class="py-1" *ngFor="let item of chef.collectionTimings">{{item}}</span>
+            <span class="py-1" *ngFor="let item of cloudKitchen.collectionTimings">{{item}}</span>
         </div>
         <div class="border flex-column py-2 px-3 br-12 my-2">
             <b class="fs-6 py-2">Party Orders</b>
-            <span class="py-1" *ngFor="let item of chef.partyDescription">{{item}}</span>
+            <span class="py-1" *ngFor="let item of cloudKitchen.partyDescription">{{item}}</span>
         </div>
     </div>
 </ng-template>

@@ -10,13 +10,13 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faArrowLeft, faCheck, faCopyright, faStar } from '@fortawesome/free-solid-svg-icons';
 import { Subject, takeUntil } from 'rxjs';
-import { Cuisine, Dish, LocalChef, LocalChefSearchQuery } from 'src/app/model/all-foods';
-import { PostcodeDistrict, ServiceLocation } from 'src/app/model/common';
+import { CloudKitchen, CloudKitchenSearchQuery, Cuisine, Dish } from 'src/app/model/all-foods';
+import { PostcodeDistrict, PostcodeDistrictQuery, ServiceLocation } from 'src/app/model/common';
 import { Constants } from 'src/app/services/common/constants';
 import { LocalService } from 'src/app/services/common/local.service';
 import { LocationService } from 'src/app/services/common/location.service';
 import { Utils } from 'src/app/services/common/utils';
-import { ChefService } from 'src/app/services/foods/chef.service';
+import { CloudKitchenService } from 'src/app/services/foods/cloudkitchen.service';
 import { CuisinesService } from 'src/app/services/foods/cusines.service';
 import { DishService } from 'src/app/services/foods/dish.service';
 
@@ -37,8 +37,8 @@ export class ChefListComponent implements OnDestroy {
 
   destroy$ = new Subject<void>();
   serviceLocation: ServiceLocation;
-  localChefs: LocalChef[] = [];
-  filteredChefs: LocalChef[] = [];
+  kitchens: CloudKitchen[] = [];
+  filteredKitchens: CloudKitchen[] = [];
   serviceLocations: ServiceLocation[] = [];
 
   starSelected: string = '/assets/icons/star3.png';
@@ -66,7 +66,7 @@ export class ChefListComponent implements OnDestroy {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private chefService: ChefService,
+    private kitchenService: CloudKitchenService,
     private locationService: LocationService,
     private cuisinesService: CuisinesService,
     private router: Router,
@@ -108,10 +108,9 @@ export class ChefListComponent implements OnDestroy {
   }
 
   private getChefs() {
-    var params = this.areaQuery.split("-");
-    var prefix = params[0];
-    var area = params[1];
-    this.locationService.fetchPostcodeDistricts(prefix, null).subscribe((pd) => {
+    var query: PostcodeDistrictQuery= {};
+    query.prefix = this.areaQuery;
+    this.locationService.fetchPostcodeDistricts(query).subscribe((pd) => {
       if (Utils.isValid(pd)) {
         this.postcodeDistrict = pd[0];
         this.fetchChefsByPostcodeDistrict(this.postcodeDistrict);
@@ -154,7 +153,7 @@ export class ChefListComponent implements OnDestroy {
         selected = true;
       }
     }
-    this.filteredChefs = [];
+    this.filteredKitchens = [];
     if (!selected) {
       this.selectedCuisines.push(c);
     }
@@ -178,14 +177,14 @@ export class ChefListComponent implements OnDestroy {
   filterByCuisine() {
     console.log('Selected cuisines: ' + JSON.stringify(this.selectedCuisines));
     if (this.selectedCuisines.length === 0) {
-      this.filteredChefs = this.localChefs;
+      this.filteredKitchens = this.kitchens;
     } else {
-      this.localChefs.forEach((supplier) => {
+      this.kitchens.forEach((supplier) => {
         this.selectedCuisines.forEach((selectedC) => {
           supplier.cuisines.forEach((supplierC) => {
             if (selectedC.name === supplierC.name) {
-              if (!this.filteredChefs.includes(supplier)) {
-                this.filteredChefs.push(supplier);
+              if (!this.filteredKitchens.includes(supplier)) {
+                this.filteredKitchens.push(supplier);
               }
             }
           });
@@ -204,7 +203,7 @@ export class ChefListComponent implements OnDestroy {
         selected = true;
       }
     }
-    this.filteredChefs = [];
+    this.filteredKitchens = [];
     if (!selected) {
       this.selectedDishes.push(c);
     }
@@ -226,17 +225,17 @@ export class ChefListComponent implements OnDestroy {
   }
 
   filterByDish() {
-    console.log('Chefs: ' + JSON.stringify(this.localChefs));
+    console.log('Chefs: ' + JSON.stringify(this.kitchens));
     console.log('Selected dish: ' + JSON.stringify(this.selectedDishes));
     if (this.selectedDishes.length === 0) {
-      this.filteredChefs = this.localChefs;
+      this.filteredKitchens = this.kitchens;
     } else {
-      this.localChefs.forEach((supplier) => {
+      this.kitchens.forEach((supplier) => {
         this.selectedDishes.forEach((selectedD) => {
           supplier.dishes.forEach((sd) => {
             if (selectedD.name === sd.name) {
-              if (!this.filteredChefs.includes(supplier)) {
-                this.filteredChefs.push(supplier);
+              if (!this.filteredKitchens.includes(supplier)) {
+                this.filteredKitchens.push(supplier);
               }
             }
           });
@@ -245,36 +244,36 @@ export class ChefListComponent implements OnDestroy {
     }
   }
 
-  onClickCook(cook: LocalChef) {
-    this.router.navigate(['cooks', cook._id]).then();
+  onClickCook(cloudKitchen: CloudKitchen) {
+    this.router.navigate(['kitchens', cloudKitchen._id]).then();
   }
 
   fetchChefsByPostcodeDistrict(postcodeDistrict: PostcodeDistrict) {
-    const chefSearchQuery = {} as LocalChefSearchQuery;
-    chefSearchQuery.postcodeDistricts = postcodeDistrict._id;
-    this.chefService
-      .getAllLocalChefs(chefSearchQuery)
-      .subscribe((result: LocalChef[]) => {
-        this.localChefs = result;
-        this.filteredChefs = this.localChefs;
+    const chefSearchQuery = {} as CloudKitchenSearchQuery;
+    chefSearchQuery.serviceAreas = postcodeDistrict.prefix;
+    this.kitchenService
+      .getAllCloudKitchens(chefSearchQuery)
+      .subscribe((result: CloudKitchen[]) => {
+        this.kitchens = result;
+        this.filteredKitchens = this.kitchens;
       });
   }
 
   fetchChefsByCuisines(cuisine: Cuisine) {
-    const chefSearchQuery = {} as LocalChefSearchQuery;
+    const chefSearchQuery = {} as CloudKitchenSearchQuery;
     chefSearchQuery.cuisines = cuisine._id;
     console.log('The Query for chefs ' + JSON.stringify(chefSearchQuery));
-    this.chefService
-      .getAllLocalChefs(chefSearchQuery)
-      .subscribe((result: LocalChef[]) => {
-        this.localChefs = result;
-        this.filteredChefs = this.localChefs;
+    this.kitchenService
+      .getAllCloudKitchens(chefSearchQuery)
+      .subscribe((result: CloudKitchen[]) => {
+        this.kitchens = result;
+        this.filteredKitchens = this.kitchens;
         this.serviceLocations = [];
       });
   }
 
-  getAddress(cook: LocalChef): string {
-    return Utils.getChefAddress(cook);
+  getAddress(cook: CloudKitchen): string {
+    return Utils.getCloudKitchenAddress(cook);
   }
 
   public scrollRight(): void {

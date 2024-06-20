@@ -5,16 +5,16 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faArrowLeft, faBox, faChevronDown, faChevronUp, faPersonBiking } from '@fortawesome/free-solid-svg-icons';
 import { Address, PaymentIntentResponse, RapidApiByPostcodeResponse, RapidApiByPostcodeResponseSummary } from 'src/app/model/common';
-import { FoodOrder, LocalChef } from 'src/app/model/all-foods';
+import { CloudKitchen, FoodOrder } from 'src/app/model/all-foods';
 import { Observable, Subject } from 'rxjs';
 import { User } from 'src/app/model/all-auth';
 import { RapidApiService } from 'src/app/services/common/rapid-api.service';
 import { StripeService } from 'src/app/services/common/stripe.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FoodOrderService } from 'src/app/services/foods/food-order.service';
-import { ChefService } from 'src/app/services/foods/chef.service';
 import { AccountService } from 'src/app/services/auth/account.service';
 import { Utils } from 'src/app/services/common/utils';
+import { CloudKitchenService } from 'src/app/services/foods/cloudkitchen.service';
 
 @Component({
   selector: 'app-food-checkout',
@@ -37,7 +37,7 @@ export class FoodCheckoutComponent implements OnDestroy {
   customerMobile: string = '';
   customerEmail: string = '';
   customerName: string = '';
-  notesToChef: string = '';
+  notesToCloudKitchen: string = '';
 
   divHeader: string = '';
   nextButtonText: string = 'Next';
@@ -61,7 +61,7 @@ export class FoodCheckoutComponent implements OnDestroy {
 
   cartTotal: number = 0;
   order: FoodOrder;
-  chef: LocalChef;
+  kitchen: CloudKitchen;
   price: number = 0.0;
 
   stripeElements: any;
@@ -80,7 +80,7 @@ export class FoodCheckoutComponent implements OnDestroy {
     private _location: Location,
     private modalService: NgbModal,
     private orderService: FoodOrderService,
-    private chefService: ChefService,
+    private kitchenService: CloudKitchenService,
     private accountService: AccountService,
     private router: Router,
     private titleService: Title
@@ -95,7 +95,7 @@ export class FoodCheckoutComponent implements OnDestroy {
       console.log('Loaded stripe: ' + s);
     });
 
-    this.chef = this.chefService.getData();
+    this.kitchen = this.kitchenService.getData();
 
     this.orderService.getData();
     this.orderService.foodOrderSubject$.subscribe({
@@ -159,14 +159,14 @@ export class FoodCheckoutComponent implements OnDestroy {
     this.order = theOrder;
     if (theOrder !== null && theOrder !== undefined) {
       this.cartTotal = theOrder.subTotal;
-      this.notesToChef = theOrder.notes;
+      this.notesToCloudKitchen = theOrder.notes;
       if (
         theOrder.items === null ||
         theOrder.items === undefined ||
         theOrder.items.length === 0
       ) {
-        if (this.chef !== null && this.chef !== undefined) {
-          this.router.navigate(['/f/chef', this.chef._id]).then();
+        if (this.kitchen !== null && this.kitchen !== undefined) {
+          this.router.navigate(['/foods/chef', this.kitchen._id]).then();
         }
       }
     } else {
@@ -222,7 +222,7 @@ export class FoodCheckoutComponent implements OnDestroy {
     this.order.customer.mobile = this.customerMobile;
     this.order.customer.address = this.customerAddress;
     this.order.serviceMode = this.serviceMode;
-    this.order.notes = this.notesToChef;
+    this.order.notes = this.notesToCloudKitchen;
     this.orderService.saveOrder(this.order).subscribe((e) => {
       this.orderSubmitted = true;
       this.order = e;
@@ -254,21 +254,21 @@ export class FoodCheckoutComponent implements OnDestroy {
     this.order.serviceMode = 'COLLECTION';
     if (this.order.deliveryFee > 0) {
       this.order.deliveryFee = 0;
-      this.order.total = this.order.total - this.chef.deliveryFee;
+      this.order.total = this.order.total - this.kitchen.deliveryFee;
     }
   }
 
   selectDelivery() {
     this.serviceMode = 'DELIVERY';
     this.order.serviceMode = 'DELIVERY';
-    this.order.deliveryFee = this.chef.deliveryFee;
-    this.order.total = this.order.total + this.chef.deliveryFee;
+    this.order.deliveryFee = this.kitchen.deliveryFee;
+    this.order.total = this.order.total + this.kitchen.deliveryFee;
   }
 
   getAddress(): string {
     var address: string = '';
-    if (this.chef !== null && this.chef !== undefined) {
-      return Utils.getChefAddress(this.chef);
+    if (this.kitchen !== null && this.kitchen !== undefined) {
+      return Utils.getCloudKitchenAddress(this.kitchen);
     }
     return address;
   }
@@ -282,9 +282,9 @@ export class FoodCheckoutComponent implements OnDestroy {
     return order;
   }
 
-  getChef(): LocalChef {
-    var chefJson = localStorage.getItem('chef');
-    var chef: LocalChef = null;
+  getCloudKitchen(): CloudKitchen {
+    var chefJson = localStorage.getItem('cloud-kitchen');
+    var chef: CloudKitchen = null;
     if (chefJson !== null && chefJson !== undefined) {
       chef = JSON.parse(chefJson);
     }

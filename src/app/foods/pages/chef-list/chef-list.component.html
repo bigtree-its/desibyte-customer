@@ -39,16 +39,16 @@
     <div class="full-screen mb-2 px-3">
         <div class="flex-row-space-between mb-1 md bg-light p-2 mx-1" *ngIf="serviceLocation != null && serviceLocation !== undefined">
             <span>{{serviceLocation.name}}, {{serviceLocation.city}}</span>
-            <span class="change-area" routerLink="/f/home">Change</span>
+            <span class="change-area" routerLink="/foods/home">Change</span>
         </div>
     </div>
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-        <div class="col mb-4 br-12" *ngFor="let chef of filteredChefs " [routerLink]="[ '/f/chef', chef._id] ">
+        <div class="col mb-4 br-12" *ngFor="let chef of filteredKitchens " [routerLink]="[ '/foods/chef', chef._id] ">
             <div class="card br-12 chef-card" style="border:none;">
                 <img src="{{chef.image}}" class="card-img-top br-top-14" alt="...">
                 <div class="card-body">
-                    <h5 class="fs-6 bolder">{{chef.kitchenName}}</h5>
+                    <h5 class="fs-6 bolder">{{chef.name}}</h5>
                     <p class="card-text"> {{chef.description}}</p>
                 </div>
             </div>

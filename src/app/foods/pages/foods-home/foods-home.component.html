@@ -4,16 +4,23 @@
     </div>
     <div class="flex-column jcc aic hero p-4">
         <!-- <h1 class="big-text" style="font-size: 50px;">What will you eat today?</h1> -->
-        <span class="big-text fs-1">Craving for Homefood?</span>
+        <span class="bolder fs-1">Craving for Homefood?</span>
         <!-- <span class="lg  fs-4">We make it easy to order home food from your neighbourhood chefs</span> -->
-        <div class="content">
-            <div class="slider spl-text">
-                <div class="slider-text1">Nostalgic</div>
-                <div class="slider-text2">A taste of home</div>
-                <div class="slider-text3">Made with love</div>
+        <div>
+            <div class="textSlider">
+                <div class="textSlider-text1">Nostalgic</div>
+                <div class="textSlider-text2">A taste of home</div>
+                <div class="textSlider-text3">Made with love</div>
             </div>
         </div>
-
+        <div class=" sm my-2">
+            <app-postcode-lookup (addressEmitter)="onSelectAddress($event)"></app-postcode-lookup>
+        </div>
+        <div class="lg jcc my-2">
+            <div style="width: 760px;">
+                <app-postcode-lookup (addressEmitter)="onSelectAddress($event)"></app-postcode-lookup>
+            </div>
+        </div>
         <!-- <div class="hp-search-container">
             <div class="flex-row jcsb w-100">
                 <input type="text" placeholder="Enter your location" class="hp-search-box" [(ngModel)]="postcodeDistrictsSearchText" (keyup.enter)="onEnter(content)">
@@ -23,25 +30,20 @@
             </div>
         </div> -->
     </div>
-    <div class=" sm my-2">
-        <app-postcode-lookup></app-postcode-lookup>
-    </div>
-    <div class="lg flex-row jcc aic my-2">
-        <app-postcode-lookup></app-postcode-lookup>
-    </div>
+
 
     <div class="flex-column jcc aic  my-4 br-7">
         <strong style="font-size: 22px;font-weight: 800;" class="color-navy">Top
             Locations</strong>
         <div class="flex-row flex-wrap aic gap-1 jcc aic">
-            <span class="btn-text my-2 py-3 px-5" *ngFor="let pd of postcodeDistricts" [routerLink]="['/f/area', pd.slug]">{{pd.area}}</span>
+            <span class="btn-text my-2 py-3 px-5" *ngFor="let pd of postcodeDistricts" [routerLink]="['/foods/area', pd.slug]">{{pd.area}}</span>
         </div>
     </div>
 
     <div class="flex-column jcc aic my-4 br-7">
         <strong style="font-size: 22px;font-weight: 800; padding: 20px 0;" class="color-navy">Top Cuisines</strong>
         <div class="flex-row flex-wrap aic gap-1 jcc aic">
-            <div *ngFor="let cuisine of cuisines" [routerLink]="['/f/chef-list']" [queryParams]="{cuisine: cuisine.slug}" class="cuisine">
+            <div *ngFor="let cuisine of cuisines" [routerLink]="['/foods/chef-list']" [queryParams]="{cuisine: cuisine.slug}" class="cuisine">
                 <img src={{cuisine.logo}} class="cuisine-logo" height="90px" width="120px">
                 <span>{{cuisine.name}}</span>
             </div>

@@ -48,4 +48,49 @@ export class JwtService {
       return true;
     }
   }
+
+  isCustomer(token) {
+    var tokenClaims;
+    if ( token){
+      tokenClaims = this.getDecodedAccessToken(token);
+    }else{
+      tokenClaims = this.getDecodedAccessToken(this.getAccessToken());
+    }
+    if ( tokenClaims && tokenClaims.userType === 'Customer'){
+      console.log('The user is a Customer')
+      return true;
+    }
+    console.log('The user is NOT a Customer')
+    return false;
+  }
+
+  isAdmin(token) {
+    var tokenClaims;
+    if ( token){
+      tokenClaims = this.getDecodedAccessToken(token);
+    }else{
+      tokenClaims = this.getDecodedAccessToken(this.getAccessToken());
+    }
+    if ( tokenClaims && tokenClaims.userType === 'Admin'){
+      console.log('The user is an Admin')
+      return true;
+    }
+    console.log('The user is NOT an Admin')
+    return false;
+  }
+
+  isSupplier(token) {
+    var tokenClaims;
+    if ( token){
+      tokenClaims = this.getDecodedAccessToken(token);
+    }else{
+      tokenClaims = this.getDecodedAccessToken(this.getAccessToken());
+    }
+    if (tokenClaims && tokenClaims.userType === 'Supplier') {
+      console.log('The user is a supplier');
+      return true;
+    }
+    console.log('The user is NOT a supplier');
+    return false;
+  }
 }

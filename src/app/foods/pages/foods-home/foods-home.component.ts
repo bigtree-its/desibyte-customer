@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { faClose, faLocation, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Cuisine } from 'src/app/model/all-foods';
-import { Address, PostcodeDistrict, RapidApiByPostcodeResponse, RapidApiByPostcodeResponseSummary, ServiceLocation } from 'src/app/model/common';
+import { Address, PostcodeDistrict, PostcodeDistrictQuery, RapidApiByPostcodeResponse, RapidApiByPostcodeResponseSummary, ServiceLocation } from 'src/app/model/common';
 import { LocationService } from 'src/app/services/common/location.service';
 import { RapidApiService } from 'src/app/services/common/rapid-api.service';
 import { Utils } from 'src/app/services/common/utils';
@@ -48,8 +48,7 @@ export class FoodsHomeComponent implements OnInit{
   invalidPostcodeDistrict: boolean;
 
   ngOnInit(): void {
-    this.fetchAllPostcodeDistricts();
-    this.fetchPopularPostcodeDistricts('Glasgow');
+    this.fetchPopularPostcodeDistricts();
     this.cuisinesService.getCuisines().subscribe((d) => {
       this.cuisines = d;
       for (var i = 0; i < d.length; i++) {
@@ -59,12 +58,11 @@ export class FoodsHomeComponent implements OnInit{
     });
   }
 
-  fetchPopularPostcodeDistricts(searchString: string) {
-    if (searchString === null && searchString === undefined) {
-      return;
-    }
+  fetchPopularPostcodeDistricts() {
+    var query: PostcodeDistrictQuery= {};
+    query.popular = true;
     this.locationService
-      .fetchPostcodeDistricts(searchString.trim(), null)
+      .fetchPostcodeDistricts(query)
       // .pipe(first())
       .subscribe(
         (data: PostcodeDistrict[]) => {
@@ -81,8 +79,9 @@ export class FoodsHomeComponent implements OnInit{
 
 
   fetchAllPostcodeDistricts() {
+    var query: PostcodeDistrictQuery= {};
     this.locationService
-    .fetchPostcodeDistricts(null, null)
+    .fetchPostcodeDistricts(query)
       // .pipe(first())
       .subscribe(
         (data: PostcodeDistrict[]) => {
@@ -102,7 +101,7 @@ export class FoodsHomeComponent implements OnInit{
     this.selectedPostcodeDistrict = selectedPostcodeDistrict;
     // this.fetchChefsByServiceLocation(selectedServiceLocation);
     this.router
-      .navigate(['/f/area'], {
+      .navigate(['/foods/area'], {
         queryParams: { location: selectedPostcodeDistrict.slug },
       })
       .then();
@@ -127,6 +126,17 @@ export class FoodsHomeComponent implements OnInit{
           // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         }
       );
+  }
+
+  onSelectAddress(address: Address) {
+    if (address){
+      var area = address.postcode.match(/^(((([A-Z][A-Z]{0,1})[0-9][A-Z0-9]{0,1}) {0,}[0-9])[A-Z]{2})$/)[3];
+      if ( area){
+        this.router.navigateByUrl(
+          '/foods/area/' + area
+        );
+      }
+    }
   }
 
   closeServiceLocations() {
@@ -178,7 +188,9 @@ export class FoodsHomeComponent implements OnInit{
     };
     this.addressSelected = true;
     var area = this.addressLookupPostcode.trim().substring(0,3);
-    this.locationService.fetchPostcodeDistricts(area, null).subscribe((pd) => {
+    var query: PostcodeDistrictQuery= {};
+    query.area = area;
+    this.locationService.fetchPostcodeDistricts(query).subscribe((pd) => {
       if (Utils.isValid(pd)) {
         this.postcodeDistrict = pd[0];
         this.router.navigateByUrl("f/area/"+this.postcodeDistrict.slug);

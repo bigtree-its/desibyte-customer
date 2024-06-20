@@ -14,6 +14,7 @@ export class Supplier {
   image: string;
   email: string;
   mobile: string;
+  telephone?: string;
   address: Address;
 }
 
@@ -47,9 +48,10 @@ export class Address {
 }
 
 export class Contact {
-  email: string;
-  mobile: string;
-  telephone: string;
+  person?: string;
+  email?: string;
+  mobile?: string;
+  telephone?: string;
 }
 
 export interface ApiResponse {
@@ -80,10 +82,18 @@ export class PostcodeDistrict {
   public active: boolean;
   public prefix: string;
   public area: string;
-  public region: string;
-  public postTown: string;
+  public coverage: string;
+  public council: string;
   public slug: string;
 }
+export class PostcodeDistrictQuery {
+  public prefix?: string;
+  public area?: string;
+  public coverage?: string;
+  public council?: string;
+  public popular?: boolean;
+}
+
 
 export class PostcodeLookupResult {
   public postcode: string;

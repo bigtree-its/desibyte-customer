@@ -34,7 +34,7 @@
     <div class="sm sticky-footer flex-row jcsb aic px-3 py-2" *ngIf="(foodOrder?.items && foodOrder.items.length > 0) || (foodOrder?.partyItems && foodOrder.partyItems.length > 0)">
 
         <div class="flex-row">
-            <fa-icon [icon]="faBag" class="fa-2x basket" [routerLink]="['/f/basket']"></fa-icon>
+            <fa-icon [icon]="faBag" class="fa-2x basket" [routerLink]="['/foods/basket']"></fa-icon>
             <span class="btn-circle" style="position: relative;
                 top: -8px;
                 left: -11px;
@@ -155,7 +155,7 @@
     <div class="p-5 my-3 flex-column jcc aic bg-dark br-12">
         <span class="fs-1 color-brand">Sorry, we didn't catch that...</span>
         <p class="color-white">We couldn't find that page. Please enter your area and search for a HomeChef – we have plenty to choose from
-            <a href="/f/home">Lets Go</a>
+            <a href="/foods/home">Lets Go</a>
         </p>
     </div>
 </div>

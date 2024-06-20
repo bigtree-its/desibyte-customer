@@ -14,15 +14,15 @@
         <div class="flex-row jcsb aic py-2">
             <div class="flex-row jcc aic">
                 <div style="height: 60px;width: 60px;">
-                    <img src="{{foodOrder.supplier.image}}" style="object-fit: cover;
+                    <img src="{{foodOrder.cloudKitchen.image}}" style="object-fit: cover;
                     max-height: 58px;
                     height: 58px;
                     width: 60px;
                     max-width: 60px;">
                 </div>
-                <span class="fs-6 ml-2" [routerLink]="[ '/f/chef', foodOrder.supplier]">{{foodOrder.supplier.tradingName}}</span>
+                <span class="fs-6 ml-2" [routerLink]="[ '/foods/chef', foodOrder.cloudKitchen]">{{foodOrder.cloudKitchen.name}}</span>
             </div>
-            <button type="button" class="btn-12 my-2" [routerLink]="[ '/f/checkout']">Checkout</button>
+            <button type="button" class="btn-12 my-2" [routerLink]="[ '/foods/checkout']">Checkout</button>
         </div>
 
     </div>
@@ -40,15 +40,15 @@
         <div class="flex-row jcsb aic py-2">
             <div class="flex-row jcc aic">
                 <div style="height: 60px;width: 60px;">
-                    <img src="{{partyOrder.supplier.image}}" style="object-fit: cover;
+                    <img src="{{partyOrder.cloudKitchen.image}}" style="object-fit: cover;
                     max-height: 58px;
                     height: 58px;
                     width: 60px;
                     max-width: 60px;">
                 </div>
-                <span class="fs-6 ml-2" [routerLink]="[ '/f/chef', partyOrder.supplier]">{{partyOrder.supplier.tradingName}}</span>
+                <span class="fs-6 ml-2" [routerLink]="[ '/foods/chef', partyOrder.cloudKitchen]">{{partyOrder.cloudKitchen.name}}</span>
             </div>
-            <button type="button" class="btn-12 my-2" [routerLink]="[ '/f/checkout']">Checkout</button>
+            <button type="button" class="btn-12 my-2" [routerLink]="[ '/foods/checkout']">Checkout</button>
         </div>
     </div>
 

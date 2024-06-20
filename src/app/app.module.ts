@@ -17,6 +17,7 @@ import { DecimalPipe } from '@angular/common';
 import { AdsModule } from './ads/ads.module';
 import { ImagekitioAngularModule } from 'imagekitio-angular';
 import { environment } from 'src/environments/environment';
+import { SupplierAdminModule } from './supplier-admin';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { environment } from 'src/environments/environment';
     BrowserModule,
     SharedModule,
     FoodsModule,
+    SupplierAdminModule,
     AdminModule,
     AuthModule,
     AdsModule,

@@ -3,11 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { faFaceSmile, faMinus, faPeopleArrows, faPlus, faStar } from '@fortawesome/free-solid-svg-icons';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { Errors } from 'src/app/model/all-auth';
-import { FoodOrder, LocalChef } from 'src/app/model/all-foods';
+import { CloudKitchen, FoodOrder } from 'src/app/model/all-foods';
 import { PaymentIntentResponse } from 'src/app/model/common';
 import { ToastService } from 'src/app/services/common/toast.service';
 import { Utils } from 'src/app/services/common/utils';
-import { ChefService } from 'src/app/services/foods/chef.service';
+import { CloudKitchenService } from 'src/app/services/foods/cloudkitchen.service';
 import { FoodOrderService } from 'src/app/services/foods/food-order.service';
 
 
@@ -22,7 +22,7 @@ export class ManageOrderComponent implements OnInit, OnDestroy{
   // Dependencies
   activatedRoute = inject(ActivatedRoute);
   orderService = inject(FoodOrderService);
-  supplierService = inject(ChefService);
+  kitchenService = inject(CloudKitchenService);
   toastService = inject(ToastService);
 
   destroy$ = new Subject<void>();
@@ -32,7 +32,7 @@ export class ManageOrderComponent implements OnInit, OnDestroy{
   errors: Errors = { errors: {} };
   errorMessage: any;
   order: FoodOrder;
-  supplier: LocalChef;
+  supplier: CloudKitchen;
 
 
   faStar = faStar;
@@ -117,7 +117,7 @@ export class ManageOrderComponent implements OnInit, OnDestroy{
         if (Utils.isValid(e)) {
           this.order = e[0];
           console.log('Customer order ' + JSON.stringify(e));
-          this.retrieveSupplier(this.order.supplier._id);
+          this.retrieveSupplier(this.order.cloudKitchen._id);
         }
       },
       error: (err) => {
@@ -139,7 +139,7 @@ export class ManageOrderComponent implements OnInit, OnDestroy{
   }
 
   retrieveSupplier(_id: string) {
-    let observable = this.supplierService.retrieveSupplier(_id);
+    let observable = this.kitchenService.retrieveKitchen(_id);
     observable.pipe(takeUntil(this.destroy$)).subscribe({
       next: (e) => {
         this.supplier = e;
@@ -147,7 +147,7 @@ export class ManageOrderComponent implements OnInit, OnDestroy{
       },
       error: (err) => {
         console.error(
-          'Error occurred when retrieving supplier.' + JSON.stringify(err)
+          'Error occurred when retrieving kitchen.' + JSON.stringify(err)
         );
         this.errors = err;
         this.error = true;

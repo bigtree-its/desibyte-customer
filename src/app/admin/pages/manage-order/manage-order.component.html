@@ -11,7 +11,7 @@
         <div class="page-header border-bottom mt-8">
             <span class="f-size-xl bolder">{{order?.reference}}</span>
         </div>
-       
+
         <div class="flex-column p-3">
             <div class="flex-row-space-between border-bottom py-3">
                 <span class="bold f-size-lg ">Your Order</span>
@@ -25,7 +25,7 @@
                 <fa-icon class="collapsible-icon" *ngIf="showSupplier" [icon]="faMinus" (click)="openCloseSupplier()"></fa-icon>
             </div>
             <ng-container *ngIf="showSupplier" [ngTemplateOutlet]="supplierLayout"></ng-container>
-    
+
             <div class="flex-row-space-between border-bottom py-3">
                 <span class="bold f-size-lg ">Your Items</span>
                 <fa-icon class="collapsible-icon" *ngIf="!showItems" [icon]="faPlus" (click)="openCloseItems()"></fa-icon>
@@ -61,7 +61,7 @@
             </div>
         </div>
     </div>
-    
+
 </div>
 
 <ng-template #supplierLayout>
@@ -75,7 +75,7 @@
         </div>
         <div class="flex-column" style="padding: 0 20px;width: 100%;">
             <div class="title-section">
-                <span class="chef-name  title mr-2">{{supplier?.kitchenName}}</span>
+                <span class="chef-name  title mr-2">{{supplier?.name}}</span>
                 <div class="clickable-row" style="font-size: 12px;">
                     <fa-icon [icon]="faStar"></fa-icon>
                     <span style="padding-left: 6px;">{{supplier?.rating}}</span>
@@ -91,11 +91,6 @@
                 </ng-container>
             </div>
             <div class="flex-column" *ngIf="supplier?.doDelivery">
-                <div class="flex-row" style="padding: 5px;align-items: center;">
-                    <fa-icon [icon]="faPeopleArrows" class="mr-1"></fa-icon>
-                    <span style="font-size: 12px;">I do delivery
-                        upto {{supplier?.deliveryDistance}} miles</span>
-                </div>
                 <div class="flex-row" *ngIf="supplier?.freeDeliveryOver > 0" style="padding: 5px;align-items: center;">
                     <fa-icon [icon]="faFaceSmile" class="mr-1"></fa-icon>
                     <span style="font-size: 12px;">Free Delivery

@@ -68,24 +68,24 @@
                         <span class="pl-1">{{order.customer.address.postcode}}</span>
                     </div>
                     <div class="flex-row" *ngIf="order.serviceMode === 'COLLECTION'">
-                        <span>{{supplier.address.addressLine1}},</span>
-                        <span>{{supplier.address.addressLine2}}</span>
+                        <span>{{cloudKitchenMini.address.addressLine1}},</span>
+                        <span>{{cloudKitchenMini.address.addressLine2}}</span>
                     </div>
                     <div class="flex-row" *ngIf="order.serviceMode === 'COLLECTION'">
-                        <span>{{supplier.address.city}}, </span>
-                        <span class="pl-1">{{supplier.address.postcode}}</span>
+                        <span>{{cloudKitchenMini.address.city}}, </span>
+                        <span class="pl-1">{{cloudKitchenMini.address.postcode}}</span>
                     </div>
                 </div>
                 <div class="flex-column border p-2 br-7 my-1" *ngIf="order.serviceMode === 'DELIVERY'">
                     <span class="bolder py-2">Order prepared by</span>
-                    <span [routerLink]="[ '/f/chef', supplier?._id] " style="font-size: 15px;cursor: pointer;color:coral;" class="bold py-1">{{supplier?.name}}</span>
+                    <span [routerLink]="[ '/foods/chef', cloudKitchenMini?._id] " style="font-size: 15px;cursor: pointer;color:coral;" class="bold py-1">{{cloudKitchenMini?.name}}</span>
                     <div class="flex-row">
-                        <span>{{supplier.address.addressLine1}},</span>
-                        <span>{{supplier.address.addressLine2}}</span>
+                        <span>{{cloudKitchenMini.address.addressLine1}},</span>
+                        <span>{{cloudKitchenMini.address.addressLine2}}</span>
                     </div>
                     <div class="flex-row">
-                        <span>{{supplier.address.city}}, </span>
-                        <span>{{supplier.address.postcode}}</span>
+                        <span>{{cloudKitchenMini.address.city}}, </span>
+                        <span>{{cloudKitchenMini.address.postcode}}</span>
                     </div>
                 </div>
             </div>

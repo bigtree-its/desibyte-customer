@@ -22,6 +22,7 @@ export class SideNavContentComponent implements OnInit {
     { label: 'Orders', route: '/orders'},
     { label: 'Profile', route: '/profile'}
   ];
+  supplier: boolean;
   
 
   constructor(private router: Router) { }
@@ -33,6 +34,9 @@ export class SideNavContentComponent implements OnInit {
     this.accountService.loginSession$.subscribe({
       next: (value) => {
         this.user = value;
+        if ( this.user.userType === 'Supplier'){
+          this.supplier = true;
+        }
       },
       error: (err) => console.error('CustomerObject emitted an error: ' + err),
       complete: () =>

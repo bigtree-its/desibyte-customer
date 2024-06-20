@@ -98,7 +98,7 @@ export class MyProfileComponent implements OnInit, OnDestroy{
   changePersonal() {
     
     var pd: PersonalDetails = {
-      "customerId": this.user.id,
+      "customerId": this.user._id,
       "firstName": this.firstName,
       "lastName": this.lastName,
       "mobile": this.mobile,
@@ -129,7 +129,7 @@ export class MyProfileComponent implements OnInit, OnDestroy{
   changePreferences() {
     if (this.customerPreferences === null || this.customerPreferences === undefined){
       this.customerPreferences = {
-        "customerId": this.user.id,
+        "customerId": this.user._id,
         "communicationViaEmail": this.communicationViaEmail,
         "communicationViaMobile": this.communicationViaMobile,
         "chefs": [],

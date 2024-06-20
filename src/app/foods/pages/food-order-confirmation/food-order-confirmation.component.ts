@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FoodOrder, LocalChef, OrderSupplier, OrderUpdateRequest } from 'src/app/model/all-foods';
+import { FoodOrder, CloudKitchen, CloudKitchenMini, OrderUpdateRequest } from 'src/app/model/all-foods';
 import { Utils } from 'src/app/services/common/utils';
 import { FoodOrderService } from 'src/app/services/foods/food-order.service';
 
@@ -13,13 +13,13 @@ export class FoodOrderConfirmationComponent {
 
   cartTotal: number = 0;
   order: FoodOrder;
-  chef: LocalChef;
+  cloudKitchen: CloudKitchen;
   price: number = 0.0;
   redirectStatus: any;
 
   activatedRoute=inject(ActivatedRoute);
   orderService=inject(FoodOrderService);
-  supplier: OrderSupplier;
+  cloudKitchenMini: CloudKitchenMini;
   error: boolean;
   loading: boolean;
 
@@ -36,7 +36,7 @@ export class FoodOrderConfirmationComponent {
       if (Utils.isValid(this.order)) {
         this.loading = false;
         console.log('Retrieved order from server ['+ this.order.reference+", Status = "+ this.order.status+"]")
-        this.supplier = this.order.supplier;
+        this.cloudKitchenMini = this.order.cloudKitchen;
         if (this.redirectStatus === 'succeeded') {
           this.orderService.destroy();
         }

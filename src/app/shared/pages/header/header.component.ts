@@ -43,6 +43,7 @@ export class HeaderComponent {
   navigationService = inject(NavigationService);
   constants = inject(Constants);
   router = inject(Router);
+  supplier: boolean;
 
   constructor() {}
 
@@ -81,6 +82,9 @@ export class HeaderComponent {
     this.accountService.loginSession$.subscribe({
       next: (value) => {
         this.user = value;
+        if ( this.user.userType === 'Supplier'){
+          this.supplier = true;
+        }
       },
       error: (err) => console.error('CustomerObject emitted an error: ' + err),
       complete: () =>

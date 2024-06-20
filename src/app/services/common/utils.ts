@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { LocalChef } from 'src/app/model/all-foods';
+import { CloudKitchen } from 'src/app/model/all-foods';
 import { Address } from 'src/app/model/common';
 
 @Injectable({
@@ -71,6 +71,12 @@ export class Utils {
   }
 
   public static isEmpty(data: string): Boolean {
+    if (data === null || data === undefined || data.length === 0) {
+      return true;
+    }
+    return false;
+  }
+  public static isEmptyArray(data: string[]): Boolean {
     if (data === null || data === undefined || data.length === 0) {
       return true;
     }
@@ -158,13 +164,13 @@ export class Utils {
     return address;
   }
 
-  static getChefAddress(chef: LocalChef) {
+  static getCloudKitchenAddress(cloudKitchen: CloudKitchen) {
     var address: string = '';
 
-    if (!chef) {
+    if (!cloudKitchen) {
       return address;
     }
-    return this.addressToString(chef.address);
+    return this.addressToString(cloudKitchen.address);
    
   }
 }

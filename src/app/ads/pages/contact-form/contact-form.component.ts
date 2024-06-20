@@ -45,7 +45,7 @@ export class ContactFormComponent implements OnInit, OnDestroy{
     }
     if ( this.user){
       var customer: Customer = {
-        _id: this.user.id,
+        _id: this.user._id,
         name: this.user.firstName + " "+ this.user.lastName,
         email: this.user.email,
         mobile: this.user.mobile,

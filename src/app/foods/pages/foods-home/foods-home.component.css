@@ -9,7 +9,7 @@
 .hero {
     height: 200px;
     width: 100%;
-    background-color: rgb(254, 238, 12);
+    background-color: #f1f1f1;
     object-position: left center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -50,7 +50,7 @@
     transition: 0.5s ease-in-out;
 }
 
-.slider {
+.textSlider {
     height: 50px;
     line-height: 50px;
     overflow: hidden;
@@ -60,7 +60,7 @@
     border-radius: 20px;
 }
 
-.slider div {
+.textSlider div {
     height: 50px;
     margin-bottom: 50px;
     padding: 0 15px;
@@ -70,17 +70,18 @@
     font-size: 40px;
 }
 
-.slider-text1 {
+.textSlider-text1 {
     animation: slide 5s linear infinite;
     color: #f90202;
+    /* color: #fff; */
 }
 
-.slider-text2 {
-    color: #1b40fa;
+.textSlider-text2 {
+    color: darkorange;
 }
 
-.slider-text3 {
-    color: #141414;
+.textSlider-text3 {
+    color: dodgerblue;
 }
 
 @keyframes slide {

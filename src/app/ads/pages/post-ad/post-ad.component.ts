@@ -230,7 +230,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
       dateAvailable: Utils.getJsDate(this.dateAvailable),
       datePosted: new Date(),
       adOwner: {
-        _id: this.user.id,
+        _id: this.user._id,
         name: this.user.firstName + ' ' + this.user.lastName,
         email: this.user.email,
         mobile: this.user.mobile,
@@ -375,7 +375,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
       bathrooms: this.bathrooms,
       featured: false,
       adOwner: {
-        _id: this.user.id,
+        _id: this.user._id,
         name: this.user.firstName + ' ' + this.user.lastName,
         email: this.user.email,
         mobile: this.user.mobile,

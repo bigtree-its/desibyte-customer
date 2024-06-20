@@ -1,0 +1,25 @@
+{
+    "contact": {
+        "person": "Navaneetha Krishnan",
+        "email": "nava.arul@gmail.com",
+        "mobile": "079791176",
+        "telephone": "01417654263874"
+    },
+    "name": "Hol Kitchen",
+    "address": {
+        "city": "GLASGOW",
+        "addressLine1": "5 Galston Avenue",
+        "addressLine2": "Newton Mearns",
+        "country": "Scotland",
+        "postcode": "G77 5SF",
+        "latitude": "55.766640",
+        "longitude": "-4.282884"
+    },
+    "cuisines": [],
+    "description": "Hola",
+    "doDelivery": true,
+    "doPartyOrders": true,
+    "serviceAreas": [
+        "G46"
+    ]
+}

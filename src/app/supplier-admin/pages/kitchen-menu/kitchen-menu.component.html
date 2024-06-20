@@ -1,0 +1,481 @@
+<div class="container">
+    <div class="flex-column">
+        <div class="flex-row border-bottom py-2 mb-3">
+            <span class="anchor bolder" (click)="selectActiveLayout('Home', 'home')">Products</span>
+            <span *ngIf="leafView !== undefined" class="mx-2">/</span>
+            <span *ngIf="leafView !== undefined" class="leaf">{{leafView}}</span>
+        </div>
+        <ng-container [ngSwitch]="activeLayout">
+            <ng-container *ngSwitchCase="'Home'" [ngTemplateOutlet]="homeLayout"></ng-container>
+            <ng-container *ngSwitchCase="'Menus'" [ngTemplateOutlet]="menuLayout"></ng-container>
+            <ng-container *ngSwitchCase="'Collections'" [ngTemplateOutlet]="collectionsLayout"></ng-container>
+            <ng-container *ngSwitchCase="'Specials'" [ngTemplateOutlet]="specialsLayout"></ng-container>
+        </ng-container>
+    </div>
+
+</div>
+
+<ng-template #homeLayout>
+    <div class="d-flex" style="gap: 20px;align-items: center;justify-content: center;">
+        <button class="flex-column jcc aic p-3 no-br" (click)="selectActiveLayout('Menus', 'listMenu')">
+            <span>Menus</span>
+            <strong style="font-size: 30px;">{{menus === null || menus ===
+                undefined ? 0: menus.length}}</strong>
+        </button>
+        <button class="flex-column jcc aic p-3 no-br" (click)="selectActiveLayout('Collections', 'listCollection')">
+            <span>Collections</span>
+            <strong style="font-size: 30px;">{{collections === null ||
+                collections === undefined ? 0:
+                collections.length}}</strong>
+        </button>
+        <button class="flex-column jcc aic p-3 no-br" (click)="selectActiveLayout('Specials', 'listSpecials')">
+            <span>Specials</span>
+            <strong style="font-size: 30px;">{{collections === null ||
+                collections === undefined ? 0:
+                collections.length}}</strong>
+
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #menuLayout>
+    <ng-container [ngSwitch]="subLayout">
+        <ng-container *ngSwitchCase="'addMenu'" [ngTemplateOutlet]="addMenuBlock"></ng-container>
+        <ng-container *ngSwitchCase="'listMenu'" [ngTemplateOutlet]="listMenuBlock"></ng-container>
+        <ng-container *ngSwitchCase="'editMenu'" [ngTemplateOutlet]="addMenuBlock"></ng-container>
+        <ng-container *ngSwitchCase="'viewMenu'" [ngTemplateOutlet]="viewMenuBlock"></ng-container>
+    </ng-container>
+</ng-template>
+
+<ng-template #collectionsLayout>
+    <ng-container [ngSwitch]="subLayout">
+        <ng-container *ngSwitchCase="'addCollection'" [ngTemplateOutlet]="addCollectionsBlock"></ng-container>
+        <ng-container *ngSwitchCase="'listCollection'" [ngTemplateOutlet]="listCollectionsBlock"></ng-container>
+        <ng-container *ngSwitchCase="'editCollection'" [ngTemplateOutlet]="editCollectionsBlock"></ng-container>
+        <ng-container *ngSwitchCase="'viewCollection'" [ngTemplateOutlet]="viewCollectionsBlock"></ng-container>
+    </ng-container>
+</ng-template>
+
+<ng-template #specialsLayout>
+    <ng-container [ngSwitch]="subLayout">
+        <ng-container *ngSwitchCase="'listSpecials'" [ngTemplateOutlet]="listSpecialsBlock"></ng-container>
+    </ng-container>
+</ng-template>
+
+<ng-template #addCollectionsBlock>
+    <div class="flex-column">
+        <div class="flex-row jcsb  header">
+            <strong (click)="selectSubLayout('listCollections')">New
+                Collection</strong>
+            <div class="flex-row">
+                <button tabindex="8" type="button" class="btn-9 mr-1" (click)="saveNewCollection()">Submit</button>
+                <button tabindex="9" type="button" class="btn-10" (click)="selectSubLayout('listCollection')">Cancel</button>
+            </div>
+        </div>
+        <div class="input-group my-3">
+            <input required type="text" name="collectionName" autocomplete="off" class="input" [(ngModel)]="collectionName" #ctrl="ngModel" placeholder="Ex. Starter">
+            <label class="user-label">Collection Name</label>
+        </div>
+    </div>
+</ng-template>
+<ng-template #editCollectionsBlock></ng-template>
+<ng-template #listCollectionsBlock>
+    <div class="flex-column">
+        <div class="flex-row jcsb  header mb-2">
+            <strong class="bolder fs-6" (click)="selectSubLayout('listCollections')">Collections</strong>
+            <button class="btn-11" (click)="addCollection()">Add</button>
+        </div>
+        <div class="flex-row flex-wrap gap-2">
+            <div class="flex-row jcsb " style="border: 1px solid #ececec; border-radius: 6px;padding: 10px;flex-grow: 1;" *ngFor="let collection of collections">
+                <span style="margin-right: 20px;">{{collection.name}}</span>
+                <button class="btn btn-sm btn-outline-danger" toolTip="Remove" (click)="removeCollection(collection)">X</button>
+            </div>
+        </div>
+    </div>
+
+</ng-template>
+<ng-template #viewCollectionsBlock></ng-template>
+
+<ng-template #addSpecialsBlock></ng-template>
+<ng-template #listSpecialsBlock>
+    <div class="flex-column">
+        <div class="flex-row jcsb  header">
+            <strong>Chef's Specials</strong>
+        </div>
+        <div *ngFor="let special of specials" class="flex-row" style="background-color: #f1f1f1;padding: 6px;border-radius: 3px;margin-bottom: 5px;">
+            <div class="image-div">
+                <img src="{{ special.image ? special.image : '/assets/images/default-image.jpeg'}}" height="100%" width="40px">
+            </div>
+            <div class="flex-column flex-grow">
+                <span>{{special.name}}</span>
+                <span>{{special.description}}</span>
+            </div>
+            <div class="menu-item-right">
+                <span>{{special.price | currency:'GBP'}}</span>
+                <button style="margin: 0 5px;" class="btn-o-p" (click)="onEditMenu(special)" placement="top" ngbTooltip="Make changes">Modify</button>
+                <button style="margin: 0 5px;" class="btn-o-d" (click)="onRemoveFood(special)" placement="top" ngbTooltip="Remove menu from inventory">Delete</button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #editSpecialsBlock></ng-template>
+<ng-template #viewSpecialsBlock></ng-template>
+
+<ng-template #addMenuBlock>
+    <div class="flex-column" style="padding: 10px;">
+        <div class="flex-row jcsb  header">
+            <span class="bolder">{{theMenu? theMenu.name:''}}</span>
+            <div class="flex-row py-2 gap-1">
+                <button tabindex="8" type="button" class="btn-9" (click)="saveMenu()">Submit</button>
+                <button tabindex="9" type="button" class="btn-10" (click)="selectSubLayout('listMenu')">Cancel</button>
+            </div>
+        </div>
+        <div *ngIf="errorMessage" class="alert alert-danger">
+            <div class="flex-row jcsb ">
+                <span>{{errorMessage}}</span>
+                <button class="btn-o-d" (click)="cancelError()">x</button>
+            </div>
+        </div>
+        <div class="flex-row flex-wrap gap-3">
+            <div class="flex-column w-100 border br-7 p-2">
+                <div class="input-group my-3">
+                    <input required type="text" name="itemName" autocomplete="off" class="input" [(ngModel)]="theMenu.name" #ctrl="ngModel">
+                    <label class="user-label">Item Name</label>
+                </div>
+                <div class="flex-row gap-2 aic" style="padding: 10px; border: 1px solid #ddd;border-radius: 3px;">
+                    <label for="collections">Choose a collection:</label>
+                    <form [formGroup]="form">
+                        <select formControlName="collection" (change)="onChangeCollection($event)" style="border:1px solid #ececec;background-color: #f1f1f1;padding: 6px;border-radius: 6px;">
+                            <option *ngFor="let collection of collections"
+                                [ngValue]="collection">
+                                {{ collection.name }}
+                            </option>
+                        </select>
+                    </form>
+                    <button class="btn-11" (click)="openModal(collectionContent)">Add</button>
+                </div>
+                <div class="input-group my-3">
+                    <input required type="text" name="itemDesc" autocomplete="off" class="input" [(ngModel)]="theMenu.description" #ctrl="ngModel">
+                    <label class="user-label">Item Description</label>
+                </div>
+
+                <div class="flex-row jcsb " style="margin: 5px 0;padding: 5px 0;border: 1px solid #ececec;padding: 10px;border-radius: 6px;">
+                    <span style="padding: 0 10px;">Vegetarian</span>
+                    <div>
+                        <label class="chk-switch" for="vegetarian">
+                            <input (change)="handleVegetarian($event)"
+                                type="checkbox" id="vegetarian"
+                                [checked]="theMenu.vegetarian === true " />
+                            <div class="chk-switch-slider round"></div>
+                        </label>
+                    </div>
+                </div>
+                <div class="flex-row jcsb " style="margin: 5px 0;padding: 5px 0;border: 1px solid #ececec;padding: 10px;border-radius: 6px;">
+                    <span style="padding: 0 10px;">Is your Special Menu</span>
+                    <div>
+                        <label class="chk-switch" for="special">
+                            <input (change)="handleSpecial($event)"
+                                type="checkbox" id="special"
+                                [checked]="theMenu.special === true " />
+                            <div class="chk-switch-slider round"></div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-column w-100 border br-7 p-2">
+
+                <div class="flex-row aic gap-3 border p-2 br-7 my-2">
+                    <span class="bolder">Spice</span>
+                    <div class="radio-input">
+                        <label>
+                            <input type="radio" id="value-1" name="value-radio"
+                                value="1" [checked]="theMenu.spice === 1" (change)="handleSpiceLevelChange($event)">
+                            <span>Low</span>
+                        </label>
+                        <label>
+                            <input type="radio" id="value-2" name="value-radio"
+                                value="2" [checked]="theMenu.spice === 2"  (change)="handleSpiceLevelChange($event)">
+                            <span>Medium</span>
+                        </label>
+                        <label>
+                            <input type="radio" id="value-3" name="value-radio"
+                                value="3" [checked]="theMenu.spice === 3"  (change)="handleSpiceLevelChange($event)">
+                            <span>High</span>
+                        </label>
+                        <span class="selection"></span>
+                    </div>
+                </div>
+                <div class="flex-row aic gap-3 border p-2 br-7 my-2">
+                    <span class="bolder">Price</span>
+                    <div class="d-flex flex-start aic" style="padding: 0 20px;">
+                        <input value [(ngModel)]="theMenu.price" #ctrl="ngModel" placeholder="5.65" name="itemPrice" id="itemPrice" tabindex="8" autocomplete="off" style="border: none;padding: 2px;margin-right: 10px;background-color: #f8f8f8;width: 50px;">
+                        <span>GBP</span>
+                    </div>
+                </div>
+                <div class="flex-column gap-2 border p-2 br-7 my-2">
+                    <span class="bolder">Choices</span>
+                    <div class="flex-row flex-wrap" *ngIf="theMenu.choices.length > 0">
+                        <div class="flex-row jcsb " *ngFor="let choice of theMenu.choices" style="background-color: #ececec; padding: 10px;margin-right: 10px;">
+                            <span style="margin-right: 30px;">{{choice.name}}</span>
+                            <span>{{choice.price | currency: 'GBP'}}</span>
+                            <fa-icon class="icon-delete ml-1" [icon]="faTrash" (click)="removeChoice(choice)"></fa-icon>
+                        </div>
+                    </div>
+                    <div class="flex-row" style="background-color: rgb(250, 250, 250);padding: 10px;margin: 10px 0;">
+                        <span style="color: rgb(2, 137, 92);margin-right: 20px;">You
+                            have {{theMenu.choices.length}} choices for
+                            this
+                            menu.</span>
+                        <button class="btn-11" (click)="openExtraModal(extraContent, 'Choice')">Add
+                        </button>
+                    </div>
+                </div>
+                <div class="flex-column gap-2 border p-2 br-7 my-2">
+                    <span class="bolder">Extras</span>
+                    <div class="flex-row flex-wrap" *ngIf="theMenu.extras.length > 0">
+                        <div class="flex-row jcsb " *ngFor="let extra of theMenu.extras" style="background-color: #ececec; padding: 10px;margin-right: 10px;">
+                            <span style="margin-right: 30px;">{{extra.name}}</span>
+                            <span>{{extra.price | currency: 'GBP'}}</span>
+                            <fa-icon class="icon-delete ml-1" [icon]="faTrash" (click)="removeExtra(extra)"></fa-icon>
+                        </div>
+
+                    </div>
+                    <div class="flex-row" style="background-color: rgb(250, 250, 250);padding: 10px;margin: 10px 0;">
+                        <span style="color: rgb(2, 137, 92);margin-right: 20px;">You
+                            have {{theMenu.extras.length}} extras for
+                            this
+                            menu.</span>
+                        <button class="btn-11" (click)="openExtraModal(extraContent, 'Extra')">Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ng-template>
+
+<ng-template #listMenuBlock>
+    <div class="flex-column">
+        <div class="flex-row jcsb my-3">
+            <strong>Your Foods</strong>
+            <button class="btn-11" (click)="addMenu()">Add</button>
+        </div>
+        <div *ngFor="let menu of menus">
+            <div class="menu-item">
+                <div class="image-div">
+                    <!-- <img [src]="menu.image !== '' ? menu.image : ''> -->
+                    <img src="{{ menu.image ? menu.image : '/assets/images/default-image.jpeg'}}" height="100%" width="40px">
+                </div>
+                <div class="flex-column flex-grow" style="margin-left: 10px;">
+                    <span>{{menu.name}}</span>
+                    <span>{{menu.description}}</span>
+                </div>
+                <div class="menu-item-right">
+                    <span>{{menu.price | currency:'GBP'}}</span>
+                    <button style="margin: 0 5px;" class="btn-o-p" (click)="onEditMenu(menu)" placement="top" ngbTooltip="Make changes">Modify</button>
+                    <button style="margin: 0 5px;" class="btn-o-d" (click)="onRemoveFood(menu)" placement="top" ngbTooltip="Remove menu from inventory">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<!-- <ng-template #editMenuBlock>
+    <div class="flex-column" style="padding: 10px;">
+        <div class="flex-row jcsb  header">
+            <span class="bolder">{{menu.name}}</span>
+            <div class="flex-row py-2 gap-1">
+                <button tabindex="8" type="button" class="btn-9" (click)="saveMenu()">Submit</button>
+                <button tabindex="9" type="button" class="btn-10" (click)="selectSubLayout('listMenu')">Cancel</button>
+            </div>
+        </div>
+        <div *ngIf="err" class="alert alert-danger">
+            <div class="flex-row jcsb ">
+                <span>{{errMsg}}</span>
+                <button class="btn btn-sm btn-outline-danger" (click)="cancelError()">x</button>
+            </div>
+        </div>
+        <div class="flex-row flex-wrap gap-3">
+            <div class="flex-column w-100 border br-7 p-2">
+                <div class="input-group my-3">
+                    <input required type="text" name="itemName" autocomplete="off" class="input" [(ngModel)]="theMenu.name" #ctrl="ngModel">
+                    <label class="user-label">Item Name</label>
+                </div>
+                <div class="flex-row gap-2 aic" style="padding: 10px; border: 1px solid #ddd;border-radius: 3px;">
+                    <label for="collections">Choose a collection:</label>
+                    <form [formGroup]="form">
+                        <select formControlName="collection" (change)="onChangeCollection($event)" style="border:1px solid #ececec;background-color: #f1f1f1;padding: 6px;border-radius: 6px;">
+                            <option *ngFor="let collection of collections"
+                                [ngValue]="collection">
+                                {{ collection.name }}
+                            </option>
+                        </select>
+                    </form>
+                    <button class="btn-11" (click)="openModal(collectionContent)">Add</button>
+                </div>
+                <div class="input-group my-3">
+                    <input required type="text" name="itemDesc" autocomplete="off" class="input" [(ngModel)]="theMenu.description" #ctrl="ngModel">
+                    <label class="user-label">Item Description</label>
+                </div>
+
+                <div class="flex-row jcsb " style="margin: 5px 0;padding: 5px 0;border: 1px solid #ececec;padding: 10px;border-radius: 6px;">
+                    <span style="padding: 0 10px;">Vegetarian</span>
+                    <div>
+                        <label class="chk-switch" for="vegetarian">
+                            <input (change)="handleVegetarian($event)"
+                                type="checkbox" id="vegetarian"
+                                [checked]="newMenu.vegetarian === true " />
+                            <div class="chk-switch-slider round"></div>
+                        </label>
+                    </div>
+                </div>
+                <div class="flex-row jcsb " style="margin: 5px 0;padding: 5px 0;border: 1px solid #ececec;padding: 10px;border-radius: 6px;">
+                    <span style="padding: 0 10px;">Is your Special Menu</span>
+                    <div>
+                        <label class="chk-switch" for="special">
+                            <input (change)="handleSpecial($event)"
+                                type="checkbox" id="special"
+                                [checked]="newMenu.special === true " />
+                            <div class="chk-switch-slider round"></div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-column w-100 border br-7 p-2">
+
+                <div class="flex-row aic gap-3 border p-2 br-7 my-2">
+                    <span class="bolder">Spice</span>
+                    <div class="radio-input">
+                        <label>
+                            <input type="radio" id="value-1" name="value-radio"
+                                value="value-1" [checked]="newMenu.spice === 1">
+                            <span>Low</span>
+                        </label>
+                        <label>
+                            <input type="radio" id="value-2" name="value-radio"
+                                value="value-2" [checked]="newMenu.spice === 2">
+                            <span>Medium</span>
+                        </label>
+                        <label>
+                            <input type="radio" id="value-3" name="value-radio"
+                                value="value-3" [checked]="newMenu.spice === 3">
+                            <span>High</span>
+                        </label>
+                        <span class="selection"></span>
+                    </div>
+                </div>
+                <div class="flex-row aic gap-3 border p-2 br-7 my-2">
+                    <span class="bolder">Price</span>
+                    <div class="d-flex flex-start aic" style="padding: 0 20px;">
+                        <input value [(ngModel)]="newMenu.price" #ctrl="ngModel" placeholder="5.65" name="itemPrice" id="itemPrice" tabindex="8" autocomplete="off" style="border: none;padding: 2px;margin-right: 10px;background-color: #f8f8f8;width: 50px;">
+                        <span>GBP</span>
+                    </div>
+                </div>
+                <div class="flex-column gap-2 border p-2 br-7 my-2">
+                    <span class="bolder">Choices</span>
+                    <div class="flex-row flex-wrap" *ngIf="choices.length > 0">
+                        <div class="flex-row jcsb " *ngFor="let choice of choices" style="background-color: #ececec; padding: 10px;margin-right: 10px;">
+                            <span style="margin-right: 30px;">{{choice.name}}</span>
+                            <span>{{choice.price | currency: 'GBP'}}</span>
+                            <fa-icon class="icon-delete ml-1" [icon]="faTrash" (click)="removeChoice(choice)"></fa-icon>
+                        </div>
+                    </div>
+                    <div class="flex-row" style="background-color: rgb(250, 250, 250);padding: 10px;margin: 10px 0;">
+                        <span style="color: rgb(2, 137, 92);margin-right: 20px;">You
+                            have {{choices.length}} choices for
+                            this
+                            menu.</span>
+                        <button class="btn-11" (click)="openExtraModal(extraContent, 'Choice')">Add
+                        </button>
+                    </div>
+                </div>
+                <div class="flex-column gap-2 border p-2 br-7 my-2">
+                    <span class="bolder">Extras</span>
+                    <div class="flex-row flex-wrap" *ngIf="extras.length > 0">
+                        <div class="flex-row jcsb " *ngFor="let extra of extras" style="background-color: #ececec; padding: 10px;margin-right: 10px;">
+                            <span style="margin-right: 30px;">{{extra.name}}</span>
+                            <span>{{extra.price | currency: 'GBP'}}</span>
+                            <fa-icon class="icon-delete ml-1" [icon]="faTrash" (click)="removeExtra(extra)"></fa-icon>
+                        </div>
+
+                    </div>
+                    <div class="flex-row" style="background-color: rgb(250, 250, 250);padding: 10px;margin: 10px 0;">
+                        <span style="color: rgb(2, 137, 92);margin-right: 20px;">You
+                            have {{extras.length}} extras for
+                            this
+                            menu.</span>
+                        <button class="btn-11" (click)="openExtraModal(extraContent, 'Extra')">Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template> -->
+
+<ng-template #viewMenuBlock>
+    <div class="vertical">
+        <div class="flex-row jcsb aic" style="margin: 5px 0 0 0;background-color: #f8f8f8;padding: 8px 5px;">
+            <span style="font-size: 18px;font-weight: 900;">Your menus
+                ({{menus.length}})</span>
+            <button placement="top" ngbTooltip="Add New menu" type="button" class="btn-11" style="margin: 0 10px;" (click)="onClickAddNewMenu()">Add</button>
+        </div>
+
+        <div class="d-flex flex-start" style="background-color: #f8f8f8;margin-bottom: 7px;">
+            <span [class.selectedCollection]="isCollectionSelected(cat)" *ngFor="let cat of collections" class="collection" (click)="selectCollectionForDisplay(cat)">{{cat}}</span>
+        </div>
+        <div *ngFor="let menu of menus">
+            <div class="flex-row" style="width: 100%;background-color: aliceblue;padding: 6px;" (click)="viewMenu(menu)">
+                <div class="image-div">
+                    <img src={{menu.image}} height="100%" width="40px">
+                </div>
+                <div class="flex-column flex-grow">
+                    <span>{{menu.name}}</span>
+                    <span>{{menu.description}}</span>
+                </div>
+                <div class="flex-column">
+                    <span>{{menu.price | currency:'GBP'}}</span>
+                    <button style="margin: 0 5px;" class="btn btn-sm btn-outline-primary" (click)="onEditMenu(menu)" placement="top" ngbTooltip="Make changes">Edit</button>
+                    <button style="margin: 0 5px;" class="btn btn-sm btn-outline-danger" (click)="onRemoveMenu(menu)" placement="top" ngbTooltip="Remove menu from inventory">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #collectionContent let-modal>
+    <div class="w-100 p-3">
+        <div class="flex-column aic">
+            <div class="input-group my-3">
+                <input required type="text" name="collectionName" autocomplete="off" class="input" [(ngModel)]="collectionName" #ctrl="ngModel">
+                <label class="user-label">Collection Name</label>
+            </div>
+
+            <button class="btn-9" (click)="saveNewCollection()">Submit</button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #extraContent let-modal>
+    <div style="width: 300px;padding: 20px;" class="flex-column">
+        <div class="input-div">
+            <input class="_381fS" type="text" name="extraName" id="extraName" tabindex="1" autocomplete="off" value [(ngModel)]="extra.name" #ctrl="ngModel">
+            <div class="_2EeI1 _26LFr"></div>
+            <label class="_1Cvlf _2tL9P " for="extraName">{{extraType}}
+                Name</label>
+        </div>
+        <div style="border: 1px solid #ededf4;">
+            <span style="display: block;padding: 5px 20px;">Price</span>
+            <div class="d-flex flex-start aic" style="padding: 0 20px;">
+                <input value [(ngModel)]="extra.price" #ctrl="ngModel" placeholder="2.5" name="extraPrice" id="extraPrice" tabindex="8" autocomplete="off" style="border: none;padding: 2px;margin: 0 0 10px 0;width: 60px;font-size: 25px;">
+                <span>GBP</span>
+            </div>
+        </div>
+        <div class="flex-row gap-3" style="margin-top: 10px;">
+            <button class="btn-11" (click)="addExtra()">Add</button>
+            <button class="btn-10" (click)="closeModal()">Cancel</button>
+        </div>
+
+    </div>
+</ng-template>

@@ -2,9 +2,9 @@ import { Location } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { faArrowLeft, faBatteryEmpty, faFaceSmile, faPeopleArrows, faStar, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { FoodOrder, LocalChef } from 'src/app/model/all-foods';
+import { CloudKitchen, FoodOrder } from 'src/app/model/all-foods';
 import { Utils } from 'src/app/services/common/utils';
-import { ChefService } from 'src/app/services/foods/chef.service';
+import { CloudKitchenService } from 'src/app/services/foods/cloudkitchen.service';
 import { FoodOrderService } from 'src/app/services/foods/food-order.service';
 
 
@@ -30,21 +30,21 @@ export class FoodBasketComponent {
   cartTotal: number = 0;
   foodOrder: FoodOrder;
   partyOrder: FoodOrder;
-  chef: LocalChef;
+  kitchen: CloudKitchen;
   price: number = 0.00;
   panels = ['Your Order', 'Second', 'Third'];
 
   constructor(
     private _location: Location,
     private orderService: FoodOrderService,
-    private chefService: ChefService) {
+    private cloudKitchenService: CloudKitchenService) {
   }
 
   ngOnInit(): void {
     // this.orderService.getData();
     this.loadFoodOrder();
     this.loadPartyOrder();
-    this.chef = this.chefService.getData();
+    this.kitchen = this.cloudKitchenService.getData();
   }
 
   private loadFoodOrder() {
@@ -79,8 +79,8 @@ export class FoodBasketComponent {
 
   getAddress(): string {
     var address: string = ""
-    if (this.chef !== null && this.chef !== undefined) {
-      return Utils.getChefAddress(this.chef);
+    if (this.kitchen !== null && this.kitchen !== undefined) {
+      return Utils.getCloudKitchenAddress(this.kitchen);
     }
     return address;
   }

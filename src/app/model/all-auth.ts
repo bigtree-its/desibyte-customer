@@ -31,7 +31,7 @@ export interface SignupResponse {
 }
 
 export class User{
-    id: string;
+    _id: string;
     firstName: string;
     lastName: string;
     name: string;

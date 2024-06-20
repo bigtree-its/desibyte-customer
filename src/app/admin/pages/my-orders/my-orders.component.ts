@@ -18,19 +18,19 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject, map, startWith, takeUntil } from 'rxjs';
 import { User } from 'src/app/model/all-auth';
 import {
+  CloudKitchen,
   FoodOrder,
-  LocalChef,
   OrderSearchQuery,
 } from 'src/app/model/all-foods';
 import { PaymentIntentResponse } from 'src/app/model/common';
 import { AccountService } from 'src/app/services/auth/account.service';
 import { ToastService } from 'src/app/services/common/toast.service';
 import { Utils } from 'src/app/services/common/utils';
-import { ChefService } from 'src/app/services/foods/chef.service';
 import { FoodOrderService } from 'src/app/services/foods/food-order.service';
 import { NgbHighlight } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl } from '@angular/forms';
 import { DecimalPipe } from '@angular/common';
+import { CloudKitchenService } from 'src/app/services/foods/cloudkitchen.service';
 
 @Component({
   selector: 'app-my-orders',
@@ -42,7 +42,7 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
   accountService = inject(AccountService);
   orderService = inject(FoodOrderService);
   toastService = inject(ToastService);
-  supplierService = inject(ChefService);
+  cloudKitchenService = inject(CloudKitchenService);
   router = inject(Router);
   modalService = inject(NgbModal);
   decimalPipe = inject(DecimalPipe);
@@ -69,12 +69,12 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
 
   openItems: boolean = true;
   showItems: boolean = false;
-  supplier: LocalChef;
+  supplier: CloudKitchen;
   errors: any;
   error: boolean;
   errorMessage: any;
   loading: boolean = false;
-  orderRefernce: any;
+  orderReference: any;
 
   constructor() {}
 
@@ -155,7 +155,7 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
 
   open(order: FoodOrder) {
     this.viewOrder = order;
-    this.retrieveSupplier(order.supplier._id);
+    this.retrieveKitchen(order.cloudKitchen._id);
   }
 
   goBack() {
@@ -252,12 +252,12 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  retrieveSupplier(_id: string) {
-    let observable = this.supplierService.retrieveSupplier(_id);
+  retrieveKitchen(_id: string) {
+    let observable = this.cloudKitchenService.retrieveKitchen(_id);
     observable.pipe(takeUntil(this.destroy$)).subscribe({
       next: (e) => {
         this.supplier = e;
-        console.log('Supplier ' + JSON.stringify(e));
+        console.log('Kitchen ' + JSON.stringify(e));
       },
       error: (err) => {
         console.error(

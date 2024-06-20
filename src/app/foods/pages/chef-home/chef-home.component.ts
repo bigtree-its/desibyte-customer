@@ -29,12 +29,12 @@ import {
   NgbDateStruct,
   NgbModal,
 } from '@ng-bootstrap/ng-bootstrap';
-import { Calendar, Collection, FoodOrder, LocalChef, Menu, PartyBundle } from 'src/app/model/all-foods';
+import { Calendar, CloudKitchen, Collection, FoodOrder, Menu, PartyBundle } from 'src/app/model/all-foods';
 import { Review } from 'src/app/model/common';
 import { FoodOrderService } from 'src/app/services/foods/food-order.service';
-import { ChefService } from 'src/app/services/foods/chef.service';
 import { ReviewService } from 'src/app/services/common/review.service';
 import { Utils } from 'src/app/services/common/utils';
+import { CloudKitchenService } from 'src/app/services/foods/cloudkitchen.service';
 
 @Component({
   selector: 'app-chef-home',
@@ -58,7 +58,7 @@ export class ChefHomeComponent implements AfterViewInit, OnDestroy {
   faAngleUp = faAngleUp;
   faBag = faBucket;
 
-  chef: LocalChef;
+  cloudKitchen: CloudKitchen;
   display_picture: any;
   gallery: string[] = [];
 
@@ -134,7 +134,7 @@ export class ChefHomeComponent implements AfterViewInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private orderService: FoodOrderService,
-    private chefService: ChefService,
+    private cloudKitchenService: CloudKitchenService,
     private reviewService: ReviewService,
     private _location: Location,
     private router: Router,
@@ -179,20 +179,20 @@ export class ChefHomeComponent implements AfterViewInit, OnDestroy {
       console.log('Chef-home for supplier ' + this.supplierId);
 
 
-      let chefObs = this.chefService.getChef(this.supplierId);
+      let chefObs = this.cloudKitchenService.getChef(this.supplierId);
       chefObs.pipe(takeUntil(this.destroy$)).subscribe({
         next: (data) => {
           if (!Utils.isValid(data)) {
             this.incorrectLanding = true;
           } else {
-            this.chef = data;
+            this.cloudKitchen = data;
             this.fetchCollections();
             this.setPartyMinDate();
-            this.fetchItems(this.chef._id);
-            this.fetchCalendars(this.chef._id);
-            this.fetchReviews(this.chef._id);
-            if (this.chef.doPartyOrders) {
-              this.fetchPartyBundles(this.chef._id);
+            this.fetchItems(this.cloudKitchen._id);
+            this.fetchCalendars(this.cloudKitchen._id);
+            this.fetchReviews(this.cloudKitchen._id);
+            if (this.cloudKitchen.doPartyOrders) {
+              this.fetchPartyBundles(this.cloudKitchen._id);
             }
           }
         },
@@ -263,7 +263,7 @@ export class ChefHomeComponent implements AfterViewInit, OnDestroy {
   }
 
   private fetchCollections() {
-    let observable = this.chefService.getCollections(this.supplierId);
+    let observable = this.cloudKitchenService.getCollections(this.supplierId);
     observable.pipe(takeUntil(this.destroy$)).subscribe({
       next: (data) => {
         this.collections = data;
@@ -278,8 +278,8 @@ export class ChefHomeComponent implements AfterViewInit, OnDestroy {
   private setPartyMinDate() {
     const current = new Date();
     var futureDate;
-    if (this.chef && this.chef.partyOrderLeadDays > 0) {
-      futureDate = this.addDays(current, this.chef.partyOrderLeadDays);
+    if (this.cloudKitchen && this.cloudKitchen.partyOrderLeadDays > 0) {
+      futureDate = this.addDays(current, this.cloudKitchen.partyOrderLeadDays);
     } else {
       futureDate = this.addDays(current, 1);
     }
@@ -291,7 +291,7 @@ export class ChefHomeComponent implements AfterViewInit, OnDestroy {
   }
 
   fetchPartyBundles(supplierId: string) {
-    this.chefService
+    this.cloudKitchenService
       .getPartyBundleForChef(supplierId)
       .subscribe((partyBundles: PartyBundle[]) => {
         this.partyBundles = partyBundles;
@@ -323,7 +323,7 @@ export class ChefHomeComponent implements AfterViewInit, OnDestroy {
   }
 
   private fetchCalendars(supplierId: string) {
-    this.chefService
+    this.cloudKitchenService
       .getCalendars(supplierId, true, false)
       .subscribe((calendars: Calendar[]) => {
         this.calendars = calendars;
@@ -367,7 +367,7 @@ export class ChefHomeComponent implements AfterViewInit, OnDestroy {
   }
 
   private fetchItems(supplierId: string) {
-    this.chefService.getMenusForChef(supplierId).subscribe((items: Menu[]) => {
+    this.cloudKitchenService.getMenusForKitchen(supplierId).subscribe((items: Menu[]) => {
       this.items = items;
       console.log('Menus fetched: ' + this.items.length);
       if (
@@ -382,8 +382,8 @@ export class ChefHomeComponent implements AfterViewInit, OnDestroy {
 
   getAddress(): string {
     var address: string = '';
-    if (this.chef !== null && this.chef !== undefined) {
-      return Utils.getChefAddress(this.chef);
+    if (this.cloudKitchen !== null && this.cloudKitchen !== undefined) {
+      return Utils.getCloudKitchenAddress(this.cloudKitchen);
     }
     return address;
   }

@@ -91,12 +91,12 @@
         <div class="flex-row mb-2 border-bottom py-2 aic">
             <span>Do you have an account?</span>
             <!-- <span [routerLink]="['/login']" [queryParams]="{returnUrl: 'checkout'}" class="clickable ml-2">Login</span> -->
-            <button type="button" [routerLink]="['/login']" [queryParams]="{returnUrl: '/f/checkout'}" class="btn btn-outline-dark px-3 ml-3">Login</button>
+            <button type="button" [routerLink]="['/login']" [queryParams]="{returnUrl: '/foods/checkout'}" class="btn btn-outline-dark px-3 ml-3">Login</button>
         </div>
         <div class="flex-row py-2 aic">
             <span>Don't have an account?</span>
             <!-- <span [routerLink]="['/register']" class="clickable ml-2">Signup</span> -->
-            <button type="button" [routerLink]="['/register']" [queryParams]="{returnUrl: '/f/checkout'}" class="btn btn-outline-dark px-3 ml-3">Signup</button>
+            <button type="button" [routerLink]="['/register']" [queryParams]="{returnUrl: '/foods/checkout'}" class="btn btn-outline-dark px-3 ml-3">Signup</button>
         </div>
     </div>
 </ng-template>
@@ -109,31 +109,31 @@
         <span>{{customerMobile}}</span>
 
         <div class="flex-column py-2">
-            <label for="notesToChef" class="bolder fs-6 mb-1">Leave a note</label>
+            <label for="notesToCloudKitchen" class="bolder fs-6 mb-1">Leave a note</label>
             <span>Leave a note for the chef with anything they need to know
                 (e.g. the doorbell doesn't work). Do not include details about
                 any allergies here.</span>
-            <input class="fb-input br-14" type="text" name="notesToChef" tabindex="2" autocomplete="off" value [(ngModel)]="notesToChef" #ctrl="ngModel" required="true">
+            <input class="fb-input br-14" type="text" name="notesToCloudKitchen" tabindex="2" autocomplete="off" value [(ngModel)]="notesToCloudKitchen" #ctrl="ngModel" required="true">
         </div>
     </div>
 </ng-template>
 <ng-template #deliveryOption>
     <div class="flex-column p-3 mb-2 bg-light">
 
-        <div *ngIf="chef.doDelivery" class="d-flex flex-grow br-25 p-0_5 bolder inset-box-shadow" style="background-color: #ddd;justify-self: center;padding: clamp(0.13rem, 0.09vw + 0.1rem, 0.25rem);">
+        <div *ngIf="kitchen.doDelivery" class="d-flex flex-grow br-25 p-0_5 bolder inset-box-shadow" style="background-color: #ddd;justify-self: center;padding: clamp(0.13rem, 0.09vw + 0.1rem, 0.25rem);">
             <button class="service-mode" (click)="selectPickup()" [class.selected]="serviceMode==='COLLECTION'"><fa-icon [icon]="faPersonBiking"
                     class="mr-1"></fa-icon>Collection</button>
-            <button class="service-mode" (click)="selectDelivery()" [class.selected]="serviceMode==='DELIVERY'" [disabled]="!chef.doDelivery"><fa-icon [icon]="faBox" class="mr-1"></fa-icon>Delivery</button>
+            <button class="service-mode" (click)="selectDelivery()" [class.selected]="serviceMode==='DELIVERY'" [disabled]="!kitchen.doDelivery"><fa-icon [icon]="faBox" class="mr-1"></fa-icon>Delivery</button>
         </div>
-        <div *ngIf="serviceMode === 'COLLECTION' || !chef.doDelivery" class="flex-column">
+        <div *ngIf="serviceMode === 'COLLECTION' || !kitchen.doDelivery" class="flex-column">
             <strong style="display: block;">Please collect
                 at</strong>
-            <span style="display: block;">{{chef.address.addressLine1}}</span>
-            <span style="display: block;">{{chef.address.addressLine2}}</span>
-            <span style="display: block;">{{chef.address.city}}</span>
-            <span style="display: block;">{{chef.address.postcode}}</span>
+            <span style="display: block;">{{kitchen.address.addressLine1}}</span>
+            <span style="display: block;">{{kitchen.address.addressLine2}}</span>
+            <span style="display: block;">{{kitchen.address.city}}</span>
+            <span style="display: block;">{{kitchen.address.postcode}}</span>
         </div>
-        <div class="flex-column" *ngIf="chef.doDelivery  && serviceMode === 'DELIVERY'">
+        <div class="flex-column" *ngIf="kitchen.doDelivery  && serviceMode === 'DELIVERY'">
             <strong class="py-1">Where should we send your order?</strong>
             <div class="flex-row-space-between align-items-center" *ngIf="customerAddress !== null && customerAddress !== undefined && customerAddress.addressLine1 !== null && customerAddress.addressLine1 !== undefined &&  customerAddress.addressLine1.length > 0">
                 <div style=" padding: 1rem;display: flex;flex-direction: column;background-color: var(--light-background);flex-grow: 1;margin-right: 10px;">

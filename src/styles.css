@@ -3,8 +3,7 @@
 
 /** Special Fonts **/
 
-@import url("https://fonts.googleapis.com/css2?family=Ruslan+Display&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Jaro:opsz@6..72&display=swap");
 
 /** Default font **/
 
@@ -12,7 +11,7 @@
 
 /** Logo **/
 
-@import url('https://fonts.googleapis.com/css2?family=Rubik+Vinyl&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Megrim&display=swap');
 :root {
     --blue: #007bff;
     --indigo: #6610f2;
@@ -33,7 +32,7 @@
     --primary: #007bff;
     --secondary: #6c757d;
     --success: #28a745;
-    --info: #17a2b8;
+    --info: #00eeff;
     --warning: #ffc107;
     --danger: #dc3545;
     --l-danger: #efd2d5;
@@ -42,6 +41,7 @@
     --dark: #343a40;
     --border: #22306d;
     --color-white: #fff;
+    --color-info: #00eeff;
     --color-black: #333;
     --color-gray: #75787b;
     --color-gray-light: #bbb;
@@ -56,7 +56,7 @@
     --brand-color-b: rgb(2, 77, 223);
     --brand-color-g: #0a0;
     --brand-color: #ff5f1f;
-    --brand-color-o: #F4BB44;
+    --brand-color-o: #f4bb44;
     --brand-color-black: rgb(34, 35, 34);
     --brand-color-dark: #53d900;
     margin: 0;
@@ -153,6 +153,7 @@ input[type="number"] {
     left: 15px;
     font-size: 14px;
     color: #828181;
+    background-color: #fff;
     pointer-events: none;
     transform: translateY(1rem);
     transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -169,7 +170,8 @@ input:valid~label {
     transform: translateY(-50%) scale(0.8);
     /* background-color: var(--brand-color); */
     padding: 0 0.2em;
-    /* color: #fff; */
+    font-weight: 900;
+    color: #0a0;
 }
 
 .container {
@@ -221,19 +223,20 @@ body {
 }
 
 .big-text {
-    /* font-family: "Bebas Neue", sans-serif; */
-    font-family: "Rubik Vinyl", system-ui;
+    font-family: "Jaro", sans-serif;
+    font-optical-sizing: auto;
 }
 
 .logo-text {
-    font-family: "Rubik Vinyl", system-ui;
+    font-family: "Megrim", system-ui;
     font-weight: 900;
+    font-size: 30px;
     cursor: pointer;
-    color: var(--brand-color);
 }
 
 .spl-text {
-    font-family: "Ruslan Display", sans-serif;
+    font-family: "Jaro", sans-serif;
+    font-optical-sizing: auto;
 }
 
 .scroll-container {
@@ -315,6 +318,10 @@ body {
     border-radius: 7px;
 }
 
+.color-info {
+    color: var(--color-info);
+}
+
 .color-light {
     opacity: 0.6;
 }
@@ -325,6 +332,17 @@ body {
 
 .bg-dark {
     background-color: #162127;
+}
+
+.anchor,
+.leaf {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.leaf {
+    font-weight: normal;
+    cursor: default;
 }
 
 .square {
@@ -357,10 +375,10 @@ body {
 
 .btn-9 {
     display: inline-block;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     color: #111;
-    border: 3px solid var(--brand-color);
+    border: 1px solid rgb(160, 217, 160);
     cursor: pointer;
     position: relative;
     background-color: transparent;
@@ -378,7 +396,7 @@ body {
     width: 100%;
     height: 100%;
     color: #fff;
-    background-color: var(--brand-color);
+    background-color: #0a0;
     transform: translateX(-100%);
     transition: all 0.3s;
     z-index: -1;
@@ -390,32 +408,71 @@ body {
 }
 
 .btn-10 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    outline: none;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 700;
+    color: #111;
+    border: 1px solid #9b9b9b;
     cursor: pointer;
-    padding: 6px 0;
-    width: 150px;
-    background-image: linear-gradient(to top, #d8d9db 0%, #fff 80%, #fdfdfd 100%);
-    border-radius: 30px;
-    border: 1px solid #8f9092;
-    transition: all 0.2s ease;
-    color: #606060;
-    text-shadow: 0 1px #fff;
+    position: relative;
+    background-color: transparent;
+    text-decoration: none;
+    overflow: hidden;
+    z-index: 1;
+    font-family: inherit;
 }
 
-.btn-10:hover {
-    font-weight: 900;
-    box-shadow: 0 4px 3px 1px #fcfcfc, 0 6px 8px #d6d7d9, 0 -4px 4px #cecfd1, 0 -6px 4px #fefefe, inset 0 0 3px 3px #cecfd1;
+.btn-10::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    background-color: #9b9b9b;
+    transform: translateX(-100%);
+    transition: all 0.3s;
+    z-index: -1;
 }
 
-.btn-10:active {
-    box-shadow: 0 4px 3px 1px #fcfcfc, 0 6px 8px #d6d7d9, 0 -4px 4px #cecfd1, 0 -6px 4px #fefefe, inset 0 0 5px 3px #999, inset 0 0 30px #aaa;
+.btn-10:hover::before {
+    color: #fff;
+    transform: translateX(0);
 }
 
-.btn-10:focus {
-    box-shadow: 0 4px 3px 1px #fcfcfc, 0 6px 8px #d6d7d9, 0 -4px 4px #cecfd1, 0 -6px 4px #fefefe, inset 0 0 5px 3px #999, inset 0 0 30px #aaa;
+.btn-11 {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 700;
+    color: #111;
+    border: 1px solid #6ca6e4;
+    cursor: pointer;
+    position: relative;
+    background-color: transparent;
+    text-decoration: none;
+    overflow: hidden;
+    z-index: 1;
+    font-family: inherit;
+}
+
+.btn-11::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    background-color: #007bff;
+    transform: translateX(-100%);
+    transition: all 0.3s;
+    z-index: -1;
+}
+
+.btn-11:hover::before {
+    color: #fff;
+    transform: translateX(0);
 }
 
 .btn-arrow {
@@ -530,11 +587,78 @@ body {
     cursor: pointer;
 }
 
+.selectable-info {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background-color: #00eeff;
+    border: 2px solid #00eeff;
+}
+
+.selectable-info:hover {
+    cursor: pointer;
+    border: 2px solid #333;
+}
+
+.selectable-info:active {
+    background-color: #ffe100;
+    border: 2px solid #ffe100;
+}
+
+.selected-info {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    background-color: aliceblue;
+}
+
+.selected-info:hover {
+    cursor: pointer;
+    background-color: #00aeff;
+}
+
+.drop-down-item {
+    cursor: pointer;
+    padding: 4px;
+}
+
+.drop-down-item:hover {
+    background-color: aliceblue;
+}
+
+.drop-down-item:active {
+    background-color: #ffd900;
+}
+
 .btn {
     display: inline-block;
     border: none;
     background-color: transparent;
     cursor: pointer;
+}
+
+.btn-6 {
+    padding: 10px 70px;
+    border: 0;
+    font-weight: 700;
+    background-color: rgb(255, 56, 86);
+    letter-spacing: 1.5px;
+    transition: all 0.3s ease;
+    box-shadow: rgb(201, 46, 70) 0px 10px 0px 0px;
+    color: hsl(0, 0%, 100%);
+    cursor: pointer;
+}
+
+.btn-6:hover {
+    box-shadow: rgb(201, 46, 70) 0px 7px 0px 0px;
+}
+
+.btn-6:active {
+    background-color: rgb(255, 56, 86);
+    /*50, 168, 80*/
+    box-shadow: rgb(201, 46, 70) 0px 0px 0px 0px;
+    transform: translateY(5px);
+    transition: 200ms;
 }
 
 .btn-12 {
@@ -742,7 +866,7 @@ body {
 }
 
 .bg-blue {
-    background-color: #9cccff;
+    background-color: #74faff;
 }
 
 .bg-success {
@@ -951,6 +1075,10 @@ select {
     border: 1px solid #fcf7f7;
 }
 
+.border-box {
+    border: 2px solid #0abdbd;
+}
+
 .border-bottom {
     border-bottom: 1px solid #fcf7f7;
 }
@@ -1066,6 +1194,58 @@ select {
     right: 0;
     background: #fff;
     z-index: 99;
+}
+
+.btn-o-p {
+    border: 1px solid #005ec3;
+    padding: 5px;
+}
+
+.btn-o-p:hover {
+    background-color: #005ec3;
+    cursor: pointer;
+    color: #fff;
+}
+
+.btn-o-s {
+    border: 1px solid #000;
+    padding: 5px;
+}
+
+.btn-o-s:hover {
+    background-color: #000;
+    cursor: pointer;
+    color: #fff;
+}
+
+.btn-o-d {
+    border: 1px solid #dd4848;
+    padding: 5px;
+}
+
+.btn-o-d:hover {
+    background-color: #dd4848;
+    cursor: pointer;
+    color: #fff;
+}
+
+.btn-o-g {
+    border: 1px solid #08de9e;
+    padding: 5px;
+}
+
+.btn-o-g:hover {
+    background-color: #08de9e;
+    cursor: pointer;
+}
+
+.icon-delete {
+    color: #777;
+}
+
+.icon-delete:hover {
+    cursor: pointer;
+    color: #dc3545;
 }
 
 .icon-pos {
@@ -1252,6 +1432,64 @@ select {
     color: #007bff;
     /* background-color: var(--navy); */
     /* color: #fff; */
+}
+
+
+/** Check Box **/
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 25px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 2px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #e9e9e9;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 25px;
+    width: 25px;
+    bottom: -1px;
+    background: #999a9b;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+.slider.round {
+    /* border-radius: 34px; */
+}
+
+.slider.round:before {
+    /* border-radius: 50%; */
+}
+
+input:checked+.slider {
+    background-color: #b2fbea;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(35px);
+    -ms-transform: translateX(35px);
+    transform: translateX(35px);
+    background: #21d19c;
 }
 
 .mobile-w {
@@ -1551,6 +1789,50 @@ select {
     cursor: pointer;
 }
 
+.input-light {
+    font-size: 14px;
+    padding: 10px 6px;
+    background-color: #333;
+    color: aquamarine;
+    border: none;
+}
+
+.bg-light-g {
+    background-color: #b2fbea;
+}
+
+.postcode-search-icon {
+    border: none;
+    background-color: aquamarine;
+    color: #000;
+    border-radius: 50%;
+    font-weight: bold;
+    padding: 5px 9px;
+}
+
+.postcode-search-icon:hover {
+    cursor: pointer;
+    background-color: rgb(17, 244, 168);
+}
+
+.bg-g {
+    background-color: aquamarine;
+    color: #000;
+}
+
+.bg-d {
+    background-color: #333;
+    color: aquamarine;
+}
+
+.input-postcode {
+    border: none;
+    outline: none;
+    background-color: #333;
+    color: aquamarine;
+    padding: 0 10px;
+}
+
 .bg-alert-success {
     background: rgb(238, 248, 237);
     color: rgb(82, 167, 68);
@@ -1695,17 +1977,6 @@ select {
     font-weight: 600;
 }
 
-.accordian-icon {
-    background-color: transparent;
-    padding: 5px 10px;
-}
-
-.accordian-icon:hover {
-    background-color: #162127;
-    color: #fff;
-    cursor: pointer;
-}
-
 .my-checkbox {
     position: relative;
     width: 1rem;
@@ -1782,6 +2053,50 @@ select {
 
 .card-title {
     background-color: #f4f4f1;
+}
+
+.button-amber {
+    padding: 5px 10px;
+    background-color: #f4e603;
+}
+
+.button-amber:hover {
+    cursor: pointer;
+    background-color: #000;
+    color: #fff;
+}
+
+.button-primary {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+}
+
+.button-primary:hover {
+    cursor: pointer;
+    background-color: #005ec3;
+}
+
+.button-success {
+    padding: 5px 10px;
+    background-color: #0a0;
+    color: #fff;
+}
+
+.button-success:hover {
+    cursor: pointer;
+    background-color: rgb(0, 129, 0);
+}
+
+.link-danger {
+    padding: 5px 10px;
+    background-color: #ce7070;
+    color: #fff;
+}
+
+.link-danger:hover {
+    cursor: pointer;
+    background-color: var(--red);
 }
 
 .link {
@@ -1876,7 +2191,6 @@ select {
 .clickable-link {
     border: none;
     font-weight: 800;
-    padding: 10px;
 }
 
 .clickable-link:hover {

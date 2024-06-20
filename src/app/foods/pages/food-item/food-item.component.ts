@@ -8,7 +8,7 @@ import {
   faPepperHot,
   faPlus,
 } from '@fortawesome/free-solid-svg-icons';
-import { Extra, Food, FoodOrderItem, Menu, PartyBundle, PartyBundleCandidate, PartyOrderItem } from 'src/app/model/all-foods';
+import { Extra, FoodOrderItem, Menu, PartyBundle, PartyBundleCandidate, PartyOrderItem } from 'src/app/model/all-foods';
 import { BasketService } from 'src/app/services/common/basket.service';
 
 @Component({
@@ -82,7 +82,7 @@ export class FoodItemComponent {
     this.modalService.dismissAll();
   }
 
-  selectItemOnCandidate(candidate: PartyBundleCandidate, food: Food, e: any) {
+  selectItemOnCandidate(candidate: PartyBundleCandidate, food: Menu, e: any) {
     if (this.pb) {
       var candis: PartyBundleCandidate[] = this.pb.partyBundleCandidates.filter(c => c.name === candidate.name);
       var theCandidate = candis[0];

@@ -9,11 +9,10 @@ export class ServiceLocator {
   productsUrl: string;
   feedbacksUrl: string;
   collectionsUrl: string;
-  chefsUrl: string;
+  CloudKitchenUrl: string;
   cuisinesUrl: string;
   DishesUrl: string;
   menusUrl: string;
-  ServiceAreasUrl: string;
   calendersUrl: string;
 
   FoodOrdersTrackingUrl: string;
@@ -21,6 +20,9 @@ export class ServiceLocator {
   FoodOrdersPaymentIntentUrl: string;
   FoodOrdersStripePaymentsUrl: string;
   FoodOrderSearchUrl: string;
+  KitchenOrderProfileUrl: string;
+  KitchenOrderSearchUrl: string;
+  
 
   ProductOrdersUrl: string;
   ProductOrdersPaymentsUrl: string;
@@ -39,7 +41,6 @@ export class ServiceLocator {
 
   SupplierUrl: string;
   PartyBundlesUrl: string;
-  PostcodeDistrictsUrl: string;
   
   //Ads
   AdEnquiryUrl: string;
@@ -49,20 +50,24 @@ export class ServiceLocator {
   ImageKitTokenUrl: string;
   ImageKitFilesUrl: string;
 
+
+  // UK Post
+  PostcodeDistrictUrl: string;
+
   constructor() {
+
+    this.CloudKitchenUrl = environment.CloudKitchenUrl;
     this.SupplierUrl = environment.SupplierUrl;
     this.groupsUrl = environment.GroupsUrl;
     this.productsUrl = environment.ProductsUrl;
     this.feedbacksUrl = environment.FeedbacksUrl;
     this.collectionsUrl = environment.CollectionsUrl;
-    this.chefsUrl = environment.ChefsUrl;
     this.cuisinesUrl = environment.CuisinesUrl;
     this.DishesUrl = environment.DishesUrl;
-    this.ServiceAreasUrl = environment.ServiceAreasUrl;
     this.menusUrl = environment.MenusUrl;
     this.calendersUrl = environment.CalendersUrl;
     this.PartyBundlesUrl = environment.PartyBundlesUrl;
-    this.PostcodeDistrictsUrl = environment.PostcodeDistrictsUrl;
+    this.PostcodeDistrictUrl = environment.PostcodeDistrictUrl;
 
     this.FoodOrdersTrackingUrl = environment.FoodOrdersTrackingUrl;
     this.FoodOrdersUrl = environment.FoodOrdersUrl;
@@ -71,6 +76,8 @@ export class ServiceLocator {
     this.FoodOrdersStripePaymentsUrl = environment.FoodOrdersStripePaymentsUrl;
     this.ProductOrdersUrl = environment.ProductOrdersUrl;
     this.ProductOrdersPaymentsUrl = environment.ProductOrdersPaymentsUrl;
+    this.KitchenOrderProfileUrl = environment.KitchenOrderProfileUrl;
+    this.KitchenOrderSearchUrl = environment.KitchenOrderSearchUrl;
 
     this.LoginUrl = environment.LoginUrl;
     this.LogoutUrl = environment.LogoutUrl;
