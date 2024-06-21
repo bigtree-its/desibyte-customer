@@ -38,7 +38,7 @@ export const environment = {
   ProductOrdersPaymentsUrl: 'https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/products/stripe-payments',
 
   // Supplier Orders
-  KitchenOrderProfileUrl: "http://localhost:8082/orders/v1/profiles",
+  KitchenOrderProfileUrl: "https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/profiles",
   KitchenOrderSearchUrl: "https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/foods/profiles",
 
   // Auth

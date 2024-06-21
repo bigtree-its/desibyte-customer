@@ -15,12 +15,12 @@ import { KitchenMenuComponent } from './pages/kitchen-menu/kitchen-menu.componen
 
 const routes: Routes = [
   {
-    path: 'fsa/my-home',
+    path: 'kitchen/home',
     component: MyHomeComponent,
     canActivate: [SupplierGuard],
   },
   {
-    path: 'fsa/my-orders',
+    path: 'kitchen/orders',
     component: MyOrdersComponent,
     canActivate: [SupplierGuard],
   },
@@ -30,12 +30,12 @@ const routes: Routes = [
     canActivate: [SupplierGuard],
   },
   {
-    path: 'fsa/my-products',
-    component: MyProductsComponent,
+    path: 'kitchen/products',
+    component: KitchenMenuComponent,
     canActivate: [SupplierGuard],
   },
   {
-    path: 'fsa/my-settings',
+    path: 'kitchen/settings',
     component: MySettingsComponent,
     canActivate: [SupplierGuard],
   },
