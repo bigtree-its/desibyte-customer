@@ -78,7 +78,7 @@
                 </div>
                 <div class="flex-column border p-2 br-7 my-1" *ngIf="order.serviceMode === 'DELIVERY'">
                     <span class="bolder py-2">Order prepared by</span>
-                    <span [routerLink]="[ '/foods/chef', cloudKitchenMini?._id] " style="font-size: 15px;cursor: pointer;color:coral;" class="bold py-1">{{cloudKitchenMini?.name}}</span>
+                    <span [routerLink]="[ '/cloud-kitchens', cloudKitchenMini?._id] " style="font-size: 15px;cursor: pointer;color:coral;" class="bold py-1">{{cloudKitchenMini?.name}}</span>
                     <div class="flex-row">
                         <span>{{cloudKitchenMini.address.addressLine1}},</span>
                         <span>{{cloudKitchenMini.address.addressLine2}}</span>

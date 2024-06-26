@@ -14,12 +14,16 @@ import {
   faAngleUp,
   faArrowLeft,
   faArrowRight,
+  faBagShopping,
   faBatteryEmpty,
-  faBucket,
+  faBookOpen,
   faCalendar,
+  faCommentDots,
   faFaceSmile,
+  faHouse,
   faPeopleArrows,
   faStar,
+  faUserGroup,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   NgbAlertModule,
@@ -56,7 +60,11 @@ export class ChefHomeComponent implements AfterViewInit, OnDestroy {
   faCalendar = faCalendar;
   faAngleDown = faAngleDown;
   faAngleUp = faAngleUp;
-  faBag = faBucket;
+  faBag = faBagShopping;
+  faHouse = faHouse;
+  faMenu = faBookOpen;
+  faComments = faCommentDots;
+  faParty = faUserGroup;
 
   cloudKitchen: CloudKitchen;
   display_picture: any;
@@ -461,6 +469,6 @@ export class ChefHomeComponent implements AfterViewInit, OnDestroy {
 
 
   checkout() {
-    this.router.navigateByUrl("f/checkout")
+    this.router.navigateByUrl("ck/checkout")
   }
 }

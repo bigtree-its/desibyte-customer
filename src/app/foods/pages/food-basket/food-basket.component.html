@@ -20,9 +20,9 @@
                     width: 60px;
                     max-width: 60px;">
                 </div>
-                <span class="fs-6 ml-2" [routerLink]="[ '/foods/chef', foodOrder.cloudKitchen]">{{foodOrder.cloudKitchen.name}}</span>
+                <span class="fs-6 ml-2" [routerLink]="[ '/cloud-kitchens', foodOrder.cloudKitchen]">{{foodOrder.cloudKitchen.name}}</span>
             </div>
-            <button type="button" class="btn-12 my-2" [routerLink]="[ '/foods/checkout']">Checkout</button>
+            <button type="button" class="btn-9 my-2 p-2" [routerLink]="[ '/ck/checkout']">Checkout</button>
         </div>
 
     </div>
@@ -46,9 +46,9 @@
                     width: 60px;
                     max-width: 60px;">
                 </div>
-                <span class="fs-6 ml-2" [routerLink]="[ '/foods/chef', partyOrder.cloudKitchen]">{{partyOrder.cloudKitchen.name}}</span>
+                <span class="fs-6 ml-2" [routerLink]="[ '/cloud-kitchens', partyOrder.cloudKitchen._id]">{{partyOrder.cloudKitchen.name}}</span>
             </div>
-            <button type="button" class="btn-12 my-2" [routerLink]="[ '/foods/checkout']">Checkout</button>
+            <button type="button" class="btn-12 my-2" [routerLink]="[ '/ck/checkout']">Checkout</button>
         </div>
     </div>
 

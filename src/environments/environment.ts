@@ -12,6 +12,11 @@ export const environment = {
   CURRENCY: 'GBP',
   CURRENCY_SYMBOL: '£',
   AD_REMOTE: 'https://ad-service-bd07dee8092c.herokuapp.com',
+  ORDER_REMOTE: 'https://order-service-9ff7ad1220e2.herokuapp.com',
+
+  ORDER_LOCAL: 'http://localhost:8082',
+  AD_LOCAL: 'http://localhost:8083',
+  UK_POST_LOCAL: 'http://localhost:8085',
 
   // Ads
   CollectionsUrl: "http://localhost:8083/ads/v1/collections",
@@ -28,18 +33,18 @@ export const environment = {
   PartyBundlesUrl: 'http://localhost:8083/ads/v1/party-bundles',
 
 // Orders
-  FoodOrdersTrackingUrl: 'https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/foods-tracking',
-  FoodOrdersUrl: 'https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/foods',
-  FoodOrderSearchUrl: 'https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/foods/search',
-  FoodOrdersStripePaymentsUrl: 'https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/foods/stripe-payments',
-  FoodOrdersPaymentIntentUrl: 'https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/foods/stripe-payments/payment-intent',
-  ProductOrdersUrl: 'https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/products',
-  ProductOrdersSearchUrl: 'https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/products/search',
-  ProductOrdersPaymentsUrl: 'https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/products/stripe-payments',
+  FoodOrdersTrackingUrl: 'http://localhost:8082/orders/v1/foods-tracking',
+  FoodOrdersUrl: 'http://localhost:8082/orders/v1/foods',
+  FoodOrderSearchUrl: 'http://localhost:8082/orders/v1/foods/search',
+  FoodOrdersStripePaymentsUrl: 'http://localhost:8082/orders/v1/foods/stripe-payments',
+  FoodOrdersPaymentIntentUrl: 'http://localhost:8082/orders/v1/foods/stripe-payments/payment-intent',
+  ProductOrdersUrl: 'http://localhost:8082/orders/v1/products',
+  ProductOrdersSearchUrl: 'http://localhost:8082/orders/v1/products/search',
+  ProductOrdersPaymentsUrl: 'http://localhost:8082/orders/v1/products/stripe-payments',
 
   // Supplier Orders
-  KitchenOrderProfileUrl: "https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/profiles",
-  KitchenOrderSearchUrl: "https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/foods/profiles",
+  KitchenOrderProfileUrl: "http://localhost:8082/orders/v1/profiles",
+  KitchenOrderSearchUrl: "http://localhost:8082/orders/v1/foods/profiles",
 
   // Auth
   LoginUrl:'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/auth/token',

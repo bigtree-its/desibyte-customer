@@ -3,7 +3,7 @@
         <fa-icon [icon]="faBars" (click)="toggleSideNav()" class="menu-icon"></fa-icon>
         <div class="flex-row aic jcc logo-text" [routerLink]="['/']">
             <!-- <fa-icon [icon]="faSpa" class="fs-4"></fa-icon> -->
-            <span class="logo-text">Oneway</span>
+            <span class="logo-text">NAVA</span>
         </div>
         <button type="button" class="btn-13 br-25" routerLink="/ads/post">Post
             an Ad</button>
@@ -11,13 +11,14 @@
     <div class="lg flex-row jcsb aic py-1">
         <div class="flex-row aic jcc" [routerLink]="['/']">
             <!-- <fa-icon [icon]="faSpa" class="fs-4"></fa-icon> -->
-            <span class="logo-text">Oneway</span>
+            <span class="logo-text">NAVA</span>
         </div>
         <div class="flex-row gap-1">
 
         </div>
         <div class="flex-row jcc aic gap-1">
             <span *ngIf="!user" class="btn-plain mx-1" routerLink="/login">Login</span>
+            <span *ngIf="!user" class="btn-plain mx-1" routerLink="/contact_us">Become a partner</span>
             <span *ngIf="!user" class="btn-bold mx-2" routerLink="/register">Signup</span>
             <div *ngIf="user" class="nav-item mr-2  br-25 border p-2" ngbDropdown #myDrop="ngbDropdown">
                 <div class="flex-row gap-1 jcc aic mx-1" (click)="$event.stopPropagation(); myDrop.open()">

@@ -21,6 +21,23 @@
     color: var(--brand-color);
 }
 
+.icon-text {
+    border: #fff;
+}
+
+.icon-text:hover {
+    color: var(--orange);
+    cursor: pointer;
+}
+
+.icon-text:active {
+    color: var(--orange);
+}
+
+.icon-text-selected {
+    color: var(--orange);
+}
+
 .basket {
     color: coral;
 }

@@ -203,7 +203,8 @@ export class PaymentFormComponent {
         elements,
         confirmParams: {
           // Return URL where the customer should be redirected after the PaymentIntent is confirmed.
-          return_url: 'http://desify.co.uk/foods/confirmation',
+          // return_url: 'http://desify.co.uk/foods/confirmation',
+          return_url: 'http://localhost:4200/ck/confirmation',
           receipt_email: 'nava.arul@gmail.com',
         },
       }

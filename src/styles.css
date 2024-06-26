@@ -3,7 +3,7 @@
 
 /** Special Fonts **/
 
-@import url("https://fonts.googleapis.com/css2?family=Jaro:opsz@6..72&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
 /** Default font **/
 
@@ -11,7 +11,7 @@
 
 /** Logo **/
 
-@import url('https://fonts.googleapis.com/css2?family=Megrim&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Megrim&display=swap");
 :root {
     --blue: #007bff;
     --indigo: #6610f2;
@@ -123,8 +123,7 @@ input::-webkit-inner-spin-button {
 }
 
 .form-select {
-    height: 32px;
-    font-size: 12px;
+    /* height: 32px; */
 }
 
 
@@ -235,7 +234,7 @@ body {
 }
 
 .spl-text {
-    font-family: "Jaro", sans-serif;
+    font-family: "Bebas Neue", sans-serif;
     font-optical-sizing: auto;
 }
 
@@ -334,6 +333,10 @@ body {
     background-color: #162127;
 }
 
+.box-shadow {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
 .anchor,
 .leaf {
     font-weight: bold;
@@ -371,6 +374,43 @@ body {
 .btn-delete:hover {
     cursor: pointer;
     background-color: red;
+}
+
+.btn-1 {
+    background-color: #ffffff;
+    border: 1px solid rgb(209, 213, 219);
+    border-radius: 0.5rem;
+    color: #111827;
+    font-family: ui-sans-serif, system-ui, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 0.875rem;
+    font-weight: 600;
+    /* line-height: 1.25rem; */
+    /* padding: 0.75rem 1rem; */
+    padding: 5px;
+    text-align: center;
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+}
+
+.btn-1:hover {
+    background-color: #f9fafb;
+}
+
+.btn-1:focus {
+    outline: 2px solid rgba(0, 0, 0, 0.1);
+    outline-offset: 2px;
+}
+
+.btn-1:focus-visible {
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 .btn-9 {
@@ -1803,9 +1843,7 @@ input:checked+.slider:before {
 
 .postcode-search-icon {
     border: none;
-    background-color: aquamarine;
     color: #000;
-    border-radius: 50%;
     font-weight: bold;
     padding: 5px 9px;
 }
@@ -1828,8 +1866,7 @@ input:checked+.slider:before {
 .input-postcode {
     border: none;
     outline: none;
-    background-color: #333;
-    color: aquamarine;
+    background-color: transparent;
     padding: 0 10px;
 }
 
@@ -1877,15 +1914,12 @@ input:checked+.slider:before {
 
 .btn-plain {
     background: transparent;
-    padding: 5px 10px;
     font-weight: 900;
 }
 
 .btn-plain:hover {
     cursor: pointer;
-    border: 1px solid coral;
-    background-color: coral;
-    color: #fff;
+    color: var(--orange);
 }
 
 .btn-bold {

@@ -1,12 +1,15 @@
 .side-nav-bar-content {
     flex: 1;
+    height: 100vh;
+    background-color: aquamarine;
 }
 
 .navItem {
     padding: 10px 0;
+    font-weight: 900;
 }
 
 .navItem:hover {
     cursor: pointer;
-    color: var(--pink);
+    color: var(--orange);
 }

@@ -4,7 +4,7 @@
     </div>
     <div class="flex-column jcc aic hero p-4">
         <!-- <h1 class="big-text" style="font-size: 50px;">What will you eat today?</h1> -->
-        <span class="bolder fs-1">Craving for Homefood?</span>
+        <span class="bolder fs-1" style="color: darkgreen;">Craving for Homefood?</span>
         <!-- <span class="lg  fs-4">We make it easy to order home food from your neighbourhood chefs</span> -->
         <div>
             <div class="textSlider">
@@ -13,11 +13,8 @@
                 <div class="textSlider-text3">Made with love</div>
             </div>
         </div>
-        <div class=" sm my-2">
-            <app-postcode-lookup (addressEmitter)="onSelectAddress($event)"></app-postcode-lookup>
-        </div>
-        <div class="lg jcc my-2">
-            <div style="width: 760px;">
+        <div class="jcc my-2">
+            <div style="width: 420px;background-color: #fff;">
                 <app-postcode-lookup (addressEmitter)="onSelectAddress($event)"></app-postcode-lookup>
             </div>
         </div>
@@ -43,7 +40,7 @@
     <div class="flex-column jcc aic my-4 br-7">
         <strong style="font-size: 22px;font-weight: 800; padding: 20px 0;" class="color-navy">Top Cuisines</strong>
         <div class="flex-row flex-wrap aic gap-1 jcc aic">
-            <div *ngFor="let cuisine of cuisines" [routerLink]="['/foods/chef-list']" [queryParams]="{cuisine: cuisine.slug}" class="cuisine">
+            <div *ngFor="let cuisine of cuisines" [routerLink]="['/cloud-kitchens-list']" [queryParams]="{cuisine: cuisine.slug}" class="cuisine">
                 <img src={{cuisine.logo}} class="cuisine-logo" height="90px" width="120px">
                 <span>{{cuisine.name}}</span>
             </div>

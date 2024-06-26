@@ -99,9 +99,14 @@ export class BecomeAPartnerComponent implements OnInit, OnDestroy {
     });
   }
 
-  onChangeAbout() {
-    this.about = this.aboutSelection.nativeElement.value;
+
+  onChangeAbout(e: any) {
+    this.about = e.target.value;
   }
+
+  // onChangeAbout() {
+  //   this.about = this.aboutSelection.nativeElement.value;
+  // }
 
   ngOnDestroy() {
     this.destroy$.next();

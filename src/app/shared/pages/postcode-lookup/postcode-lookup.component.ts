@@ -84,12 +84,12 @@ export class PostcodeLookupComponent {
     // .pipe(first())
     .subscribe(
       (data: APITierResponse) => {
-        console.log('Address Lookup response ' + JSON.stringify(data));
+        // console.log('Address Lookup response ' + JSON.stringify(data));
         if (data && data.noOfItems > 0) {
           this.addressSelected = false;
           this.showAddressList = true;
           const sortedArray = data.result.addresses.slice().sort((a, b) => a.building_number - b.building_number);
-          console.log('Sorted address : '+ JSON.stringify(sortedArray))
+          // console.log('Sorted address : '+ JSON.stringify(sortedArray))
           data.result.addresses = sortedArray;
           this.addressLookupResponse = data;
         }

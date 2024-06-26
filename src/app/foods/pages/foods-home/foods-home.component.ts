@@ -101,7 +101,7 @@ export class FoodsHomeComponent implements OnInit{
     this.selectedPostcodeDistrict = selectedPostcodeDistrict;
     // this.fetchChefsByServiceLocation(selectedServiceLocation);
     this.router
-      .navigate(['/foods/area'], {
+      .navigate(['/ck/area'], {
         queryParams: { location: selectedPostcodeDistrict.slug },
       })
       .then();
@@ -133,7 +133,7 @@ export class FoodsHomeComponent implements OnInit{
       var area = address.postcode.match(/^(((([A-Z][A-Z]{0,1})[0-9][A-Z0-9]{0,1}) {0,}[0-9])[A-Z]{2})$/)[3];
       if ( area){
         this.router.navigateByUrl(
-          '/foods/area/' + area
+          '/ck/area/' + area
         );
       }
     }

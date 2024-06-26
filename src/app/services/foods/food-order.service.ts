@@ -454,7 +454,7 @@ export class FoodOrderService {
     this.foodOrder.serviceFee = 0.0;
     this.foodOrder.subTotal = subTotal;
     if (subTotal !== 0) {
-      this.foodOrder.serviceFee = 0.5;
+      // this.foodOrder.serviceFee = 1.0;
       if (this.foodOrder.serviceMode === 'DELIVERY') {
         this.foodOrder.deliveryFee = 0.5;
       }
@@ -467,6 +467,9 @@ export class FoodOrderService {
       this.foodOrder.serviceFee;
 
     this.foodOrder.total = totalToPay;
+    if (! this.foodOrder.total){
+      this.foodOrder.total = 0;
+    }
     this.foodOrder.total = +(+this.foodOrder.total).toFixed(2);
     console.log('Food order updated with SubTotal: ' + subTotal + ' Total: ' + totalToPay);
     this.setData(this.foodOrder);

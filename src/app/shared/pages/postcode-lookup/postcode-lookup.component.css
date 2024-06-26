@@ -39,6 +39,6 @@
 }
 
 .address-item:hover {
-    color: var(--blue);
+    color: var(--orange);
     cursor: pointer;
 }

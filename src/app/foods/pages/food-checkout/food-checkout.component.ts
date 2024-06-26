@@ -1,12 +1,23 @@
 import { Location } from '@angular/common';
-import { Title } from "@angular/platform-browser";
+import { Title } from '@angular/platform-browser';
 import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faArrowLeft, faBox, faChevronDown, faChevronUp, faPersonBiking } from '@fortawesome/free-solid-svg-icons';
-import { Address, PaymentIntentResponse, RapidApiByPostcodeResponse, RapidApiByPostcodeResponseSummary } from 'src/app/model/common';
+import {
+  faArrowLeft,
+  faBox,
+  faChevronDown,
+  faChevronUp,
+  faPersonBiking,
+} from '@fortawesome/free-solid-svg-icons';
+import {
+  Address,
+  PaymentIntentResponse,
+  RapidApiByPostcodeResponse,
+  RapidApiByPostcodeResponseSummary,
+} from 'src/app/model/common';
 import { CloudKitchen, FoodOrder } from 'src/app/model/all-foods';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { User } from 'src/app/model/all-auth';
 import { RapidApiService } from 'src/app/services/common/rapid-api.service';
 import { StripeService } from 'src/app/services/common/stripe.service';
@@ -22,16 +33,15 @@ import { CloudKitchenService } from 'src/app/services/foods/cloudkitchen.service
   styleUrls: ['./food-checkout.component.css'],
 })
 export class FoodCheckoutComponent implements OnDestroy {
-
   faPersonBiking = faPersonBiking;
   faBox = faBox;
   faArrowLeft = faArrowLeft;
   chevronDown = faChevronDown;
   chevronUp = faChevronUp;
 
-  openItems: boolean  = false;
-  yourDetails: boolean  = false;
-  yourAddress: boolean  = false;
+  openItems: boolean = false;
+  yourDetails: boolean = false;
+  yourAddress: boolean = false;
   enablePayButton: boolean = false;
 
   customerMobile: string = '';
@@ -84,23 +94,25 @@ export class FoodCheckoutComponent implements OnDestroy {
     private accountService: AccountService,
     private router: Router,
     private titleService: Title
-  ) { }
+  ) {}
 
   public loadStripe$: Observable<any> = this.stripeService.LoadStripe();
 
   ngOnInit(): void {
     this.loading = false;
-    this.titleService.setTitle("Checkout")
+    this.titleService.setTitle('Checkout');
     this.loadStripe$.subscribe((s) => {
       console.log('Loaded stripe: ' + s);
     });
 
-    this.kitchen = this.kitchenService.getData();
-
+    this.kitchenService.getData();
+    this.kitchenService.cloudKitchenSubject$.subscribe(e=>{
+      this.kitchen = e;
+    });
     this.orderService.getData();
     this.orderService.foodOrderSubject$.subscribe({
       next: (value) => {
-        console.log('OrderSubject rx emitted : '+ JSON.stringify(value));
+        console.log('OrderSubject rx emitted : ' + JSON.stringify(value));
         var FoodOrder: FoodOrder = value;
         this.extractOrder(FoodOrder);
       },
@@ -131,33 +143,36 @@ export class FoodCheckoutComponent implements OnDestroy {
     });
   }
 
-  openCloseItems(){
+  openCloseItems() {
     this.openItems = !this.openItems;
     this.yourDetails = false;
     this.yourAddress = false;
   }
-  openCloseDetails(){
+  openCloseDetails() {
     this.yourDetails = !this.yourDetails;
     this.openItems = false;
     this.yourAddress = false;
   }
-  openCloseAddress(){
+  openCloseAddress() {
     this.yourAddress = !this.yourAddress;
     this.openItems = false;
     this.yourDetails = false;
   }
 
-  canShowPlaceOrderButton(){
+  canShowPlaceOrderButton() {
     return this.validateCustomerDetails() && this.validateServiceMode();
   }
 
   extractOrder(theOrder: FoodOrder) {
-    console.log('Order status '+ theOrder.status)
-    if (Utils.isValid(theOrder) && (theOrder.status === 'Completed' || theOrder.status === 'Paid')) {
+    console.log('Order status ' + theOrder.status);
+    if (
+      Utils.isValid(theOrder) &&
+      (theOrder.status === 'Completed' || theOrder.status === 'Paid')
+    ) {
       return;
     }
     this.order = theOrder;
-    if (theOrder !== null && theOrder !== undefined) {
+    if (theOrder) {
       this.cartTotal = theOrder.subTotal;
       this.notesToCloudKitchen = theOrder.notes;
       if (
@@ -165,18 +180,17 @@ export class FoodCheckoutComponent implements OnDestroy {
         theOrder.items === undefined ||
         theOrder.items.length === 0
       ) {
-        if (this.kitchen !== null && this.kitchen !== undefined) {
-          this.router.navigate(['/foods/chef', this.kitchen._id]).then();
+        if (this.kitchen ) {
+          this.router.navigate(['/cloud-kitchens', this.kitchen._id]).then();
         }
       }
     } else {
       this.order = this.getOrder();
-      if (this.order === null || this.order === undefined) {
-        this.router.navigateByUrl("/")
+      if (!this.order) {
+        this.router.navigateByUrl('/');
       } else {
         this.cartTotal = this.order.subTotal;
       }
-
     }
   }
   ngAfterViewInit(): void {
@@ -216,6 +230,7 @@ export class FoodCheckoutComponent implements OnDestroy {
   }
 
   placeOrder(content) {
+    window.alert('Placing order '+ JSON.stringify(this.order))
     this.loading = true;
     this.order.customer.name = this.customerName;
     this.order.customer.email = this.customerEmail;
@@ -223,15 +238,20 @@ export class FoodCheckoutComponent implements OnDestroy {
     this.order.customer.address = this.customerAddress;
     this.order.serviceMode = this.serviceMode;
     this.order.notes = this.notesToCloudKitchen;
-    this.orderService.saveOrder(this.order).subscribe((e) => {
-      this.orderSubmitted = true;
-      this.order = e;
-      // this.loading = false;
-      // this.orderConfirmed();
-      console.log('Saved order '+ JSON.stringify(e))
-      if (content) {
-        this.open(content);
-      } 
+    let observable = this.orderService.saveOrder(this.order);
+    observable.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (e) => {
+        this.orderSubmitted = true;
+        this.order = e;
+        this.loading = false;
+        if (content) {
+          this.open(content);
+        }
+      },
+      error: (err) => {
+        console.error('Errors during saving order. ' + JSON.stringify(err));
+        this.orderSubmitted = false;
+      },
     });
   }
 
@@ -242,7 +262,6 @@ export class FoodCheckoutComponent implements OnDestroy {
     this.showPaymentSection = false;
     this.showOrderConfirmation = true;
   }
-
 
   ngOnDestroy() {
     this.destroy$.next();
@@ -291,6 +310,14 @@ export class FoodCheckoutComponent implements OnDestroy {
     return chef;
   }
 
+  onSelectAddress(address: Address) {
+    if (address) {
+      this.customerAddress = address;
+      this.addressSelected = true;
+      this.lookupAddress = false;
+    }
+  }
+
   onSubmitPostcodeLookup(postcodeLookupForm: NgForm) {
     console.log('Search address form submitted..');
     if (postcodeLookupForm.valid) {
@@ -311,7 +338,7 @@ export class FoodCheckoutComponent implements OnDestroy {
           this.addressSelected = false;
           console.log(
             'Address Lookup response ' +
-            JSON.stringify(this.postcodeAddressList)
+              JSON.stringify(this.postcodeAddressList)
           );
         },
         (error) => {
@@ -364,7 +391,9 @@ export class FoodCheckoutComponent implements OnDestroy {
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
-        (result) => { this.loading = false; },
+        (result) => {
+          this.loading = false;
+        },
         (reason) => {
           this.loading = false;
           // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -376,7 +405,6 @@ export class FoodCheckoutComponent implements OnDestroy {
     this.modalService.dismissAll();
     this.loading = false;
   }
-
 
   goback() {
     this._location.back();

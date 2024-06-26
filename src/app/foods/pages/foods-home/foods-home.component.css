@@ -9,7 +9,9 @@
 .hero {
     height: 200px;
     width: 100%;
-    background-color: #f1f1f1;
+    /* color: #fff; */
+    color: rgb(242, 86, 0);
+    background-color: rgb(245, 241, 239);
     object-position: left center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -72,16 +74,15 @@
 
 .textSlider-text1 {
     animation: slide 5s linear infinite;
-    color: #f90202;
     /* color: #fff; */
 }
 
 .textSlider-text2 {
-    color: darkorange;
+    /* color: darkorange; */
 }
 
 .textSlider-text3 {
-    color: dodgerblue;
+    /* color: dodgerblue; */
 }
 
 @keyframes slide {

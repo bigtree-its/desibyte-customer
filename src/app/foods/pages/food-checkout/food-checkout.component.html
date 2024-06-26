@@ -5,7 +5,7 @@
         <div class="back" (click)="goback()">
             <fa-icon [icon]="faArrowLeft"></fa-icon>
         </div>
-        <span class="a-page-header">Checkout</span>
+        <span class="bolder fs-4">Checkout</span>
         <div>
             <strong *ngIf="order && !orderSubmitted" class="f-size-lg color-red bolder">{{order?.total|
                 currency:
@@ -40,18 +40,17 @@
         </div>
     </div>
 
-    <div class="row lg">
-        <div class="col-md-6">
+    <div class="lg flex-column">
+
+        <div class="flex-column border p-3 br-7 mt-3">
+            <span class="bolder fs-5">Your food cart</span>
             <app-f-order-item *ngFor="let item of order?.items" [item]="item" [editable]=false></app-f-order-item>
             <ng-template [ngTemplateOutlet]="summary"></ng-template>
         </div>
-        <div class="col-md-6">
-
-            <ng-template *ngIf="showHomeScreen" [ngTemplateOutlet]="auth"></ng-template>
-
-            <div *ngIf="!showHomeScreen" class="flex-column">
-                <ng-template [ngTemplateOutlet]="details"></ng-template>
-                <ng-template [ngTemplateOutlet]="deliveryOption"></ng-template>
+        <div *ngIf="!showHomeScreen" class="flex-column h-100">
+            <ng-template [ngTemplateOutlet]="details"></ng-template>
+            <ng-template [ngTemplateOutlet]="deliveryOption"></ng-template>
+            <div class="flex-row jcc aic">
                 <button *ngIf="canShowPlaceOrderButton()" class="btn-arrow mt-1 d-flex jcc aic" (click)="placeOrder(paymentForm)">
                     <span>{{loading? 'Please wait...': "I'm Ready to Pay"}}</span>
                     <svg width="34" height="34" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -62,19 +61,21 @@
                     </svg>
                 </button>
             </div>
+        </div>
 
-            <div *ngIf="showOrderConfirmation">
-                <div class="flex-column jcc aic bg-light p-4">
-                    <span>Your order has been submitted</span>
-                    <span class="f-size-xl mt-4 bolder big-text">{{order?.reference}}</span>
-                </div>
+        <div *ngIf="showOrderConfirmation">
+            <div class="flex-column jcc aic bg-light p-4">
+                <span>Your order has been submitted</span>
+                <span class="f-size-xl mt-4 bolder big-text">{{order?.reference}}</span>
             </div>
-
+        </div>
+        <div class="flex-column mt-3">
+            <ng-template *ngIf="showHomeScreen" [ngTemplateOutlet]="auth"></ng-template>
         </div>
     </div>
 
-    <div class="sm sticky-footer flex-row p-2 jcc">
-        <button *ngIf="canShowPlaceOrderButton()" class="btn-arrow mt-1 d-flex jcc aic" (click)="placeOrder(paymentForm)">
+    <div class="sm sticky-footer py-2 px-4 border-top">
+        <button *ngIf="canShowPlaceOrderButton()" class="btn-arrow mt-1 d-flex jcc aic w-100" (click)="placeOrder(paymentForm)">
             <span>{{loading? 'Please wait...': "I'm Ready to Pay"}}</span>
             <svg width="34" height="34" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="37" cy="37" r="35.5" stroke="white" stroke-width="3"></circle>
@@ -102,8 +103,8 @@
 </ng-template>
 
 <ng-template #details>
-    <div class="flex-column my-1 br-7 px-2 py-2">
-        <span class="bolder fs-4 py-1">About you</span>
+    <div class="flex-column my-1 br-7 px-2 py-2 border">
+        <span class="bolder fs-6 py-1">About you</span>
         <span class="bold py-1">{{customerName}}</span>
         <span class="pb-1">{{customerEmail}}</span>
         <span>{{customerMobile}}</span>
@@ -118,14 +119,14 @@
     </div>
 </ng-template>
 <ng-template #deliveryOption>
-    <div class="flex-column p-3 mb-2 bg-light">
+    <div class="flex-column p-3 mb-2 border br-7">
 
         <div *ngIf="kitchen.doDelivery" class="d-flex flex-grow br-25 p-0_5 bolder inset-box-shadow" style="background-color: #ddd;justify-self: center;padding: clamp(0.13rem, 0.09vw + 0.1rem, 0.25rem);">
             <button class="service-mode" (click)="selectPickup()" [class.selected]="serviceMode==='COLLECTION'"><fa-icon [icon]="faPersonBiking"
                     class="mr-1"></fa-icon>Collection</button>
             <button class="service-mode" (click)="selectDelivery()" [class.selected]="serviceMode==='DELIVERY'" [disabled]="!kitchen.doDelivery"><fa-icon [icon]="faBox" class="mr-1"></fa-icon>Delivery</button>
         </div>
-        <div *ngIf="serviceMode === 'COLLECTION' || !kitchen.doDelivery" class="flex-column">
+        <div *ngIf="serviceMode === 'COLLECTION' || !kitchen.doDelivery" class="flex-column p-3">
             <strong style="display: block;">Please collect
                 at</strong>
             <span style="display: block;">{{kitchen.address.addressLine1}}</span>
@@ -150,21 +151,22 @@
                         customerAddress.country }}</span>
                 </div>
                 <div>
-                    <button class="btn-13 py-2" (click)="showAddressLookup()">Change</button>
+                    <button class="btn-1 py-2" (click)="showAddressLookup()">Change</button>
                 </div>
             </div>
-            <div class="postcode-lookup-container" *ngIf="lookupAddress">
+            <app-postcode-lookup *ngIf="lookupAddress" (addressEmitter)="onSelectAddress($event)" style="background-color: #fff;"></app-postcode-lookup>
+            <!-- <div class="postcode-lookup-container" *ngIf="lookupAddress">
                 <input class="fb-input" type="text" name="postcode" id="postcode" tabindex="4" autocomplete="off" value [(ngModel)]="addressLookupPostcode" #ctrl="ngModel" placeholder="Enter your postcode">
                 <button class="btn-13 py-2" (click)="findAddress()">Find</button>
-            </div>
-            <div *ngIf="postcodeAddressList !== undefined && postcodeAddressList.length > 0 && !addressSelected">
+            </div> -->
+            <!-- <div *ngIf="postcodeAddressList !== undefined && postcodeAddressList.length > 0 && !addressSelected">
                 <div style="border: 1px solid var(--light-border);overflow-y: auto;height: 100px;margin-top: 5px;padding: 5px;">
                     <div class="address-item" *ngFor="let add of postcodeAddressList" (click)="onSelectDeliveryAddress(add)">
                         <span> {{add.StreetAddress }},
                             {{add.Place}}</span>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </ng-template>
@@ -183,7 +185,7 @@
             <span>Service Fee</span>
             <span>{{order?.serviceFee| currency: 'GBP'}}</span>
         </div>
-        <div class="flex-row-space-between" style="margin-top: 10px;">
+        <div class="flex-row-space-between mt-1 border-top py-1">
             <strong>Total</strong>
             <strong>{{order?.total| currency: 'GBP'}}</strong>
         </div>

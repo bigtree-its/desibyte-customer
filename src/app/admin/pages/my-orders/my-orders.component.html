@@ -110,7 +110,7 @@
             <!-- <ng-container *ngIf="showOrder" [ngTemplateOutlet]="orderLayout"></ng-container> -->
             <div class="flex-column border p-2 br-7">
                 <span class="bolder py-2">{{viewOrder.serviceMode === 'DELIVERY'? 'Delivery Address': 'Collection Address'}}</span>
-                <span [routerLink]="[ '/foods/chef', supplier?._id] " style="font-size: 15px;cursor: pointer;color:coral;" class="bold py-1" *ngIf="viewOrder.serviceMode === 'COLLECTION'">{{supplier.name}}</span>
+                <span [routerLink]="[ '/cloud-kitchens', supplier?._id] " style="font-size: 15px;cursor: pointer;color:coral;" class="bold py-1" *ngIf="viewOrder.serviceMode === 'COLLECTION'">{{supplier.name}}</span>
                 <div class="flex-row" *ngIf="viewOrder.serviceMode === 'DELIVERY'">
                     <span>{{viewOrder.customer.address.addressLine1}},</span>
                     <span>{{viewOrder.customer.address.addressLine2}}</span>
@@ -130,7 +130,7 @@
             </div>
             <div class="flex-column border p-2 br-7 my-1" *ngIf="viewOrder.serviceMode === 'DELIVERY'">
                 <span class="bolder py-2">Order prepared by</span>
-                <span [routerLink]="[ '/foods/chef', supplier?._id] " style="font-size: 15px;cursor: pointer;color:coral;" class="bold py-1">{{supplier?.name}}</span>
+                <span [routerLink]="[ '/cloud-kitchens', supplier?._id] " style="font-size: 15px;cursor: pointer;color:coral;" class="bold py-1">{{supplier?.name}}</span>
                 <div class="flex-row">
                     <span>{{supplier.address.addressLine1}},</span>
                     <span>{{supplier.address.addressLine2}}</span>
