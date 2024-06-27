@@ -19,7 +19,7 @@
             cuisine.name }}
         </span>
     </div>
-    <div class="sm flex-column h-100 my-1">
+    <div class="sm flex-column h-100 my-1 mb-200">
         <ng-container [ngSwitch]="activeLayout">
             <ng-container *ngSwitchCase="'Menu'" [ngTemplateOutlet]="menuLayout"></ng-container>
             <ng-container *ngSwitchCase="'Reviews'" [ngTemplateOutlet]="reviewsLayout"></ng-container>
@@ -227,7 +227,7 @@
     </div>
 </ng-template>
 <ng-template #infoLayout>
-    <div class="flex-column">
+    <div class="flex-column mb-200">
         <div class="border flex-column py-2 px-3 br-12 my-2">
             <b class="fs-6 py-2">Food hygiene rating</b>
             <div class="d-flex aic gap-1">
