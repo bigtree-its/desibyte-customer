@@ -1,10 +1,15 @@
 import { DecimalPipe, Location } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit, PipeTransform } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnDestroy,
+  OnInit,
+  PipeTransform,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { map, Observable, startWith, Subject, takeUntil } from 'rxjs';
-import { User } from 'src/app/model/all-auth';
 import {
   KitchenOrder,
   KitchenOrderProfileResponse,
@@ -14,7 +19,7 @@ import { AccountService } from 'src/app/services/auth/account.service';
 import { SupplierOrderService } from 'src/app/services/supplier/supplier-order.service';
 import { NgbHighlight } from '@ng-bootstrap/ng-bootstrap';
 import { CloudKitchenService } from 'src/app/services/foods/cloudkitchen.service';
-import { CloudKitchen } from '/Users/maan/projects/bigtree/project-beku/desibyte-customer/src/app/model/all-foods';
+import { CloudKitchen } from 'src/app/model/all-foods';
 
 @Component({
   selector: 'app-my-orders',
@@ -22,7 +27,6 @@ import { CloudKitchen } from '/Users/maan/projects/bigtree/project-beku/desibyte
   styleUrls: ['./my-orders.component.css'],
 })
 export class MyOrdersComponent implements OnInit, OnDestroy {
-
   destroy$ = new Subject<void>();
   actionOnOrder: KitchenOrder;
   selectedPeriod: string = 'Today';
@@ -67,14 +71,18 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.orderSvc.orderSubject$.subscribe((e) => {
       this.orderProfile = e;
-      if (this.orderProfile ) {
+      if (this.orderProfile) {
         this.ordersToView = this.orderProfile.today;
       } else {
         console.log('Subscribed orders are empty');
         this.cloudKitchen = this.kitchenService.getData();
-        if (this.cloudKitchen) {
-          this.fetchOrders();
-        }
+        this.kitchenService.cloudKitchenSubject$.subscribe(e=>{
+          if (e) {
+            this.cloudKitchen = e;
+            this.fetchOrders();
+          }
+        });
+        
       }
     });
     // var chefOrderProfile = sessionStorage.getItem("chef-order-profile");
@@ -84,24 +92,20 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
   }
 
   fetchOrders() {
-    let observable = this.orderSvc.getProfile(
-      this.cloudKitchen._id
-    );
+    let observable = this.orderSvc.getProfile(this.cloudKitchen._id);
     observable.pipe(takeUntil(this.destroy$)).subscribe({
       next: (e) => {
         this.orderProfile = e;
-        if (this.orderProfile.today && this.orderProfile.today.length > 0){
+        if (this.orderProfile.today && this.orderProfile.today.length > 0) {
           const sortedArray = this.orderProfile.today.slice().sort((a, b) => {
-            return (
-              <any>new Date(b.dateCreated) - <any>new Date(a.dateCreated)
-            );
+            return <any>new Date(b.dateCreated) - <any>new Date(a.dateCreated);
           });
           this.orders = sortedArray;
           this.myOrders$ = this.filter.valueChanges.pipe(
             startWith(''),
             map((text) => this.search(text, this.decimalPipe))
           );
-         }
+        }
       },
       error: (err) => {
         console.error(
@@ -186,7 +190,6 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
     this.viewOrder = order;
   }
 
-
   openActionConfirmation(content, size, action) {
     this.action = action;
     this.modalSvc
@@ -249,6 +252,16 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
         window.alert('Error when ' + status + ' the order');
       }
     );
+  }
+
+  showOrders(period: string) {
+    if (period === 'Today') {
+      this.ordersToView = this.orderProfile.today;
+    } else if (period === 'Week') {
+      this.ordersToView = this.orderProfile.sevenDays;
+    } else if (period === 'Month') {
+      this.ordersToView = this.orderProfile.month;
+    }
   }
 
   onAction(order: KitchenOrder, e) {

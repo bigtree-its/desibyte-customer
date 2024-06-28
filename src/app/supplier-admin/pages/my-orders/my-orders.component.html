@@ -5,10 +5,9 @@
     </div>
     <div class="sm">
         <div class="d-flex jcc aic w-100">
-            <div class="flex-column jcc aic py-3 px-5 bg-light-green">
+            <div class="flex-column jcc aic py-3 px-5 bg-light-green" (click)="showOrders('Today')">
                 <span class="bold">Today</span>
-                <span class="bolder fs-4">{{orderProfile.today.length}}</span>
-                <!-- <span>{{orderProfile. | currency:'GBP'}}</span> -->
+                <span class="bolder fs-4">{{orderProfile?.today?.length}}</span>
             </div>
         </div>
 
