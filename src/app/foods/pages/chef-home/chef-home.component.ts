@@ -187,7 +187,7 @@ export class ChefHomeComponent implements AfterViewInit, OnDestroy {
       console.log('Chef-home for supplier ' + this.supplierId);
 
 
-      let chefObs = this.cloudKitchenService.getChef(this.supplierId);
+      let chefObs = this.cloudKitchenService.retrieveKitchen(this.supplierId);
       chefObs.pipe(takeUntil(this.destroy$)).subscribe({
         next: (data) => {
           if (!Utils.isValid(data)) {

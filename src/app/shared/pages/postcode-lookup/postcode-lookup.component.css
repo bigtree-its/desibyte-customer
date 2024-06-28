@@ -36,9 +36,10 @@
 
 .address-item {
     padding: 6px;
+    font-weight: 700;
 }
 
 .address-item:hover {
-    color: var(--orange);
+    color: green;
     cursor: pointer;
 }

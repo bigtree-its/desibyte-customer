@@ -4,12 +4,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoginComponent, RegisterComponent, ResetInitiateComponent, ResetSubmitComponent } from './pages';
+import { AccountActivateComponent } from './pages/account-activate/account-activate.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'password_reset/new', component: ResetInitiateComponent },
-  { path: 'password_reset/submit', component: ResetSubmitComponent }
+  { path: 'password_reset/submit', component: ResetSubmitComponent },
+  { path: 'account_activate', component: AccountActivateComponent }
 ]
 
 @NgModule({
@@ -17,7 +19,8 @@ const routes: Routes = [
     LoginComponent,
     RegisterComponent,
     ResetInitiateComponent,
-    ResetSubmitComponent
+    ResetSubmitComponent,
+    AccountActivateComponent
   ],
   imports: [
     CommonModule,

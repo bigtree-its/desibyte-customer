@@ -55,6 +55,11 @@ export interface PasswordResetSubmit {
     password: string;
 }
 
+export class AccountActivationRequest {
+    accountId: string;
+    activationCode: string;
+}
+
 export interface CustomerPreferences{
     customerId: string;
     communicationViaEmail: Boolean;

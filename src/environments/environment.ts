@@ -13,6 +13,7 @@ export const environment = {
   CURRENCY_SYMBOL: '£',
   AD_REMOTE: 'https://ad-service-bd07dee8092c.herokuapp.com',
   ORDER_REMOTE: 'https://order-service-9ff7ad1220e2.herokuapp.com',
+  AUTH_REMOTE: 'https://bigtree-auth-service-672f06320174.herokuapp.com',
 
   ORDER_LOCAL: 'http://localhost:8082',
   AD_LOCAL: 'http://localhost:8083',
@@ -47,15 +48,16 @@ export const environment = {
   KitchenOrderSearchUrl: "http://localhost:8082/orders/v1/foods/profiles",
 
   // Auth
-  LoginUrl:'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/auth/token',
-  LogoutUrl:'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/auth/logout',
-  RegisterUrl:'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/users/signup',
-  PasswordResetInitiateUrl:'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/auth/passwords/reset_initiate',
-  PasswordResetSubmitUrl:'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/auth/passwords/reset_submit',
-  GetCustomerPreferencesUrl:'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/customers/replace-me/preferences',
-  CreateOrUpdateCustomerPreferencesUrl:'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/customers/preferences',
-  CreateContactsUrl:'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/contacts',
-  UpdatePersonalDetails:'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/users/update_personal',
+  LoginUrl:'http://localhost:8081/v1/auth/token',
+  LogoutUrl:'http://localhost:8081/v1/auth/logout',
+  RegisterUrl:'http://localhost:8081/v1/users/signup',
+  PasswordResetInitiateUrl:'http://localhost:8081/v1/auth/passwords/reset_initiate',
+  PasswordResetSubmitUrl:'http://localhost:8081/v1/auth/passwords/reset_submit',
+  AccountActivationUrl:'http://localhost:8081/v1/auth/account_activate',
+  GetCustomerPreferencesUrl:'http://localhost:8081/v1/customers/replace-me/preferences',
+  CreateOrUpdateCustomerPreferencesUrl:'http://localhost:8081/v1/customers/preferences',
+  CreateContactsUrl:'http://localhost:8081/v1/contacts',
+  UpdatePersonalDetails:'http://localhost:8081/v1/users/update_personal',
  
 
   //Ads

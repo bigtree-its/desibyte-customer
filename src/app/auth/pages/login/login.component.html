@@ -1,7 +1,7 @@
 <div class="container">
     <div class="d-flex jcc">
         <div class="flex-column card mt-3 p-3 jcs width-m" style="border:none;">
-            <span class="py-2 bolder fs-1">Login</span>
+            <span class="py-2 bolder fs-3">Login</span>
             <div class="py-1">
                 <p>
                     Enter the email address and your password. For security reasons, do not share your login credentials with anyone
@@ -27,7 +27,7 @@
             </div> -->
             <span class="clickable-link" [routerLink]="['/password_reset/new']">Forgot?</span>
             <br>
-            <button class="btn-arrow mt-3 d-flex jcc aic" (click)="submit()" >
+            <button class="btn-arrow mt-3 d-flex jcc aic" (click)="submit()">
                 <span>{{loading? 'Authenticating...' : 'Sign In'}}</span>
                 <svg width="34" height="34" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="37" cy="37" r="35.5" stroke="white" stroke-width="3"></circle>

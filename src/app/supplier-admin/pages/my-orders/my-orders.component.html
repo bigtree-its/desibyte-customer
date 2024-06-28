@@ -3,16 +3,27 @@
     <div class="section-header">
         <span class="bolder fs-3">My Orders</span>
     </div>
+    <div class="sm">
+        <div class="d-flex jcc aic w-100">
+            <div class="flex-column jcc aic py-3 px-5 bg-light-green">
+                <span class="bold">Today</span>
+                <span class="bolder fs-4">{{orderProfile.today.length}}</span>
+                <!-- <span>{{orderProfile. | currency:'GBP'}}</span> -->
+            </div>
+        </div>
+
+    </div>
+    <div class="flex-row jcc aic py-2 my-2 gap-2">
+        <button class="selectable-btn">Today</button>
+        <button class="btn-1">Week</button>
+        <button class="btn-1">Month</button>
+    </div>
     <div class="flex-row jcc aic py-2 my-2 gap-2">
         <span class="button-amber">Open</span>
         <span class="button-primary">In progress</span>
         <span class="button-success">Completed</span>
     </div>
-    <div class="flex-row jcc aic py-2 my-2 gap-2">
-        <span class="bold fs-6 clickable">Today</span>
-        <span class="bold fs-6 clickable">Week</span>
-        <span class="bold fs-6 clickable">Month</span>
-    </div>
+
     <div class="overflow-y height-500 w-100">
         <table class="table table-striped">
             <thead>
@@ -35,37 +46,37 @@
                     <td>
                         <ngb-highlight [result]="order.dateCreated | date " [term]="filter.value" />
                     </td>
-                    <td>
+                    <!-- <td>
                         <ngb-highlight [result]="order.status | titlecase" [term]="filter.value" />
-                    </td>
+                    </td> -->
                 </tr>
             </tbody>
         </table>
     </div>
     <div class="h-flex flex-wrap">
-        <div class="info-button y-flex" style="flex-grow: 1;" (click)="displayOrders(profile?.today, 'Today')">
+        <div class="info-button y-flex" style="flex-grow: 1;" (click)="displayOrders(orderProfile?.today, 'Today')">
             <span>Today</span>
-            <span style="font-size: 30px;">{{profile?.today.length}}</span>
+            <span style="font-size: 30px;">{{orderProfile?.today.length}}</span>
         </div>
-        <div class="info-button y-flex" style="flex-grow: 1;" (click)="displayOrders(profile?.sevenDays, 'Seven Days')">
+        <div class="info-button y-flex" style="flex-grow: 1;" (click)="displayOrders(orderProfile?.sevenDays, 'Seven Days')">
             <span>Week</span>
-            <span style="font-size: 30px;">{{profile?.sevenDays.length}}</span>
+            <span style="font-size: 30px;">{{orderProfile?.sevenDays.length}}</span>
         </div>
-        <div class="info-button y-flex" style="flex-grow: 1;" (click)="displayOrders(profile?.month, 'Month')">
+        <div class="info-button y-flex" style="flex-grow: 1;" (click)="displayOrders(orderProfile?.month, 'Month')">
             <span>Month</span>
-            <span style="font-size: 30px;">{{profile?.month.length}}</span>
+            <span style="font-size: 30px;">{{orderProfile?.month.length}}</span>
         </div>
-        <div class="info-button y-flex" style="flex-grow: 1;" (click)="displayOrders(profile?.lastMonth, 'Last Month')">
+        <div class="info-button y-flex" style="flex-grow: 1;" (click)="displayOrders(orderProfile?.lastMonth, 'Last Month')">
             <span>Previous Month</span>
-            <span style="font-size: 30px;">{{profile?.lastMonth.length}}</span>
+            <span style="font-size: 30px;">{{orderProfile?.lastMonth.length}}</span>
         </div>
-        <div class="info-button y-flex" style="flex-grow: 1;" (click)="displayOrders(profile?.sixMonth, 'Six Months')">
+        <div class="info-button y-flex" style="flex-grow: 1;" (click)="displayOrders(orderProfile?.sixMonth, 'Six Months')">
             <span>Six Months</span>
-            <span style="font-size: 30px;">{{profile?.sixMonth.length}}</span>
+            <span style="font-size: 30px;">{{orderProfile?.sixMonth.length}}</span>
         </div>
-        <div class="info-button y-flex" style="flex-grow: 1;" (click)="displayOrders(profile?.year, 'Year To Date')">
+        <div class="info-button y-flex" style="flex-grow: 1;" (click)="displayOrders(orderProfile?.year, 'Year To Date')">
             <span>Yearly</span>
-            <span style="font-size: 30px;">{{profile?.year.length}}</span>
+            <span style="font-size: 30px;">{{orderProfile?.year.length}}</span>
         </div>
     </div>
 

@@ -11,6 +11,7 @@ import {
 } from 'src/app/model/all-foods';
 import { LocalService } from '../common/local.service';
 import { ServiceLocator } from '../common/service.locator';
+import { Constants } from '../common/constants';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,6 @@ import { ServiceLocator } from '../common/service.locator';
 export class CloudKitchenService {
   ipAddress: string | undefined;
   configUrl = 'assets/static/location.json';
-  private storageItem = 'cloud-kitchen';
   private cloudKitchen: CloudKitchen = undefined;
   public cloudKitchenSubject$ = new BehaviorSubject(this.cloudKitchen);
 
@@ -29,7 +29,7 @@ export class CloudKitchenService {
   ) {}
 
   saveKitchen(kitchen: CloudKitchen): Observable<CloudKitchen> {
-    console.log('Saving kitchen')
+    console.log('Saving kitchen');
     var url = this.serviceLocator.CloudKitchenUrl;
     if (kitchen._id) {
       url = this.serviceLocator.CloudKitchenUrl + '/' + kitchen._id;
@@ -49,7 +49,9 @@ export class CloudKitchenService {
     }
   }
 
-  getAllCloudKitchens(query: CloudKitchenSearchQuery): Observable<CloudKitchen[]> {
+  getAllCloudKitchens(
+    query: CloudKitchenSearchQuery
+  ): Observable<CloudKitchen[]> {
     console.log('Getting cloud kitchens for : ' + JSON.stringify(query));
     var params = new HttpParams();
     if (query.cuisines !== undefined && query.cuisines !== null) {
@@ -70,7 +72,7 @@ export class CloudKitchenService {
     if (query.serviceAreas) {
       params = params.set('serviceAreas', query.serviceAreas);
     }
-    
+
     if (query.open) {
       params = params.set('open', query.open);
     }
@@ -80,7 +82,9 @@ export class CloudKitchenService {
     if (query.minimumOrder) {
       params = params.set('minimumOrder', query.minimumOrder);
     }
-    return this.http.get<CloudKitchen[]>(this.serviceLocator.CloudKitchenUrl, { params });
+    return this.http.get<CloudKitchen[]>(this.serviceLocator.CloudKitchenUrl, {
+      params,
+    });
   }
 
   fetchKitchen(email: string): Observable<CloudKitchen[]> {
@@ -89,17 +93,15 @@ export class CloudKitchenService {
     if (email) {
       params = params.set('email', email);
     }
-    return this.http.get<CloudKitchen[]>(this.serviceLocator.CloudKitchenUrl, { params });
-  }
-
-  getChef(id: string): Observable<CloudKitchen> {
-    console.log('Retrieving Chef ' + id);
-    var url = this.serviceLocator.CloudKitchenUrl + '/' + id;
-    return this.http.get<CloudKitchen>(url).pipe(
-      tap((data) => {
-        this.setCloudKitchenOnBrowserStorage(data);
+    return this.http
+      .get<CloudKitchen[]>(this.serviceLocator.CloudKitchenUrl, {
+        params,
       })
-    );
+      .pipe(
+        tap((result) => {
+          this.setCloudKitchenOnBrowserStorage(result[0]);
+        })
+      );
   }
 
   retrieveKitchen(id: string): Observable<CloudKitchen> {
@@ -182,19 +184,22 @@ export class CloudKitchenService {
 
   setCloudKitchenOnBrowserStorage(cloudKitchen: CloudKitchen) {
     this.cloudKitchen = cloudKitchen;
-    this.localService.saveData(this.storageItem, JSON.stringify(cloudKitchen));
+    this.localService.saveData(
+      Constants.StorageItem_CloudKitchen,
+      JSON.stringify(cloudKitchen)
+    );
     this.cloudKitchenSubject$.next(cloudKitchen);
   }
 
   purgeCloudKitchen() {
     console.log('Purging cloudKitchen.');
-    this.localService.removeData(this.storageItem);
+    this.localService.removeData(Constants.StorageItem_CloudKitchen);
     this.cloudKitchen = null;
     this.cloudKitchenSubject$.next(null);
   }
 
   getData(): CloudKitchen {
-    var json = this.localService.getData(this.storageItem);
+    var json = this.localService.getData(Constants.StorageItem_CloudKitchen);
     if (json === undefined) {
       return undefined;
     }

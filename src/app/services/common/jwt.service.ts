@@ -86,7 +86,7 @@ export class JwtService {
     }else{
       tokenClaims = this.getDecodedAccessToken(this.getAccessToken());
     }
-    if (tokenClaims && tokenClaims.userType && tokenClaims.userType === 'BusinessOwner') {
+    if (tokenClaims && tokenClaims.userType && tokenClaims.userType === 'Business') {
       console.log('The user is a supplier');
       return true;
     }

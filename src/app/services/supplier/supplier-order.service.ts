@@ -36,11 +36,10 @@ export class SupplierOrderService {
     return this.http.get<KitchenOrder[]>(this.serviceLocator.FoodOrdersUrl, {params});
   }
 
-  getProfile(email: string, id: string): Observable<KitchenOrderProfileResponse> {
+  getProfile(id: string): Observable<KitchenOrderProfileResponse> {
     var params = new HttpParams();
-    if (email) {
-      params = params.set('supplier', email);
-    }
+    params = params.set('cloudKitchenId', id);
+    console.log('Fetching order profile for kitchen ', id)
     return this.http.get<KitchenOrderProfileResponse>(this.serviceLocator.KitchenOrderProfileUrl, {params}).pipe(
       tap(result => {
         localStorage.setItem(this.storageItem, JSON.stringify(result));

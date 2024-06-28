@@ -6,7 +6,7 @@ import {
 } from 'rxjs/operators';
 
 import { Router } from '@angular/router';
-import { CustomerPreferences, LoginResponse, PasswordResetInitiate, PasswordResetSubmit, PersonalDetails, RegisterRequest, SignupResponse, User } from 'src/app/model/all-auth';
+import { AccountActivationRequest, CustomerPreferences, LoginResponse, PasswordResetInitiate, PasswordResetSubmit, PersonalDetails, RegisterRequest, SignupResponse, User } from 'src/app/model/all-auth';
 import { JwtService } from '../common/jwt.service';
 import { LocalService } from '../common/local.service';
 import { ServiceLocator } from '../common/service.locator';
@@ -210,6 +210,10 @@ export class AccountService {
 
   public passwordResetSubmit(req: PasswordResetSubmit): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(this.serviceLocator.PasswordResetSubmitUrl, req);
+  }
+
+  public activateAccount(req: AccountActivationRequest): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.serviceLocator.AccountActivationUrl, req);
   }
 
   public logout() {

@@ -82,7 +82,7 @@ export class HeaderComponent {
     this.accountService.loginSession$.subscribe({
       next: (value) => {
         this.user = value;
-        if (this.user.userType && this.user.userType === 'BusinessOwner'){
+        if (this.user && this.user.userType && this.user.userType === 'Business'){
           this.supplier = true;
         }
       },

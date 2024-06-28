@@ -32,6 +32,7 @@ export class ServiceLocator {
   RegisterUrl: string;
   PasswordResetInitiateUrl: string;
   PasswordResetSubmitUrl: string;
+  AccountActivationUrl: string;
   ReviewsUrl: string;
   GetCustomerPreferencesUrl: string;
   CreateOrUpdateCustomerPreferencesUrl: string;
@@ -84,6 +85,7 @@ export class ServiceLocator {
     this.RegisterUrl = environment.RegisterUrl;
     this.PasswordResetInitiateUrl = environment.PasswordResetInitiateUrl;
     this.PasswordResetSubmitUrl = environment.PasswordResetSubmitUrl;
+    this.AccountActivationUrl = environment.AccountActivationUrl;
     this.ReviewsUrl = environment.ReviewsUrl;
     this.GetCustomerPreferencesUrl = environment.GetCustomerPreferencesUrl;
     this.CreateOrUpdateCustomerPreferencesUrl = environment.CreateOrUpdateCustomerPreferencesUrl;

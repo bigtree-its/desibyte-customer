@@ -1,9 +1,9 @@
 import { DecimalPipe, Location } from '@angular/common';
-import { Component, inject, PipeTransform } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, PipeTransform } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { map, Observable, startWith } from 'rxjs';
+import { map, Observable, startWith, Subject, takeUntil } from 'rxjs';
 import { User } from 'src/app/model/all-auth';
 import {
   KitchenOrder,
@@ -13,13 +13,17 @@ import {
 import { AccountService } from 'src/app/services/auth/account.service';
 import { SupplierOrderService } from 'src/app/services/supplier/supplier-order.service';
 import { NgbHighlight } from '@ng-bootstrap/ng-bootstrap';
+import { CloudKitchenService } from 'src/app/services/foods/cloudkitchen.service';
+import { CloudKitchen } from '/Users/maan/projects/bigtree/project-beku/desibyte-customer/src/app/model/all-foods';
 
 @Component({
   selector: 'app-my-orders',
   templateUrl: './my-orders.component.html',
   styleUrls: ['./my-orders.component.css'],
 })
-export class MyOrdersComponent {
+export class MyOrdersComponent implements OnInit, OnDestroy {
+
+  destroy$ = new Subject<void>();
   actionOnOrder: KitchenOrder;
   selectedPeriod: string = 'Today';
   periods: string[] = ['Today', 'Week', 'Month'];
@@ -41,49 +45,35 @@ export class MyOrdersComponent {
   todayOrders: KitchenOrder[] = [];
   loginSessionJson: string;
   action: any;
-  profile: KitchenOrderProfileResponse;
   ordersToView: KitchenOrder[];
 
   myOrders$: Observable<KitchenOrder[]>;
   filter = new FormControl('', { nonNullable: true });
   decimalPipe = inject(DecimalPipe);
   viewOrder: KitchenOrder;
+  cloudKitchen: CloudKitchen;
+  errorMessage: any;
+  orderProfile: KitchenOrderProfileResponse;
 
   constructor(
     private _location: Location,
     private router: Router,
     private orderSvc: SupplierOrderService,
+    private kitchenService: CloudKitchenService,
     private accountSvc: AccountService,
     private modalSvc: NgbModal
   ) {}
 
   ngOnInit() {
     this.orderSvc.orderSubject$.subscribe((e) => {
-      this.profile = e;
-      if (e !== null && e !== undefined) {
-        this.ordersToView = this.profile.today;
+      this.orderProfile = e;
+      if (this.orderProfile ) {
+        this.ordersToView = this.orderProfile.today;
       } else {
         console.log('Subscribed orders are empty');
-        var user: User = this.accountSvc.getCurrentUser();
-        console.log('user logged in.. fetching orders..');
-        if (user !== null && user !== undefined) {
-          this.orderSvc.getProfile(user.email, user._id).subscribe((e) => {
-            this.profile = e;
-            if (e !== null && e !== undefined) {
-               if (this.profile.today && this.profile.today.length > 0){
-                const sortedArray = this.profile.today.slice().sort((a, b) => {
-                  return (
-                    <any>new Date(b.dateCreated) - <any>new Date(a.dateCreated)
-                  );
-                });
-                this.orders = sortedArray;
-                this.myOrders$ = this.filter.valueChanges.pipe(
-                  startWith(''),
-                  map((text) => this.search(text, this.decimalPipe))
-                );
-               }
-            }
-          });
+        this.cloudKitchen = this.kitchenService.getData();
+        if (this.cloudKitchen) {
+          this.fetchOrders();
         }
       }
     });
@@ -91,6 +81,34 @@ export class MyOrdersComponent {
     // if ( chefOrderProfile !== null && chefOrderProfile !== undefined){
     //   this.profile = JSON.parse(chefOrderProfile);
     // }
+  }
+
+  fetchOrders() {
+    let observable = this.orderSvc.getProfile(
+      this.cloudKitchen._id
+    );
+    observable.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (e) => {
+        this.orderProfile = e;
+        if (this.orderProfile.today && this.orderProfile.today.length > 0){
+          const sortedArray = this.orderProfile.today.slice().sort((a, b) => {
+            return (
+              <any>new Date(b.dateCreated) - <any>new Date(a.dateCreated)
+            );
+          });
+          this.orders = sortedArray;
+          this.myOrders$ = this.filter.valueChanges.pipe(
+            startWith(''),
+            map((text) => this.search(text, this.decimalPipe))
+          );
+         }
+      },
+      error: (err) => {
+        console.error(
+          'Errors during loading orders for kitchen. ' + JSON.stringify(err)
+        );
+      },
+    });
   }
 
   search(text: string, pipe: PipeTransform): KitchenOrder[] {
@@ -236,5 +254,10 @@ export class MyOrdersComponent {
   onAction(order: KitchenOrder, e) {
     this.updateStatus(order, e.target.value);
     this.modalSvc.dismissAll();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

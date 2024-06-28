@@ -280,7 +280,19 @@ export class FoodCheckoutComponent implements OnDestroy {
   selectDelivery() {
     this.serviceMode = 'DELIVERY';
     this.order.serviceMode = 'DELIVERY';
-    this.order.deliveryFee = this.kitchen.deliveryFee;
+    if ( this.kitchen){
+      if ( this.kitchen.freeDeliveryOver > 0){
+        if ( this.order.total >= this.kitchen.freeDeliveryOver){
+          this.order.deliveryFee = 0;
+        }else{
+          var deliveryQualify = this.kitchen.freeDeliveryOver - this.order.total;
+          if ( deliveryQualify > 0){
+            
+          }
+          this.order.deliveryFee = this.kitchen.deliveryFee;
+        }
+      }
+    }
     this.order.total = this.order.total + this.kitchen.deliveryFee;
   }
 

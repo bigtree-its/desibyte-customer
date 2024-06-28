@@ -81,6 +81,7 @@ export class MyHomeComponent implements OnInit, OnDestroy {
   menus: Menu[];
   specials: Menu[];
   orderProfile: KitchenOrderProfileResponse;
+  notification: string;
 
   ngOnInit(): void {
     this.fetchCuisines();
@@ -145,7 +146,6 @@ export class MyHomeComponent implements OnInit, OnDestroy {
   }
   fetchOrders() {
     let observable = this.supplierOrderService.getProfile(
-      this.cloudKitchen.contact.email,
       this.cloudKitchen._id
     );
     observable.pipe(takeUntil(this.destroy$)).subscribe({
@@ -413,6 +413,8 @@ export class MyHomeComponent implements OnInit, OnDestroy {
       next: (e) => {
         this.saveKitchenStatus = true;
         this.activeLayout = 'Home';
+        this.cloudKitchen = e;
+        this.notification = "Your changes are saved";
       },
       error: (err) => {
         console.error('Errors during saving kitchen. ' + JSON.stringify(err));
@@ -420,6 +422,10 @@ export class MyHomeComponent implements OnInit, OnDestroy {
         this.activeLayout = 'Home';
       },
     });
+  }
+
+  closeNotification(){
+    this.notification = null;
   }
 
   ngOnDestroy() {

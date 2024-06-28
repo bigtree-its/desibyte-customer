@@ -15,5 +15,6 @@ export class Constants {
   static StorageItem_Location: string = 'location';
   static StorageItem_P_OrderList: string = 'p_order_list';
   static StorageItem_F_OrderList: string = 'f_order_list';
+  static StorageItem_CloudKitchen: string = 'cloud_kitchen';
 ;
 }

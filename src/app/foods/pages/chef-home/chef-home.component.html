@@ -32,47 +32,41 @@
 
     <div class="lg row">
         <div class="col-md-8" style=" min-height: 100vh;overflow-y: auto; margin-bottom: 100px;">
-            <div class="py-1">
-                <div class="flex-row jcc aic border br-7">
-                    <div style="height: 220px;width: 200px;">
-                        <img src="{{cloudKitchen.image}}" style="object-fit: contain;height: 100%; width: 100%;border-radius: 12px;">
+            <div class="flex-row jcc ais">
+                <div style="height: 220px;width: 200px;">
+                    <img src="{{cloudKitchen.image}}" style="object-fit: contain;height: 100%; width: 100%;border-radius: 12px;">
+                </div>
+                <div class="flex-column gap-1 ml-2 pt-2">
+                    <div class="clickable-row" style="font-size: 12px;" (click)="selectLayout('Reviews')">
+                        <fa-icon [icon]="faStar"></fa-icon>
+                        <span style="padding-left: 6px;">{{cloudKitchen.rating}}</span>
+                        <span style="padding-left: 6px;">({{cloudKitchen.reviews}}
+                            reviews)</span>
                     </div>
-                    <div class="flex-column gap-1 ml-2">
-                        <div class="title-section">
-                            <div class="clickable-row" style="font-size: 12px;" (click)="selectLayout('Reviews')">
-                                <fa-icon [icon]="faStar"></fa-icon>
-                                <span style="padding-left: 6px;">{{cloudKitchen.rating}}</span>
-                                <span style="padding-left: 6px;">({{cloudKitchen.reviews}}
-                                    reviews)</span>
-                            </div>
-                        </div>
-                        <div class="flex-row">
-                            <span *ngIf="cloudKitchen.preOrderOnly" class="attribute">PrefoodOrder Only</span>
-                        </div>
-                        <span class="py-1 px-1 f-size-s lg">{{cloudKitchen.description}}</span>
-                        <table>
-                            <tr>
-                                <th>Cuisines</th>
-                                <td>
-                                    <div class="gap-1 flex-row-wrap">
-                                        <span class="mr-1" *ngFor="let cuisine of cloudKitchen.cuisines | slice:0:3">{{
-                                        cuisine.name }}
-                                    </span>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr *ngIf="cloudKitchen.doDelivery">
-                                <th>Free Delivery</th>
-                                <td><span>Order over
-                                    {{cloudKitchen.freeDeliveryOver |
-                                    currency: 'GBP'}}</span></td>
-                            </tr>
-                        </table>
-                        <div *ngIf="!cloudKitchen.doDelivery" style="padding: 5px 0;">
-                            <span class="attribute">Collection Only</span>
-                        </div>
-                        <!-- <ng-container [ngTemplateOutlet]="menuBar"></ng-container> -->
+                    <div class="flex-row">
+                        <span *ngIf="cloudKitchen.preOrderOnly" class="attribute">PrefoodOrder Only</span>
                     </div>
+
+                    <span class="py-1 px-1 f-size-s lg">{{cloudKitchen.description}}</span>
+                    <span class="my-1 bolder">Cuisines</span>
+                    <div class="gap-1 flex-row-wrap">
+                        <span class="mr-1" *ngFor="let cuisine of cloudKitchen.cuisines | slice:0:3">{{
+                            cuisine.name }}
+                        </span>
+                    </div>
+                    <div class="flex-column" *ngIf="cloudKitchen.doDelivery">
+                        <span class="bg-light-green px-2">Home Delivery</span>
+                        <div class="flex-row gap-3" *ngIf="cloudKitchen.freeDeliveryOver > 0">
+                            <span class="my-1 bolder">Free delivery</span>
+                            <span>Order over
+                                {{cloudKitchen.freeDeliveryOver |
+                                currency: 'GBP'}}</span>
+                        </div>
+                    </div>
+                    <div *ngIf="!cloudKitchen.doDelivery" style="padding: 5px 0;">
+                        <span class="bg-light-green px-2">Collection Only</span>
+                    </div>
+                    <!-- <ng-container [ngTemplateOutlet]="menuBar"></ng-container> -->
                 </div>
             </div>
 
