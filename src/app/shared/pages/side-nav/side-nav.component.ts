@@ -16,9 +16,10 @@ export class SideNavComponent implements OnInit {
   
   @Input() sidenavTemplateRef: any;
   @Input() duration: number = 0.25;
-  @Input() navWidth: number = window.innerWidth;
+  // @Input() navWidth: number = window.innerWidth;
+  @Input() navWidth: number = window.outerWidth;
   // @Input() direction: SideNavDirection = SideNavDirection.Left;
-  @Input() direction: string = "left";
+  @Input() direction: string = "right";
   
   constructor(private navService: NavigationService){}
 

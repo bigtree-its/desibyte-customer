@@ -3,19 +3,19 @@
     <div class="section-header">
         <span class="bolder fs-3">My Orders</span>
     </div>
-    <div class="sm">
-        <div class="d-flex jcc aic w-100">
-            <div class="flex-column jcc aic py-3 px-5 bg-light-green" (click)="showOrders('Today')">
-                <span class="bold">Today</span>
-                <span class="bolder fs-4">{{orderProfile?.today?.length}}</span>
-            </div>
+    <div class="d-flex jcc aic w-100 gap-3">
+        <div class="flex-column jcc aic py-3 px-5 bg-light-green" (click)="showOrders('Today')">
+            <span class="bold">Today</span>
+            <span class="bolder fs-4">{{orderProfile?.today?.length}}</span>
         </div>
-
-    </div>
-    <div class="flex-row jcc aic py-2 my-2 gap-2">
-        <button class="selectable-btn">Today</button>
-        <button class="btn-1">Week</button>
-        <button class="btn-1">Month</button>
+        <div class="flex-column jcc aic py-3 px-5 bg-light-green" (click)="showOrders('Week')">
+            <span class="bold">Week</span>
+            <span class="bolder fs-4">{{orderProfile?.sevenDays?.length}}</span>
+        </div>
+        <div class="flex-column jcc aic py-3 px-5 bg-light-green" (click)="showOrders('Month')">
+            <span class="bold">Month</span>
+            <span class="bolder fs-4">{{orderProfile?.month?.length}}</span>
+        </div>
     </div>
     <div class="flex-row jcc aic py-2 my-2 gap-2">
         <span class="button-amber">Open</span>

@@ -3,7 +3,7 @@
 
 /** Special Fonts **/
 
-@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Limelight&display=swap');
 
 /** Default font **/
 
@@ -11,7 +11,7 @@
 
 /** Logo **/
 
-@import url("https://fonts.googleapis.com/css2?family=Limelight&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Alumni+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 :root {
     --body: #f5f7f8;
     --blue: #007bff;
@@ -205,7 +205,7 @@ body {
     /* line-height: 2.6rem; */
     letter-spacing: 0.1px;
     background-color: #f5f7f8;
-    font-family: "Open Sans", sans-serif;
+    /* font-family: "Open Sans", sans-serif; */
     overflow: -moz-scrollbars-none;
     -ms-overflow-style: none;
     /* color: #162127; */
@@ -222,20 +222,24 @@ body {
     border-radius: 0;
 }
 
+ul {
+    padding: 0;
+}
+
 .big-text {
     font-family: "Jaro", sans-serif;
     font-optical-sizing: auto;
 }
 
 .logo-text {
-    font-family: "Limelight", sans-serif;
+    font-family: "Alumni Sans", sans-serif;
     font-weight: 600;
     font-size: 24px;
     cursor: pointer;
 }
 
 .spl-text {
-    font-family: "Bebas Neue", sans-serif;
+    font-family: "Limelight", sans-serif;
     font-optical-sizing: auto;
 }
 
@@ -332,6 +336,10 @@ body {
 
 .bg-light-green {
     background-color: rgb(216, 239, 239);
+}
+
+.bg-light-brown {
+    background-color: #ffe6e6;
 }
 
 .bg-dark {
@@ -441,6 +449,18 @@ body {
 .btn-2:focus-visible {
     -webkit-box-shadow: none;
     box-shadow: none;
+}
+
+.btn-3 {
+    padding: 5px 10px;
+    border-radius: 12px;
+    border: 1px solid #f5f7f9;
+}
+
+.btn-3:hover {
+    background-color: #111;
+    cursor: pointer;
+    color: #fff;
 }
 
 .btn-9 {
@@ -1222,23 +1242,6 @@ select {
     width: 50%;
 }
 
-.w-half-screen {
-    width: 50%;
-}
-
-.header-font {
-    font-family: "Abril Fatface", serif;
-    color: #162127;
-}
-
-.f-dim {
-    color: #656c72;
-}
-
-.font-abril-fatface {
-    font-family: "Abril Fatface", serif;
-}
-
 .color-red {
     color: var(--d-red);
 }
@@ -1247,13 +1250,19 @@ select {
     color: #fff;
 }
 
-.font-playfair-display {
-    font-family: Playfair Display, "Playfair Display-fallback", Lora, "Lora-fallback", Georgia, serif;
+.list-horizontal li {
+    display: inline-block;
 }
 
-.title-section {
-    display: flex;
-    flex-direction: column;
+.list-horizontal li:before {
+    content: '\00a0\2022\00a0\00a0';
+    color: #999;
+    /* color: rgba(0, 0, 0, 0.5); */
+    /* font-size: 11px; */
+}
+
+.list-horizontal li:first-child:before {
+    content: '';
 }
 
 .sticky-footer {
@@ -1261,12 +1270,10 @@ select {
     bottom: 0;
     left: 0;
     right: 0;
-    background: #fff;
     z-index: 99;
 }
 
 .footer {
-    background: #fff;
     z-index: 99;
 }
 

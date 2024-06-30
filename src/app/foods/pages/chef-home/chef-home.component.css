@@ -1,21 +1,3 @@
-.select-span {
-    display: flex;
-    border-bottom: 2px solid #fff;
-    padding: 6px 10px;
-    align-items: center;
-    margin: 3px 10px;
-}
-
-.select-span:hover {
-    border-bottom: 2px solid #111;
-    cursor: pointer;
-}
-
-.selectedSpan {
-    background-color: #111;
-    color: #fff;
-}
-
 .selectedCal {
     background-color: #868080;
     color: var(--brand-color);
@@ -36,15 +18,6 @@
 
 .icon-text-selected {
     color: var(--orange);
-}
-
-.basket {
-    color: coral;
-}
-
-.basket:hover {
-    cursor: pointer;
-    color: #2661f6;
 }
 
 ::ng-deep .modal-content {

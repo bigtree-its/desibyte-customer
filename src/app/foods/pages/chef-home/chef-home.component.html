@@ -15,9 +15,10 @@
         </div>
     </div>
     <div class="sm flex-row jcc aic w-100 my-1 gap-1">
-        <span *ngFor="let cuisine of cloudKitchen.cuisines | slice:0:3">{{
-            cuisine.name }}
-        </span>
+        <ul class="list-horizontal">
+            <li *ngFor="let cuisine of cloudKitchen.cuisines | slice:0:3">{{ cuisine.name }}
+            </li>
+        </ul>
     </div>
     <div class="sm flex-column h-100 my-1 mb-200">
         <ng-container [ngSwitch]="activeLayout">
@@ -49,11 +50,10 @@
 
                     <span class="py-1 px-1 f-size-s lg">{{cloudKitchen.description}}</span>
                     <span class="my-1 bolder">Cuisines</span>
-                    <div class="gap-1 flex-row-wrap">
-                        <span class="mr-1" *ngFor="let cuisine of cloudKitchen.cuisines | slice:0:3">{{
-                            cuisine.name }}
-                        </span>
-                    </div>
+                    <ul class="list-horizontal">
+                        <li *ngFor="let cuisine of cloudKitchen.cuisines | slice:0:3">{{ cuisine.name }}
+                        </li>
+                    </ul>
                     <div class="flex-column" *ngIf="cloudKitchen.doDelivery">
                         <span class="bg-light-green px-2">Home Delivery</span>
                         <div class="flex-row gap-3" *ngIf="cloudKitchen.freeDeliveryOver > 0">
@@ -94,7 +94,7 @@
 </div>
 
 <ng-template #mobileMenuBar>
-    <div class="sticky-footer flex-row gap-3 border-top jcsb aic px-3">
+    <div class="sticky-footer flex-row gap-3 bg-white border-top jcsb jcc aic px-3">
         <!-- <div class="flex-row icon-text">
             <fa-icon [icon]="faBag" class="basket" [routerLink]="['/ck/basket']"></fa-icon>
             <span class="btn-circle" style="position: relative;
@@ -102,6 +102,10 @@
                 left: -5px;
                 background: #f5f5f5;">{{itemsInCart}}</span>
         </div> -->
+        <div class="flex-column jcc aic p-3 icon-text" (click)="selectLayout('Info')" [class.icon-text-selected]="activeLayout === 'Info'">
+            <fa-icon [icon]="faHouse"></fa-icon>
+            <small>Home</small>
+        </div>
         <div class="flex-row jcc aic">
             <div class="flex-column jcc aic icon-text" [routerLink]="['/ck/basket']">
                 <fa-icon [icon]="faBag"></fa-icon>
@@ -110,10 +114,7 @@
             <span *ngIf="itemsInCart > 0" class="btn-circle">{{itemsInCart}}</span>
         </div>
 
-        <div class="flex-column jcc aic p-3 icon-text" (click)="selectLayout('Info')" [class.icon-text-selected]="activeLayout === 'Info'">
-            <fa-icon [icon]="faHouse"></fa-icon>
-            <small>Home</small>
-        </div>
+
         <div class="flex-column jcc aic p-3 icon-text" (click)="selectLayout('Menu')" [class.icon-text-selected]="activeLayout === 'Menu'">
             <fa-icon [icon]="faMenu"></fa-icon>
             <small>Menu</small>

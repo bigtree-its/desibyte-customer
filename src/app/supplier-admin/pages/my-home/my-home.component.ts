@@ -54,6 +54,7 @@ export class MyHomeComponent implements OnInit, OnDestroy {
   packagingFee: any;
   kitchenName: string;
   description: string;
+  keyword: string;
   cuisineInput: string;
   kitchenAddress: Address;
   cuisines: Cuisine[];
@@ -422,6 +423,42 @@ export class MyHomeComponent implements OnInit, OnDestroy {
         this.activeLayout = 'Home';
       },
     });
+  }
+
+  removeKeyword(keyword: string) {
+    if ( this.cloudKitchen){
+      if ( this.cloudKitchen.keywords){
+        for (var i = 0; i < this.cloudKitchen.keywords.length; i++) {
+          var kw = this.cloudKitchen.keywords[i];
+          if (kw === keyword) {
+            this.cloudKitchen.keywords.splice(i, 1);
+            break;
+          }
+        }
+      }
+    }
+  }
+  
+  addNewKeyword(){
+    if ( this.cloudKitchen){
+      if ( !this.cloudKitchen.keywords){
+        this.cloudKitchen.keywords = [];
+      }
+      if ( this.cloudKitchen.keywords){
+        var found = false;
+        for (var i = 0; i < this.cloudKitchen.keywords.length; i++) {
+          var kw = this.cloudKitchen.keywords[i];
+          if (kw === this.keyword) {
+            found = true;
+            break;
+          }
+        }
+        if (! found){
+          this.cloudKitchen.keywords.push(this.keyword);
+          this.keyword = "";
+        }
+      }
+    }
   }
 
   closeNotification(){

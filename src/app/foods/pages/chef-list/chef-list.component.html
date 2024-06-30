@@ -1,4 +1,4 @@
-<div class="container-fluid mb-150">
+<div class="mb-150">
 
     <div class="flex-row py-2 aic">
         <fa-icon [icon]="faArrowLeft" (click)="goBack()" class="btn-circle mr-3"></fa-icon>
@@ -19,8 +19,9 @@
         <span class="bolder fs-5">Whats on your mind ?</span>
         <div class="full-screen mb-2 px-3">
             <div class="flex-row-scrollable py-3">
-                <div *ngFor="let d of dishes" class="btn-text d-flex jcc aic mr-1 px-3" (click)="onSelectDish(d)" [class.clicked]="isDishSelected(d)">
-                    <span>{{d.name}}</span>
+                <!-- <div *ngFor="let kw of keywords" class="btn-text d-flex jcc aic mr-1 px-3" (click)="onSelectDish(d)" [class.clicked]="isDishSelected(d)"> -->
+                <div *ngFor="let kw of keywords" class="btn-text d-flex jcc aic mr-1 px-3" (click)="onSelectKeyword(kw)" [class.selected]="isKeywordSelected(kw)">
+                    <span>{{kw}}</span>
                 </div>
             </div>
         </div>
@@ -29,9 +30,10 @@
     <div class="flex-column w-100 mb-2 px-3 lg">
         <h4 class="big-text">Whats on your mind ?</h4>
         <div class="flex-row-scrollable">
-            <div *ngFor="let d of dishes" class="selectable mr-1" (click)="onSelectDish(d)" [class.selected]="isDishSelected(d)">
+            <!-- <div *ngFor="let d of dishes" class="selectable mr-1" (click)="onSelectDish(d)" [class.selected]="isDishSelected(d)"> -->
+            <div *ngFor="let kw of keywords" class="selectable mr-1" (click)="onSelectKeyword(kw)" [class.selected]="isKeywordSelected(kw)">
                 <fa-icon [icon]="faCheck"></fa-icon>
-                <span class="pl-1">{{d.name}}</span>
+                <span class="pl-1">{{kw}}</span>
             </div>
         </div>
     </div>
@@ -43,7 +45,7 @@
         </div>
     </div>
 
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+    <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
         <div class="col mb-4 br-12" *ngFor="let chef of filteredKitchens " [routerLink]="[ '/cloud-kitchens', chef._id] ">
             <div class="br-12 chef-card" style="border:none;">
                 <img src="{{chef.image}}" class="card-img-top br-top-14" alt="...">

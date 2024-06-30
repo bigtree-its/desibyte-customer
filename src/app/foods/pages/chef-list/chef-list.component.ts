@@ -53,6 +53,8 @@ export class ChefListComponent implements OnDestroy {
   errors: any;
   errorMessage: any;
   dishes: Dish[] = [];
+  keywords: string[] = [];
+  selectedKeywords: string[] = [];
   cuisine: Cuisine;
   faStar = faStar;
   faCopyright = faCopyright;
@@ -116,7 +118,6 @@ export class ChefListComponent implements OnDestroy {
         this.fetchChefsByPostcodeDistrict(this.postcodeDistrict);
         this.titleService.setTitle("Home Chefs in "+this.postcodeDistrict.area+", "+ this.postcodeDistrict.prefix.toUpperCase());
         this.localService.saveData(Constants.StorageItem_Location, JSON.stringify(this.postcodeDistrict));
-        this.fetchChefsByPostcodeDistrict(this.postcodeDistrict);
       }else{
         this.invalidPostcodeDistrict = true;
       }
@@ -193,31 +194,30 @@ export class ChefListComponent implements OnDestroy {
     }
   }
 
-  onSelectDish(c: Dish) {
+  onSelectKeyword(c: string) {
     console.log('You clicked dish' + JSON.stringify(c));
     var selected = false;
-    for (var i = 0; i < this.selectedDishes.length; i++) {
-      var theDish = this.selectedDishes[i];
-      if (theDish.name === c.name) {
-        this.selectedDishes.splice(i, 1);
+    for (var i = 0; i < this.selectedKeywords.length; i++) {
+      var k = this.selectedKeywords[i];
+      if (k === c) {
+        this.selectedKeywords.splice(i, 1);
         selected = true;
       }
     }
     this.filteredKitchens = [];
     if (!selected) {
-      this.selectedDishes.push(c);
+      this.selectedKeywords.push(c);
     }
 
     this.filterByDish();
   }
 
-  isDishSelected(c: Dish) {
+  isKeywordSelected(c: string) {
     var selected = false;
-    for (var i = 0; i < this.selectedDishes.length; i++) {
-      var theDish = this.selectedDishes[i];
-      if (theDish.name === c.name) {
+    for (var i = 0; i < this.selectedKeywords.length; i++) {
+      var theDish = this.selectedKeywords[i];
+      if (theDish === c) {
         selected = true;
-        console.log('Dish selected? ' + true);
         break;
       }
     }
@@ -225,15 +225,13 @@ export class ChefListComponent implements OnDestroy {
   }
 
   filterByDish() {
-    console.log('Chefs: ' + JSON.stringify(this.kitchens));
-    console.log('Selected dish: ' + JSON.stringify(this.selectedDishes));
-    if (this.selectedDishes.length === 0) {
+    if (this.selectedKeywords.length === 0) {
       this.filteredKitchens = this.kitchens;
     } else {
       this.kitchens.forEach((supplier) => {
-        this.selectedDishes.forEach((selectedD) => {
-          supplier.dishes.forEach((sd) => {
-            if (selectedD.name === sd.name) {
+        this.selectedKeywords.forEach((selectedD) => {
+          supplier.keywords.forEach((sd) => {
+            if (selectedD === sd) {
               if (!this.filteredKitchens.includes(supplier)) {
                 this.filteredKitchens.push(supplier);
               }
@@ -256,6 +254,13 @@ export class ChefListComponent implements OnDestroy {
       .subscribe((result: CloudKitchen[]) => {
         this.kitchens = result;
         this.filteredKitchens = this.kitchens;
+        
+        if ( this.filteredKitchens){
+          this.filteredKitchens.forEach((ck, i) => {
+            this.keywords = this.keywords.concat(ck.keywords)
+          });
+          console.log('Keywords ='+ this.keywords)
+        }
       });
   }
 

@@ -26,6 +26,7 @@ export class CloudKitchen{
     name?: string;
     image?: string;
     description?: string[];
+    keywords?: string[];
     partyDescription?: string[];
     allergenAdvice?: string[];
     collectionTimings?: string[];

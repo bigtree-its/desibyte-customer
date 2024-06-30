@@ -41,6 +41,7 @@
             <ng-container *ngSwitchCase="'Address'" [ngTemplateOutlet]="addressTemplate"></ng-container>
             <ng-container *ngSwitchCase="'Contact'" [ngTemplateOutlet]="contactTemplate"></ng-container>
             <ng-container *ngSwitchCase="'Cuisines'" [ngTemplateOutlet]="cuisinesTemplate"></ng-container>
+            <ng-container *ngSwitchCase="'Keywords'" [ngTemplateOutlet]="keywordsTemplate"></ng-container>
             <ng-container *ngSwitchCase="'Packaging and Delivery'" [ngTemplateOutlet]="packagingAndDeliveryTemplate"></ng-container>
             <ng-container *ngSwitchCase="'Party Orders'" [ngTemplateOutlet]="partyOrderTemplate"></ng-container>
             <ng-container *ngSwitchCase="'Service Areas'" [ngTemplateOutlet]="serviceAreasTemplate"></ng-container>
@@ -103,6 +104,14 @@
                     <span class="bolder fs-6 mt-3  clickable-link" (click)="selectActiveLayout('Cuisines')">Cuisines</span>
                     <div class="flex-row flex-wrap gap-2 mt-2">
                         <span class="selected-info" *ngFor="let cuisine of cloudKitchen?.cuisines">{{cuisine.name}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-column ">
+                <span class="bolder fs-6 my-2 clickable-link" (click)="selectActiveLayout('Keywords')">Keywords</span>
+                <div class="flex-column mb-2" *ngIf="cloudKitchen && cloudKitchen?.keywords && cloudKitchen?.keywords?.length > 0">
+                    <div class="flex-row flex-wrap gap-2 mt-2">
+                        <span class="selected-info" *ngFor="let kw of cloudKitchen?.keywords">{{kw}}</span>
                     </div>
                 </div>
             </div>
@@ -525,6 +534,22 @@
                 <strong
                     style="font-size: 30px;">{{orderProfile?.year.length}}</strong>
             </button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #keywordsTemplate>
+    <div class="flex-column">
+        <span class="bolder spl-text my-2">Your Keywords</span>
+        <div class="flex-row flex-wrap gap-2">
+            <div class="flex-row jcsb border br-7 aic py-2 px-3 box" *ngFor="let keyword of cloudKitchen?.keywords">
+                <span style="margin-right: 20px;">{{keyword}}</span>
+                <button class="btn-circle" title="Remove" (click)="removeKeyword(keyword)">X</button>
+            </div>
+        </div>
+        <div class="flex-row gap-3 mt-2">
+            <input id="keyword" required type="text" name="keyword" autocomplete="off" [(ngModel)]="keyword" #ctrl="ngModel">
+            <button class="btn-2" (click)="addNewKeyword()">Add</button>
         </div>
     </div>
 </ng-template>

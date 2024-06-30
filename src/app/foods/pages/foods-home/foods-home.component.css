@@ -1,17 +1,9 @@
-.title-text {
-    font-family: "Protest Riot", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 50px;
-    color: #333BFF;
-}
-
 .hero {
     height: 200px;
     width: 100%;
+    border-radius: 12px;
     /* color: #fff; */
-    color: rgb(242, 86, 0);
-    background-color: rgb(245, 241, 239);
+    background-color: rgb(244, 227, 218);
     object-position: left center;
     background-size: cover;
     background-repeat: no-repeat;
