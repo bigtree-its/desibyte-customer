@@ -1,0 +1,83 @@
+<div class="contianer-fluid">
+    <div class="row">
+        <div class="lg col flex-column bg-white h-100 jcs aic">
+            <span *ngIf="cloudKitchen" class="bolder fs-3 mt-5">You are
+                reviewing {{cloudKitchen.name}} </span>
+            <div style="height: 400px;width: 400px;">
+                <img src="{{cloudKitchen.image}}" style="object-fit: cover;
+                    max-height: 398px;
+                    height: 398px;
+                    width: 400px;
+                    max-width: 400px;">
+            </div>
+            <!-- <div style="max-height: 100%;max-width: 100%;">
+                <img src="/assets/images/food.jpeg" style="object-fit: cover;max-height: 100%;max-width: 100%;">
+            <img src="{{cloudKitchen.image}}" style="object-fit: cover;max-height: 100%;max-width: 100%;">
+        </div> -->
+            <div class="flex-row gap-1">
+                <span>{{cloudKitchen.address?.addressLine1}},</span>
+                <span>{{cloudKitchen.address?.addressLine2}},</span>
+                <span>{{cloudKitchen.address?.city}}</span>
+            </div>
+        </div>
+
+        <div class="col" id="contentDiv">
+            <ng-container *ngIf="!success" [ngTemplateOutlet]="writeReviewTemplate"></ng-container>
+            <ng-container *ngIf="success" [ngTemplateOutlet]="successTemplate"></ng-container>
+        </div>
+    </div>
+</div>
+<ng-template #successTemplate>
+    <div class="flex-column jcc aic p-5 alert-success mt-5">
+        <span class="bolder py-3 fs-5">Your review has been submitted</span>
+        <button class="btn-3" [routerLink]="['/ck/home']">Explore home
+            foods</button>
+    </div>
+</ng-template>
+
+<ng-template #writeReviewTemplate>
+    <div class="flex-column w-100 p-5">
+        <span class="bolder fs-3 my-3">Write
+            your review</span>
+        <div class="sm">
+            <div class="flex-row jcc aic">
+                <div style="height: 60px;width: 60px;">
+                    <img src="{{cloudKitchen.image}}" style="object-fit: cover;
+                    max-height: 58px;
+                    height: 58px;
+                    width: 60px;
+                    max-width: 60px;">
+                </div>
+                <span class="fs-6 ml-2 clickable" [routerLink]="[ '/cloud-kitchens', cloudKitchen._id]">{{cloudKitchen.name}}</span>
+            </div>
+        </div>
+        <div class="flex-row" style="padding: 10px 0;cursor: pointer;">
+            <fa-icon (click)="setRating(1)" [icon]="faStar" [ngStyle]="{'color': rating > 0  ? 'var(--orange)' :  'var(--light-grey)'}" style="margin-right: 3px;"></fa-icon>
+            <fa-icon (click)="setRating(2)" [icon]="faStar" [ngStyle]="{'color': rating > 1  ? 'var(--orange)' :  'var(--light-grey)'}" style="margin-right: 3px;"></fa-icon>
+            <fa-icon (click)="setRating(3)" [icon]="faStar" [ngStyle]="{'color': rating > 2  ? 'var(--orange)' :  'var(--light-grey)'}" style="margin-right: 3px;"></fa-icon>
+            <fa-icon (click)="setRating(4)" [icon]="faStar" [ngStyle]="{'color': rating > 3  ? 'var(--orange)' :  'var(--light-grey)'}" style="margin-right: 3px;"></fa-icon>
+            <fa-icon (click)="setRating(5)" [icon]="faStar" [ngStyle]="{'color': rating > 4  ? 'var(--orange)' :  'var(--light-grey)'}"></fa-icon>
+        </div>
+        <input class="p-2 my-2 border" *ngIf="orderNotSupplied" type="text" name="orderReference" id="orderReference" tabindex="1" autocomplete="off" value [(ngModel)]="orderReference" #ctrl="ngModel" placeholder="What's your order reference?">
+        <input class="p-2 my-2 border" *ngIf="orderNotSupplied" type="text" name="headline" id="headline" tabindex="1" autocomplete="off" value [(ngModel)]="headline" #ctrl="ngModel" placeholder="Headline">
+
+        <div class="input-div">
+            <textarea class="_381tA" name="comment" id="comment" value [(ngModel)]="comment" tabindex="3" #ctrl="ngModel" style="height: 100px;"></textarea>
+            <div class="_2EeI1 _26LFr"></div>
+            <label class="_1CvtA _2tL9P" for="message">Whats your
+                thoughts on this?</label>
+        </div>
+        <button tabindex="4" class="btn-1 mt-3" (click)="onSubmitReview()">Post
+            your review</button>
+
+        <div class="flex-row jcc aic p-4 mt-1 alert-error" *ngIf="errorMessage !== undefined">
+            <span>{{errorMessage}}</span>
+        </div>
+        <div *ngIf="loading">
+            <span>Submitting....</span>
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+</ng-template>

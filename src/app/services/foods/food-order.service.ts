@@ -186,6 +186,8 @@ export class FoodOrderService {
     if (intent !== null && intent !== undefined) {
       params = params.set('intent', intent);
     }
+
+    console.log('Fetching payment intent for '+ ref+' from url '+ this.serviceLocator.FoodOrdersPaymentIntentUrl);
     return this.http.get<PaymentIntentResponse[]>(
       this.serviceLocator.FoodOrdersPaymentIntentUrl,
       { params: params }

@@ -13,9 +13,12 @@ import { PostcodeLookupComponent } from './pages/postcode-lookup/postcode-lookup
 import { ImagekitioAngularModule } from 'imagekitio-angular';
 import { FooterComponent } from './pages/footer/footer.component';
 import { SandboxComponent } from './pages/sandbox/sandbox.component';
+import { WriteReviewComponent } from './pages/write-review/write-review.component';
+import { AuthGuard } from '../services/auth/auth-guard.service';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'write_review', component: WriteReviewComponent, canActivate: [AuthGuard] },
   { path: 'sandbox', component: SandboxComponent }
 ]
 
@@ -27,7 +30,8 @@ const routes: Routes = [
     PaymentFormComponent,
     PostcodeLookupComponent,
     FooterComponent,
-    SandboxComponent
+    SandboxComponent,
+    WriteReviewComponent
   ],
   imports: [
     CommonModule,

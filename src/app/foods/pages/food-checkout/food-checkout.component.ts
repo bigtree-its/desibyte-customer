@@ -230,7 +230,6 @@ export class FoodCheckoutComponent implements OnDestroy {
   }
 
   placeOrder(content) {
-    window.alert('Placing order '+ JSON.stringify(this.order))
     this.loading = true;
     this.order.customer.name = this.customerName;
     this.order.customer.email = this.customerEmail;

@@ -34,6 +34,7 @@ export class RegisterComponent {
   }
 
   registerUser() {
+    this.errorMessage= null;
     this.signupSuccess = false;
     if (this.registerForm.valid) {
       this.register = {

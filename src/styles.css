@@ -3,7 +3,7 @@
 
 /** Special Fonts **/
 
-@import url('https://fonts.googleapis.com/css2?family=Limelight&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Limelight&display=swap");
 
 /** Default font **/
 
@@ -11,7 +11,9 @@
 
 /** Logo **/
 
-@import url('https://fonts.googleapis.com/css2?family=Alumni+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Alumni+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 :root {
     --body: #f5f7f8;
     --blue: #007bff;
@@ -28,8 +30,9 @@
     --cyan: #17a2b8;
     --box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
     --white: #fff;
-    --gray: #6c757d;
-    --gray-dark: #343a40;
+    --grey: #969b9f;
+    --light-grey: #b9babb;
+    --dark-grey: #343a40;
     --primary: #007bff;
     --secondary: #6c757d;
     --success: #28a745;
@@ -41,6 +44,7 @@
     --light: #f8f9fa;
     --dark: #343a40;
     --border: #22306d;
+    --body-color: #f5f7f9;
     --color-white: #fff;
     --color-info: #00eeff;
     --color-black: #333;
@@ -168,10 +172,11 @@ input:valid {
 .input:focus~label,
 input:valid~label {
     transform: translateY(-50%) scale(0.8);
-    /* background-color: var(--brand-color); */
+    background-color: var(--body-color);
     padding: 0 0.2em;
-    font-weight: 900;
-    color: #0a0;
+    font-weight: 600;
+    color: #ff5f1f;
+    font-size: 17px;
 }
 
 .container {
@@ -232,7 +237,9 @@ ul {
 }
 
 .logo-text {
+    /* font-family: "Quicksand", sans-serif; */
     font-family: "Alumni Sans", sans-serif;
+    /* font-family: "DM Sans", sans-serif; */
     font-weight: 600;
     font-size: 24px;
     cursor: pointer;
@@ -334,6 +341,10 @@ ul {
     color: var(--brand-color);
 }
 
+.bg-brand {
+    background-color: var(--brand-color);
+}
+
 .bg-light-green {
     background-color: rgb(216, 239, 239);
 }
@@ -415,8 +426,8 @@ ul {
 }
 
 .btn-1:hover {
-    background-color: var(--green);
-    border: 1px solid var(--green);
+    background-color: #000;
+    border: 1px solid #000;
     color: #fff;
 }
 
@@ -453,12 +464,13 @@ ul {
 
 .btn-3 {
     padding: 5px 10px;
-    border-radius: 12px;
-    border: 1px solid #f5f7f9;
+    border-radius: 7px;
+    border: 1px solid #d0d2d4;
 }
 
 .btn-3:hover {
-    background-color: #111;
+    background-color: #222;
+    border: 1px solid #222;
     cursor: pointer;
     color: #fff;
 }
@@ -1043,17 +1055,15 @@ ul {
 }
 
 .open {
-    background-color: #2fad35;
+    background-color: #66e76c;
     color: #000;
-    border-radius: 4px;
-    color: #fff;
+    border-radius: 25px;
     padding: 0px 20px;
 }
 
 .closed {
-    background-color: #e50914;
-    border-radius: 7px;
-    color: #fff;
+    background-color: #868686;
+    border-radius: 25px;
     padding: 0px 20px;
 }
 
@@ -1175,7 +1185,7 @@ select {
 }
 
 .br {
-    border: 1px solid #fcf7f7;
+    border: 1px solid #9efafa;
 }
 
 .border-box {
@@ -1255,14 +1265,14 @@ select {
 }
 
 .list-horizontal li:before {
-    content: '\00a0\2022\00a0\00a0';
+    content: "\00a0\2022\00a0\00a0";
     color: #999;
     /* color: rgba(0, 0, 0, 0.5); */
     /* font-size: 11px; */
 }
 
 .list-horizontal li:first-child:before {
-    content: '';
+    content: "";
 }
 
 .sticky-footer {
@@ -1870,6 +1880,23 @@ input:checked+.slider:before {
     border-radius: 8px;
 }
 
+.alert-error {
+    background-color: rgb(252, 218, 218);
+    border-left: 2px solid rgb(212, 117, 117);
+    border-radius: 7px;
+}
+
+.alert-success {
+    background-color: #c7eccd;
+    border-radius: 7px;
+    border-left: 5px solid #448334;
+    padding: 30px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
 .alert-close {
     cursor: pointer;
 }
@@ -1890,6 +1917,10 @@ input:checked+.slider:before {
 
 .bg-light-g {
     background-color: #b2fbea;
+}
+
+.br-lg {
+    border: 1px solid #b2fbea;
 }
 
 .postcode-search-icon {
@@ -2259,15 +2290,14 @@ input:checked+.slider:before {
 
 .clickable {
     border: none;
-    background-color: #fdfcfc;
-    border-radius: 25px;
     font-weight: bold;
     padding: 5px 9px;
 }
 
 .clickable:hover {
     cursor: pointer;
-    background-color: #dedede;
+    text-decoration: underline;
+    color: rgb(2, 77, 223);
 }
 
 .clickable-icon {
@@ -2770,6 +2800,14 @@ input:checked+.slider:before {
 
 .mt-8 {
     margin-top: 80px;
+}
+
+.mt-9 {
+    margin-top: 90px;
+}
+
+.mt-100 {
+    margin-top: 100px;
 }
 
 .mb-1 {

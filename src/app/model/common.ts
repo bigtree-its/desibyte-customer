@@ -68,7 +68,7 @@ export interface ServiceLocation {
 }
 
 export class Review {
-  chef: string;
+  cloudKitchenId: string;
   order: string;
   title: string;
   comment: string;

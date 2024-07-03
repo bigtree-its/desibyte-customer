@@ -75,6 +75,7 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
   errorMessage: any;
   loading: boolean = false;
   orderReference: any;
+  notification: string;
 
   constructor() {}
 
@@ -101,11 +102,9 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
       let observable = this.orderService.getFoodOrders(orderSearchQuery);
       observable.subscribe((e) => {
         if (Utils.isValid(e)) {
-          const sortedArray = e
-            .slice()
-            .sort((a, b) => {
-              return <any>new Date(b.dateCreated) - <any>new Date(a.dateCreated);
-            });
+          const sortedArray = e.slice().sort((a, b) => {
+            return <any>new Date(b.dateCreated) - <any>new Date(a.dateCreated);
+          });
           this.orders = sortedArray;
           this.myOrders$ = this.filter.valueChanges.pipe(
             startWith(''),
@@ -192,13 +191,22 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
     let observable = this.orderService.action(this.viewOrder.reference, action);
     observable.pipe(takeUntil(this.destroy$)).subscribe({
       next: (e) => {
-        if (action === 'Delete') {
+        var performed = '';
+        switch (action) {
+          case 'Cancel':
+            performed = 'cancelled';
+            break;
+          case 'Delete':
+            performed = 'Paid';
+        }
+        this.notification =
+          'Your order ' + this.viewOrder.reference + ' has been ' + performed;
+        if (action === 'Cancel') {
           this.viewOrder = null;
         } else {
           this.viewOrder = e;
         }
         this.loading = false;
-        this.toastService.success('Order has been ' + this.viewOrder.status);
       },
       error: (err) => {
         this.loading = false;
@@ -247,17 +255,11 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
   retrieveKitchen(_id: string) {
     let observable = this.cloudKitchenService.retrieveKitchen(_id);
     observable.pipe(takeUntil(this.destroy$)).subscribe({
       next: (e) => {
         this.supplier = e;
-        console.log('Kitchen ' + JSON.stringify(e));
       },
       error: (err) => {
         console.error(
@@ -269,5 +271,14 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
         this.toastService.info(this.errorMessage);
       },
     });
+  }
+
+  closeNotification() {
+    this.notification = null;
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -1,0 +1,37 @@
+.spl-text {
+    --tw-text-opacity: 1;
+    color: rgba(0, 163, 136, var(--tw-text-opacity));
+}
+
+.page-main {
+    display: flex;
+    flex-direction: row;
+}
+
+.page-left {
+    display: none;
+}
+
+.page-right {
+    display: flex;
+    flex-direction: column;
+    max-width: 480px;
+    min-width: 480px;
+}
+
+#contentDiv {
+    width: 100%;
+}
+
+@media (min-width: 700px) {
+    .page-left {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex-grow: 1;
+        margin-left: 20px;
+    }
+    #contentDiv {
+        width: 50%;
+    }
+}
