@@ -1,4 +1,5 @@
 import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject, takeUntil } from 'rxjs';
 import { AdEnquiry, GeneralAd, PropertyAd } from 'src/app/model/all-ads';
@@ -22,6 +23,7 @@ export class ContactFormComponent implements OnInit, OnDestroy{
   adCategory: string;
   adOwner: AdOwner;
   customer: Customer;
+  faClose = faClose;
 
   @Input() user: User;
   @Input() ad: GeneralAd;

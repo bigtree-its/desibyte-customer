@@ -15,6 +15,7 @@ import { Constants } from '../common/constants';
 })
 export class FoodOrderService {
  
+  servicePercentage: number = 7;
   ipAddress: any;
   cloudKitchen: CloudKitchen;
   foodOrderKey: string;
@@ -78,10 +79,12 @@ export class FoodOrderService {
   }
 
   saveOrder(order: FoodOrder): Observable<FoodOrder> {
+    this.foodOrder = order;
+    this.calculateFoodOrderTotal();
     var params = new HttpParams();
     params = params.set('action', 'IntentToPay');
     return this.http
-      .post<FoodOrder>(this.serviceLocator.FoodOrdersUrl, order, { params })
+      .post<FoodOrder>(this.serviceLocator.FoodOrdersUrl, this.foodOrder, { params })
       .pipe(
         tap((result) => {
           this.setData(result);
@@ -442,6 +445,7 @@ export class FoodOrderService {
       }
     }
   }
+
   public calculateFoodOrderTotal() {
     var subTotal: number = 0.0;
     
@@ -458,8 +462,15 @@ export class FoodOrderService {
     if (subTotal !== 0) {
       // this.foodOrder.serviceFee = 1.0;
       if (this.foodOrder.serviceMode === 'DELIVERY') {
-        this.foodOrder.deliveryFee = 0.5;
+        if ( this.cloudKitchen && this.cloudKitchen.freeDeliveryOver && this.cloudKitchen.freeDeliveryOver > subTotal){
+          this.foodOrder.deliveryFee = this.cloudKitchen.deliveryFee? this.cloudKitchen.deliveryFee : 0.00;
+        }
+        if ( this.cloudKitchen.packagingFee){
+          this.foodOrder.packingFee = this.cloudKitchen.packagingFee;
+        }
       }
+      var serviceFee = (7 / 100) * subTotal;
+      this.foodOrder.serviceFee = serviceFee;
     }
 
     var totalToPay: number =

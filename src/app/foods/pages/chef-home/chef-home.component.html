@@ -3,8 +3,23 @@
     <div class="flex-row jcsb py-2 aic border-bottom">
         <fa-icon [icon]="faArrowLeft" class="btn-circle" (click)="goback()"></fa-icon>
         <span class="bolder fs-3">{{cloudKitchen.name}}</span>
-        <span [class.open]="cloudKitchen.open" [class.closed]="!cloudKitchen.open">{{cloudKitchen.open?
-            "Open":"Closed"}}</span>
+        <!-- <div class="flex-row">
+            <img *ngIf="cloudKitchen.open" src="/assets/images/we-are-open.jpeg" style="width: 50px;height: 50px;">
+            <img *ngIf="!cloudKitchen.open" src="/assets/images/we-are-closed.jpeg" style="width: 50px;height: 50px;">
+        </div> -->
+       
+        <div *ngIf="cloudKitchen.open" class="flex-column open aic jcc px-2 py-1">
+            <small style="font-size: 11px;">Yes</small>
+            <small style="font-size: 7px;font-style: italic;">We're</small>
+            <span class="fs-6">Open</span>
+        </div>
+        <div *ngIf="!cloudKitchen.open" class="flex-column closed aic jcc px-2 py-1">
+            <small style="font-size: 11px;">Sorry</small>
+            <small style="font-size: 7px;font-style: italic;">We're</small>
+            <span class="fs-6">Closed</span>
+        </div>
+        <!-- <span [class.open]="cloudKitchen.open" [class.closed]="!cloudKitchen.open">{{cloudKitchen.open?
+            "Open":"Closed"}}</span> -->
     </div>
     <div class="sm flex-row jcc aic w-100 my-1">
         <div class="clickable-row" style="font-size: 12px;" (click)="selectLayout('Reviews')">
@@ -111,7 +126,7 @@
                 <fa-icon [icon]="faBag"></fa-icon>
                 <small>Bag</small>
             </div>
-            <span *ngIf="itemsInCart > 0" class="btn-circle">{{itemsInCart}}</span>
+            <span *ngIf="itemsInCart > 0" class="badge">{{itemsInCart}}</span>
         </div>
 
 

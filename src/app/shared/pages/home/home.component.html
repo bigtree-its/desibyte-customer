@@ -1,52 +1,66 @@
 <div class="container-fluid">
-    <div class="flex-column jcc aic">
-        <span class="bold spl-text my-5 fs-1" style="text-align: center;">UK's
-            largest platform for expats</span>
-    </div>
-    <div class="container h-100 mb-200">
-        <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 gap-3 jcc">
-            <div [routerLink]="['/ck/home']" class="flex-column jcc aic" style="width: 30%;background-color: rgb(235, 231, 3);min-height: 100px;max-height: 100px;cursor: pointer;">
-                <span class="bolder fs-1">F</span>
-                <span class="bold">Foods</span>
-            </div>
-            <div [routerLink]="['/ads/home']" class="flex-column jcc aic" style="width: 30%;background-color: aquamarine;min-height: 100px;max-height: 100px;cursor: pointer;">
-                <span class="bolder fs-1">A</span>
-                <span class="bold">Ads</span>
-            </div>
-            <div [routerLink]="['/ads/home']" class="flex-column jcc aic" style="width: 30%;background-color: var(--orange);color:#fff;min-height: 100px;max-height: 100px;cursor: pointer;">
-                <span class="bolder fs-1">P</span>
-                <span class="bold">Properties</span>
-            </div>
-            <div [routerLink]="['/ads/home']" class="flex-column jcc aic" style="width: 30%;background-color: darkgreen;color:#fff;min-height: 100px;max-height: 100px;cursor: pointer;">
-                <span class="bolder fs-1">M</span>
-                <span class="bold">Motors</span>
-            </div>
-            <div [routerLink]="['/ads/home']" class="flex-column jcc aic" style="width: 30%;background-color: indianred;color:#fff;min-height: 100px;max-height: 100px;cursor: pointer;">
-                <span class="bolder fs-1">K</span>
-                <span class="bold">Kids</span>
-            </div>
-            <div [routerLink]="['/ads/home']" class="flex-column jcc aic" style="width: 30%;background-color: gold;color:#222;min-height: 100px;max-height: 100px;cursor: pointer;">
-                <span class="bolder fs-1">F</span>
-                <span class="bold">Furniture</span>
-            </div>
-            <div [routerLink]="['/ads/home']" class="flex-column jcc aic" style="width: 30%;background-color: darkblue;color:#fff;min-height: 100px;max-height: 100px;cursor: pointer;">
-                <span class="bolder fs-1">C</span>
-                <span class="bold">Clothing</span>
-            </div>
-            <div [routerLink]="['/ads/home']" class="flex-column jcc aic" style="width: 30%;background-color: deeppink;color:#fff;min-height: 100px;max-height: 100px;cursor: pointer;">
-                <span class="bolder fs-1">D</span>
-                <span class="bold">Decor</span>
-            </div>
-            <div [routerLink]="['/ads/home']" class="flex-column jcc aic" style="width: 30%;background-color: red;color:#fff;min-height: 100px;max-height: 100px;cursor: pointer;">
-                <span class="bolder fs-1">E</span>
-                <span class="bold">Events</span>
-            </div>
-            <div [routerLink]="['/ads/home']" class="flex-column jcc aic" style="width: 30%;background-color: ghostwhite;color:#333;min-height: 100px;max-height: 100px;border:1px solid #cecdcd;cursor: pointer;">
-                <span class="bolder fs-1">S</span>
-                <span class="bold">Services</span>
+    <div class="row">
+        <div class="col flex-column jcc aic">
+            <div class="flex-column jcc aic text-center">
+                <span class="bolder font-courier fs-1">Welcome</span>
+                <span class="bold spl-text fs-1"></span>
+                <span class="bold spl-text fs-1"></span>
             </div>
         </div>
-
+        <div class="col jcc aic">
+            <div class="flex-row flex-wrap jcc aic p-5 gap-3">
+                <div [routerLink]="['/ck/home']" class="flex-column jcc aic br-7"
+                    style="background-color: rgb(239, 239, 232);min-height: 250px;max-height: 250px;min-width: 250px;min-width: 250px;cursor: pointer;">
+                    <span class="bolder fs-1">F</span>
+                    <span class="bold">Foods</span>
+                </div>
+                <div [routerLink]="['/ads/home']" class="flex-column jcc aic br-7"
+                    style="background-color: rgb(233, 240, 238);min-height: 250px;max-height: 250px;min-width: 250px;cursor: pointer;">
+                    <span class="bolder fs-1">A</span>
+                    <span class="bold">Ads</span>
+                </div>
+                <div [routerLink]="['/ads/home']" class="flex-column jcc aic br-7"
+                    style="background-color: #cecdcd;min-height: 250px;max-height: 250px;min-width: 250px;cursor: pointer;">
+                    <span class="bolder fs-1">P</span>
+                    <span class="bold">Properties</span>
+                </div>
+                <div [routerLink]="['/ads/home']" class="flex-column jcc aic br-7"
+                    style="background-color: rgb(239, 239, 232);min-height: 250px;max-height: 250px;min-width: 250px;cursor: pointer;">
+                    <span class="bolder fs-1">M</span>
+                    <span class="bold">Motors</span>
+                </div>
+                <div [routerLink]="['/ads/home']" class="flex-column jcc aic br-7"
+                    style="background-color: rgb(233, 240, 238);min-height: 250px;max-height: 250px;min-width: 250px;cursor: pointer;">
+                    <span class="bolder fs-1">K</span>
+                    <span class="bold">Kids</span>
+                </div>
+                <div [routerLink]="['/ads/home']" class="flex-column jcc aic br-7"
+                    style="background-color: rgb(232, 250, 245);min-height: 250px;max-height: 250px;min-width: 250px;cursor: pointer;">
+                    <span class="bolder fs-1">F</span>
+                    <span class="bold">Furniture</span>
+                </div>
+                <div [routerLink]="['/ads/home']" class="flex-column jcc aic br-7"
+                    style="background-color: rgb(244, 244, 244);min-height: 250px;max-height: 250px;min-width: 250px;cursor: pointer;">
+                    <span class="bolder fs-1">C</span>
+                    <span class="bold">Clothing</span>
+                </div>
+                <div [routerLink]="['/ads/home']" class="flex-column jcc aic br-7"
+                    style="background-color: rgb(233, 240, 238);min-height: 250px;max-height: 250px;min-width: 250px;cursor: pointer;">
+                    <span class="bolder fs-1">D</span>
+                    <span class="bold">Decor</span>
+                </div>
+                <div [routerLink]="['/ads/home']" class="flex-column jcc aic br-7"
+                    style="background-color: #cecdcd;min-height: 250px;max-height: 250px;min-width: 250px;cursor: pointer;">
+                    <span class="bolder fs-1">E</span>
+                    <span class="bold">Events</span>
+                </div>
+                <div [routerLink]="['/ads/home']" class="flex-column jcc aic br-7"
+                    style="background-color: rgb(247, 255, 253);color:#333;min-height: 250px;max-height: 250px;border:1px solid #cecdcd;min-width: 250px;cursor: pointer;">
+                    <span class="bolder fs-1">S</span>
+                    <span class="bold">Services</span>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <app-footer></app-footer>

@@ -3,37 +3,85 @@
         <span class="page-hash bold px-3">#1 Desi Home Foods</span>
     </div> -->
     <div class="sm flex-column">
+        <img src="/assets/images/home-food-3.webp">
+        <span style="width: 420px;" class="bolder spl-text fs-1 text-center" style="color: orangered;">Are you starving?</span>
+        <h1 class="color-grey mb-5 fs-5 bolder  text-center">Within a few clicks, find meals that
+            <br class="d-none d-xxl-block"> are accessible near you
+        </h1>
         <div class="w-100 my-1">
-            <div class="bg-white border">
+            <div class="bg-dark-grey br-25 py-2">
                 <app-postcode-lookup (addressEmitter)="onSelectAddress($event)"></app-postcode-lookup>
             </div>
         </div>
     </div>
-    <div class="flex-column jcc aic p-4">
-        <!-- <h1 class="big-text" style="font-size: 50px;">What will you eat today?</h1> -->
-        <span class="bolder fs-1 spl-text">Craving for Homefood?</span>
-        <!-- <span class="lg  fs-4">We make it easy to order home food from your neighbourhood chefs</span> -->
-        <div>
-            <div class="textSlider">
-                <div class="textSlider-text1">Nostalgic</div>
-                <div class="textSlider-text2">A taste of home</div>
-                <div class="textSlider-text3">Made with love</div>
+    <div class="lg row" style="height: 500px;">
+        <div class="col flex-column jcc aic">
+            <div class="flex-column p-4 text-center ">
+                <span style="width: 420px;" class="bolder spl-text fs-xl" style="color: orangered;">Are you starving?</span>
+                <h1 class="color-grey mb-5 fs-3 bolder">Within a few clicks, find meals that
+                    <br class="d-none d-xxl-block"> are accessible near you
+                </h1>
+              
+                <div>
+                    <div class="textSlider">
+                        <div class="textSlider-text1">Homemade Goodness</div>
+                        <div class="textSlider-text2">Delivered Fresh</div>
+                        <div class="textSlider-text3">LOVE food</div>
+                    </div>
+                </div>
+                <div class="flex-row jcc aic">
+                    <div class="w-100">
+                        <div class="bg-dark-grey br-25 py-2">
+                            <app-postcode-lookup (addressEmitter)="onSelectAddress($event)"></app-postcode-lookup>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col h-50 jcc aic p-5">
+            <img src="/assets/images/home-food-3.webp" style="height: 400px;">
+        </div>
+    </div>
+    <div class="flex-column aic my-2">
+        <span class="fs-1 bolder color-o py-5 spl-text">How does it work</span>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 jcc">
+            <div class="col flex-column jcc aic mb-4" style="width: 320px;">
+                <fa-icon [icon]="faLocationDot" size="6x" class=" color-y"></fa-icon>
+                <div class="flex-column jcc aic my-4 gap-2 text-center">
+                    <span class="bolder fs-6">Select location</span>
+                    <span class="px-5">Choose the location where your food will be delivered.</span>
+                </div>
+            </div>
+            <div class="col flex-column jcc aic mb-4"  style="width: 320px;">
+                <fa-icon [icon]="faUtensils" size="6x" class=" color-y"></fa-icon>
+                <div class="flex-column jcc aic  my-4  gap-1 text-center">
+                    <span class="bolder fs-6">Choose Kitchen</span>
+                    <span class="px-5">Check over 100s of Home Kitchen</span>
+                </div>
+            </div>
+            <div class="col flex-column jcc aic mb-4"  style="width: 320px;">
+                <fa-icon [icon]="faReceipt" size="6x" class=" color-y"></fa-icon>
+                <div class="flex-column jcc aic  my-4  gap-2 text-center">
+                    <span class="bolder fs-6">Place Order</span>
+                    <span class="px-5">It's quick, safe, and simple to place your order</span>
+                </div>
+            </div>
+            <div class="col flex-column jcc aic mb-4" style="width: 320px;">
+                <fa-icon [icon]="faMugHot" size="6x" class=" color-y"></fa-icon>
+                <div class="flex-column jcc aic  my-4  gap-2 text-center">
+                    <span class="bolder fs-6">Enjoy meals</span>
+                    <span class="px-5">Food is made at neighbours home kitchen and delivered directly to your home</span>
+                </div>
             </div>
         </div>
     </div>
-    <div class="lg flex-row jcc aic">
-        <div class="w-50">
-            <div class="bg-white border">
-                <app-postcode-lookup (addressEmitter)="onSelectAddress($event)"></app-postcode-lookup>
-            </div>
-        </div>
-    </div>
+   
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 jcc mt-2">
         <div class="col">
             <div class="flex-column br-12 bg-white p-3 flex-grow w-100">
                 <span class="bolder pb-2  spl-text">Top locations</span>
                 <div class="flex-row flex-wrap aic gap-1 jcc aic">
-                    <span class="btn-3" *ngFor="let pd of popularDistricts" [routerLink]="['/ck/area', pd.prefix]">{{pd.coverage}}</span>
+                    <span class="btn-plain" *ngFor="let pd of popularDistricts" [routerLink]="['/ck/area', pd.prefix]">{{pd.coverage}}</span>
                 </div>
             </div>
         </div>

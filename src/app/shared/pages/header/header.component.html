@@ -1,26 +1,29 @@
 <div class="bg-white py-1 w-100 px-2">
-    <div class="sm flex-row jcsb aic py-2">
+    <div class="sm flex-row jcsb aic">
         <fa-icon [icon]="faBars" (click)="toggleSideNav()" class="menu-icon"></fa-icon>
         <div class="flex-row aic jcc logo-text" [routerLink]="['/']">
             <!-- <fa-icon [icon]="faSpa" class="fs-4"></fa-icon> -->
-            <span class="logo-text">thappad</span>
+            <span class="logo-text">pichai</span>
         </div>
-        <button type="button" class="btn-3 br-25" routerLink="/ads/post">Post
-            an Ad</button>
+        <span class="btn-plain" routerLink="/ads/post">Post an Ad</span>
     </div>
-    <div class="lg flex-row jcsb aic py-1">
+    <div class="lg flex-row jcsb aic">
         <div class="flex-row aic jcc" [routerLink]="['/']">
             <!-- <fa-icon [icon]="faSpa" class="fs-4"></fa-icon> -->
-            <span class="logo-text">thappad</span>
+            <span class="logo-text">pichai</span>
         </div>
         <div class="flex-row gap-1">
 
         </div>
-        <div class="flex-row jcc aic gap-1">
-            <span *ngIf="!user" class="btn-plain mx-1" routerLink="/login">Login</span>
-            <span *ngIf="!user" class="btn-plain mx-1" routerLink="/contact_us">Become a partner</span>
-            <span *ngIf="!user" class="btn-bold mx-2" routerLink="/register">Signup</span>
-            <div *ngIf="user" class="nav-item mr-1 br-25 border p-2" ngbDropdown #myDrop="ngbDropdown">
+        <div class="flex-row jcc aic gap-2">
+            <span *ngIf="!user" class="link-plain mx-1" routerLink="/login">Login</span>
+            <span *ngIf="!user" class="link-plain mx-2" routerLink="/register">Signup</span>
+            <span *ngIf="!user" class="link-plain mx-1" routerLink="/contact_us">Become a partner</span>
+            <!-- <fa-icon *ngIf="user" [icon]="faUser" class="color-g" size="2x"  (click)="toggleSideNav()" ></fa-icon> -->
+            <span class="btn-plain"  (click)="toggleSideNav()" >{{user.firstName.trim().substring(0,10)}}</span>
+            <!-- <div *ngIf="user" class="nav-item mr-1 br-25 p-2" ngbDropdown #myDrop="ngbDropdown">
+                <span class="cursor-pointer font-courier bolder-g"  (click)="$event.stopPropagation(); myDrop.open()">{{user.firstName.trim().substring(0,10)}}</span>
+                
                 <div class="flex-row gap-1 jcc aic mx-1" (click)="$event.stopPropagation(); myDrop.open()">
                     <fa-icon [icon]="faUser"></fa-icon>
                     <span class="bolder cursor-pointer">{{user.firstName.trim().substring(0,10)}}</span>
@@ -42,8 +45,8 @@
                     <a ngbDropdownItem (click)="logout()">Logout</a>
 
                 </div>
-            </div>
-            <button type="button" class="btn-3 br-25" routerLink="/ads/post">Post an Ad</button>
+            </div> -->
+            <span class="btn-plain" routerLink="/ads/post">Post an Ad</span>
         </div>
     </div>
 </div>

@@ -8,66 +8,94 @@
     </div>
     <div class="sm flex-column" style="margin-bottom: 100px;">
 
-        <ngb-carousel *ngIf="ad.gallery">
+        <ngb-carousel *ngIf="ad?.gallery">
             <ng-template ngbSlide *ngFor="let gallery of ad?.gallery">
-                <img src={{gallery.url}} style="object-fit: contain;height: 100%; width: 100%;" />
+                <img src={{gallery.url}} style="object-fit: cover;height: 100%; width: 100%;" />
             </ng-template>
         </ngb-carousel>
-        <div class="flex-row jcsb aic">
-            <span class="fs-6 bolder my-1">{{ad.price |
-                currency:'GBP'}}</span>
-            <span><b>Posted</b> {{ad.datePosted | dateAgo}}</span>
-        </div>
-        <span class="fs-6 bold">{{ad.address?.addressLine2}},
-            {{ad.address?.city}}</span>
-        <ng-container [ngTemplateOutlet]="infoSection"></ng-container>
-        <div class="p-2 flex-row jcsb sticky-footer border-top">
-            <div class="flex-row gap-1 aic">
-                <span class="bolder py-2">Posted By</span>
-                <span class="py-1">{{ad.adOwner.name}}</span>
+        <div class="asfs p-4 bg-white br-7 flex-column flex-grow my-3">
+            <div class="py-2 flex-column asfs ">
+                <span class="bolder py-2 ">Posted By</span>
+                <span class="py-1 mb-3 ">{{ad?.adOwner?.name}}</span>
+                
             </div>
-            <span *ngIf="!user" [routerLink]="['/login']" [queryParams]="{returnUrl: returnUrl}" class="btn-link cursor-pointer">Login to send enquiry</span>
-            <app-contact-form *ngIf="user" [user]="user" [ad]="ad"></app-contact-form>
-        </div>
-    </div>
-    <div class="lg row">
-        <div class="col-md-8 flex-column" style="min-height: 100vh;overflow-y: auto; margin-bottom: 100px;">
-            <div class="flex-column jcc aic mb-2" style="max-height: 700px;max-width: 768px;">
-                <ngb-carousel style="width: 100%;height:100%;object-fit: scale-down;">
-                    <ng-template ngbSlide *ngFor="let gallery of ad?.gallery ">
-                        <div>
-                            <img [src]="gallery.url" style="object-fit: fill;height: 100%;width: 100%;" />
-                        </div>
-                    </ng-template>
-                </ngb-carousel>
-            </div>
-            <div class="flex-row w-100 jcsb aic ">
-                <span class="fs-6 bold ">{{ad.address?.addressLine2}},
-                    {{ad.address?.city}}</span>
-                <span class="fs-6 bold ">{{ad.price |
+            <div class="flex-row w-100 jcsb aic py-2">
+                <div class="flex-row gap-2">
+                    <fa-icon [icon]="faLocation" class="color-y"></fa-icon>
+                    <span class="card-title bold">{{ad?.address?.city | titlecase}}</span>
+                </div>
+                <span class="fs-6 bold ">{{ad?.price |
                     currency:'GBP'}}</span>
             </div>
             <div class="flex-row w-100 jcsb aic ">
-                <span><b>Posted</b> {{ad.datePosted | dateAgo}}</span>
-                <span><b>Available from </b>{{ad.dateAvailable | date:
+                <span><b>Posted</b> {{ad?.datePosted | dateAgo}}</span>
+                <span><b>Available from </b>{{ad?.dateAvailable | date:
                     'dd MMM'}}</span>
             </div>
             <ng-container [ngTemplateOutlet]="infoSection "></ng-container>
-        </div>
-        <div class="col-md-4 border asfs py-3 bg-light ">
-            <div class="py-2 flex-column asfs ">
-                <span class="bolder py-2 ">Posted By</span>
-                <span class="py-1 mb-3 ">{{ad.adOwner.name}}</span>
-                <span *ngIf="!user " [routerLink]="[ '/login'] " [queryParams]="{returnUrl: returnUrl} " class="btn-link cursor-pointer ">Login to send enquiry</span>
+            <div class="sticky-footer d-flex jcc aic py-3 border bg-white">
+                <span *ngIf="!user " [routerLink]="[ '/login'] " [queryParams]="{returnUrl: returnUrl} "
+                class="btn-solid text-center">Login to send enquiry</span>
                 <app-contact-form *ngIf="user " [user]="user " [ad]="ad "></app-contact-form>
             </div>
+           
         </div>
+    </div>
+    <div class="lg flex-row gap-3">
+        <div class="flex-column">
+            <!-- <div class="flex-column flex-grow" style="min-height: 100vh;overflow-y: auto; margin-bottom: 100px;">
+                <ngb-carousel>
+                    <ng-template ngbSlide *ngFor="let gallery of ad?.gallery ">
+                        <div>
+                            <img [src]="gallery.url" />
+                        </div>
+                    </ng-template>
+                </ngb-carousel>
+            </div> -->
+            <div>
+                <img [src]="display_picture" style="height: 500px; width:500px;object-fit: contain;">
+            </div>
+            <div class="flex-row gap-2 my-3">
+                <img [src]="gallery.url" *ngFor="let gallery of ad?.gallery " style="height: 60px; width:60px;object-fit: cover;" (click)="displayPicture(gallery.url)">
+            </div>
+        </div>
+        <div>
+            <div class="asfs p-4 bg-white br-7 flex-column flex-grow">
+                <div class="py-2 flex-column asfs ">
+                    <span class="bolder py-2 ">Posted By</span>
+                    <span class="py-1 mb-3 ">{{ad?.adOwner.name}}</span>
+                   
+                </div>
+                <div class="flex-row w-100 jcsb aic py-2">
+                    <div class="flex-row gap-2">
+                        <fa-icon [icon]="faLocation" class="color-y"></fa-icon>
+                        <span class="card-title bold">{{ad?.address?.city | titlecase}}</span>
+                    </div>
+                    <span class="fs-6 bold ">{{ad?.price |
+                        currency:'GBP'}}</span>
+                </div>
+                <div class="flex-row w-100 jcsb aic ">
+                    <span><b>Posted</b> {{ad?.datePosted | dateAgo}}</span>
+                    <span><b>Available from </b>{{ad?.dateAvailable | date:
+                        'dd MMM'}}</span>
+                </div>
+                <ng-container [ngTemplateOutlet]="infoSection "></ng-container>
+                <div class="my-3">
+                    <span *ngIf="!user " [routerLink]="[ '/login'] " [queryParams]="{returnUrl: returnUrl} "
+                    class="btn-solid text-center">Login to send enquiry</span>
+                    <app-contact-form *ngIf="user " [user]="user " [ad]="ad "></app-contact-form>
+                </div>
+               
+            </div>
+        </div>
+        
+        
     </div>
 </div>
 
 <ng-template #infoSection>
     <div class="flex-column ">
         <span class="bolder py-2 ">Description</span>
-        <span class="py-1 " *ngFor="let item of ad.description ">{{item}}</span>
+        <span class="py-1 " *ngFor="let item of ad?.description ">{{item}}</span>
     </div>
 </ng-template>

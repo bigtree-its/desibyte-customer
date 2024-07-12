@@ -6,10 +6,10 @@
 
 .navItem {
     padding: 10px 0;
-    font-weight: 900;
+    font-size: 15px;
 }
 
 .navItem:hover {
     cursor: pointer;
-    color: var(--orange);
+    color: var(--green);
 }

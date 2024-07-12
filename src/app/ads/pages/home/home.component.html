@@ -1,32 +1,39 @@
-<div class="container-fluid overflow-y mb-5">
+<div class="container overflow-y mb-5">
 
-    <div class="full-screen my-1 px-2 flex-row jcc border-top border-bottom pt-2">
+    <div class="full-screen my-1 px-2 flex-row jcc my-3">
         <div class="flex-row-scrollable">
-            <div *ngFor="let category of categories" class="category" (click)="onSelectCategory(category.name)" [class.selectedCategory]="isSelectedCategory(category)">
+            <div *ngFor="let category of categories" class="category" [routerLink]="[ '/ads/home/', category.name] "
+                [class.selectedCategory]="isSelectedCategory(category)">
                 <fa-icon [icon]="category.icon"></fa-icon>
                 <span>{{category.name}}</span>
             </div>
         </div>
     </div>
+
     <div class="sm my-2 p-2 flex-column">
-        <app-postcode-lookup (addressEmitter)="onEmitAddress($event)"></app-postcode-lookup>
+        <div class="bg-dark-grey br-25 py-2">
+            <app-postcode-lookup (addressEmitter)="onEmitAddress($event)"></app-postcode-lookup>
+        </div>
         <div class="flex-column" *ngIf="location">
             <div class="radio-buttons-container">
                 <div class="radio-button">
-                    <input name="rental-period" id="Monthly" value="Monthly" class="radio-button__input" checked type="radio" (change)="handleSearchRadius($event)">
+                    <input name="rental-period" id="Monthly" value="Monthly" class="radio-button__input" checked
+                        type="radio" (change)="handleSearchRadius($event)">
                     <label for="Monthly" class="radio-button__label">
                         <span class="radio-button__custom"></span>This postcode
                         only
                     </label>
                 </div>
                 <div class="radio-button">
-                    <input name="rental-period" id="Weekly" value="Weekly" class="radio-button__input" type="radio" (change)="handleSearchRadius($event)">
+                    <input name="rental-period" id="Weekly" value="Weekly" class="radio-button__input" type="radio"
+                        (change)="handleSearchRadius($event)">
                     <label for="Weekly" class="radio-button__label">
                         <span class="radio-button__custom"></span>This area
                     </label>
                 </div>
                 <div class="radio-button">
-                    <input name="rental-period" id="Weekly" value="Weekly" class="radio-button__input" type="radio" (change)="handleSearchRadius($event)">
+                    <input name="rental-period" id="Weekly" value="Weekly" class="radio-button__input" type="radio"
+                        (change)="handleSearchRadius($event)">
                     <label for="Weekly" class="radio-button__label">
                         <span class="radio-button__custom"></span>This city
                     </label>
@@ -46,19 +53,24 @@
     </div>
     <!-- Filter-->
     <div class="row">
-        <div class="lg col-md-1 col-lg-2 col-xl-3 flex-column gap-1">
+        <div class="lg col-lg-3 flex-column gap-1">
             <span class="bolder fs-6 pb-3">Filters</span>
-            <div class="flex-column mb-2">
+            <div class="flex-column mb-2 gap-2">
                 <span class="bolder">Location</span>
-                <app-postcode-lookup (addressEmitter)="onEmitAddress($event)"></app-postcode-lookup>
+                <div class="bg-dark-grey br-25 py-2">
+                    <app-postcode-lookup (addressEmitter)="onEmitAddress($event)"></app-postcode-lookup>
+                </div>
             </div>
             <ng-container *ngIf="category === 'Property'" [ngTemplateOutlet]="propertyTypeList"></ng-container>
             <ng-container *ngIf="category === 'Property'" [ngTemplateOutlet]="consumptionTypeFilter"></ng-container>
-            <ng-container *ngIf="category === 'Property' || category === 'Cars' || category === 'Books' || category === 'Furniture'  || category === 'Electronics'   || category === 'Toys'" [ngTemplateOutlet]="priceRangeFilter"></ng-container>
-            <ng-container *ngIf="category === 'Property' && propertyType !=='Garage'  && propertyType !=='Commercial'" [ngTemplateOutlet]="bedroomsFilter"></ng-container>
-            <button *ngIf="category" type="button" class="btn-7" (click)="searchProperties()">Go</button>
+            <ng-container
+                *ngIf="category === 'Property' || category === 'Cars' || category === 'Books' || category === 'Furniture'  || category === 'Electronics'   || category === 'Toys'"
+                [ngTemplateOutlet]="priceRangeFilter"></ng-container>
+            <ng-container *ngIf="category === 'Property' && propertyType !=='Garage'  && propertyType !=='Commercial'"
+                [ngTemplateOutlet]="bedroomsFilter"></ng-container>
+            <button *ngIf="category" type="button" class="btn-solid" (click)="searchProperties()">Go</button>
         </div>
-        <div class="col-md-11 col-lg-10 col-xl-9 ">
+        <div class="col-lg-9">
             <div class="flex-column" *ngIf="category==='All'">
 
                 <div *ngIf="properties && properties.length > 0" class="flex-column">
@@ -69,12 +81,15 @@
                     <ng-container [ngTemplateOutlet]="propertyListScroller"></ng-container>
                 </div>
 
-                <div class="div" *ngFor="let group of groupedAds | keyvalue">
-                    <div class="d-flex jcsb aic gap-1 my-2">
-                        <b class="bolder fs-5 ">{{group.key}} </b>
+                <div class="mb-5 p-2" *ngFor="let group of groupedAds | keyvalue">
+                    <div class="d-flex jcsb aic gap-1 mb-5">
+                        <b></b>
+                        <b class="bolder fs-3 ">{{group.key}} <span
+                                style="font-size: 12px;color: #999;">({{group.value.length}})</span></b>
                         <b (click)="onSelectCategory(group.key)" class="cursor-pointer link">See all</b>
                     </div>
-                    <ng-container [ngTemplateOutlet]="adListScroller" [ngTemplateOutletContext]="{ items: group.value }"></ng-container>
+                    <ng-container [ngTemplateOutlet]="adListScroller"
+                        [ngTemplateOutletContext]="{ items: group.value }"></ng-container>
                 </div>
             </div>
             <div class="flex-column" *ngIf="category!=='All'">
@@ -91,7 +106,8 @@
             <fa-icon [icon]="faArrowLeft"></fa-icon>
         </div>
         <div #pScroller style="display: flex;padding: 10px;overflow-x: hidden;white-space: nowrap;gap: 10px;">
-            <ng-container *ngFor="let property of properties" [ngTemplateOutlet]="propertyCard" [ngTemplateOutletContext]="{ item: property }"></ng-container>
+            <ng-container *ngFor="let property of properties" [ngTemplateOutlet]="propertyCard"
+                [ngTemplateOutletContext]="{ item: property }"></ng-container>
         </div>
         <div class="arrow-icon-div" (click)="scrollRight('pScroller')">
             <fa-icon [icon]="faArrowRight"></fa-icon>
@@ -99,18 +115,21 @@
     </div>
     <div class="sm full-screen mb-2 px-3">
         <div class="flex-row-scrollable py-2 w-100 gap-1">
-            <ng-container *ngFor="let property of properties" [ngTemplateOutlet]="propertyCard" [ngTemplateOutletContext]="{ item: property}"></ng-container>
+            <ng-container *ngFor="let property of properties" [ngTemplateOutlet]="propertyCard"
+                [ngTemplateOutletContext]="{ item: property}"></ng-container>
         </div>
     </div>
 </ng-template>
 
-<ng-template #adListScroller let-items="items">
+<ng-template let-items="items">
     <div class="lg scroll-container">
         <div class="arrow-icon-div" (click)="scrollLeft('adScroller')">
             <fa-icon [icon]="faArrowLeft"></fa-icon>
         </div>
-        <div #adScroller style="display: flex;padding: 10px;overflow-x: hidden;white-space: nowrap;gap: 10px;">
-            <ng-container *ngFor="let ad of items" [ngTemplateOutlet]="adCard" [ngTemplateOutletContext]="{ item: ad }"></ng-container>
+        <div #adScroller
+            style="display: flex;overflow: hidden; scroll-behavior: smooth;padding: 10px;white-space: nowrap;gap: 10px;">
+            <ng-container *ngFor="let ad of items" [ngTemplateOutlet]="adCard"
+                [ngTemplateOutletContext]="{ item: ad }"></ng-container>
         </div>
         <div class="arrow-icon-div" (click)="scrollRight('adScroller')">
             <fa-icon [icon]="faArrowRight"></fa-icon>
@@ -118,15 +137,50 @@
     </div>
     <div class="sm full-screen mb-2 px-3">
         <div class="flex-row-scrollable py-2 w-100 gap-1">
-            <ng-container *ngFor="let ad of ads" [ngTemplateOutlet]="adCard" [ngTemplateOutletContext]="{ item: ad }"></ng-container>
+            <ng-container *ngFor="let ad of ads" [ngTemplateOutlet]="adCard"
+                [ngTemplateOutletContext]="{ item: ad }"></ng-container>
         </div>
     </div>
 </ng-template>
 
+<ng-template #adListScroller let-items="items">
+    <drag-scroll [scroll-x-wheel-enabled]="true">
+        <div *ngFor="let ad of items; let i = index" drag-scroll-item [routerLink]="['/ads/g', ad.reference]">
+            <div class="card shadow-sm">
+                <img [src]="ad.gallery[0]?.url" class="card-img-top" alt="..."
+                    style="max-height: 200px;min-height: 200px;object-fit: cover;">
+                <div class="card-body">
+                    <h6 class="card-title">{{ad.title}}</h6>
+                    <fa-icon [icon]="faStarS" class="color-o" *ngIf="ad.rating > 0"></fa-icon>
+                    <fa-icon [icon]="faStarS" class="color-o" *ngIf="ad.rating > 1"></fa-icon>
+                    <fa-icon [icon]="faStarS" class="color-o" *ngIf="ad.rating > 2"></fa-icon>
+                    <fa-icon [icon]="faStarS" class="color-o" *ngIf="ad.rating > 3"></fa-icon>
+                    <fa-icon [icon]="faStarS" class="color-o" *ngIf="ad.rating > 4"></fa-icon>
+
+                    <fa-icon [icon]="faStarR" *ngIf="ad.rating < 5"></fa-icon>
+                    <fa-icon [icon]="faStarR" *ngIf="ad.rating < 4"></fa-icon>
+                    <fa-icon [icon]="faStarR" *ngIf="ad.rating < 3"></fa-icon>
+                    <fa-icon [icon]="faStarR" *ngIf="ad.rating < 2"></fa-icon>
+                    <fa-icon [icon]="faStarR" *ngIf="ad.rating < 1"></fa-icon>
+                    <div class="flex-row gap-2 aic">
+                        <fa-icon class="color-y" [icon]="faLocation"></fa-icon>
+                        <span class="color-y" style="text-overflow: ellipsis;overflow: hidden;"
+                            title="{{ad.address.addressLine2}}">{{ad.address.city | titlecase}}</span>
+                    </div>
+                    <p class="card-price">GBP {{ad.price | number: '1.2-2' }}</p>
+                </div>
+            </div>
+        </div>
+    </drag-scroll>
+</ng-template>
+
 <ng-template #propertyCard let-item="item">
-    <div class="flex-column" style="max-width: 300px;min-width: 300px;height: 320px;margin-right: 10px;" [routerLink]="['/ads/p', item.reference]">
-        <img *ngIf="!item.gallery" src="/assets/images/default-image.jpeg" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
-        <img *ngIf="item.gallery" src="{{item.gallery[0].url}}" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
+    <div class="flex-column" style="max-width: 300px;min-width: 300px;height: 320px;margin-right: 10px;"
+        [routerLink]="['/ads/p', item.reference]">
+        <img *ngIf="!item.gallery" src="/assets/images/default-image.jpeg"
+            style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
+        <img *ngIf="item.gallery" src="{{item.gallery[0].url}}"
+            style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
         <div class="flex-column p-1">
             <span class="bolder py-2">{{item.title}}</span>
             <span class="fs-7 bold">{{item.address.addressLine2}},
@@ -142,19 +196,21 @@
     </div>
 </ng-template>
 <ng-template #adCard let-item="item">
-    <div class="flex-column" style="max-width: 300px;min-width: 300px;height: 320px;margin-right: 10px;" [routerLink]="['/ads/g', item.reference]">
-        <img *ngIf="!item.gallery" src="/assets/images/default-image.jpeg" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
-        <img *ngIf="item.gallery" src="{{item.gallery[0].url}}" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
+    <div class="flex-column" style="max-width: 250px;min-width: 250px;height: 300px;margin-right: 10px;"
+        [routerLink]="['/ads/g', item.reference]">
+        <img *ngIf="!item.gallery" src="/assets/images/default-image.jpeg"
+            style="height: 220px;width:100%;object-fit: cover;border-radius: 12px;">
+        <img *ngIf="item.gallery && item.gallery.length > 0" src="{{item.gallery[0]?.url}}"
+            style="height: 220px;width:100%;object-fit: cover;border-radius: 12px;">
         <div class="flex-column p-1">
-            <span class="bolder py-2">{{item.title}}</span>
-            <span class="fs-7 bold">{{item.address.addressLine2}},
-                {{item.address.city}}
-            </span>
-            <div class="flex-row jcsb aic">
-                <span class="bolder">{{item.price |
-                    currency:'GBP'}}</span>
-                <span>{{item.datePosted |
-                    dateAgo}}</span>
+            <span class="bolder py-1 fs-6">{{item.title}}</span>
+            <div class="flex-row gap-2 aic">
+                <fa-icon class="color-y" [icon]="faLocation"></fa-icon>
+                <span class="fs-6 color-y">{{item.address.addressLine2}}, {{item.address.city | lowercase}}</span>
+            </div>
+            <div class="flex-row jcsb aic py-1">
+                <span class="bolder">{{item.price | currency:'GBP'}}</span>
+                <span style="font-size: 10px;">{{item.datePosted | dateAgo}}</span>
             </div>
         </div>
     </div>
@@ -162,30 +218,13 @@
 
 <ng-template #adList>
     <div class="flex-column">
-        <div class="flex-row gap-1">
+        <div class="flex-row gap-3">
             <fa-icon [icon]="faArrowLeft" class="btn-circle" (click)="onSelectCategory('All')"></fa-icon>
             <span class="bolder pb-3 fs-5">{{category}}</span>
         </div>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 gap-1">
-            <div class="col mb-4" *ngFor="let item of ads" [routerLink]="[ '/ads/g', item.reference] ">
-                <div class="flex-column" style="border:none;cursor: pointer;">
-                    <!-- <img src="{{item.gallery[0].url}}" class="card-img" alt="..."> -->
-                    <img *ngIf="item.gallery" src="{{item.gallery[0].url}}" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
-                    <img *ngIf="!item.gallery" src="/assets/images/default-image.jpeg" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
-                    <div class="flex-column bg-light p-2">
-                        <span class="bolder py-2">{{item.title}}</span>
-                        <span class="fs-7 bold">{{item.address.addressLine2}},
-                            {{item.address.city}}
-                        </span>
-                        <div class="flex-row jcsb aic">
-                            <span class="bolder">{{item.price |
-                                currency:'GBP'}}</span>
-                            <span>{{item.datePosted |
-                                dateAgo}}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 gap-4">
+            <ng-container *ngFor="let ad of ads" [ngTemplateOutlet]="adCard"
+                [ngTemplateOutletContext]="{ item: ad }"></ng-container>
         </div>
     </div>
 
@@ -193,7 +232,7 @@
 
 <ng-template #propertyList>
     <div class="flex-column">
-        <div class="flex-row gap-1">
+        <div class="flex-row gap-3">
             <fa-icon [icon]="faArrowLeft" class="btn-circle" (click)="onSelectCategory('All')"></fa-icon>
             <span class="bolder pb-3 fs-5">Properties</span>
         </div>
@@ -201,8 +240,10 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3  align-items-stretch">
             <div class="col mb-4" *ngFor="let item of properties " [routerLink]="[ '/ads/p', item.reference] ">
                 <div class="flex-column" style="border:none;cursor: pointer;">
-                    <img *ngIf="item.gallery" src="{{item.gallery[0].url}}" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
-                    <img *ngIf="!item.gallery" src="/assets/images/default-image.jpeg" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
+                    <img *ngIf="item.gallery" src="{{item.gallery[0].url}}"
+                        style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
+                    <img *ngIf="!item.gallery" src="/assets/images/default-image.jpeg"
+                        style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
                     <div class="flex-column p-1">
                         <span class="bolder py-2">{{item.title}}</span>
                         <span class="fs-7 bold">{{item.address.addressLine2}},
@@ -237,6 +278,7 @@
         </select>
     </div>
 </ng-template>
+
 <ng-template #propertyTypeList>
     <div class="flex-column mb-2">
         <span class="bold">Property Type</span>
@@ -254,24 +296,23 @@
         </div>
     </div>
 </ng-template>
+
 <ng-template #consumptionTypeFilter>
     <div class="flex-column mb-2">
         <span class="bold">Whats your intend?</span>
         <div class="mydict flex-row">
             <div>
                 <label>
-                    <input id="Sale" value="Sale" type="radio" name="radio"
-                        checked (change)="onChangeConsumptionType($event)">
+                    <input id="Sale" value="Sale" type="radio" name="radio" checked
+                        (change)="onChangeConsumptionType($event)">
                     <span>Sale</span>
                 </label>
                 <label>
-                    <input id="Rent" value="Rent" type="radio" name="radio"
-                        (change)="onChangeConsumptionType($event)">
+                    <input id="Rent" value="Rent" type="radio" name="radio" (change)="onChangeConsumptionType($event)">
                     <span>Rent</span>
                 </label>
                 <label>
-                    <input id="Share" value="Share" type="radio"
-                        name="radio"
+                    <input id="Share" value="Share" type="radio" name="radio"
                         (change)="onChangeConsumptionType($event)">
                     <span>Share</span>
                 </label>
@@ -280,21 +321,29 @@
     </div>
 
 </ng-template>
+
 <ng-template #priceRangeFilter>
     <div class="flex-column w-100 mb-2">
         <span class="bold">Price Range</span>
-        <div class="flex-row aic gap-1" *ngIf="category === 'Property' || category === 'Cars' || category === 'Books' || category === 'Furniture'  || category === 'Electronics'   || category === 'Toys'">
-            <input type="number" style="width: 100px;border-radius: 0;height: 32px;" [(ngModel)]="minAmount" #ctrl="ngModel" id="minAmount" class="form-control" placeholder="Min">
-            <input type="number" style="width: 100px;border-radius: 0;height: 32px;" [(ngModel)]="maxAmount" #ctrl="ngModel" id="maxAmount" class="form-control" placeholder="Max">
+        <div class="flex-row aic gap-1"
+            *ngIf="category === 'Property' || category === 'Cars' || category === 'Books' || category === 'Furniture'  || category === 'Electronics'   || category === 'Toys'">
+            <input type="number" style="width: 100px;border-radius: 0;height: 32px;" [(ngModel)]="minAmount"
+                #ctrl="ngModel" id="minAmount" class="form-control" placeholder="Min">
+            <input type="number" style="width: 100px;border-radius: 0;height: 32px;" [(ngModel)]="maxAmount"
+                #ctrl="ngModel" id="maxAmount" class="form-control" placeholder="Max">
         </div>
     </div>
 </ng-template>
+
 <ng-template #bedroomsFilter>
     <div class="flex-column w-100 mb-2">
         <span class="bold">Bedrooms</span>
-        <div class="flex-row aic gap-1" *ngIf="category === 'Property' && propertyType !=='Garage'  && propertyType !=='Commercial'">
-            <input type="number" style="width: 100px;border-radius: 0;height: 32px;" [(ngModel)]="minBed" #ctrl="ngModel" id="minBed" class="form-control" placeholder="Min Bed">
-            <input type="number" style="width: 100px;border-radius: 0;height: 32px;" [(ngModel)]="maxBed" #ctrl="ngModel" id="maxBed" class="form-control" placeholder="Max Bed">
+        <div class="flex-row aic gap-1"
+            *ngIf="category === 'Property' && propertyType !=='Garage'  && propertyType !=='Commercial'">
+            <input type="number" style="width: 100px;border-radius: 0;height: 32px;" [(ngModel)]="minBed"
+                #ctrl="ngModel" id="minBed" class="form-control" placeholder="Min Bed">
+            <input type="number" style="width: 100px;border-radius: 0;height: 32px;" [(ngModel)]="maxBed"
+                #ctrl="ngModel" id="maxBed" class="form-control" placeholder="Max Bed">
         </div>
     </div>
 </ng-template>
@@ -303,11 +352,13 @@
     <div class="flex-row gap-1 p-3 jcc aic">
         <div class="input-group" style="width: 100px; font-size: 12px;">
             <div class="bg-light border jcc aic d-flex p-2 br-tl-7 br-bl-7">£</div>
-            <input type="number" [(ngModel)]="minAmount" #ctrl="ngModel" min="0.00" step="1" value="1.00" id="minAmount" class="form-control" placeholder="Min">
+            <input type="number" [(ngModel)]="minAmount" #ctrl="ngModel" min="0.00" step="1" value="1.00" id="minAmount"
+                class="form-control" placeholder="Min">
         </div>
         <div class="input-group" style="width: 100px; font-size: 12px;">
             <div class="bg-light border jcc aic d-flex p-2 br-tl-7 br-bl-7">£</div>
-            <input type="number" [(ngModel)]="maxAmount" #ctrl="ngModel" min="0.00" step="1" value="1.00" id="maxAmount" class="form-control" placeholder="Max">
+            <input type="number" [(ngModel)]="maxAmount" #ctrl="ngModel" min="0.00" step="1" value="1.00" id="maxAmount"
+                class="form-control" placeholder="Max">
         </div>
     </div>
 </ng-template>
@@ -323,24 +374,30 @@
             <div class="flex-row gap-1 p-3 jcc aic">
                 <div class="input-group" style="width: 100px; font-size: 12px;">
                     <div class="bg-light border jcc aic d-flex p-2 br-tl-7 br-bl-7">£</div>
-                    <input type="number" [(ngModel)]="minAmount" #ctrl="ngModel" min="0.00" step="1" value="1.00" id="minAmount" class="form-control" placeholder="Min">
+                    <input type="number" [(ngModel)]="minAmount" #ctrl="ngModel" min="0.00" step="1" value="1.00"
+                        id="minAmount" class="form-control" placeholder="Min">
                 </div>
                 <div class="input-group" style="width: 100px; font-size: 12px;">
                     <div class="bg-light border jcc aic d-flex p-2 br-tl-7 br-bl-7">£</div>
-                    <input type="number" [(ngModel)]="maxAmount" #ctrl="ngModel" min="0.00" step="1" value="1.00" id="maxAmount" class="form-control" placeholder="Max">
+                    <input type="number" [(ngModel)]="maxAmount" #ctrl="ngModel" min="0.00" step="1" value="1.00"
+                        id="maxAmount" class="form-control" placeholder="Max">
                 </div>
                 <small>Clear</small>
             </div>
         </div>
     </div>
 </ng-template>
+
 <ng-template #bedFilterRow>
     <div class="flex-row gap-1 p-3 jcc aic">
-        <input style="width: 100px; font-size: 12px;" type="number" [(ngModel)]="minBed" #ctrl="ngModel" min="0.00" step="1" value="1.00" id="minBed" class="form-control" placeholder="Min Bed">
-        <input style="width: 100px; font-size: 12px;" type="number" [(ngModel)]="maxBed" #ctrl="ngModel" min="0.00" step="1" value="1.00" id="maxBed" class="form-control" placeholder="Max Bed">
+        <input style="width: 100px; font-size: 12px;" type="number" [(ngModel)]="minBed" #ctrl="ngModel" min="0.00"
+            step="1" value="1.00" id="minBed" class="form-control" placeholder="Min Bed">
+        <input style="width: 100px; font-size: 12px;" type="number" [(ngModel)]="maxBed" #ctrl="ngModel" min="0.00"
+            step="1" value="1.00" id="maxBed" class="form-control" placeholder="Max Bed">
         <small>Clear</small>
     </div>
 </ng-template>
+
 <ng-template #bedFilter>
     <div class="nav-item mr-2" ngbDropdown>
         <div class="flex-row gap-1 jcc aic mx-1">
@@ -350,15 +407,17 @@
         </div>
         <div ngbDropdownMenu aria-labelledby="navbarDropdown1" class="dropdown-menu">
             <div class="flex-row gap-1 p-3 jcc aic">
-                <input style="width: 100px; font-size: 12px;" type="number" [(ngModel)]="minBed" #ctrl="ngModel" min="0.00" step="1" value="1.00" id="minBed" class="form-control" placeholder="Min Bed">
-                <input style="width: 100px; font-size: 12px;" type="number" [(ngModel)]="maxBed" #ctrl="ngModel" min="0.00" step="1" value="1.00" id="maxBed" class="form-control" placeholder="Max Bed">
+                <input style="width: 100px; font-size: 12px;" type="number" [(ngModel)]="minBed" #ctrl="ngModel"
+                    min="0.00" step="1" value="1.00" id="minBed" class="form-control" placeholder="Min Bed">
+                <input style="width: 100px; font-size: 12px;" type="number" [(ngModel)]="maxBed" #ctrl="ngModel"
+                    min="0.00" step="1" value="1.00" id="maxBed" class="form-control" placeholder="Max Bed">
                 <small>Clear</small>
             </div>
         </div>
     </div>
 </ng-template>
-<ng-template #propertyTypeFilter>
 
+<ng-template #propertyTypeFilter>
     <div class="nav-item mr-2" ngbDropdown #myDrop="ngbDropdown">
         <div class="flex-row gap-1 jcc aic mx-1">
             <fa-icon class="btn-circle" [icon]="faHomes"></fa-icon>
@@ -370,45 +429,39 @@
                 <div class="mydict">
                     <div>
                         <label>
-                            <input id="All" value="All" type="radio"
-                                name="radio" checked
+                            <input id="All" value="All" type="radio" name="radio" checked
                                 (change)="selectPropertyType($event)">
                             <span>All</span>
                         </label>
                         <label>
-                            <input id="Flat" value="Flat" type="radio"
-                                name="radio"
+                            <input id="Flat" value="Flat" type="radio" name="radio"
                                 (change)="selectPropertyType($event)">
                             <span>Flat</span>
                         </label>
                         <label>
-                            <input id="Detached House"
-                                value="Detached House"
-                                type="radio" name="radio"
+                            <input id="Detached House" value="Detached House" type="radio" name="radio"
                                 (change)="selectPropertyType($event)">
                             <span>Detached House</span>
                         </label>
                         <label>
-                            <input id="Shared Room" value="Shared Room"
-                                type="radio" name="radio"
+                            <input id="Shared Room" value="Shared Room" type="radio" name="radio"
                                 (change)="selectPropertyType($event)">
                             <span>Shared Room</span>
                         </label>
                         <label>
-                            <input id="Garage" value="Garage" type="radio"
-                                name="radio"
+                            <input id="Garage" value="Garage" type="radio" name="radio"
                                 (change)="selectPropertyType($event)">
                             <span>Garage</span>
                         </label>
                         <label>
-                            <input id="Commercial" value="Commercial"
-                                type="radio" name="radio"
+                            <input id="Commercial" value="Commercial" type="radio" name="radio"
                                 (change)="selectPropertyType($event)">
                             <span>Commercial</span>
                         </label>
                     </div>
                 </div>
-                <button type="button" class="btn btn-outline-primary me-2" (click)="$event.stopPropagation(); myDrop.close()">Apply</button>
+                <button type="button" class="btn btn-outline-primary me-2"
+                    (click)="$event.stopPropagation(); myDrop.close()">Apply</button>
                 <!-- <button type="radio" class="btn-1" (click)="selectPropertyType('All')">All</button>
                 <button type="button" class="btn-1" (click)="selectPropertyType('Flat')">Flat</button>
                 <button type="button" class="btn-1" (click)="selectPropertyType('Detached House')">Detached House</button>
@@ -423,17 +476,19 @@
 <ng-template #filterModal let-modal>
     <div class="modal-header d-flex jcsb aic">
         <span class="bolder fs-6">Filters</span>
-        <button type="button" class="btn-modal-close" aria-label="Close" (click)="close()">X</button>
+        <button type="button" class="btn-circle" aria-label="Close" (click)="close()">X</button>
+
     </div>
     <div class="modal-body flex-column p-3 w-100 flex-grow gap-1">
         <ng-container [ngTemplateOutlet]="categoryList"></ng-container>
         <ng-container *ngIf="category === 'Property'" [ngTemplateOutlet]="propertyTypeList"></ng-container>
         <ng-container *ngIf="category === 'Property'" [ngTemplateOutlet]="consumptionTypeFilter"></ng-container>
-        <ng-container *ngIf="category === 'Property' || category === 'Car' || category === 'Books'" [ngTemplateOutlet]="priceRangeFilter"></ng-container>
+        <ng-container *ngIf="category === 'Property' || category === 'Car' || category === 'Books'"
+            [ngTemplateOutlet]="priceRangeFilter"></ng-container>
         <ng-container *ngIf="category === 'Property'" [ngTemplateOutlet]="bedroomsFilter"></ng-container>
     </div>
     <div class="modal-sticky-footer flex-row jcsb aic" style="margin: 10px;padding: 10px;gap:.6rem;">
-        <button type="button" class="btn-10" (click)="searchProperties()">Apply</button>
-        <button type="button" class="btn-10" (click)="close()">Cancel</button>
+        <button type="button" class="btn-solid-success" (click)="searchProperties()">Apply</button>
+        <button type="button" class="btn-solid-warning" (click)="close()">Cancel</button>
     </div>
 </ng-template>

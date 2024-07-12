@@ -1,8 +1,8 @@
 <ng-container *ngIf="(loadStripe$ | async) as stripe; else loadingStripe"></ng-container>
 
-<div class="container-fluid">
+<div class="container">
     <!-- Header -->
-    <div class="flex-row-space-between align-items-center">
+    <div class="flex-row jcsb aic py-2">
         <div class="back" (click)="goback()">
             <fa-icon [icon]="faArrowLeft"></fa-icon>
         </div>
@@ -97,12 +97,12 @@
         <div class="flex-row mb-2 border-bottom py-2 aic">
             <span>Do you have an account?</span>
             <!-- <span [routerLink]="['/login']" [queryParams]="{returnUrl: 'checkout'}" class="clickable ml-2">Login</span> -->
-            <button type="button" [routerLink]="['/login']" [queryParams]="{returnUrl: '/foods/checkout'}" class="btn btn-outline-dark px-3 ml-3">Login</button>
+            <button type="button" [routerLink]="['/login']" [queryParams]="{returnUrl: '/ck/checkout'}" class="btn-solid px-3 ml-3">Login</button>
         </div>
         <div class="flex-row py-2 aic">
             <span>Don't have an account?</span>
             <!-- <span [routerLink]="['/register']" class="clickable ml-2">Signup</span> -->
-            <button type="button" [routerLink]="['/register']" [queryParams]="{returnUrl: '/foods/checkout'}" class="btn btn-outline-dark px-3 ml-3">Signup</button>
+            <button type="button" [routerLink]="['/register']" [queryParams]="{returnUrl: '/ck/checkout'}" class="btn-solid px-3 ml-3">Signup</button>
         </div>
     </div>
 </ng-template>

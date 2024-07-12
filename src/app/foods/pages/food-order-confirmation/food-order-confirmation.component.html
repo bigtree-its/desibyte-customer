@@ -1,9 +1,8 @@
-<div class="container-fluid">
-    <div class="d-flex jcsb aic">
-        <span class="a-page-header">Order Confirmation</span>
-        <div>
-
-            <strong *ngIf="order" class="f-size-lg color-red bolder">{{order?.total|
+<div class="container flex-column">
+    <div class="row">
+        <div class="flex-row aic jcsb bg-white p-4 my-3 br-7">
+            <span class="bolder fs-3">Order Confirmation</span>
+            <strong *ngIf="order" class="fs-5 color-o bolder">{{order?.total|
                 currency:
                 'GBP'}}</strong>
         </div>
@@ -17,11 +16,11 @@
 
 
     <div class="row" *ngIf="!loading">
-        <div class="col-md-6">
+        <div class="col br-7 bg-white p-3">
             <app-f-order-item *ngFor="let item of order?.items" [item]="item" [editable]=false></app-f-order-item>
             <ng-template [ngTemplateOutlet]="summary"></ng-template>
         </div>
-        <div class="col-md-6">
+        <div class="col bg-white p-3">
             <div class="flex-column" *ngIf="order">
                 <div class="bg-light p-3 my-2">
                     <div class="flex-row aic">
@@ -89,7 +88,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
     <div style="height: 50px;"></div>

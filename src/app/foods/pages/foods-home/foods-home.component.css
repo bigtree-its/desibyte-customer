@@ -1,15 +1,13 @@
 .hero {
-    height: 200px;
+    height: 100vh;
     width: 100%;
-    border-radius: 12px;
     /* color: #fff; */
-    background-color: rgb(244, 227, 218);
     object-position: left center;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     /* background-image: url("https://www.trulia.com/images/app-shopping/homePage/hiDpiExtraLarge.webp"); */
-    /* background-image: url("/assets/images/home-food.jpeg"); */
+    background-image: url("/assets/images/Homefood.png");
 }
 
 .page-hash {
@@ -52,6 +50,7 @@
     text-align: center;
     margin: 10px 0;
     border-radius: 20px;
+    color: darkgrey;
 }
 
 .textSlider div {

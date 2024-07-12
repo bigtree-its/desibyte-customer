@@ -1,12 +1,10 @@
-<div class="container-fluid">
+<div class="container">
     <div class="flex-column">
 
         <!-- Header -->
         <div class="flex-row jcsb aic border-bottom ">
             <div class="flex-row aic">
-                <div *ngIf="viewOrder" class="arrow-icon-div" (click)="goBack()">
-                    <fa-icon [icon]="faArrowLeft"></fa-icon>
-                </div>
+                <fa-icon [icon]="faArrowLeft" (click)="goBack()" class="btn-circle mr-3"></fa-icon>
                 <span class="py-2 fs-4 bolder">{{viewOrder?
                     viewOrder.reference: 'My Orders'}}</span>
             </div>

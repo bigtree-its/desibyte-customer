@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { faClose, faLocation, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faClose, faFireBurner, faLocation, faLocationDot, faMugHot, faReceipt, faSearch, faUtensils } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Cuisine } from 'src/app/model/all-foods';
 import { Address, PostcodeDistrict, PostcodeDistrictQuery, RapidApiByPostcodeResponse, RapidApiByPostcodeResponseSummary, ServiceLocation } from 'src/app/model/common';
@@ -20,6 +20,10 @@ export class FoodsHomeComponent implements OnInit{
   faLocation = faLocation;
   faSearch = faSearch;
   faClose = faClose;
+  faLocationDot = faLocationDot;
+  faMugHot = faMugHot;
+  faReceipt = faReceipt;
+  faUtensils = faUtensils;
 
   router = inject(Router);
   cuisinesService = inject(CuisinesService);

@@ -24,7 +24,9 @@
         </select>
         <div class="flex-column my-1">
             <span class="bolder py-1">Ad Location</span>
-            <app-postcode-lookup (addressEmitter)="onSelectAddress($event)"></app-postcode-lookup>
+            <div class="bg-dark-grey br-25 py-2">
+                <app-postcode-lookup (addressEmitter)="onSelectAddress($event)"></app-postcode-lookup>
+            </div>
         </div>
 
         <!-- ImageKit Client Side Upload Working example-->
@@ -294,12 +296,12 @@
 </ng-template>
 <ng-template #postConfirmation>
 
-    <div class="flex-column gap-1 p-3">
+    <div class="flex-column gap-1 p-3 bg-white br-7 my-3">
         <span class="bolder fs-4">Thanks for posting you ad</span>
-        <span>
-            Your ad reference {{postedAd.reference}}
+        <span class="py-2">
+            Your ad reference <b>{{postedAd.reference}}</b>
         </span>
-        <span>
+        <span class="py-2">
             We moderate listings in order to follow safety practices, which can
             sometimes take a few hours. Once your ad
             has been approved, it will be available to view <a
@@ -309,10 +311,10 @@
             We will send a confirmation email to {{user.email}} which you can
             use to edit or delete your ad in future.
         </span>
-        <div class="flex-row">
-            <button class="btn-7" [routerLink]="['/my_ads']">Manage My
+        <div class="flex-row my-3">
+            <button class="btn-plain" [routerLink]="['/my_ads']">Manage My
                 Ads</button>
-            <button class="btn-8 ml-3" (click)="postNewAd()">Post new ad</button>
+            <button class="btn-plain ml-3" (click)="postNewAd()">Post new ad</button>
         </div>
 
     </div>
@@ -323,12 +325,12 @@
         <div class="flex-row mb-2 border-bottom py-2 aic">
             <span>Do you have an account?</span>
             <!-- <span [routerLink]="['/login']" [queryParams]="{returnUrl: 'checkout'}" class="clickable ml-2">Login</span> -->
-            <button type="button" [routerLink]="['/login']" [queryParams]="{returnUrl: '/ads/post'}" class="btn btn-outline-dark px-3 ml-3">Login</button>
+            <button type="button" [routerLink]="['/login']" [queryParams]="{returnUrl: '/ads/post'}" class="btn-solid px-3 ml-3">Login</button>
         </div>
         <div class="flex-row py-2 aic">
             <span>Don't have an account?</span>
             <!-- <span [routerLink]="['/register']" class="clickable ml-2">Signup</span> -->
-            <button type="button" [routerLink]="['/register']" [queryParams]="{returnUrl: '/ads/post'}" class="btn btn-outline-dark px-3 ml-3">Signup</button>
+            <button type="button" [routerLink]="['/register']" [queryParams]="{returnUrl: '/ads/post'}" class="btn-solid  px-3 ml-3">Signup</button>
         </div>
     </div>
 </ng-template>

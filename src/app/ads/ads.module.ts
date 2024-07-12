@@ -12,10 +12,12 @@ import { PropertyDetailComponent } from './pages/property-detail/property-detail
 import { ContactFormComponent } from './pages/contact-form/contact-form.component';
 import { AdDetailComponent } from './pages/ad-detail/ad-detail.component';
 import { ImagekitioAngularModule } from 'imagekitio-angular';
+import { DragScrollComponent, DragScrollItemDirective } from 'ngx-drag-scroll';
 
 const routes: Routes = [
   { path: 'ads/post', component: PostAdComponent },
   { path: 'ads/home', component: HomeComponent },
+  { path: 'ads/home/:category', component: HomeComponent },
   { path: 'ads/p/:id', component: PropertyDetailComponent },
   { path: 'ads/g/:id', component: AdDetailComponent }
 ]
@@ -39,6 +41,8 @@ const routes: Routes = [
     NgbCarouselModule,
     NgbDropdownModule,
     DateAgoPipe,
+    DragScrollComponent,
+    DragScrollItemDirective,
     ImagekitioAngularModule,
     RouterModule.forChild(routes)
   ]

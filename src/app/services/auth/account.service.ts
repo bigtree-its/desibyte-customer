@@ -78,7 +78,6 @@ export class AccountService {
             this.router.navigate(['/']);
           }
           this.setUser(result);
-
         })
       );
   }
@@ -177,13 +176,6 @@ export class AccountService {
     this.user = user;
     // this.fetchCustomerPreferences(user.id);
     this.loginSession$.next(this.user);
-    if (this.redirectUrl) {
-      console.log('redirecting to ' + this.redirectUrl);
-      this.router.navigateByUrl(this.redirectUrl);
-      this.redirectUrl = null;
-    } else {
-      this.router.navigate(['/']);
-    }
   }
 
   private buildUser(token: string) {

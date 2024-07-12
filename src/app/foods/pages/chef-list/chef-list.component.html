@@ -20,9 +20,10 @@
         <div class="full-screen mb-2 px-3">
             <div class="flex-row-scrollable py-3">
                 <!-- <div *ngFor="let kw of keywords" class="btn-text d-flex jcc aic mr-1 px-3" (click)="onSelectDish(d)" [class.clicked]="isDishSelected(d)"> -->
-                <div *ngFor="let kw of keywords" class="btn-text d-flex jcc aic mr-1 px-3" (click)="onSelectKeyword(kw)" [class.selected]="isKeywordSelected(kw)">
-                    <span>{{kw}}</span>
-                </div>
+                    <div *ngFor="let kw of keywords" class="selectable mr-1" (click)="onSelectKeyword(kw)" [class.selected]="isKeywordSelected(kw)">
+                        <fa-icon [icon]="faCheck"></fa-icon>
+                        <span class="pl-1">{{kw}}</span>
+                    </div>
             </div>
         </div>
     </div>
@@ -46,12 +47,14 @@
     </div>
 
     <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-        <div class="col mb-4 br-12" *ngFor="let chef of filteredKitchens " [routerLink]="[ '/cloud-kitchens', chef._id] ">
-            <div class="br-12 chef-card" style="border:none;">
-                <img src="{{chef.image}}" class="card-img-top br-top-14" alt="...">
-                <div class="card-body mt-1">
+        <div class="col mb-4" *ngFor="let chef of filteredKitchens " [routerLink]="[ '/cloud-kitchens', chef._id] ">
+            <div class="chef-card">
+                <img src="{{chef.image}}" class="card-img-top" alt="...">
+                <div class="card-body mt-1 p-2">
                     <h5 class="fs-6 bolder">{{chef.name}}</h5>
                     <p class="card-text"> {{chef.description}}</p>
+                    <span [class.open]="chef.open" [class.closed]="!chef.open">{{chef.open?
+                        "Open Now":"Closed"}}</span>
                 </div>
             </div>
         </div>

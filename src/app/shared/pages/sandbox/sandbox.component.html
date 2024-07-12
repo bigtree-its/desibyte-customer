@@ -1,14 +1,8 @@
-<div class="flex-column">
-    <span>Upload files</span>
-    <input type="file" accept="image/png,image/gif,image/jpg,image/jpeg" class="file-input" (change)="onChange($event)" #fileUpload />
-    <div class="flex-column" *ngIf="myMap.size > 0">
-        <div class="full-screen my-1 px-2 flex-row jcc pt-2">
-            <div class="flex-row-scrollable">
-                <div class="br-12 mr-1" style="position:relative;min-width: 130px;min-height: 130px;max-width:130px;max-height: 130px;border:1px solid #e2e2e2;padding: 10px;" *ngFor="let file of myMap | keyvalue">
-                    <img [src]="file.value" class="preview">
-                </div>
-            </div>
-        </div>
-    </div>
-    <button (click)="upload()">Upload</button>
-</div>
+<drag-scroll #nav>
+  <img drag-scroll-item src="https://picsum.photos/id/44/1920/600" style="height: 500px;width: 760px;object-fit: contain;"/>
+  <img drag-scroll-item src="https://picsum.photos/id/55/1920/600" style="height: 500px;width: 760px;object-fit: contain;" />
+  <img drag-scroll-item src="https://picsum.photos/id/66/1920/600" style="height: 500px;width: 760px;object-fit: contain;" />
+</drag-scroll>
+<button (click)="moveLeft()">Left</button>
+<button (click)="moveRight()">Right</button>
+<button (click)="moveTo(2)">Last</button>

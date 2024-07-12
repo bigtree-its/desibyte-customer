@@ -14,11 +14,12 @@ export const environment = {
   AD_REMOTE: 'https://ad-service-bd07dee8092c.herokuapp.com',
   ORDER_REMOTE: 'https://order-service-9ff7ad1220e2.herokuapp.com',
   AUTH_REMOTE: 'https://bigtree-auth-service-672f06320174.herokuapp.com',
+  GEO_REMOTE: 'https://bigtree-geo-78f520f4abb3.herokuapp.com',
 
   AUTH_LOCAL: 'http://localhost:8081',
   ORDER_LOCAL: 'http://localhost:8082',
   AD_LOCAL: 'http://localhost:8083',
-  UK_POST_LOCAL: 'http://localhost:8085',
+  GEO_LOCAL: 'http://localhost:8085',
 
   // Ads
   CollectionsUrl: "http://localhost:8083/ads/v1/collections",
@@ -70,7 +71,7 @@ export const environment = {
   ImageKitFilesUrl: 'http://localhost:8083/ads/v1/imagekit/files',
 
 
-  //UK Post
+  //GEO
   PostcodeDistrictUrl: 'http://localhost:8085/uk-post/v1/postcode-districts',
   
   /** API Tier**/

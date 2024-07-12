@@ -1,11 +1,11 @@
 <div>
-    <button type="button" class="btn-10" (click)="openModal(contactForm)">Enquire
+    <button type="button" class="btn-solid-success" (click)="openModal(contactForm)">Enquire
         Now</button>
 </div>
 <ng-template #contactForm let-modal>
     <div class="modal-header d-flex jcsb aic">
         <span class="bolder fs-6">Contact</span>
-        <button type="button" class="btn-modal-close" aria-label="Close" (click)="close()">X</button>
+        <fa-icon [icon]="faClose" class="btn-circle" (click)="close()"></fa-icon>
     </div>
     <div class="modal-body">
         <div *ngIf="enquirySubmitted" class="flex-column p-2 br-12 w-100">
@@ -19,7 +19,7 @@
     </div>
 
     <div class="modal-sticky-footer flex-row jcsb aic" style="margin: 10px;padding: 10px;gap:.6rem;">
-        <button *ngIf="user && !enquirySubmitted" type="button" class="btn-10" (click)="contactOwner()">Send Enquiry</button>
-        <button *ngIf="enquirySubmitted" type="button" class="btn-10" (click)="close()">Close</button>
+        <button *ngIf="user && !enquirySubmitted" type="button" class="btn-solid-success" (click)="contactOwner()">Send Enquiry</button>
+        <button *ngIf="enquirySubmitted" type="button" class="btn-solid-warning" (click)="close()">Close</button>
     </div>
 </ng-template>

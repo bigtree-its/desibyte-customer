@@ -8,13 +8,14 @@ import { ReviewItemComponent } from './pages/review-item/review-item.component';
 import { DateAgoPipe } from '../pipes/date-ago.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaymentFormComponent } from './pages/payment-form/payment-form.component';
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PostcodeLookupComponent } from './pages/postcode-lookup/postcode-lookup.component';
 import { ImagekitioAngularModule } from 'imagekitio-angular';
 import { FooterComponent } from './pages/footer/footer.component';
 import { SandboxComponent } from './pages/sandbox/sandbox.component';
 import { WriteReviewComponent } from './pages/write-review/write-review.component';
 import { AuthGuard } from '../services/auth/auth-guard.service';
+import { DragScrollComponent, DragScrollItemDirective } from 'ngx-drag-scroll';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -42,6 +43,8 @@ const routes: Routes = [
     FontAwesomeModule,
     NgbDropdownModule,
     ImagekitioAngularModule,
+    DragScrollComponent,
+    DragScrollItemDirective,
     RouterModule.forChild(routes)
   ],
   exports: [
@@ -49,7 +52,8 @@ const routes: Routes = [
     FooterComponent,
     PostcodeLookupComponent,
     PaymentFormComponent,
-    ReviewItemComponent
+    ReviewItemComponent,
+    NgbModule
   ]
 })
 export class SharedModule {

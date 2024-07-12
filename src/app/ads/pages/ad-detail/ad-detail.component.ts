@@ -2,9 +2,9 @@ import { Location } from '@angular/common';
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { faArrowLeft, faBath, faBed, faHouse, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faBath, faBed, faHouse, faLocationDot, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { first } from 'rxjs/operators';
-import { GeneralAd, ImageKitImg } from 'src/app/model/all-ads';
+import { AdSearchQuery, GeneralAd, ImageKitImg } from 'src/app/model/all-ads';
 import { LoginResponse, User } from 'src/app/model/all-auth';
 import { AdsService } from 'src/app/services/ads/ads.service';
 import { AccountService } from 'src/app/services/auth/account.service';
@@ -27,7 +27,7 @@ export class AdDetailComponent implements OnInit {
   customer: User;
   ad: GeneralAd;
   category: string;
-  display_picture: ImageKitImg;
+  display_picture: string;
   gallery: ImageKitImg[] = [];
   @ViewChild('widgetsContent') widgetsContent: ElementRef;
   // @ViewChild('googleMap') googleMap: google.maps.Map;
@@ -52,6 +52,8 @@ export class AdDetailComponent implements OnInit {
   faHouse= faHouse;
   faBed= faBed;
   faBath= faBath;
+  faLocation = faLocationDot;
+
   user: User;
   adReference: any;
   returnUrl: string;
@@ -80,8 +82,10 @@ export class AdDetailComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.adReference = params['id'];
       this.returnUrl = '/ads/g/'+ this.adReference;
-      console.log(`Property Reference: ${params['id']}`);
-      this.adService.getAds(this.adReference).subscribe(result => {
+      console.log(`Ad Reference: ${this.adReference}`);
+      var query: AdSearchQuery ={};
+      query.reference = this.adReference;
+      this.adService.getAds(query).subscribe(result => {
         if ( result && result.length > 0){
           this.ad = result[0];
           console.log('The ad : ' + JSON.stringify(this.ad));
@@ -90,8 +94,14 @@ export class AdDetailComponent implements OnInit {
           //   lng: this.ad.address.longitude,
           // }
           // this.addMarker();
-          this.display_picture = this.ad.image;
-          this.gallery.push(this.ad.image);
+          if ( this.ad.image){
+            this.display_picture = this.ad.image.url;
+            this.gallery.push(this.ad.image);
+          }else{
+            this.display_picture = this.ad.gallery[0].url;
+          }
+          
+         
           // this.ad.gallery.forEach(p => {
           //   this.gallery.push(p);
           // })
@@ -139,7 +149,7 @@ export class AdDetailComponent implements OnInit {
   //   if (this.zoom > this.options.minZoom) this.zoom--
   // }
 
-  displayPicture(img: ImageKitImg) {
+  displayPicture(img: string) {
     this.display_picture = img;
   }
   scrollLeft() {

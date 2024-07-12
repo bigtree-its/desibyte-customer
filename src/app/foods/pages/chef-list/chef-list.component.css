@@ -11,7 +11,7 @@
 
 .cuisine:hover {
     cursor: pointer;
-    background-color: var(--warning);
+    background-color: yellow;
 }
 
 .cuisine-logo {

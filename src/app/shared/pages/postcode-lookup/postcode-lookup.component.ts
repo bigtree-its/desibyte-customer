@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output, inject } from '@angular/core';
-import { faClose, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faClose, faLocationDot, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { APITierAddress, APITierResponse } from 'src/app/model/all-address-lookup';
 import { Address, RapidApiByPostcodeResponse, RapidApiByPostcodeResponseSummary } from 'src/app/model/common';
 import { RapidApiService } from 'src/app/services/common/rapid-api.service';
@@ -18,6 +18,7 @@ export class PostcodeLookupComponent {
   showAddressList: boolean;
   faSearch = faSearch;
   faClose = faClose;
+  faLocation = faLocationDot;
 
   selectedAddress: string;
   addressSelected: boolean;

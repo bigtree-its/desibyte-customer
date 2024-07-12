@@ -1,6 +1,8 @@
+import { ViewportScroller } from '@angular/common';
 import {
   Component,
   ElementRef,
+  HostListener,
   inject,
   OnDestroy,
   OnInit,
@@ -21,6 +23,7 @@ import {
   faHome,
   faImage,
   faList,
+  faLocationDot,
   faPersonChalkboard,
   faPersonDigging,
   faSort,
@@ -28,6 +31,8 @@ import {
   faTag,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
+import { faStar as starReg } from '@fortawesome/free-regular-svg-icons';
+import { faStar as starSolid } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 import {
@@ -38,6 +43,7 @@ import {
 } from 'src/app/model/all-ads';
 import { Address } from 'src/app/model/common';
 import { AdsService } from 'src/app/services/ads/ads.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -45,7 +51,9 @@ import { AdsService } from 'src/app/services/ads/ads.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit, OnDestroy {
+
   destroy$ = new Subject<void>();
+
   @ViewChild('pScroller', { read: ElementRef })
   public pScroller: ElementRef<any>;
 
@@ -81,10 +89,22 @@ export class HomeComponent implements OnInit, OnDestroy {
   faEvents = faCalendarDays;
   faFurniture = faChair;
   faAll = faList;
-  faImage=  faImage;
+  faImage = faImage;
+  faLocation = faLocationDot;
   // faArrowRight = faChevronRight;
   faArrowLeft = faArrowLeft;
   faArrowRight = faArrowRight;
+  faStarR = starReg;
+  faStarS = starSolid;
+
+  isNavCollapse = false;
+  @HostListener('window:scroll', []) onScroll() {
+    if (this.scroll.getScrollPosition()[1] > 70) {
+      this.isNavCollapse = true;
+    } else {
+      this.isNavCollapse = false;
+    }
+  }
 
   categories: Category[] = [
     {
@@ -136,9 +156,25 @@ export class HomeComponent implements OnInit, OnDestroy {
   searchRadius: any;
   groupedAds: Map<string, GeneralAd[]>;
 
+
+  constructor(private scroll: ViewportScroller, private activatedRoute: ActivatedRoute) { }
+
   ngOnInit(): void {
-    this.category = 'All';
-    this.getAll();
+    this.activatedRoute.params.subscribe(params => {
+      var category = params['category'];
+      if (category) {
+        this.category = category;
+        console.log('Viewing ' + category)
+        this.onSelectCategory(category);
+      } else {
+        this.category = 'All';
+        this.getAll();
+      }
+    });
+  }
+
+  nomalise(category: string) {
+
   }
 
   onEmitAddress(address: Address) {
@@ -146,31 +182,52 @@ export class HomeComponent implements OnInit, OnDestroy {
     console.log('Address emitted ' + JSON.stringify(address));
   }
 
+  onWheel(event: WheelEvent): void {
+    if (event.deltaY > 0) this.scrollToRight();
+    else this.scrollToLeft();
+  }
+
+  scrollToLeft(): void {
+    document.getElementById('scroll-1').scrollLeft -= 400;
+  }
+
+  scrollToRight(): void {
+    document.getElementById('scroll-1')!.scrollLeft += 400;
+  }
+
+
   public scrollRight(e: string): void {
     if (e === 'pScroller') {
-      this.pScroller.nativeElement.scrollTo({
-        left: this.pScroller.nativeElement.scrollLeft + 150,
-        behavior: 'smooth',
-      });
+      this.pScroller.nativeElement.scrollLeft += 150;
+      // this.pScroller.nativeElement.scrollTo({
+      //   left: this.pScroller.nativeElement.scrollLeft + 150,
+      //   behavior: 'smooth',
+      // });
     } else {
-      this.adScroller.nativeElement.scrollTo({
-        left: this.adScroller.nativeElement.scrollLeft + 150,
-        behavior: 'smooth',
-      });
+      window.alert('Scrolling right ' + e)
+      this.adScroller.nativeElement.scrollLeft += 150;
+      // this.adScroller.nativeElement.scrollTo({
+      //   left: this.adScroller.nativeElement.scrollLeft + 150,
+      //   behavior: 'smooth',
+      // });
     }
   }
 
+
   public scrollLeft(e: string): void {
     if (e === 'pScroller') {
-      this.pScroller.nativeElement.scrollTo({
-        left: this.pScroller.nativeElement.scrollLeft - 150,
-        behavior: 'smooth',
-      });
+      this.pScroller.nativeElement.scrollLeft -= 150;
+      // this.pScroller.nativeElement.scrollTo({
+      //   left: this.pScroller.nativeElement.scrollLeft - 150,
+      //   behavior: 'smooth',
+      // });
     } else {
-      this.adScroller.nativeElement.scrollTo({
-        left: this.adScroller.nativeElement.scrollLeft - 150,
-        behavior: 'smooth',
-      });
+      window.alert('Scrolling ' + e);
+      this.adScroller.nativeElement.scrollLeft -= 150;
+      // this.adScroller.nativeElement.scrollTo({
+      //   left: this.adScroller.nativeElement.scrollLeft - 150,
+      //   behavior: 'smooth',
+      // });
     }
   }
 
@@ -184,8 +241,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     adQuery.lastMonth = true;
     this.adService.getAds(adQuery).subscribe((d) => {
       this.ads = d;
+      console.log('Total ads retrieved ' + this.ads.length)
       this.groupedAds = this.ads.reduce(
-        (result:any, currentValue:any) => { 
+        (result: any, currentValue: any) => {
           (result[currentValue['category']] = result[currentValue['category']] || []).push(currentValue);
           return result;
         }, {});
@@ -196,58 +254,72 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.location = e.target.value;
   }
 
-  onSelectCategory(e: any) {
+  onSelectCategory(e: string) {
     this.category = e;
     var adQuery: AdSearchQuery = {};
     adQuery.lastMonth = true;
     switch (this.category) {
       case 'All':
+      case 'all':
         this.getAll();
         break;
       case 'Property':
+      case 'Properties':
+      case 'properties':
         var query: PropertySearchQuery = {};
         query.lastMonth = true;
         this.adService.getProperties(query).subscribe((d) => {
           this.properties = d;
         });
         break;
+      case 'Car':
       case 'Cars':
-        adQuery.category = 'Cars';
+      case 'cars':
+      case 'car':
+        adQuery.category = 'Car';
         this.getAds(adQuery);
         break;
       case 'Furniture':
+      case 'furnitures':
         adQuery.category = 'Furniture';
         this.getAds(adQuery);
         break;
       case 'Books':
+      case 'books':
         adQuery.category = 'Books';
         this.getAds(adQuery);
         break;
       case 'Services':
+      case 'services':
         adQuery.category = 'Services';
         this.getAds(adQuery);
         break;
       case 'Jobs':
+      case 'jobs':
         adQuery.category = 'Jobs';
         this.getAds(adQuery);
         break;
       case 'Events':
+      case 'events':
         adQuery.category = 'Events';
         this.getAds(adQuery);
         break;
       case 'Electronics':
+      case 'electronics':
         adQuery.category = 'Electronics';
         this.getAds(adQuery);
         break;
       case 'Ads':
+      case 'ads':
         this.getAds(adQuery);
         break;
       case 'Kids':
+      case 'kids':
         adQuery.category = 'Kids';
         this.getAds(adQuery);
         break;
       default:
-        alert('Default case');
+        break;
     }
   }
 
@@ -286,7 +358,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         windowClass: 'custom-class',
       })
       .result.then(
-        (result) => {},
+        (result) => { },
         (reason) => {
           // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         }
