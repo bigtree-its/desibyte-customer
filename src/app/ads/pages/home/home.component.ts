@@ -341,6 +341,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   onChangePropertyTypeList(e: any) {
     this.propertyType = e.target.value;
+    if ( this.propertyType === 'Rooms'){
+      this.consumptionType = "Rent";
+    }else{
+      this.consumptionType = "Sale";
+    }
   }
 
   onChangeConsumptionType(e: any) {

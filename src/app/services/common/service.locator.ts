@@ -21,6 +21,7 @@ export class ServiceLocator {
   FoodOrdersStripePaymentsUrl: string;
   FoodOrderSearchUrl: string;
   KitchenOrderProfileUrl: string;
+  KitchenOrdersUrl: string;
   KitchenOrderSearchUrl: string;
   
 
@@ -78,7 +79,7 @@ export class ServiceLocator {
     this.ProductOrdersUrl = environment.ProductOrdersUrl;
     this.ProductOrdersPaymentsUrl = environment.ProductOrdersPaymentsUrl;
     this.KitchenOrderProfileUrl = environment.KitchenOrderProfileUrl;
-    this.KitchenOrderSearchUrl = environment.KitchenOrderSearchUrl;
+    this.KitchenOrdersUrl = environment.KitchenOrdersUrl;
 
     this.LoginUrl = environment.LoginUrl;
     this.LogoutUrl = environment.LogoutUrl;

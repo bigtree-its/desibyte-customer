@@ -46,8 +46,8 @@ export const environment = {
   ProductOrdersPaymentsUrl: 'http://localhost:8082/orders/v1/products/stripe-payments',
 
   // Supplier Orders
-  KitchenOrderProfileUrl: "http://localhost:8082/orders/v1/profiles",
-  KitchenOrderSearchUrl: "http://localhost:8082/orders/v1/foods/profiles",
+  KitchenOrderProfileUrl: "http://localhost:8082/kitchen-orders/v1/profile",
+  KitchenOrdersUrl: "http://localhost:8082/kitchen-orders/v1",
 
   // Auth
   LoginUrl:'http://localhost:8081/v1/auth/token',

@@ -1,20 +1,16 @@
 .selectable-btn {
     padding: 5px 15px;
     border-radius: 10px;
-    background-color: #fff;
-    border: 1px solid rgb(209, 213, 219);
     font-weight: 500;
 }
 
 .selectable-btn:hover {
     cursor: pointer;
-    background-color: #444;
-    border: 1px solid #444;
-    color: aquamarine;
+    background-color: #e7f5e7;
+    color: #53d900;
 }
 
 .selected-btn {
-    background-color: #444;
-    border: 1px solid #444;
-    color: aquamarine;
+    background-color: #e7f5e7;
+    color: #53d900;
 }

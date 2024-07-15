@@ -57,6 +57,8 @@ export class KitchenOrder {
     collectionDate: Date;
     deliveryDate: Date;
     review: Review;
+    customerNotes?: Note[];
+    kitchenNotes?: Note[];
 }
 
 export class KitchenOrderItem {
@@ -70,4 +72,9 @@ export class KitchenOrderItem {
     choice: Extra;
     subTotal: number;
     specialInstruction: string;
+}
+
+export class Note{
+    message?: string;
+    dateTime?: Date;
 }

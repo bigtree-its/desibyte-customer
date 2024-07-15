@@ -14,12 +14,16 @@ import {
   KitchenOrder,
   KitchenOrderProfileResponse,
   KitchenOrderTracking,
+  Note,
 } from 'src/app/model/all-food-supplier';
 import { AccountService } from 'src/app/services/auth/account.service';
 import { SupplierOrderService } from 'src/app/services/supplier/supplier-order.service';
 import { NgbHighlight } from '@ng-bootstrap/ng-bootstrap';
 import { CloudKitchenService } from 'src/app/services/foods/cloudkitchen.service';
 import { CloudKitchen } from 'src/app/model/all-foods';
+import { faArrowLeft, faChevronDown, faChevronUp, faFaceSmile, faPeopleArrows, faStar } from '@fortawesome/free-solid-svg-icons';
+import { FoodOrderService } from 'src/app/services/foods/food-order.service';
+import { Utils } from 'src/app/services/common/utils';
 
 @Component({
   selector: 'app-my-orders',
@@ -27,12 +31,21 @@ import { CloudKitchen } from 'src/app/model/all-foods';
   styleUrls: ['./my-orders.component.css'],
 })
 export class MyOrdersComponent implements OnInit, OnDestroy {
+
   destroy$ = new Subject<void>();
   actionOnOrder: KitchenOrder;
   selectedPeriod: string = 'Today';
   periods: string[] = ['Today', 'Week', 'Month'];
   statuses: string[] = ['All', 'Open', 'Completed', 'Ready', 'Cancelled'];
   ELEMENT_DATA: KitchenOrder[] = [];
+
+  errors: any;
+  error: boolean;
+  errorMessage: any;
+  loading: boolean = false;
+  orderReference: any;
+  notification: string;
+  declineReason: string;
 
   displayedColumns: string[] = [
     'Reference',
@@ -44,9 +57,6 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
   ];
   dataSource: any;
   orders: KitchenOrder[] = [];
-  weeklyOrders: KitchenOrder[] = [];
-  monthlyOrders: KitchenOrder[] = [];
-  todayOrders: KitchenOrder[] = [];
   loginSessionJson: string;
   action: any;
   ordersToView: KitchenOrder[];
@@ -56,17 +66,28 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
   decimalPipe = inject(DecimalPipe);
   viewOrder: KitchenOrder;
   cloudKitchen: CloudKitchen;
-  errorMessage: any;
   orderProfile: KitchenOrderProfileResponse;
 
+  faArrowLeft = faArrowLeft;
+  faStar = faStar;
+  faPeopleArrows = faPeopleArrows;
+  faFaceSmile = faFaceSmile;
+  chevronDown = faChevronDown;
+  chevronUp = faChevronUp;
+
+
+  openOrder: boolean = true;
+  showOrder: boolean = false;
+
+  openItems: boolean = true;
+  showItems: boolean = false;
+  filteredStatus: string;
+
   constructor(
-    private _location: Location,
-    private router: Router,
     private orderSvc: SupplierOrderService,
     private kitchenService: CloudKitchenService,
-    private accountSvc: AccountService,
     private modalSvc: NgbModal
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.orderSvc.orderSubject$.subscribe((e) => {
@@ -76,19 +97,14 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
       } else {
         console.log('Subscribed orders are empty');
         this.cloudKitchen = this.kitchenService.getData();
-        this.kitchenService.cloudKitchenSubject$.subscribe(e=>{
+        this.kitchenService.cloudKitchenSubject$.subscribe(e => {
           if (e) {
             this.cloudKitchen = e;
             this.fetchOrders();
           }
         });
-        
       }
     });
-    // var chefOrderProfile = sessionStorage.getItem("chef-order-profile");
-    // if ( chefOrderProfile !== null && chefOrderProfile !== undefined){
-    //   this.profile = JSON.parse(chefOrderProfile);
-    // }
   }
 
   fetchOrders() {
@@ -96,15 +112,13 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
     observable.pipe(takeUntil(this.destroy$)).subscribe({
       next: (e) => {
         this.orderProfile = e;
+        this.filteredStatus = 'All'
         if (this.orderProfile.today && this.orderProfile.today.length > 0) {
-          const sortedArray = this.orderProfile.today.slice().sort((a, b) => {
-            return <any>new Date(b.dateCreated) - <any>new Date(a.dateCreated);
-          });
-          this.orders = sortedArray;
-          this.myOrders$ = this.filter.valueChanges.pipe(
-            startWith(''),
-            map((text) => this.search(text, this.decimalPipe))
-          );
+          this.prepareOrderToView(this.orderProfile.today);
+        } else if (this.orderProfile.sevenDays && this.orderProfile.sevenDays.length > 0) {
+          this.prepareOrderToView(this.orderProfile.sevenDays);
+        } else if (this.orderProfile.month && this.orderProfile.month.length > 0) {
+          this.prepareOrderToView(this.orderProfile.month);
         }
       },
       error: (err) => {
@@ -113,6 +127,17 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
         );
       },
     });
+  }
+
+  private prepareOrderToView(orders: KitchenOrder[]) {
+    const sortedArray = orders.slice().sort((a, b) => {
+      return <any>new Date(b.dateCreated) - <any>new Date(a.dateCreated);
+    });
+    this.orders = sortedArray;
+    this.myOrders$ = this.filter.valueChanges.pipe(
+      startWith(''),
+      map((text) => this.search(text, this.decimalPipe))
+    );
   }
 
   search(text: string, pipe: PipeTransform): KitchenOrder[] {
@@ -126,65 +151,6 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
     });
   }
 
-  openOrder(order: KitchenOrder) {
-    sessionStorage.setItem('chef-single-order', JSON.stringify(order));
-    this.router.navigate(['orders', order.reference]).then();
-  }
-
-  groupOrders() {
-    let today: Date = new Date();
-    today.setHours(0, 0, 0, 0);
-    let dayOfWeekNumber: number = today.getDay();
-    let endDays: number = 7 - dayOfWeekNumber;
-    var weekEnd: Date = this.addDays(today, endDays);
-    weekEnd.setHours(0, 0, 0, 0);
-    for (var i = 0; i < this.orders.length; i++) {
-      var order: KitchenOrder = this.orders[i];
-      let orderDate: Date = new Date(order.dateCreated);
-      orderDate.setHours(0, 0, 0, 0);
-      if (
-        orderDate.getTime() <= weekEnd.getTime() &&
-        orderDate.getTime() >= today.getTime()
-      ) {
-        this.weeklyOrders.push(order);
-      }
-      if (orderDate.getTime() === today.getTime()) {
-        this.todayOrders.push(order);
-      }
-    }
-  }
-
-  addDays(theDate: Date, days: number): Date {
-    return new Date(theDate.getTime() + days * 24 * 60 * 60 * 1000);
-  }
-
-  selectPeriodEvent(event) {}
-
-  selectPeriod(period: string) {
-    if (period === 'Today') {
-      this.dataSource = this.todayOrders;
-    }
-    if (period === 'This Week') {
-      this.dataSource = this.weeklyOrders;
-    }
-    if (period === 'This Month') {
-      this.dataSource = this.monthlyOrders;
-    }
-    if (period === 'Last Month') {
-      // TODO
-    }
-    this.selectedPeriod = period;
-  }
-
-  displayOrders(orders: KitchenOrder[], period) {
-    this.ordersToView = orders;
-    this.selectedPeriod = period;
-  }
-
-  selectStatus(event) {
-    if (event.value === 'Open') {
-    }
-  }
 
   open(order: KitchenOrder) {
     this.viewOrder = order;
@@ -195,11 +161,15 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
     this.modalSvc
       .open(content, { ariaLabelledBy: 'modal-basic-title', size: size })
       .result.then(
-        (result) => {},
+        (result) => { },
         (reason) => {
           // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         }
       );
+  }
+
+  closeModal() {
+    this.modalSvc.dismissAll();
   }
 
   openActionModal(order: KitchenOrder, content) {
@@ -208,66 +178,110 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
   }
 
   goBack() {
-    this._location.back();
+    this.viewOrder = null;
   }
 
-  updateStatus(order: KitchenOrder, action: string) {
-    var status;
+  performAction(action: string) {
+    this.loading = true;
+
+    if (action === 'Decline') {
+      var note: Note = {};
+      note.dateTime = new Date();
+      note.message = this.declineReason;
+      if (!this.viewOrder.kitchenNotes) {
+        this.viewOrder.kitchenNotes = [];
+      }
+      this.viewOrder.kitchenNotes.push(note);
+    }
+    var performed = this.getActionPerformed(action);
+    let observable = this.orderSvc.action(this.viewOrder.reference, action);
+    observable.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (e) => {
+        this.viewOrder = e;
+        this.notification =
+          'Order ' + this.viewOrder.reference + ' has been updated with status ' + performed;
+        this.loading = false;
+      },
+      error: (err) => {
+        this.loading = false;
+        console.error('Errors from reset submit.' + JSON.stringify(err));
+        if (Utils.isJsonString(err)) {
+          this.notification =
+            'There was an issue when performing your update on the order. Please contact custoer support quoting order reference ' + this.viewOrder.reference;
+        }
+      },
+    });
+  }
+
+  obtainDeclineReason(content) {
+    this.modalSvc
+      .open(content, { ariaLabelledBy: 'modal-basic-title' })
+      .result.then(
+        (result) => { },
+        (reason) => {
+          // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
+  }
+
+  getActionPerformed(action: string) {
+    var performed;
     switch (action) {
       case 'Accept': {
-        status = 'ACCEPTED';
+        performed = 'Accepted';
         break;
       }
-      case 'Reject': {
-        status = 'REJECTED';
+      case 'Decline': {
+        performed = 'Declined';
         break;
       }
       case 'Refund': {
-        status = 'REFUNDED';
+        performed = 'Refunded';
+        break;
+      }
+      case 'Ready': {
+        performed = 'Ready';
         break;
       }
       case 'Complete': {
-        status = order.serviceMode === 'COLLECTION' ? 'COLLECTED' : 'DELIVERED';
+        performed = this.viewOrder.serviceMode === 'COLLECTION' ? 'Collected' : 'Delivered';
         break;
       }
+      return performed;
     }
-    order.status = status;
-    var tracking: KitchenOrderTracking = {
-      reference: order.reference,
-      status: status,
-      _id: '',
-      orderId: order._id,
-      dateAccepted: undefined,
-      datePaid: undefined,
-      dateCancelled: undefined,
-      dateDelivered: undefined,
-      dateCollected: undefined,
-      dateRefunded: undefined,
-    };
-    this.orderSvc.updateStatus(tracking).subscribe(
-      (data: KitchenOrderTracking) => {
-        order.status = data.status;
-      },
-      (err) => {
-        window.alert('Error when ' + status + ' the order');
-      }
-    );
+
   }
 
   showOrders(period: string) {
     if (period === 'Today') {
-      this.ordersToView = this.orderProfile.today;
+      this.selectedPeriod = period;
+      this.prepareOrderToView(this.orderProfile.today)
     } else if (period === 'Week') {
-      this.ordersToView = this.orderProfile.sevenDays;
+      this.selectedPeriod = period;
+      this.prepareOrderToView(this.orderProfile.sevenDays)
     } else if (period === 'Month') {
-      this.ordersToView = this.orderProfile.month;
+      this.selectedPeriod = period;
+      this.prepareOrderToView(this.orderProfile.month)
     }
   }
 
-  onAction(order: KitchenOrder, e) {
-    this.updateStatus(order, e.target.value);
-    this.modalSvc.dismissAll();
+  filterStatus(status: string) {
+    let filteredOrderes = [];
+    if (status !== 'All') {
+      for (let i = 0; i < this.orders.length; i++) {
+        if (this.orders[i].status === status) {
+          filteredOrderes = [...filteredOrderes, this.orders[i]];
+        }
+      }
+      this.prepareOrderToView(filteredOrderes)
+    } else {
+      this.showOrders(this.selectedPeriod);
+    }
+    this.filteredStatus = status;
+
   }
+
+
 
   ngOnDestroy() {
     this.destroy$.next();

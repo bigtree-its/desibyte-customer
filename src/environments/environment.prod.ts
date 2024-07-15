@@ -46,9 +46,9 @@ export const environment = {
   ProductOrdersPaymentsUrl: 'https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/products/stripe-payments',
 
   // Supplier Orders
-  KitchenOrderProfileUrl: "https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/profiles",
-  KitchenOrderSearchUrl: "https://order-service-9ff7ad1220e2.herokuapp.com/orders/v1/foods/profiles",
-
+  KitchenOrderProfileUrl: "https://order-service-9ff7ad1220e2.herokuapp.com/kitchen-orders/v1/profile",
+  KitchenOrdersUrl: "https://order-service-9ff7ad1220e2.herokuapp.com/kitchen-orders/v1",
+  
   // Auth
   LoginUrl:'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/auth/token',
   LogoutUrl:'https://bigtree-auth-service-672f06320174.herokuapp.com/v1/auth/logout',

@@ -2,15 +2,14 @@
     <div class="sm flex-row jcsb aic">
         <fa-icon [icon]="faBars" (click)="toggleSideNav()" class="menu-icon"></fa-icon>
         <div class="flex-row aic jcc logo-text" [routerLink]="['/']">
-            <!-- <fa-icon [icon]="faSpa" class="fs-4"></fa-icon> -->
-            <span class="logo-text">pichai</span>
+            <h1>pichai</h1>
         </div>
         <span class="btn-plain" routerLink="/ads/post">Post an Ad</span>
     </div>
     <div class="lg flex-row jcsb aic">
-        <div class="flex-row aic jcc" [routerLink]="['/']">
+        <div class="flex-row aic jcc logo-text" [routerLink]="['/']">
             <!-- <fa-icon [icon]="faSpa" class="fs-4"></fa-icon> -->
-            <span class="logo-text">pichai</span>
+            <h1>pichai</h1>
         </div>
         <div class="flex-row gap-1">
 
@@ -20,7 +19,7 @@
             <span *ngIf="!user" class="link-plain mx-2" routerLink="/register">Signup</span>
             <span *ngIf="!user" class="link-plain mx-1" routerLink="/contact_us">Become a partner</span>
             <!-- <fa-icon *ngIf="user" [icon]="faUser" class="color-g" size="2x"  (click)="toggleSideNav()" ></fa-icon> -->
-            <span class="btn-plain"  (click)="toggleSideNav()" >{{user.firstName.trim().substring(0,10)}}</span>
+            <span *ngIf="user" class="btn-plain"  (click)="toggleSideNav()" >{{user.firstName.trim().substring(0,10)}}</span>
             <!-- <div *ngIf="user" class="nav-item mr-1 br-25 p-2" ngbDropdown #myDrop="ngbDropdown">
                 <span class="cursor-pointer font-courier bolder-g"  (click)="$event.stopPropagation(); myDrop.open()">{{user.firstName.trim().substring(0,10)}}</span>
                 

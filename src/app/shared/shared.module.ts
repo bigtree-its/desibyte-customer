@@ -16,6 +16,7 @@ import { SandboxComponent } from './pages/sandbox/sandbox.component';
 import { WriteReviewComponent } from './pages/write-review/write-review.component';
 import { AuthGuard } from '../services/auth/auth-guard.service';
 import { DragScrollComponent, DragScrollItemDirective } from 'ngx-drag-scroll';
+import { RatingComponent } from './pages/rating/rating.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -32,7 +33,8 @@ const routes: Routes = [
     PostcodeLookupComponent,
     FooterComponent,
     SandboxComponent,
-    WriteReviewComponent
+    WriteReviewComponent,
+    RatingComponent
   ],
   imports: [
     CommonModule,
@@ -53,6 +55,7 @@ const routes: Routes = [
     PostcodeLookupComponent,
     PaymentFormComponent,
     ReviewItemComponent,
+    RatingComponent,
     NgbModule
   ]
 })

@@ -23,6 +23,7 @@ import {
   faHouse,
   faPeopleArrows,
   faStar,
+  faStarHalf,
   faUserGroup,
 } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -39,6 +40,8 @@ import { FoodOrderService } from 'src/app/services/foods/food-order.service';
 import { ReviewService } from 'src/app/services/common/review.service';
 import { Utils } from 'src/app/services/common/utils';
 import { CloudKitchenService } from 'src/app/services/foods/cloudkitchen.service';
+import { faStar as starReg } from '@fortawesome/free-regular-svg-icons';
+import { faStar as starSolid } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-chef-home',

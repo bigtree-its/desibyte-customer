@@ -58,13 +58,6 @@ export class FoodOrderService {
   }
 
   action(reference: string, action: string): Observable<FoodOrder> {
-    // var params = new HttpParams();
-    // if (reference !== null && reference !== undefined) {
-    //   params = params.set('ref', reference);
-    // }
-    // if (action !== null && action !== undefined) {
-    //   params = params.set('action', action);
-    // }
     const params = new HttpParams({
       fromString: 'ref=' + reference + '&action=' + action,
     });

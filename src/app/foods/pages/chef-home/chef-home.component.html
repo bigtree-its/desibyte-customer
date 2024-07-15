@@ -7,7 +7,7 @@
             <img *ngIf="cloudKitchen.open" src="/assets/images/we-are-open.jpeg" style="width: 50px;height: 50px;">
             <img *ngIf="!cloudKitchen.open" src="/assets/images/we-are-closed.jpeg" style="width: 50px;height: 50px;">
         </div> -->
-       
+
         <div *ngIf="cloudKitchen.open" class="flex-column open aic jcc px-2 py-1">
             <small style="font-size: 11px;">Yes</small>
             <small style="font-size: 7px;font-style: italic;">We're</small>
@@ -47,39 +47,33 @@
     <ng-container class="sm" [ngTemplateOutlet]="mobileMenuBar"></ng-container>
 
     <div class="lg row">
-        <div class="col-md-8" style=" min-height: 100vh;overflow-y: auto; margin-bottom: 100px;">
+        <div class="col-md-8 flex-column" style=" min-height: 100vh;overflow-y: auto; margin-bottom: 100px;">
             <div class="flex-row jcc ais">
                 <div style="height: 220px;width: 200px;">
-                    <img src="{{cloudKitchen.image}}" style="object-fit: contain;height: 100%; width: 100%;border-radius: 12px;">
+                    <img src="{{cloudKitchen.image}}"
+                        style="object-fit: contain;height: 100%; width: 100%;border-radius: 12px;">
                 </div>
                 <div class="flex-column gap-1 ml-2 pt-2">
-                    <div class="clickable-row" style="font-size: 12px;" (click)="selectLayout('Reviews')">
-                        <fa-icon [icon]="faStar"></fa-icon>
-                        <span style="padding-left: 6px;">{{cloudKitchen.rating}}</span>
-                        <span style="padding-left: 6px;">({{cloudKitchen.reviews}}
-                            reviews)</span>
-                    </div>
+                    <app-rating [rating]="cloudKitchen.rating" [displayReviewDetails]="true"  (click)="selectLayout('Reviews')"></app-rating>
                     <div class="flex-row">
-                        <span *ngIf="cloudKitchen.preOrderOnly" class="attribute">PrefoodOrder Only</span>
+                        <span *ngIf="cloudKitchen.preOrderOnly" class="attribute">PreOrder Only</span>
                     </div>
-
-                    <span class="py-1 px-1 f-size-s lg">{{cloudKitchen.description}}</span>
-                    <span class="my-1 bolder">Cuisines</span>
+                    <span class="py-1 fs-7 lg">{{cloudKitchen.description}}</span>
                     <ul class="list-horizontal">
                         <li *ngFor="let cuisine of cloudKitchen.cuisines | slice:0:3">{{ cuisine.name }}
                         </li>
                     </ul>
-                    <div class="flex-column" *ngIf="cloudKitchen.doDelivery">
-                        <span class="bg-light-green px-2">Home Delivery</span>
-                        <div class="flex-row gap-3" *ngIf="cloudKitchen.freeDeliveryOver > 0">
+                    <div class="flex-column ais" *ngIf="cloudKitchen.doDelivery">
+                        <span class="highlight px-2">Home Delivery</span>
+                        <div class="flex-row gap-3 aic" *ngIf="cloudKitchen.freeDeliveryOver > 0">
                             <span class="my-1 bolder">Free delivery</span>
                             <span>Order over
                                 {{cloudKitchen.freeDeliveryOver |
                                 currency: 'GBP'}}</span>
                         </div>
                     </div>
-                    <div *ngIf="!cloudKitchen.doDelivery" style="padding: 5px 0;">
-                        <span class="bg-light-green px-2">Collection Only</span>
+                    <div *ngIf="!cloudKitchen.doDelivery" class="flex-row">
+                        <span class="highlight px-2">Collection Only</span>
                     </div>
                     <!-- <ng-container [ngTemplateOutlet]="menuBar"></ng-container> -->
                 </div>
@@ -102,7 +96,8 @@
 <div class="flex-row jcc aic " *ngIf="incorrectLanding">
     <div class="p-5 my-3 flex-column jcc aic bg-dark br-12">
         <span class="fs-1 color-brand">Sorry, we didn't catch that...</span>
-        <p class="color-white">We couldn't find that page. Please enter your area and search for a HomeChef – we have plenty to choose from
+        <p class="color-white">We couldn't find that page. Please enter your area and search for a HomeChef – we have
+            plenty to choose from
             <a href="/ck/home">Lets Go</a>
         </p>
     </div>
@@ -117,7 +112,8 @@
                 left: -5px;
                 background: #f5f5f5;">{{itemsInCart}}</span>
         </div> -->
-        <div class="flex-column jcc aic p-3 icon-text" (click)="selectLayout('Info')" [class.icon-text-selected]="activeLayout === 'Info'">
+        <div class="flex-column jcc aic p-3 icon-text" (click)="selectLayout('Info')"
+            [class.icon-text-selected]="activeLayout === 'Info'">
             <fa-icon [icon]="faHouse"></fa-icon>
             <small>Home</small>
         </div>
@@ -130,11 +126,13 @@
         </div>
 
 
-        <div class="flex-column jcc aic p-3 icon-text" (click)="selectLayout('Menu')" [class.icon-text-selected]="activeLayout === 'Menu'">
+        <div class="flex-column jcc aic p-3 icon-text" (click)="selectLayout('Menu')"
+            [class.icon-text-selected]="activeLayout === 'Menu'">
             <fa-icon [icon]="faMenu"></fa-icon>
             <small>Menu</small>
         </div>
-        <div class="flex-column jcc aic p-3 icon-text" (click)="selectLayout('Reviews')" [class.icon-text-selected]="activeLayout === 'Reviews'">
+        <div class="flex-column jcc aic p-3 icon-text" (click)="selectLayout('Reviews')"
+            [class.icon-text-selected]="activeLayout === 'Reviews'">
             <fa-icon [icon]="faComments"></fa-icon>
             <small>Reviews</small>
         </div>
@@ -143,14 +141,17 @@
 <ng-template #menuBar>
     <div class="flex-row w-100 my-1 p-1 border-top jcc aic">
         <b (click)="selectLayout('Menu')" [class.selectedMenu]="activeLayout === 'Menu'" class="menu">Menu</b>
-        <b (click)="selectLayout('Reviews')" [class.selectedMenu]="activeLayout === 'Reviews'" class="menu mx-2 px-3">Reviews
+        <b (click)="selectLayout('Reviews')" [class.selectedMenu]="activeLayout === 'Reviews'"
+            class="menu mx-2 px-3">Reviews
             ({{reviews.length}})</b>
         <b (click)="selectLayout('Info')" [class.selectedMenu]="activeLayout === 'Info'" class="menu mx-2 px-3">Info</b>
-        <b (click)="openModal(partyModal)" [class.selectedMenu]="activeLayout === 'Party'" class="menu mx-2 px-3">Party</b>
+        <b (click)="openModal(partyModal)" [class.selectedMenu]="activeLayout === 'Party'"
+            class="menu mx-2 px-3">Party</b>
     </div>
 </ng-template>
 <ng-template #noItemsBlock>
-    <div class="alert alert-info p-5" style=" margin-top: 10px;display: flex;flex-direction: column; gap: 0.1rem;align-items: center;">
+    <div class="alert alert-info p-5"
+        style=" margin-top: 10px;display: flex;flex-direction: column; gap: 0.1rem;align-items: center;">
         <fa-icon [icon]="faBatteryEmpty" class="fa-2xl" style="opacity: 0.1;"></fa-icon>
         <span style="margin-top: 10px;font-weight: 900;">
             YOUR BASKET IS EMPTY
@@ -166,8 +167,10 @@
         <div *ngIf="foodOrder && foodOrder.partyOrder" class="flex-row jcsb w-100 aic gap-1">
             <span class="bolder">Event</span>
             <div class="input-group">
-                <input class="form-control" placeholder="dd-mm-yyyy" name="dp" [(ngModel)]="eventDate" ngbDatepicker #d="ngbDatepicker" />
-                <fa-icon [icon]="faCalendar" (click)="d.toggle()" class="border br-tr-7 br-br-7 p-2 clickable-icon"></fa-icon>
+                <input class="form-control" placeholder="dd-mm-yyyy" name="dp" [(ngModel)]="eventDate" ngbDatepicker
+                    #d="ngbDatepicker" />
+                <fa-icon [icon]="faCalendar" (click)="d.toggle()"
+                    class="border br-tr-7 br-br-7 p-2 clickable-icon"></fa-icon>
             </div>
             <ngb-timepicker [(ngModel)]="eventTime" />
         </div>
@@ -225,10 +228,12 @@
     <div class="flex-column">
         <div class="flex-row my-2 jcc aic">
             <strong class="ml-2">Want to write a review ? </strong>
-            <button class="btn-lift btn-sm mx-3" [routerLink]="['/write_review']" [queryParams]="{kitchen: supplierId}">Write
+            <button class="btn-lift btn-sm mx-3" [routerLink]="['/write_review']"
+                [queryParams]="{kitchen: supplierId}">Write
                 Review</button>
         </div>
-        <div *ngIf="reviews !== null && reviews !== undefined &&  reviews.length > 0" style="max-height: 300px;overflow-y: auto;">
+        <div *ngIf="reviews !== null && reviews !== undefined &&  reviews.length > 0"
+            style="max-height: 300px;overflow-y: auto;">
             <app-review-item *ngFor="let r of reviews" [review]="r"></app-review-item>
         </div>
         <div *ngIf="reviews === null || reviews === undefined ||  reviews.length === 0">
@@ -305,8 +310,10 @@
             <div class="flex-column" *ngFor="let c of collections">
                 <div class="d-flex jcsb aic p-2 border-bottom">
                     <span class="bolder">{{c?.name}}</span>
-                    <fa-icon class="btn-circle" *ngIf="selectedCategory === null || selectedCategory.name !== c.name" [icon]="faAngleDown" (click)="onSelectCategory(c)"></fa-icon>
-                    <fa-icon class="btn-circle" *ngIf="selectedCategory === c" [icon]="faAngleUp" (click)="onSelectCategory(null)"></fa-icon>
+                    <fa-icon class="btn-circle" *ngIf="selectedCategory === null || selectedCategory.name !== c.name"
+                        [icon]="faAngleDown" (click)="onSelectCategory(c)"></fa-icon>
+                    <fa-icon class="btn-circle" *ngIf="selectedCategory === c" [icon]="faAngleUp"
+                        (click)="onSelectCategory(null)"></fa-icon>
                 </div>
                 <div class="flex-column" *ngIf="selectedCategory && selectedCategory.name === c.name">
                     <ng-container [ngTemplateOutlet]="ItemsInCategory"></ng-container>
@@ -318,14 +325,17 @@
 
     <div *ngIf="displayCal && calendars" class="flex-column">
         <div class="flex-row jcc aic">
-            <div [class.selectedCal]="calendar.date === calendarToDisplay.date" class="flex-column jcc aic btn-circle mx-2 p-4" *ngFor="let calendar of calendars;" (click)="selectCalendar(calendar)">
+            <div [class.selectedCal]="calendar.date === calendarToDisplay.date"
+                class="flex-column jcc aic btn-circle mx-2 p-4" *ngFor="let calendar of calendars;"
+                (click)="selectCalendar(calendar)">
                 <span class="bold">{{calendar.date| date: 'E':'EST'}}</span>
                 <span class="bold">{{calendar.date| date: 'd':'EST'}}</span>
             </div>
         </div>
 
         <div *ngIf="calendarToDisplay" class="flex-column">
-            <app-food-item *ngFor="let food of calendarToDisplay.foods" [menu]="food" [displayDescription]="true" [readyBy]="calendarToDisplay.date"></app-food-item>
+            <app-food-item *ngFor="let food of calendarToDisplay.foods" [menu]="food" [displayDescription]="true"
+                [readyBy]="calendarToDisplay.date"></app-food-item>
         </div>
     </div>
 </ng-template>
@@ -347,8 +357,10 @@
                 <div class="flex-column">
                     <span class="bolder">Event Date</span>
                     <div class="input-group">
-                        <input class="form-control" [minDate]="minDate" placeholder="dd-mm-yyyy" name="dp" [(ngModel)]="eventDate" ngbDatepicker #d="ngbDatepicker" />
-                        <fa-icon [icon]="faCalendar" (click)="d.toggle()" class="border br-tr-7 br-br-7 p-2 clickable-icon"></fa-icon>
+                        <input class="form-control" [minDate]="minDate" placeholder="dd-mm-yyyy" name="dp"
+                            [(ngModel)]="eventDate" ngbDatepicker #d="ngbDatepicker" />
+                        <fa-icon [icon]="faCalendar" (click)="d.toggle()"
+                            class="border br-tr-7 br-br-7 p-2 clickable-icon"></fa-icon>
                     </div>
                 </div>
                 <div class="flex-column">

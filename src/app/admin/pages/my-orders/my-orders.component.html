@@ -89,22 +89,23 @@
                 <div class="progress_container">
                     <div class="progress" id="progress"></div>
                     <div class="flex-column jcc aic">
-                        <div class="circle mt-3" [class.active]="viewOrder?.status === 'Draft' || viewOrder?.status === 'Paid' || viewOrder?.status === 'Collected' || viewOrder?.status === 'Delivered' || viewOrder?.status === 'Ready'">
+                        <div class="circle mt-3" [class.circle-active]="viewOrder?.status === 'Draft' || viewOrder?.status === 'Paid' || viewOrder?.status === 'Collected' || viewOrder?.status === 'Delivered' || viewOrder?.status === 'Ready'">
                         </div>
                         <span>New</span>
                     </div>
                     <div class="flex-column  jcc aic">
-                        <div class="circle mt-3" [class.active]="viewOrder?.status === 'Paid' || viewOrder?.status === 'Collected' || viewOrder?.status === 'Delivered' || viewOrder?.status === 'Ready'">
+                        <div class="circle mt-3" [class.circle-active]="viewOrder?.status === 'Paid' || viewOrder?.status === 'Collected' || viewOrder?.status === 'Delivered' || viewOrder?.status === 'Ready'">
                         </div>
                         <span>In Progress</span>
                     </div>
                     <div class="flex-column  jcc aic">
-                        <div class="circle mt-3" [class.active]="viewOrder?.status === 'Ready' || viewOrder?.status === 'Cancelled'"></div>
+                        <div class="circle mt-3" [class.circle-active]="viewOrder?.status === 'Ready' || viewOrder?.status === 'Cancelled' || viewOrder?.status === 'Declined'"></div>
                         <span *ngIf="viewOrder?.status === 'Paid'">Ready</span>
                         <span *ngIf="viewOrder?.status === 'Cancelled'">Cancelled</span>
+                        <span *ngIf="viewOrder?.status === 'Declined'">Declined</span>
                     </div>
                     <div class="flex-column jcc aie" *ngIf="viewOrder?.status !== 'Cancelled'">
-                        <div class="circle mt-3" [class.active]="viewOrder?.status === 'Collected' || viewOrder?.status === 'Delivered'"></div>
+                        <div class="circle mt-3" [class.circle-active]="viewOrder?.status === 'Collected' || viewOrder?.status === 'Delivered'"></div>
                         <span>Completed</span>
                     </div>
                 </div>

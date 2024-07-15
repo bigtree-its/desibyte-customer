@@ -64,16 +64,16 @@
 
 <ng-template #addCollectionsBlock>
     <div class="flex-column">
-        <div class="flex-row jcsb  header">
+        <div class="flex-row jcsb  bg-white aic p-2 br-7">
             <strong (click)="selectSubLayout('listCollections')">New
                 Collection</strong>
-            <div class="flex-row">
-                <button tabindex="8" type="button" class="btn-9 mr-1" (click)="saveNewCollection()">Submit</button>
-                <button tabindex="9" type="button" class="btn-10" (click)="selectSubLayout('listCollection')">Cancel</button>
+            <div class="flex-row gap-3">
+                <button tabindex="8" type="button" class="btn-success" (click)="saveNewCollection()">Submit</button>
+                <button tabindex="9" type="button" class="btn-danger" (click)="selectSubLayout('listCollection')">Cancel</button>
             </div>
         </div>
         <div class="input-group my-3">
-            <input required type="text" name="collectionName" autocomplete="off" class="input" [(ngModel)]="collectionName" #ctrl="ngModel" placeholder="Ex. Starter">
+            <input required type="text" name="collectionName" autocomplete="off" class="input-white" [(ngModel)]="collectionName" #ctrl="ngModel">
             <label class="user-label">Collection Name</label>
         </div>
     </div>
@@ -83,7 +83,7 @@
     <div class="flex-column">
         <div class="flex-row jcsb  header mb-2">
             <strong class="bolder fs-6" (click)="selectSubLayout('listCollections')">Collections</strong>
-            <button class="btn-plus" (click)="addCollection()">+</button>
+            <button class="btn-success" (click)="addCollection()">+</button>
         </div>
         <div class="flex-row flex-wrap gap-2">
             <div class="flex-row jcsb border br-7 aic py-2 px-3 box" *ngFor="let collection of collections">
@@ -112,8 +112,8 @@
             </div>
             <div class="menu-item-right">
                 <span>{{special.price | currency:'GBP'}}</span>
-                <button style="margin: 0 5px;" class="btn-o-p" (click)="onEditMenu(special)" placement="top" ngbTooltip="Make changes">Modify</button>
-                <button style="margin: 0 5px;" class="btn-o-d" (click)="onRemoveFood(special)" placement="top" ngbTooltip="Remove menu from inventory">Delete</button>
+                <button style="margin: 0 5px;" class="btn-success" (click)="onEditMenu(special)" placement="top" ngbTooltip="Make changes">Modify</button>
+                <button style="margin: 0 5px;" class="btn-danger" (click)="onRemoveFood(special)" placement="top" ngbTooltip="Remove menu from inventory">Delete</button>
             </div>
         </div>
     </div>
@@ -123,11 +123,11 @@
 
 <ng-template #addMenuBlock>
     <div class="flex-column p-1 mb-200">
-        <div class="flex-row jcsb aic">
-            <span class="bolder">{{theMenu? theMenu.name:'' | uppercase}} </span>
+        <div class="flex-row jcsb  bg-white aic p-2 br-7 mb-3">
+            <span class="bolder">{{theMenu? theMenu.name? theMenu.name :'New Menu' : '' | uppercase}} </span>
             <div class="flex-row py-2 gap-1">
-                <button tabindex="8" type="button" class="btn-9" (click)="saveMenu()">Submit</button>
-                <button tabindex="9" type="button" class="btn-10" (click)="selectSubLayout('listMenu')">Cancel</button>
+                <button tabindex="8" type="button" class="btn-success" (click)="saveMenu()">Submit</button>
+                <button tabindex="9" type="button" class="btn-warning" (click)="selectSubLayout('listMenu')">Cancel</button>
             </div>
         </div>
         <div *ngIf="errorMessage" class="alert alert-danger">
@@ -152,7 +152,7 @@
                             </option>
                         </select>
                     </form>
-                    <button class="btn-plus" (click)="openModal(collectionContent)">+</button>
+                    <button class="btn-success" (click)="openModal(collectionContent)">+</button>
                 </div>
                 <div class="input-group my-3">
                     <input required type="text" name="itemDesc" autocomplete="off" class="input" [(ngModel)]="theMenu.description" #ctrl="ngModel">
@@ -208,7 +208,7 @@
                 <div class="flex-row aic gap-3  p-2 my-2">
                     <span class="bolder">Price</span>
                     <div class="d-flex flex-start aic" style="padding: 0 20px;">
-                        <input value [(ngModel)]="theMenu.price" #ctrl="ngModel" placeholder="5.65" name="itemPrice" id="itemPrice" tabindex="8" autocomplete="off" style="border: none;padding: 2px;margin-right: 10px;background-color: #fff;width: 50px;">
+                        <input value [(ngModel)]="theMenu.price" #ctrl="ngModel" placeholder="5.65" name="itemPrice" id="itemPrice" tabindex="8" autocomplete="off" style="border: none;padding: 6px 10px;margin-right: 10px;background-color: #f5f7f9;width: 50px;">
                         <span>GBP</span>
                     </div>
                 </div>
@@ -221,18 +221,17 @@
                             <fa-icon class="icon-delete ml-1" [icon]="faTrash" (click)="removeChoice(choice)"></fa-icon>
                         </div>
                     </div>
-                    <div class="flex-row" style="background-color: rgb(250, 250, 250);padding: 10px;margin: 10px 0;">
-                        <span style="color: rgb(2, 137, 92);margin-right: 20px;">You
-                            have {{theMenu?.choices?.length}} choices for
+                    <div class="flex-row aic" style="background-color: rgb(250, 250, 250);padding: 10px;margin: 10px 0;">
+                        <span style="color: rgb(2, 137, 92);margin-right: 20px;">You have {{theMenu?.choices?.length}} choices for
                             this
                             menu.</span>
-                        <button class="btn-plus" (click)="openExtraModal(extraContent, 'Choice')">+
+                        <button class="btn-success" (click)="openExtraModal(extraContent, 'Choice')">+
                         </button>
                     </div>
                 </div>
                 <div class="flex-column gap-2 border p-2 br-7 my-2">
                     <span class="bolder">Extras</span>
-                    <div class="flex-row flex-wrap" *ngIf="theMenu?.extras?.length > 0">
+                    <div class="flex-row flex-wrap aic" *ngIf="theMenu?.extras?.length > 0">
                         <div class="flex-row jcsb " *ngFor="let extra of theMenu.extras" style="background-color: #ececec; padding: 10px;margin-right: 10px;">
                             <span style="margin-right: 30px;">{{extra.name}}</span>
                             <span>{{extra.price | currency: 'GBP'}}</span>
@@ -240,12 +239,11 @@
                         </div>
 
                     </div>
-                    <div class="flex-row" style="background-color: rgb(250, 250, 250);padding: 10px;margin: 10px 0;">
-                        <span style="color: rgb(2, 137, 92);margin-right: 20px;">You
-                            have {{theMenu?.extras?.length}} extras for
+                    <div class="flex-row aic" style="background-color: rgb(250, 250, 250);padding: 10px;margin: 10px 0;">
+                        <span style="color: rgb(2, 137, 92);margin-right: 20px;">You have {{theMenu?.extras?.length}} extras for
                             this
                             menu.</span>
-                        <button class="btn-plus" (click)="openExtraModal(extraContent, 'Extra')">+
+                        <button class="btn-success" (click)="openExtraModal(extraContent, 'Extra')">+
                         </button>
                     </div>
                 </div>
@@ -259,7 +257,7 @@
     <div class="flex-column">
         <div class="flex-row jcsb my-3">
             <span class="fs-6">Your Foods</span>
-            <button class="btn-plus" (click)="addMenu()">+</button>
+            <button class="btn-success" (click)="addMenu()">+</button>
         </div>
         <div *ngFor="let menu of menus">
             <div class="menu-item">
@@ -273,8 +271,8 @@
                 </div>
                 <div class="menu-item-right">
                     <span>{{menu.price | currency:'GBP'}}</span>
-                    <button style="margin: 0 5px;" class="btn-o-p" (click)="onEditMenu(menu)" placement="top" ngbTooltip="Make changes">Modify</button>
-                    <button style="margin: 0 5px;" class="btn-o-d" (click)="onRemoveFood(menu)" placement="top" ngbTooltip="Remove menu from inventory">Delete</button>
+                    <button style="margin: 0 5px;" class="btn-info" (click)="onEditMenu(menu)" placement="top" ngbTooltip="Make changes">Modify</button>
+                    <button style="margin: 0 5px;" class="btn-danger" (click)="onRemoveFood(menu)" placement="top" ngbTooltip="Remove menu from inventory">Delete</button>
                 </div>
             </div>
         </div>
@@ -419,7 +417,7 @@
         <div class="flex-row jcsb aic" style="margin: 5px 0 0 0;background-color: #f8f8f8;padding: 8px 5px;">
             <span style="font-size: 18px;font-weight: 900;">Your menus
                 ({{menus.length}})</span>
-            <button placement="top" ngbTooltip="Add New menu" type="button" class="btn-plus" style="margin: 0 10px;" (click)="onClickAddNewMenu()">+</button>
+            <button placement="top" ngbTooltip="Add New menu" type="button" class="btn-success" style="margin: 0 10px;" (click)="onClickAddNewMenu()">+</button>
         </div>
 
         <div class="d-flex flex-start" style="background-color: #f8f8f8;margin-bottom: 7px;">
@@ -436,8 +434,8 @@
                 </div>
                 <div class="flex-column">
                     <span>{{menu.price | currency:'GBP'}}</span>
-                    <button style="margin: 0 5px;" class="btn btn-sm btn-outline-primary" (click)="onEditMenu(menu)" placement="top" ngbTooltip="Make changes">Edit</button>
-                    <button style="margin: 0 5px;" class="btn btn-sm btn-outline-danger" (click)="onRemoveMenu(menu)" placement="top" ngbTooltip="Remove menu from inventory">Delete</button>
+                    <button style="margin: 0 5px;" class="btn-info" (click)="onEditMenu(menu)" placement="top" ngbTooltip="Make changes">Edit</button>
+                    <button style="margin: 0 5px;" class="btn-danger" (click)="onRemoveMenu(menu)" placement="top" ngbTooltip="Remove menu from inventory">Delete</button>
                 </div>
             </div>
         </div>
@@ -452,7 +450,7 @@
                 <label class="user-label">Collection Name</label>
             </div>
 
-            <button class="btn-9" (click)="saveNewCollection()">Submit</button>
+            <button class="btn-success" (click)="saveNewCollection()">Submit</button>
         </div>
     </div>
 </ng-template>
@@ -473,8 +471,8 @@
             </div>
         </div>
         <div class="flex-row gap-3" style="margin-top: 10px;">
-            <button class="btn-plus" (click)="addExtra()">+</button>
-            <button class="btn-minus" (click)="closeModal()">Cancel</button>
+            <button class="btn-success" (click)="addExtra()">Add</button>
+            <button class="btn-warning" (click)="closeModal()">Cancel</button>
         </div>
 
     </div>

@@ -3,295 +3,158 @@
     <div class="section-header">
         <span class="bolder fs-3">My Orders</span>
     </div>
-    <div class="d-flex jcc aic w-100 gap-3">
-        <div class="flex-column jcc aic py-3 px-5 bg-light-green" (click)="showOrders('Today')">
-            <span class="bold">Today</span>
-            <span class="bolder fs-4">{{orderProfile?.today?.length}}</span>
-        </div>
-        <div class="flex-column jcc aic py-3 px-5 bg-light-green" (click)="showOrders('Week')">
-            <span class="bold">Week</span>
-            <span class="bolder fs-4">{{orderProfile?.sevenDays?.length}}</span>
-        </div>
-        <div class="flex-column jcc aic py-3 px-5 bg-light-green" (click)="showOrders('Month')">
-            <span class="bold">Month</span>
-            <span class="bolder fs-4">{{orderProfile?.month?.length}}</span>
-        </div>
-    </div>
-    <div class="flex-row jcc aic py-2 my-2 gap-2">
-        <span class="button-amber">Open</span>
-        <span class="button-primary">In progress</span>
-        <span class="button-success">Completed</span>
-    </div>
 
-    <div class="overflow-y height-500 w-100">
-        <table class="table table-striped">
+    <!-- All Orders  -->
+    <div class="flex-column" *ngIf="!viewOrder">
+        <div class="d-flex jcc aic w-100 gap-3">
+            <div class="flex-column jcc aic py-3 px-5 btn-success" (click)="showOrders('Today')">
+                <span class="bold">Today</span>
+                <span class="bolder fs-4">{{orderProfile?.today?.length}}</span>
+            </div>
+            <div class="flex-column jcc aic py-3 px-5 btn-warning" (click)="showOrders('Week')">
+                <span class="bold">Week</span>
+                <span class="bolder fs-4">{{orderProfile?.sevenDays?.length}}</span>
+            </div>
+            <div class="flex-column jcc aic py-3 px-5 btn-info" (click)="showOrders('Month')">
+                <span class="bold">Month</span>
+                <span class="bolder fs-4">{{orderProfile?.month?.length}}</span>
+            </div>
+        </div>
+        <div class="flex-row jcc my-2">
+            <div class="flex-row jcc aic py-2 gap-2 border-o br-7" style="width: 360px;">
+                <span class="selectable-btn" (click)="filterStatus('All')"
+                    [class.selected-btn]="filteredStatus === 'All'">All</span>
+                <span class="selectable-btn" (click)="filterStatus('Paid')"
+                    [class.selected-btn]="filteredStatus === 'Paid'">Open</span>
+                <span class="selectable-btn" (click)="filterStatus('In Progress')"
+                    [class.selected-btn]="filteredStatus === 'In Progress'">In Progress</span>
+                <span class="selectable-btn" (click)="filterStatus('Completed')"
+                    [class.selected-btn]="filteredStatus === 'Completed'">Completed</span>
+            </div>
+        </div>
+        <form>
+            <div class="my-2 row">
+                <label for="table-filtering-search" class="col-xs-3 col-sm-auto col-form-label">Full text
+                    search:</label>
+                <div class="col-xs-3 col-sm-auto">
+                    <input id="table-filtering-search" class="form-control" type="text" [formControl]="filter" />
+                </div>
+            </div>
+        </form>
+        <div class="overflow-y height-500 w-100">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Reference</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let order of myOrders$ | async; index as i" (click)="open(order)">
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td>
+                            <ngb-highlight [result]="order.reference" [term]="filter.value" />
+                        </td>
+                        <td>
+                            <ngb-highlight [result]="order.total | currency: 'GBP' " [term]="filter.value" />
+                        </td>
+                        <td>
+                            <ngb-highlight [result]="order.dateCreated | date " [term]="filter.value" />
+                        </td>
+                        <td>
+                            <ngb-highlight [result]="order.status | titlecase" [term]="filter.value" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- <table class="styled-table">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Reference</th>
-                    <th scope="col">Amount</th>
-                    <th scope="col">Date</th>
+                  <th>Reference</th>
+                  <th>Total</th>
+                  <th>Date</th>
+                  <th>Status</th>
                 </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let order of myOrders$ | async; index as i" (click)="open(order)">
-                    <th scope="row">{{ i + 1 }}</th>
-                    <td>
-                        <ngb-highlight [result]="order.reference" [term]="filter.value" />
-                    </td>
-                    <td>
-                        <ngb-highlight [result]="order.total | currency: 'GBP' " [term]="filter.value" />
-                    </td>
-                    <td>
-                        <ngb-highlight [result]="order.dateCreated | date " [term]="filter.value" />
-                    </td>
-                    <!-- <td>
-                        <ngb-highlight [result]="order.status | titlecase" [term]="filter.value" />
-                    </td> -->
+              </thead>
+              <tbody>
+                <tr (click)="open(order)" *ngFor="let order of orders | orderByDate:'dateCreated':'desc'">
+                    <td class="pl-2">{{order.reference}}</td>
+                    <td class="pl-2">{{order.total | currency: 'GBP'}}</td>
+                    <td class="pl-2">{{order.dateCreated | date }}</td>
+                    <td class="pl-2">{{order.status | titlecase}}</td>
                 </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="h-flex flex-wrap">
-        <div class="info-button y-flex" style="flex-grow: 1;" (click)="displayOrders(orderProfile?.today, 'Today')">
-            <span>Today</span>
-            <span style="font-size: 30px;">{{orderProfile?.today.length}}</span>
-        </div>
-        <div class="info-button y-flex" style="flex-grow: 1;" (click)="displayOrders(orderProfile?.sevenDays, 'Seven Days')">
-            <span>Week</span>
-            <span style="font-size: 30px;">{{orderProfile?.sevenDays.length}}</span>
-        </div>
-        <div class="info-button y-flex" style="flex-grow: 1;" (click)="displayOrders(orderProfile?.month, 'Month')">
-            <span>Month</span>
-            <span style="font-size: 30px;">{{orderProfile?.month.length}}</span>
-        </div>
-        <div class="info-button y-flex" style="flex-grow: 1;" (click)="displayOrders(orderProfile?.lastMonth, 'Last Month')">
-            <span>Previous Month</span>
-            <span style="font-size: 30px;">{{orderProfile?.lastMonth.length}}</span>
-        </div>
-        <div class="info-button y-flex" style="flex-grow: 1;" (click)="displayOrders(orderProfile?.sixMonth, 'Six Months')">
-            <span>Six Months</span>
-            <span style="font-size: 30px;">{{orderProfile?.sixMonth.length}}</span>
-        </div>
-        <div class="info-button y-flex" style="flex-grow: 1;" (click)="displayOrders(orderProfile?.year, 'Year To Date')">
-            <span>Yearly</span>
-            <span style="font-size: 30px;">{{orderProfile?.year.length}}</span>
-        </div>
+              </tbody>
+        </table> -->
     </div>
 
-    <div class="y-flex">
-        <strong style="font-size: 25px;padding: 20px 0;margin: 5px 0;background-color: #f5f5f5;">{{selectedPeriod}}</strong>
-        <div *ngIf="(ordersToView === undefined || ordersToView === null || ordersToView.length === 0); then emptyOrders else orderList">
-        </div>
-    </div>
+    <!-- Single Order -->
+    <div class="flex-column" *ngIf="viewOrder">
 
-
-
-
-    <!-- <div class="y-flex"> -->
-    <!-- <div class="between" style="border-bottom: 1px solid var(--border);padding: 5px;">
-            <span><b>Period</b> : {{selectedPeriod}}</span>
-            <div class="h-flex gap">
-                <button class="bt-button" (click)="selectPeriod('Last Month')">Last Month</button>
-                <button class="bt-button" (click)="selectPeriod('This Week')">This Week</button>
-                <button class="bt-button" (click)="selectPeriod('This Month')">All Month</button>
+        <div class="row">
+            <div class="col flex-row p-2 aic  bg-white br-7">
+                <div class="flex-row aic">
+                    <fa-icon [icon]="faArrowLeft" (click)="goBack()" class="btn-circle mr-3"></fa-icon>
+                    <span class="py-2 fs-4 bolder">{{viewOrder?
+                        viewOrder.reference: 'My Orders'}}</span>
+                </div>
+                <div *ngIf="loading" class="d-flex jcc aic p-3">
+                    <div class="loader"></div>
+                </div>
             </div>
         </div>
-        <div class="y-flex">
-            <div *ngFor="let order of orders" class="h-flex li-order">
-                <span>{{order.reference}}</span>
-                <span> {{order.dateCreated | date: 'dd/MM/yyyy'}}</span>
-                <span style="flex-grow: 1;"> {{order.customer.name}}</span>
-                <span style="width: 50px;"> {{order.total | currency: 'GBP'}}</span>
-                <span style="min-width: 100px;"> {{order.status | titlecase}}</span>
-                <button class="bt-button" (click)="open(actionContent,'sm', order)">...</button>
+       
+        <div class="progress_container">
+            <div class="progress" id="progress"></div>
+            <div class="flex-column jcc aic">
+                <div class="circle mt-3" [class.active]="viewOrder?.status === 'Paid'">
+                </div>
+                <span>Open</span>
             </div>
-        </div> -->
+            <div class="flex-column  jcc aic">
+                <div class="circle mt-3" [class.active]="viewOrder?.status === 'Accepted'">
+                </div>
+                <span>In Progress</span>
+            </div>
+            <div class="flex-column  jcc aic">
+                <div class="circle mt-3"
+                    [class.active]="viewOrder?.status === 'Ready' || viewOrder?.status === 'Cancelled'"></div>
+                <span *ngIf="viewOrder?.status === 'Paid'">Ready</span>
+                <span *ngIf="viewOrder?.status === 'Cancelled'">Cancelled</span>
+            </div>
+            <div class="flex-column jcc aie" *ngIf="viewOrder?.status !== 'Cancelled'">
+                <div class="circle mt-3"
+                    [class.active]="viewOrder?.status === 'Collected' || viewOrder?.status === 'Delivered'"></div>
+                <span>Completed</span>
+            </div>
+        </div>
 
-    <!-- <div class="table">
-            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table table table-responsive-md">
-               
-                <ng-container matColumnDef="Reference">
-                    <th mat-header-cell *matHeaderCellDef>Reference</th>
-                    <td mat-cell *matCellDef="let order" (click)="open(orderContent,'lg', order)">
-                        {{order.reference}}</td>
-                </ng-container>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 gap-3 mt-5">
+            <ng-container [ngTemplateOutlet]="itemsTemplate"></ng-container>
+            <ng-container [ngTemplateOutlet]="summaryTemplate"></ng-container>
+        </div>
 
-                <ng-container matColumnDef="Date">
-                    <th mat-header-cell *matHeaderCellDef> Date </th>
-                    <td mat-cell *matCellDef="let order"> {{order.dateCreated | date: 'dd/MM/yyyy'}} </td>
-                </ng-container>
+        <div class="lg row bg-white p-3 mt-5 br-7">
+            <div class="col">
+                <div class="flex-row jcc aic gap-3">
+                    <span class="btn-success" (click)="performAction('Accept')">Accept</span>
+                    <span class="btn-warning" (click)="obtainDeclineReason(declineReasonModal)">Decline</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sm sticky-footer bg-white p-3 flex-row jcc aic gap-3">
+        <span class="btn-success" (click)="performAction('Accept')">Accept</span>
+        <span class="btn-warning" (click)="obtainDeclineReason(declineReasonModal)">Decline</span>
+    </div>
 
-                <ng-container matColumnDef="Customer">
-                    <th mat-header-cell *matHeaderCellDef> Customer </th>
-                    <td mat-cell *matCellDef="let order">
-                        {{order.customer.name}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="Amount">
-                    <th mat-header-cell *matHeaderCellDef> Amount </th>
-                    <td mat-cell *matCellDef="let order"> {{order.total | currency: 'GBP'}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="Status">
-                    <th mat-header-cell *matHeaderCellDef> Status </th>
-                    [ngStyle]="{'color': order.status == 'PAID'? 'green':'blue'}"
-                    <td mat-cell *matCellDef="let order" [ngClass]="order.status == 'PAID'? 'text-success':'text-primary'">
-                        {{order.status | titlecase}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="Action">
-                    <th mat-header-cell *matHeaderCellDef> Action </th>
-                    <td mat-cell *matCellDef="let order">
-                        <button class="bt-button" (click)="open(actionContent,'sm', order)">...</button>
-                    </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-        </div> -->
-    <!-- </div> -->
 </div>
 
 
-
-<!-- <ng-template #orderContent let-modal>
-    <div class="modal-body">
-        <div class="y-flex">
-            <div style="display: flex;justify-content: space-around;gap: 2rem;flex-wrap: wrap;">
-                <div
-                    style="display: flex;flex-direction: column;background-color: var(--info);padding: 20px;flex-grow: 1;">
-                    <strong style="font-size: 25px; margin-bottom: 10px;">#{{actionOnOrder.reference}}</strong>
-                    <strong>Date: <span style="font-weight: normal;">{{actionOnOrder.dateCreated
-                            | date: 'dd/MM/yyyy'}}</span></strong>
-                    <strong>Service Mode: <span style="font-weight: normal;">{{actionOnOrder.serviceMode
-                            | titlecase}}</span></strong>
-                </div>
-                <div
-                    style="display: flex;flex-direction: column;align-items: center;flex-grow: 1;background-color: var(--info);padding: 10px;">
-                    <strong style="font-size: 15px;margin-bottom: 20px;">Order
-                        Status</strong>
-                    <strong style="font-size: 25px;">{{actionOnOrder.status |
-                        titlecase}}</strong>
-                </div>
-                <div
-                    style="display: flex;justify-content: center;align-items: center;flex-grow: 1;background-color: var(--info);padding: 20px;">
-                    <strong style="font-size: 40px;">{{actionOnOrder.total |
-                        currency :'GBP'}}</strong>
-                </div>
-            </div>
-
-            <div style="display: flex;justify-content: space-between;gap: 1rem;flex-wrap: wrap;">
-                <div *ngIf="actionOnOrder.serviceMode === 'DELIVERY'"
-                    style="background-color: var(--info);padding: 10px;flex-grow: 1;" class="y-flex">
-                    <strong> Deliver to:</strong>
-                    <p>
-                        {{actionOnOrder.customer.address.addressLine1}}
-                        <br> {{actionOnOrder.customer.address.addressLine2}}
-                        <br> {{actionOnOrder.customer.address.city}}
-                        <br> {{actionOnOrder.customer.address.postcode | uppercase}}
-                    </p>
-                </div>
-                <div *ngIf="actionOnOrder.serviceMode === 'COLLECTION'"
-                    style="background-color: var(--info);padding: 10px;flex-grow: 1;" class="y-flex">
-                    <strong>Collect at:</strong>
-                    <p>
-                        {{actionOnOrder.supplier.address.addressLine1}}
-                        <br> {{actionOnOrder.supplier.address.addressLine2}}
-                        <br> {{actionOnOrder.supplier.address.city}}
-                        <br> {{actionOnOrder.supplier.address.postcode | uppercase}}
-                    </p>
-                </div>
-                <div style="background-color: var(--info);padding: 10px;flex-grow: 1;" class="y-flex">
-                    <strong>Customer</strong>
-                    <p>
-                        {{actionOnOrder.customer.name}}<br> {{actionOnOrder.customer.mobile}}
-                        <br> {{actionOnOrder.customer.email}}
-                    </p>
-                </div>
-            </div>
-
-            <div class="y-flex">
-                <div *ngFor="let item of actionOnOrder.items">
-                    <ng-template *ngTemplateOutlet="templateItem; context: { value:item }"></ng-template>
-                </div>
-            </div>
-            <div *ngIf="actionOnOrder.status !== 'COLLECTED' &&  actionOnOrder.status !== 'DELIVERED'" class="h-flex"
-                style="background-color: var(--info);padding: 10px;">
-                <button *ngIf="actionOnOrder.status === 'PAID' ||  actionOnOrder.status === 'REJECTED'"
-                    class="bt-button btn-md"
-                    (click)="openActionConfirmation(actionInteraction,'sm', 'Accept')">Accept</button>
-                <button *ngIf="actionOnOrder.status === 'PAID' ||  actionOnOrder.status === 'ACCEPTED'"
-                    class="bt-button btn-md" (click)="updateStatus('Reject')">Reject</button>
-                <button *ngIf="actionOnOrder.status === 'ACCEPTED'" class="bt-button btn-md"
-                    (click)="updateStatus('Deliver')">Delivered</button>
-                <button *ngIf="actionOnOrder.status === 'ACCEPTED'" class="bt-button btn-md"
-                    (click)="updateStatus('Collect')">Collected</button>
-                <button *ngIf="actionOnOrder.status === 'REJECTED'" class="bt-button btn-md"
-                    (click)="updateStatus('Refund')">Refund</button>
-            </div>
-        </div>
-    </div>
-</ng-template> -->
-
-<ng-template #orderList>
-    <div class="y-flex lg">
-        <!-- Header -->
-        <div class="between li-order section-header" style="font-weight: bolder;background: none;">
-            <div style="width: 10%;">Date</div>
-            <div style="width: 10%;">Order Reference</div>
-            <div style="width: 15%;">Customer</div>
-            <div style="width: 10%;">Status</div>
-            <div style="width: 8%;">Total</div>
-            <div style="width: 20%;">Actions</div>
-        </div>
-        <div *ngFor="let order of ordersToView" class="between li-order">
-            <div class="clickable" style="width: 10%;" (click)="openOrder(order)">{{order.dateCreated | date: 'dd-MMM-yyyy' }}</div>
-            <div class="clickable" style="width: 10%;" (click)="openOrder(order)">#{{order.reference}} </div>
-            <div class="clickable" style="width: 15%;" (click)="openOrder(order)">{{order.customer.name}}</div>
-            <div style="width: 10%;" [class.text-success]="order.status === 'PAID'" [class.text-danger]="order.status === 'REJECTED'" [class.text-primary]="order.status === 'CREATED'" [class.text-success]="order.status === 'ACCEPTED'">{{order.status | titlecase}}</div>
-            <div style="width: 8%;">{{order.total | currency: 'GBP'}}</div>
-            <div class="d-flex" style="width: 20%;">
-                <button class="btn btn-sm btn-success" *ngIf="order.status === 'PAID'" (click)="updateStatus(order, 'Accept')">Accept</button>
-                <button class="btn btn-sm btn-danger" *ngIf="order.status === 'PAID'" (click)="updateStatus(order, 'Reject')">Reject</button>
-                <button class="btn btn-sm btn-warning" *ngIf="order.status === 'REJECTED'" (click)="updateStatus(order, 'Refund')">Refund</button>
-                <button class="btn btn-sm btn-primary" *ngIf="order.status === 'ACCEPTED'" (click)="updateStatus(order, 'Complete')">Complete</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="y-flex sm">
-        <div *ngFor="let order of ordersToView" class="between li-order">
-            <div class="y-flex sm" style="margin-right: 10px;width: 10%;">
-                <span> {{order.dateCreated | date: 'yyyy'}}</span>
-                <span style="font-size: 20px;font-style: italic;font-weight: 900;"> {{order.dateCreated | date:
-                    'dd'}}</span>
-                <span> {{order.dateCreated | date: 'MMM' | uppercase}}</span>
-            </div>
-            <div class="y-flex sm" style="flex-grow: 1;width: 40%;" (click)="openOrder(order)">
-                <span>#{{order.reference}}</span>
-                <span>{{order.customer.name}}</span>
-            </div>
-            <span style="margin-right: 10px;width: 10%;"> {{order.total | currency: 'GBP'}}</span>
-            <span style="width: 30%;text-align: center;">{{order.status | titlecase}}</span>
-            <div class="d-flex" style="width: 20%;">
-                <button class="btn btn-sm btn-success" *ngIf="order.status === 'PAID'" (click)="updateStatus(order, 'Accept')">Accept</button>
-                <button class="btn btn-sm btn-danger" *ngIf="order.status === 'PAID'" (click)="updateStatus(order, 'Reject')">Reject</button>
-                <button class="btn btn-sm btn-warning" *ngIf="order.status === 'REJECTED'" (click)="updateStatus(order, 'Refund')">Refund</button>
-                <button class="btn btn-sm btn-primary" *ngIf="order.status === 'ACCEPTED'" (click)="updateStatus(order, 'Complete')">Complete</button>
-            </div>
-            <!-- <div class="name" style="width: 20%;"> <select (change)="onAction(order, $event)"
-                style="border:1px solid #ececec;padding: 6px;border-radius: 6px;" tabindex="1">
-                <option value="Accept" disabled selected>--Action--</option>
-                <option value="Accept" *ngIf="order.status === 'PAID'">Accept</option>
-                <option value="Reject" *ngIf="order.status === 'PAID'">Reject</option>
-                <option value="Complete" *ngIf="order.status === 'ACCEPTED'">Complete</option>
-                <option value="Refund" *ngIf="order.status === 'REJECTED'">Refund</option>
-            </select></div> -->
-        </div>
-    </div>
-</ng-template>
 
 <ng-template #emptyOrders>
     <div style="padding: 20px;background-color: rgb(181, 241, 221);">
@@ -299,41 +162,80 @@
     </div>
 </ng-template>
 
-<!-- <ng-template #actionInteraction let-modal>
-    <div style="padding: 20px;">
-        <div class="y-flex">
-            <p>
-                Have you gone though the items? Are you sure want to perform this?
-            </p>
-            <button class="bt-button btn-md" (click)="updateStatus(action)">{{action | titlecase}}</button>
+
+<ng-template #itemsTemplate>
+    <div class=" col flex-column p-3 flex-grow bg-white br-7">
+        <span class="bold f-size-lg ">Items</span>
+        <table class="mt-1 mb-4">
+            <tr>
+                <th>Name</th>
+                <th>Quantity</th>
+            </tr>
+            <tr class="border-bottom py-3" *ngFor="let item of viewOrder?.items">
+                <td>{{item.name}}</td>
+                <td class="pl-2">{{item.quantity}}</td>
+            </tr>
+        </table>
+    </div>
+</ng-template>
+
+<ng-template #summaryTemplate>
+    <div class=" col flex-column p-3 flex-grow bg-white br-7">
+        <div class="flex-column justify-content-center align-items-center">
+            <div style=" display: flex; flex-direction: column;width: 100%;padding: 5px 30px;">
+                <div class="flex-row-space-between">
+                    <span>Subtotal</span>
+                    <span>{{viewOrder?.subTotal | currency:
+                        'GBP'}}</span>
+                </div>
+                <div class="flex-row-space-between">
+                    <span>Delivery fee</span>
+                    <span>{{viewOrder?.deliveryFee | currency:
+                        'GBP'}}</span>
+                </div>
+                <div class="flex-row-space-between">
+                    <span>Packing fee</span>
+                    <span>{{viewOrder?.packagingFee| currency:
+                        'GBP'}}</span>
+                </div>
+                <div class="flex-row-space-between">
+                    <span>Service Fee</span>
+                    <span>{{viewOrder?.serviceFee | currency:
+                        'GBP'}}</span>
+                </div>
+                <div class="flex-row-space-between" style="margin-top: 10px;">
+                    <span style="font-weight: 900;">TOTAL</span>
+                    <span style="font-weight: 900;">{{viewOrder?.total |
+                        currency:
+                        'GBP'}}</span>
+                </div>
+            </div>
         </div>
     </div>
-</ng-template> -->
+</ng-template>
 
-<ng-template #templateItem let-item="value">
-    <div class="order-item-wrapper">
-        <div class="flex-column" style="width: 100%;">
-            <div style="width: 100%;clear: both; display: flex; justify-content: space-between;">
-                <div class="h-flex">
-                    <strong><small>{{item.name}}</small></strong> (
-                    <strong><small>{{item.quantity}}</small></strong>
-                    <strong><small>{{item.price | currency :'GBP'}}</small></strong> )
-                </div>
-                <strong><small>{{item.subTotal | currency: 'GBP'}}</small></strong>
+<ng-template #declineReasonModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Decline the order</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="flex-column">
+            <div class="py-1">
+                <p>
+                    Please state the reason for declining the order
+                </p>
             </div>
-            <div *ngIf="item.choice !== null && item.choice !== undefined">
-                <div style="width: 100%;clear: both; display: flex; justify-content: space-between;">
-                    <span style="font-style: italic;">({{item.choice.name}})</span>
-                    <span>{{item.choice.price | currency: 'GBP'}}</span>
-                </div>
+            <div class="input-div">
+                <textarea rows="5" class="_381tA" name="declineReason" id="declineReason" value [(ngModel)]="declineReason" tabindex="3" #ctrl="ngModel" style="height: 100px;"></textarea>
+                <div class="_2EeI1 _26LFr"></div>
+                <label class="_1CvtA _2tL9P" for="message">Your Message</label>
             </div>
-            <div *ngIf="item.extras !== null && item.extras !== undefined && item.extras.length > 0">
-                <div style="width: 100%;clear: both; display: flex; justify-content: space-between;" *ngFor="let extra of item.extras">
-                    <span>{{extra.name}}</span>
-                    <span>{{extra.price | currency: 'GBP'}}</span>
-                </div>
+            <div class="flex-row jcc aic py-3 my-3 gap-3">
+                <span *ngIf="declineReason" class="btn-danger my-3" (click)="performAction('Decline')">Decline</span>
+                <span class="btn-warning" (click)="closeModal()">Cancel</span>
             </div>
+            
         </div>
     </div>
-
 </ng-template>

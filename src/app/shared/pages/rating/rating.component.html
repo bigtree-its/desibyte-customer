@@ -1,0 +1,37 @@
+<div class="flex-row" style="font-size: 12px;">
+    <fa-icon [icon]="faStarS" class="color-o" *ngIf="rating >= 1"></fa-icon>
+    <fa-icon [icon]="faStarS" class="color-o" *ngIf="rating >= 2"></fa-icon>
+    <fa-icon [icon]="faStarS" class="color-o" *ngIf="rating >= 3"></fa-icon>
+    <fa-icon [icon]="faStarS" class="color-o" *ngIf="rating >= 4"></fa-icon>
+    <fa-icon [icon]="faStarS" class="color-o" *ngIf="rating >= 5"></fa-icon>
+
+    <!-- Half Stars -->
+   
+    <ng-template [ngIf]="rating > 1 && rating < 2" [ngIfThen]="starHalf"></ng-template>
+    <ng-template [ngIf]="rating > 2 && rating < 3" [ngIfThen]="starHalf"></ng-template>
+    <ng-template [ngIf]="rating > 3 && rating < 4" [ngIfThen]="starHalf"></ng-template>
+    <ng-template [ngIf]="rating > 4 && rating < 5" [ngIfThen]="starHalf"></ng-template>
+
+    <!-- Empty Stars -->
+    <fa-icon [icon]="faStarR" *ngIf="rating < 1 "></fa-icon>
+    <!-- 2th-->
+    <fa-icon [icon]="faStarR" *ngIf="rating < 2 && rating <= 1 "></fa-icon>
+    <!-- 3th-->
+    <fa-icon [icon]="faStarR" *ngIf="rating < 3 && rating <= 2 "></fa-icon>
+    <!-- 4th-->
+    <fa-icon [icon]="faStarR" *ngIf="rating < 4 && rating <= 3 "></fa-icon>
+    <!-- 5th-->
+    <fa-icon [icon]="faStarR" *ngIf="rating < 5 && rating <= 4 "></fa-icon>
+   
+    <span *ngIf="displayReviewDetails" style="padding-left: 6px;">{{rating}}</span>
+    <span *ngIf="displayReviewDetails" style="padding-left: 6px;">({{totalReviews}} reviews)</span>
+</div>
+<ng-template #starFull>
+    <fa-icon [icon]="faStarS" class="color-o"></fa-icon>
+</ng-template>
+<ng-template #starHalf>
+    <fa-icon [icon]="faStarH" class="color-o"></fa-icon>
+</ng-template>
+<ng-template #starEmpty>
+    <fa-icon [icon]="faStarR"></fa-icon>
+</ng-template>

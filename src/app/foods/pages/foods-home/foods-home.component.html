@@ -2,22 +2,50 @@
     <!-- <div class="flex-row my-2">
         <span class="page-hash bold px-3">#1 Desi Home Foods</span>
     </div> -->
+
     <div class="sm flex-column">
-        <img src="/assets/images/home-food-3.webp">
-        <span style="width: 420px;" class="bolder spl-text fs-1 text-center" style="color: orangered;">Are you starving?</span>
+        <img src="/assets/images/home-food-3.webp" class="mt-2 mb-4">
+        <span style="width: 420px;" class="bolder spl-text fs-1 text-center">Are you starving?</span>
         <h1 class="color-grey mb-5 fs-5 bolder  text-center">Within a few clicks, find meals that
             <br class="d-none d-xxl-block"> are accessible near you
         </h1>
         <div class="w-100 my-1">
             <div class="bg-dark-grey br-25 py-2">
-                <app-postcode-lookup (addressEmitter)="onSelectAddress($event)"></app-postcode-lookup>
+                <app-postcode-lookup (postcodeEmitter)="onSelectPostcode($event)"></app-postcode-lookup>
             </div>
         </div>
     </div>
+    <div class="lg row p-5 aic">
+        <div class="col">
+            <div class="flex-column jcc aic">
+                <span style="width: 420px;" class="bolder spl-text fs-1 text-center">Are you starving?</span>
+                <h1 class="color-grey mb-5 fs-5 bolder text-center">Within a few clicks, find meals that
+                    <br class="d-none d-xxl-block"> are accessible near you
+                </h1>
+                <div>
+                    <div class="textSlider">
+                        <div class="textSlider-text1">Homemade Goodness</div>
+                        <div class="textSlider-text2">Delivered Fresh</div>
+                        <div class="textSlider-text3">LOVE food</div>
+                    </div>
+                </div>
+                <div class="w-50 my-1">
+                    <div class="bg-dark-grey br-25 py-2">
+                        <!-- <app-postcode-lookup (addressEmitter)="onSelectAddress($event)"></app-postcode-lookup> -->
+                        <app-postcode-lookup (postcodeEmitter)="onSelectPostcode($event)"></app-postcode-lookup>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col lg jcc aic p-5">
+            <img src="/assets/images/home-food-3.webp" style="height: 400px;">
+        </div>
+    </div>
+    <!-- 
     <div class="lg row" style="height: 500px;">
         <div class="col flex-column jcc aic">
             <div class="flex-column p-4 text-center ">
-                <span style="width: 420px;" class="bolder spl-text fs-xl" style="color: orangered;">Are you starving?</span>
+                <span style="width: 420px;" class="bolder spl-text fs-xl">Are you starving?</span>
                 <h1 class="color-grey mb-5 fs-3 bolder">Within a few clicks, find meals that
                     <br class="d-none d-xxl-block"> are accessible near you
                 </h1>
@@ -32,7 +60,7 @@
                 <div class="flex-row jcc aic">
                     <div class="w-100">
                         <div class="bg-dark-grey br-25 py-2">
-                            <app-postcode-lookup (addressEmitter)="onSelectAddress($event)"></app-postcode-lookup>
+                            <app-postcode-lookup (postcodeEmitter)="onSelectPostcode($event)"></app-postcode-lookup>
                         </div>
                     </div>
                 </div>
@@ -41,7 +69,7 @@
         <div class="col h-50 jcc aic p-5">
             <img src="/assets/images/home-food-3.webp" style="height: 400px;">
         </div>
-    </div>
+    </div> -->
     <div class="flex-column aic my-2">
         <span class="fs-1 bolder color-o py-5 spl-text">How does it work</span>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 jcc">

@@ -7,7 +7,8 @@
 
     <div class="full-screen mb-2 px-3">
         <div class="flex-row-scrollable py-3">
-            <div *ngFor="let cuisine of cuisines" class="cuisine" (click)="onSelectCuisine(cuisine)" [class.selectedCuisine]="isSelectedCuisine(cuisine)">
+            <div *ngFor="let cuisine of cuisines" class="cuisine" (click)="onSelectCuisine(cuisine)"
+                [class.selectedCuisine]="isSelectedCuisine(cuisine)">
                 <img src={{cuisine.logo}} class="cuisine-logo" height="90px" width="120px">
                 <span>{{cuisine.name}}</span>
             </div>
@@ -20,10 +21,11 @@
         <div class="full-screen mb-2 px-3">
             <div class="flex-row-scrollable py-3">
                 <!-- <div *ngFor="let kw of keywords" class="btn-text d-flex jcc aic mr-1 px-3" (click)="onSelectDish(d)" [class.clicked]="isDishSelected(d)"> -->
-                    <div *ngFor="let kw of keywords" class="selectable mr-1" (click)="onSelectKeyword(kw)" [class.selected]="isKeywordSelected(kw)">
-                        <fa-icon [icon]="faCheck"></fa-icon>
-                        <span class="pl-1">{{kw}}</span>
-                    </div>
+                <div *ngFor="let kw of keywords" class="selectable mr-1" (click)="onSelectKeyword(kw)"
+                    [class.selected]="isKeywordSelected(kw)">
+                    <fa-icon [icon]="faCheck"></fa-icon>
+                    <span class="pl-1">{{kw}}</span>
+                </div>
             </div>
         </div>
     </div>
@@ -32,7 +34,8 @@
         <h4 class="big-text">Whats on your mind ?</h4>
         <div class="flex-row-scrollable">
             <!-- <div *ngFor="let d of dishes" class="selectable mr-1" (click)="onSelectDish(d)" [class.selected]="isDishSelected(d)"> -->
-            <div *ngFor="let kw of keywords" class="selectable mr-1" (click)="onSelectKeyword(kw)" [class.selected]="isKeywordSelected(kw)">
+            <div *ngFor="let kw of keywords" class="selectable mr-1" (click)="onSelectKeyword(kw)"
+                [class.selected]="isKeywordSelected(kw)">
                 <fa-icon [icon]="faCheck"></fa-icon>
                 <span class="pl-1">{{kw}}</span>
             </div>
@@ -40,7 +43,8 @@
     </div>
 
     <div class="full-screen mb-2 px-3">
-        <div class="flex-row-space-between mb-1 md bg-light p-2 mx-1" *ngIf="serviceLocation != null && serviceLocation !== undefined">
+        <div class="flex-row-space-between mb-1 md bg-light p-2 mx-1"
+            *ngIf="serviceLocation != null && serviceLocation !== undefined">
             <span>{{serviceLocation.name}}, {{serviceLocation.city}}</span>
             <span class="change-area" routerLink="/ck/home">Change</span>
         </div>
@@ -52,6 +56,7 @@
                 <img src="{{chef.image}}" class="card-img-top" alt="...">
                 <div class="card-body mt-1 p-2">
                     <h5 class="fs-6 bolder">{{chef.name}}</h5>
+                    <app-rating [rating]="chef.rating"></app-rating>
                     <p class="card-text"> {{chef.description}}</p>
                     <span [class.open]="chef.open" [class.closed]="!chef.open">{{chef.open?
                         "Open Now":"Closed"}}</span>

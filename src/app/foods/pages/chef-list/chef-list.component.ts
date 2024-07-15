@@ -19,7 +19,8 @@ import { Utils } from 'src/app/services/common/utils';
 import { CloudKitchenService } from 'src/app/services/foods/cloudkitchen.service';
 import { CuisinesService } from 'src/app/services/foods/cusines.service';
 import { DishService } from 'src/app/services/foods/dish.service';
-
+import { faStar as starReg } from '@fortawesome/free-regular-svg-icons';
+import { faStar as starSolid } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -60,6 +61,8 @@ export class ChefListComponent implements OnDestroy {
   faCopyright = faCopyright;
   faCheck = faCheck;
   faArrowLeft = faArrowLeft;
+  faStarR = starReg;
+  faStarS = starSolid;
 
   areaQuery: string;
   cuisineQuery: string;

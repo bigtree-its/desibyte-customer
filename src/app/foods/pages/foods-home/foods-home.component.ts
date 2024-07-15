@@ -143,6 +143,17 @@ export class FoodsHomeComponent implements OnInit{
     }
   }
 
+  onSelectPostcode(postcode: string) {
+    if (postcode){
+      var area = postcode.match(/^(((([A-Z][A-Z]{0,1})[0-9][A-Z0-9]{0,1}) {0,}[0-9])[A-Z]{2})$/)[3];
+      if ( area){
+        this.router.navigateByUrl(
+          '/ck/area/' + area
+        );
+      }
+    }
+  }
+
   closeServiceLocations() {
     this.showAddressList = false;
     this.addressLookupPostcode = undefined;

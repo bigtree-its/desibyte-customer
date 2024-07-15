@@ -28,6 +28,7 @@ export class PostcodeLookupComponent {
   rapidApiByPostcodeResponseSummary: RapidApiByPostcodeResponseSummary;
 
   @Output() addressEmitter = new EventEmitter<Address>;
+  @Output() postcodeEmitter = new EventEmitter<string>;
   addressLookupResponse: APITierResponse;
 
 
@@ -46,7 +47,7 @@ export class PostcodeLookupComponent {
 
   findAddress() {
     if (this.addressLookupPostcode && this.addressLookupPostcode.length >= 5) {
-      this.doFakeLookup();
+      this.postcodeEmitter.emit(this.addressLookupPostcode);
     }
   }
 

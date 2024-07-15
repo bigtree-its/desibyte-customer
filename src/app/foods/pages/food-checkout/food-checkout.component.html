@@ -94,15 +94,15 @@
 
 <ng-template #auth>
     <div class="flex-column p-3 border">
-        <div class="flex-row mb-2 border-bottom py-2 aic">
+        <div class="flex-row mb-2 border-bottom py-2 aic gap-3">
             <span>Do you have an account?</span>
             <!-- <span [routerLink]="['/login']" [queryParams]="{returnUrl: 'checkout'}" class="clickable ml-2">Login</span> -->
-            <button type="button" [routerLink]="['/login']" [queryParams]="{returnUrl: '/ck/checkout'}" class="btn-solid px-3 ml-3">Login</button>
+            <button type="button" [routerLink]="['/login']" [queryParams]="{returnUrl: '/ck/checkout'}" class="btn-solid py-2 px-4">Login</button>
         </div>
-        <div class="flex-row py-2 aic">
+        <div class="flex-row py-2 aic gap-3">
             <span>Don't have an account?</span>
             <!-- <span [routerLink]="['/register']" class="clickable ml-2">Signup</span> -->
-            <button type="button" [routerLink]="['/register']" [queryParams]="{returnUrl: '/ck/checkout'}" class="btn-solid px-3 ml-3">Signup</button>
+            <button type="button" [routerLink]="['/register']" [queryParams]="{returnUrl: '/ck/checkout'}" class="btn-solid py-2 px-4">Signup</button>
         </div>
     </div>
 </ng-template>

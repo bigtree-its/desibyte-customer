@@ -151,23 +151,12 @@
                     style="max-height: 200px;min-height: 200px;object-fit: cover;">
                 <div class="card-body">
                     <h6 class="card-title">{{ad.title}}</h6>
-                    <fa-icon [icon]="faStarS" class="color-o" *ngIf="ad.rating > 0"></fa-icon>
-                    <fa-icon [icon]="faStarS" class="color-o" *ngIf="ad.rating > 1"></fa-icon>
-                    <fa-icon [icon]="faStarS" class="color-o" *ngIf="ad.rating > 2"></fa-icon>
-                    <fa-icon [icon]="faStarS" class="color-o" *ngIf="ad.rating > 3"></fa-icon>
-                    <fa-icon [icon]="faStarS" class="color-o" *ngIf="ad.rating > 4"></fa-icon>
-
-                    <fa-icon [icon]="faStarR" *ngIf="ad.rating < 5"></fa-icon>
-                    <fa-icon [icon]="faStarR" *ngIf="ad.rating < 4"></fa-icon>
-                    <fa-icon [icon]="faStarR" *ngIf="ad.rating < 3"></fa-icon>
-                    <fa-icon [icon]="faStarR" *ngIf="ad.rating < 2"></fa-icon>
-                    <fa-icon [icon]="faStarR" *ngIf="ad.rating < 1"></fa-icon>
                     <div class="flex-row gap-2 aic">
                         <fa-icon class="color-y" [icon]="faLocation"></fa-icon>
                         <span class="color-y" style="text-overflow: ellipsis;overflow: hidden;"
                             title="{{ad.address.addressLine2}}">{{ad.address.city | titlecase}}</span>
                     </div>
-                    <p class="card-price">GBP {{ad.price | number: '1.2-2' }}</p>
+                    <span class="card-price">{{ad.price | currency: 'GBP' }}</span>
                 </div>
             </div>
         </div>
@@ -195,34 +184,44 @@
         </div>
     </div>
 </ng-template>
-<ng-template #adCard let-item="item">
-    <div class="flex-column" style="max-width: 250px;min-width: 250px;height: 300px;margin-right: 10px;"
-        [routerLink]="['/ads/g', item.reference]">
-        <img *ngIf="!item.gallery" src="/assets/images/default-image.jpeg"
-            style="height: 220px;width:100%;object-fit: cover;border-radius: 12px;">
-        <img *ngIf="item.gallery && item.gallery.length > 0" src="{{item.gallery[0]?.url}}"
-            style="height: 220px;width:100%;object-fit: cover;border-radius: 12px;">
-        <div class="flex-column p-1">
-            <span class="bolder py-1 fs-6">{{item.title}}</span>
-            <div class="flex-row gap-2 aic">
-                <fa-icon class="color-y" [icon]="faLocation"></fa-icon>
-                <span class="fs-6 color-y">{{item.address.addressLine2}}, {{item.address.city | lowercase}}</span>
-            </div>
-            <div class="flex-row jcsb aic py-1">
-                <span class="bolder">{{item.price | currency:'GBP'}}</span>
-                <span style="font-size: 10px;">{{item.datePosted | dateAgo}}</span>
+<ng-template #adCard let-ad="item">
+    <div class="col">
+        <div class="chef-card" [routerLink]="['/ads/g', ad.reference]">
+            <img [src]="ad.gallery[0]?.url" class="card-img-top" alt="..."
+                style="max-height: 200px;min-height: 200px;object-fit: cover;">
+            <div class="card-body p-1">
+                <h6 class="card-title">{{ad.title}}</h6>
+                <div class="flex-row gap-2 aic">
+                    <fa-icon class="color-y" [icon]="faLocation"></fa-icon>
+                    <span class="color-y" style="text-overflow: ellipsis;overflow: hidden;"
+                        title="{{ad.address.addressLine2}}">{{ad.address.city | titlecase}}</span>
+                </div>
+                <span class="card-price">{{ad.price | currency: 'GBP' }}</span>
             </div>
         </div>
     </div>
+
 </ng-template>
 
 <ng-template #adList>
     <div class="flex-column">
-        <div class="flex-row gap-3">
-            <fa-icon [icon]="faArrowLeft" class="btn-circle" (click)="onSelectCategory('All')"></fa-icon>
-            <span class="bolder pb-3 fs-5">{{category}}</span>
-        </div>
-        <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 gap-4">
+        <span class="bolder pb-3 fs-5">{{category | titlecase}}</span>
+        <!-- <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+            <div class="col mb-4 chef-card" *ngFor="let ad of ads" [routerLink]="['/ads/g', ad.reference]">
+                <img [src]="ad.gallery[0]?.url" class="card-img-top" alt="...">
+                <div class="card-body p-2">
+                    <h5 class="fs-6 bolder">{{ad.title}}</h5>
+                    <div class="flex-row gap-2 aic">
+                        <fa-icon class="color-y" [icon]="faLocation"></fa-icon>
+                        <span class="color-y" style="text-overflow: ellipsis;overflow: hidden;"
+                            title="{{ad.address.addressLine2}}">{{ad.address.city | titlecase}}</span>
+                    </div>
+                    <span class="card-price">{{ad.price | currency: 'GBP' }}</span>
+                </div>
+            </div>
+        </div> -->
+
+        <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
             <ng-container *ngFor="let ad of ads" [ngTemplateOutlet]="adCard"
                 [ngTemplateOutletContext]="{ item: ad }"></ng-container>
         </div>
@@ -232,10 +231,7 @@
 
 <ng-template #propertyList>
     <div class="flex-column">
-        <div class="flex-row gap-3">
-            <fa-icon [icon]="faArrowLeft" class="btn-circle" (click)="onSelectCategory('All')"></fa-icon>
-            <span class="bolder pb-3 fs-5">Properties</span>
-        </div>
+        <span class="bolder pb-3 fs-5">Properties</span>
 
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3  align-items-stretch">
             <div class="col mb-4" *ngFor="let item of properties " [routerLink]="[ '/ads/p', item.reference] ">
@@ -286,6 +282,7 @@
             <select class="form-select" (change)="onChangePropertyTypeList($event)">
                 <option default>Any</option>
                 <option value="Flat">Flat</option>
+                <option value="Rooms">Rooms</option>
                 <option value="Detached">Detached</option>
                 <option value="Semi-detached">Semi-detached</option>
                 <option value="Bungalow">Bungalow</option>
@@ -302,16 +299,20 @@
         <span class="bold">Whats your intend?</span>
         <div class="mydict flex-row">
             <div>
-                <label>
+                <label *ngIf="propertyType !== 'Rooms'">
                     <input id="Sale" value="Sale" type="radio" name="radio" checked
                         (change)="onChangeConsumptionType($event)">
                     <span>Sale</span>
                 </label>
-                <label>
+                <label  *ngIf="propertyType === 'Rooms'">
+                    <input id="Rent" value="Rent" type="radio" name="radio" (change)="onChangeConsumptionType($event)" checked>
+                    <span>Rent</span>
+                </label>
+                <label  *ngIf="propertyType !== 'Rooms'">
                     <input id="Rent" value="Rent" type="radio" name="radio" (change)="onChangeConsumptionType($event)">
                     <span>Rent</span>
                 </label>
-                <label>
+                <label  *ngIf="propertyType !== 'Rooms'">
                     <input id="Share" value="Share" type="radio" name="radio"
                         (change)="onChangeConsumptionType($event)">
                     <span>Share</span>

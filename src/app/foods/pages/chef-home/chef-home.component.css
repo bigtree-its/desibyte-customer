@@ -29,3 +29,8 @@
 ::ng-deep .modal-dialog {
     /* min-width: 800px; */
 }
+
+.crop {
+    overflow: hidden;
+    display: block;
+  }
