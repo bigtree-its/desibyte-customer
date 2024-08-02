@@ -1,6 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { faFacebook, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { faClose, faCopyright, faLocation, faLocationDot, faMugHot, faReceipt, faSearch, faUtensils } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Cuisine } from 'src/app/model/all-foods';
@@ -25,9 +24,6 @@ export class FoodsHomeComponent implements OnInit{
   faMugHot = faMugHot;
   faReceipt = faReceipt;
   faUtensils = faUtensils;
-  faFacebook = faFacebook;
-  faTwitter= faTwitter;
-  faInstagram= faInstagram;
   faCopyright = faCopyright;
 
   router = inject(Router);

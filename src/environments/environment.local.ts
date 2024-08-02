@@ -72,7 +72,7 @@ export const environment = {
 
 
   //GEO
-  PostcodeDistrictUrl: 'http://localhost:8085/uk-post/v1/postcode-districts',
+  PostcodeDistrictUrl: 'http://localhost:8085/geo/v1/postcode-districts',
   
   /** API Tier**/
   API_Tier_PRIVATE_KEY: 'NYdGEdtZDf7YaKcGhdtYm9D3uzIjau7Y6b1ISLns',
