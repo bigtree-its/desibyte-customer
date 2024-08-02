@@ -152,7 +152,7 @@ export class WriteReviewComponent implements OnInit, OnDestroy {
       this.order = this.orderReference;
     }
     review.customer = {
-      name: this.customer.firstName + ' ' + this.customer.lastName,
+      name: this.customer.name ,
       email: this.customer.email,
       mobile: this.customer.mobile,
       _id: this.customer._id,

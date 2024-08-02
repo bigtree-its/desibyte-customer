@@ -23,7 +23,7 @@
                 <span *ngIf="leafTemplate !== undefined" class="mx-2  fs-6">/</span>
                 <span *ngIf="leafTemplate !== undefined" class="leaf  fs-6">{{leafTemplate}}</span>
             </div>
-            <button type="button" class="btn-1" (click)="saveKitchen()">Save
+            <button type="button" class="btn-success" (click)="saveKitchen()">Save
                 Changes</button>
         </div>
         <div class="alert-info my-3 jcc aic" *ngIf="loadingKitchen">
@@ -33,8 +33,7 @@
             <span class="fs-5">Oops</span>
             <span class="py-1">We encountered an error while loading your
                 kitchen. Please try after some time.</span>
-            <span class="py-2">If issue continue, please reach out to
-                help@zomberi.co.uk.</span>
+            <span class="py-2">If issue continue, please reach out to help@gringoz.co.uk.</span>
         </div>
         <ng-container [ngSwitch]="activeLayout">
             <ng-container *ngSwitchCase="'Home'" [ngTemplateOutlet]="homeTemplate"></ng-container>
@@ -42,7 +41,8 @@
             <ng-container *ngSwitchCase="'Contact'" [ngTemplateOutlet]="contactTemplate"></ng-container>
             <ng-container *ngSwitchCase="'Cuisines'" [ngTemplateOutlet]="cuisinesTemplate"></ng-container>
             <ng-container *ngSwitchCase="'Keywords'" [ngTemplateOutlet]="keywordsTemplate"></ng-container>
-            <ng-container *ngSwitchCase="'Packaging and Delivery'" [ngTemplateOutlet]="packagingAndDeliveryTemplate"></ng-container>
+            <ng-container *ngSwitchCase="'Packaging and Delivery'"
+                [ngTemplateOutlet]="packagingAndDeliveryTemplate"></ng-container>
             <ng-container *ngSwitchCase="'Party Orders'" [ngTemplateOutlet]="partyOrderTemplate"></ng-container>
             <ng-container *ngSwitchCase="'Service Areas'" [ngTemplateOutlet]="serviceAreasTemplate"></ng-container>
         </ng-container>
@@ -59,9 +59,7 @@
                 <span class="bold">Open</span>
                 <div class="content" *ngIf="cloudKitchen">
                     <label class="checkBox">
-                        <input id="ch1" type="checkbox"
-                            [(ngModel)]="cloudKitchen.open"
-                            [checked]="cloudKitchen?.open">
+                        <input id="ch1" type="checkbox" [(ngModel)]="cloudKitchen.open" [checked]="cloudKitchen?.open">
                         <div class="transition"></div>
                     </label>
                 </div>
@@ -70,8 +68,7 @@
                 <span class="bold">Active</span>
                 <div class="content" *ngIf="cloudKitchen">
                     <label class="checkBox">
-                        <input id="ch1" type="checkbox"
-                            [(ngModel)]="cloudKitchen.active"
+                        <input id="ch1" type="checkbox" [(ngModel)]="cloudKitchen.active"
                             [checked]="cloudKitchen?.active">
                         <div class="transition"></div>
                     </label>
@@ -100,16 +97,20 @@
         </div>
         <div class="flex-column p-3 border br-7 flex-grow">
             <div class="flex-row flex-wrap gap-3">
-                <div class="flex-column mb-2" *ngIf="cloudKitchen && cloudKitchen?.cuisines && cloudKitchen?.cuisines?.length > 0">
-                    <span class="bolder fs-6 mt-3  clickable-link" (click)="selectActiveLayout('Cuisines')">Cuisines</span>
+                <div class="flex-column mb-2"
+                    *ngIf="cloudKitchen && cloudKitchen?.cuisines && cloudKitchen?.cuisines?.length > 0">
+                    <span class="bolder fs-6 mt-3  clickable-link"
+                        (click)="selectActiveLayout('Cuisines')">Cuisines</span>
                     <div class="flex-row flex-wrap gap-2 mt-2">
-                        <span class="selected-info" *ngFor="let cuisine of cloudKitchen?.cuisines">{{cuisine.name}}</span>
+                        <span class="selected-info"
+                            *ngFor="let cuisine of cloudKitchen?.cuisines">{{cuisine.name}}</span>
                     </div>
                 </div>
             </div>
             <div class="flex-column ">
                 <span class="bolder fs-6 my-2 clickable-link" (click)="selectActiveLayout('Keywords')">Keywords</span>
-                <div class="flex-column mb-2" *ngIf="cloudKitchen && cloudKitchen?.keywords && cloudKitchen?.keywords?.length > 0">
+                <div class="flex-column mb-2"
+                    *ngIf="cloudKitchen && cloudKitchen?.keywords && cloudKitchen?.keywords?.length > 0">
                     <div class="flex-row flex-wrap gap-2 mt-2">
                         <span class="selected-info" *ngFor="let kw of cloudKitchen?.keywords">{{kw}}</span>
                     </div>
@@ -118,7 +119,8 @@
             <div class="flex-column">
                 <span class="bolder fs-6 mt-3 clickable-link" (click)="selectActiveLayout('Service Areas')">Service
                     Areas</span>
-                <div class="flex-column mb-2" *ngIf="cloudKitchen && cloudKitchen?.serviceAreas && cloudKitchen?.serviceAreas?.length > 0">
+                <div class="flex-column mb-2"
+                    *ngIf="cloudKitchen && cloudKitchen?.serviceAreas && cloudKitchen?.serviceAreas?.length > 0">
                     <div class="flex-row flex-wrap gap-2 mt-2">
                         <span class="selected-info" *ngFor="let area of cloudKitchen?.serviceAreas">{{area}}</span>
                     </div>
@@ -126,7 +128,8 @@
             </div>
         </div>
         <div class="flex-column  p-3 border br-7 flex-grow">
-            <span class="bolder fs-6 my-3  clickable-link" (click)="selectActiveLayout('Packaging and Delivery')">Packaging
+            <span class="bolder fs-6 my-3  clickable-link"
+                (click)="selectActiveLayout('Packaging and Delivery')">Packaging
                 & Delivery</span>
             <table style="width: 100%;">
                 <tr style="height: 30px;">
@@ -134,8 +137,7 @@
                     <td>
                         <div class="theme_switcher">
                             <label id="switch" class="switch">
-                                <input type="checkbox"
-                                    [checked]="cloudKitchen?.doDelivery"><span
+                                <input type="checkbox" [checked]="cloudKitchen?.doDelivery"><span
                                     class="slider round"></span>
                             </label>
                         </div>
@@ -159,15 +161,15 @@
             </table>
         </div>
         <div class="flex-column  p-3 border br-7 flex-grow">
-            <span class="bolder fs-6 my-3  clickable-link" (click)="selectActiveLayout('Party Orders')">Party Orders</span>
+            <span class="bolder fs-6 my-3  clickable-link" (click)="selectActiveLayout('Party Orders')">Party
+                Orders</span>
             <table style="width: 100%;">
                 <tr style="height: 30px;">
                     <th>I take Party Orders</th>
                     <td>
                         <div class="theme_switcher">
                             <label id="switch" class="switch">
-                                <input type="checkbox"
-                                    [checked]="cloudKitchen?.doPartyOrders"><span
+                                <input type="checkbox" [checked]="cloudKitchen?.doPartyOrders"><span
                                     class="slider round"></span>
                             </label>
                         </div>
@@ -194,17 +196,20 @@
             <div class="flex-column border p-3">
                 <span class="bolder fs-4 mb-3">Setup your cloud-kitchen</span>
                 <div class="flex-row py-2 aic">
-                    <fa-icon *ngIf="!showKitchenName" [icon]="faArrowLeft" (click)="goBack()" class="btn-circle mr-2"></fa-icon>
+                    <fa-icon *ngIf="!showKitchenName" [icon]="faArrowLeft" (click)="goBack()"
+                        class="btn-circle mr-2"></fa-icon>
                     <span class="bolder fs-6">{{section}}</span>
                 </div>
                 <div class="flex-column" *ngIf="showKitchenName">
                     <div class="flex-column my-2">
                         <span class="bolder py-2">Kitchen Name</span>
-                        <input id="kitchenName" class="mb-2 input-light" required type="text" name="kitchenName" autocomplete="off" [(ngModel)]="cloudKitchen.name" #ctrl="ngModel">
+                        <input id="kitchenName" class="mb-2 input-light" required type="text" name="kitchenName"
+                            autocomplete="off" [(ngModel)]="cloudKitchen.name" #ctrl="ngModel">
                     </div>
                     <div class="flex-column my-2">
                         <span class="bolder py-2">Kitchen Description</span>
-                        <input id="description" class="mb-1 input-light" required type="text" name="description" autocomplete="off" [(ngModel)]="cloudKitchen.description" #ctrl="ngModel">
+                        <input id="description" class="mb-1 input-light" required type="text" name="description"
+                            autocomplete="off" [(ngModel)]="cloudKitchen.description" #ctrl="ngModel">
 
                     </div>
 
@@ -212,10 +217,8 @@
                         <span class="bolder">Open</span>
                         <div class="theme_switcher">
                             <label id="switch" class="switch">
-                                <input type="checkbox"
-                                    (change)="handleOpen($event)"
-                                    [checked]="cloudKitchen?.open"><span
-                                    class="slider round"></span>
+                                <input type="checkbox" (change)="handleOpen($event)"
+                                    [checked]="cloudKitchen?.open"><span class="slider round"></span>
                             </label>
                         </div>
                     </div>
@@ -223,16 +226,15 @@
                         <span class="bolder">Active</span>
                         <div class="theme_switcher">
                             <label id="switch" class="switch">
-                                <input type="checkbox"
-                                    (change)="handleActive($event)"
-                                    [checked]="cloudKitchen?.active"><span
-                                    class="slider round"></span>
+                                <input type="checkbox" (change)="handleActive($event)"
+                                    [checked]="cloudKitchen?.active"><span class="slider round"></span>
                             </label>
                         </div>
                     </div>
                 </div>
 
-                <app-postcode-lookup *ngIf="showKitchenAddress" class="bg-white" (addressEmitter)="onSelectAddress($event)"></app-postcode-lookup>
+                <app-postcode-lookup *ngIf="showKitchenAddress" class="bg-white"
+                    (addressEmitter)="onSelectAddress($event)"></app-postcode-lookup>
                 <!-- <div *ngIf="showCuisines" class="flex-row gap-2  flex-wrap">
                     <span class="selectable-info" *ngFor="let cuisine of cuisines" (click)="selectCuisine(cuisine)">{{cuisine.name}}</span>
                 </div> -->
@@ -240,8 +242,7 @@
                     <div class="flex-row gap-2 aic" *ngFor="let cuisine of cuisines">
                         <div class="content">
                             <label class="checkBox">
-                                <input id="ch1" type="checkbox"
-                                    [checked]="isSelected(cuisine)"
+                                <input id="ch1" type="checkbox" [checked]="isSelected(cuisine)"
                                     (change)="selectCuisine($event, cuisine)">
                                 <div class="transition"></div>
                             </label>
@@ -267,7 +268,8 @@
                 <div class="flex-row my-3">
                     <button class="btn-1 py-2 px-5" (click)="setupNext()">{{showServiceLocations?
                         'Complete':'Next'}}</button>
-                    <button *ngIf="showServiceLocations" class="py-2 px-5" [routerLink]="[ '/kitchen/menus'] ">Menus</button>
+                    <button *ngIf="showServiceLocations" class="py-2 px-5"
+                        [routerLink]="[ '/kitchen/menus'] ">Menus</button>
                 </div>
             </div>
         </div>
@@ -290,19 +292,24 @@
                     <span>{{cloudKitchen?.contact.mobile}}</span>
                     <span>{{cloudKitchen?.contact.telephone}}</span>
                 </div>
-                <div class="flex-column" *ngIf="cloudKitchen && cloudKitchen.cuisines && cloudKitchen?.cuisines?.length > 0">
+                <div class="flex-column"
+                    *ngIf="cloudKitchen && cloudKitchen.cuisines && cloudKitchen?.cuisines?.length > 0">
                     <span class="bolder fs-5 mt-3">Cuisines</span>
                     <div class="flex-row flex-wrap gap-2 mt-2">
-                        <span class="selected-info" *ngFor="let cuisine of cloudKitchen.cuisines">{{cuisine.name}}</span>
+                        <span class="selected-info"
+                            *ngFor="let cuisine of cloudKitchen.cuisines">{{cuisine.name}}</span>
                     </div>
                 </div>
 
-                <div class="flex-column" *ngIf="cloudKitchen && cloudKitchen.serviceAreas && cloudKitchen.serviceAreas.length > 0">
+                <div class="flex-column"
+                    *ngIf="cloudKitchen && cloudKitchen.serviceAreas && cloudKitchen.serviceAreas.length > 0">
                     <span class="bolder fs-5 mt-3">Service Areas</span>
                     <div class="flex-row flex-wrap gap-2 mt-2">
-                        <div class="bg-light d-flex jcc aic px-2 py-1 gap-2" *ngFor="let sl of cloudKitchen.serviceAreas">
+                        <div class="bg-light d-flex jcc aic px-2 py-1 gap-2"
+                            *ngFor="let sl of cloudKitchen.serviceAreas">
                             <span>{{sl}}</span>
-                            <fa-icon (click)="unSelectServiceLocation(sl)" class="btn-circle" [icon]="faClose"></fa-icon>
+                            <fa-icon (click)="unSelectServiceLocation(sl)" class="btn-circle"
+                                [icon]="faClose"></fa-icon>
                         </div>
                     </div>
                 </div>
@@ -334,8 +341,7 @@
         <div class="flex-row gap-2 aic" *ngFor="let cuisine of cuisines">
             <div class="content">
                 <label class="checkBox">
-                    <input id="ch1" type="checkbox"
-                        [checked]="isSelected(cuisine)"
+                    <input id="ch1" type="checkbox" [checked]="isSelected(cuisine)"
                         (change)="selectCuisine($event, cuisine)">
                     <div class="transition"></div>
                 </label>
@@ -351,7 +357,8 @@
     <div class="flex-column mt-2">
         <div class="flex-column mb-3">
             <span class="bolder fs-6 mt-3">Your Service Areas</span>
-            <div class="flex-row flex-wrap gap-2 mt-2" *ngIf="cloudKitchen.serviceAreas && cloudKitchen.serviceAreas.length > 0">
+            <div class="flex-row flex-wrap gap-2 mt-2"
+                *ngIf="cloudKitchen.serviceAreas && cloudKitchen.serviceAreas.length > 0">
                 <div class="bg-light d-flex jcc aic px-2 py-1 gap-2" *ngFor="let sl of cloudKitchen.serviceAreas">
                     <span>{{sl}}</span>
                     <fa-icon (click)="unSelectServiceLocation(sl)" class="btn-circle" [icon]="faClose"></fa-icon>
@@ -359,58 +366,73 @@
             </div>
         </div>
         <div class="flex-row gap-2 aic">
-            <input id="searchTextPostcodeDistrict" name="searchTextPostcodeDistrict" class="input-light" placeholder="e.g Clarkston or Newton Mearns" [(ngModel)]="searchTextPostcodeDistrict" #ctrl="ngModel" (keyup.enter)="onSearchPostcodeDistrict()">
-            <button *ngIf="!postcodeDistricts || postcodeDistricts.length=== 0" class="bolder my-1" (click)="onSearchPostcodeDistrict()">Go</button>
-            <button *ngIf="postcodeDistricts && postcodeDistricts.length> 0" class="bolder my-1" (click)="clearSearchPostcodeDistrict()">X</button>
+            <input id="searchTextPostcodeDistrict" name="searchTextPostcodeDistrict" class="input-light"
+                placeholder="e.g Clarkston or Newton Mearns" [(ngModel)]="searchTextPostcodeDistrict" #ctrl="ngModel"
+                (keyup.enter)="onSearchPostcodeDistrict()">
+            <button *ngIf="!postcodeDistricts || postcodeDistricts.length=== 0" class="btn-info my-1"
+                (click)="onSearchPostcodeDistrict()">Go</button>
+            <button *ngIf="postcodeDistricts && postcodeDistricts.length> 0" class="btn-warning my-1"
+                (click)="clearSearchPostcodeDistrict()">X</button>
         </div>
-        <div *ngIf="postcodeDistricts && postcodeDistricts.length> 0" style="max-height: 300px;overflow-y: auto;padding: 5px; background-color: #f1f1f1;" class="flex-column">
-            <span (click)="onSelectServiceLocation(pd)" class="drop-down-item" *ngFor="let pd of postcodeDistricts">{{pd.prefix}}-{{pd.coverage}}</span>
+        <div *ngIf="postcodeDistricts && postcodeDistricts.length> 0"
+            style="max-height: 300px;overflow-y: auto;padding: 5px; background-color: #f1f1f1;" class="flex-column">
+            <span (click)="onSelectServiceLocation(pd)" class="drop-down-item"
+                *ngFor="let pd of postcodeDistricts">{{pd.prefix}}-{{pd.coverage}}</span>
         </div>
     </div>
 </ng-template>
 <ng-template #packagingAndDeliveryTemplate>
     <div class="flex-column">
-        <table style="width: 100%;">
+        <table >
             <tr style="height: 30px;">
                 <th>I do delivery</th>
                 <td>
                     <div class="theme_switcher">
                         <label id="switch" class="switch">
-                            <input type="checkbox"
-                                (change)="handleDelivery($event)"
-                                [checked]="cloudKitchen?.doDelivery"><span
-                                class="slider round"></span>
+                            <input type="checkbox" (change)="handleDelivery($event)"
+                                [checked]="cloudKitchen?.doDelivery"><span class="slider round"></span>
                         </label>
                     </div>
                 </td>
             </tr>
             <tr style="height: 40px;">
                 <th>Delivery fee(£)</th>
-                <td><input style="width: 100px;height: 30px;background-color: #e7e9e8;border:none;" id="deliveryFee" class="py-2" required type="text" name="deliveryFee" autocomplete="off" [(ngModel)]="cloudKitchen.deliveryFee" #ctrl="ngModel"></td>
+                <td><input style="width: 100px;" id="deliveryFee"
+                    class="input-white" required type="text" name="deliveryFee" autocomplete="off"
+                        [(ngModel)]="cloudKitchen.deliveryFee" #ctrl="ngModel"></td>
             </tr>
             <tr style="height: 40px;">
                 <th>Free delivery for order over(£)
                 </th>
-                <td> <input style="width: 100px;height: 30px;background-color: #e7e9e8;border:none;" id="freeDeliveryOrderOver" class="py-2" required type="text" name="freeDeliveryOrderOver" autocomplete="off" [(ngModel)]="cloudKitchen.freeDeliveryOver" #ctrl="ngModel"></td>
+                <td>
+                    <input style="width: 100px;"
+                    id="freeDeliveryOrderOver" class="input-white" required type="text" name="freeDeliveryOrderOver"
+                    autocomplete="off" [(ngModel)]="cloudKitchen.freeDeliveryOver" #ctrl="ngModel">
+                </td>
             </tr>
 
             <tr style="height: 40px;">
                 <th>Packaging fee(£)</th>
-                <td><input style="width: 100px;height: 30px;background-color: #e7e9e8;border:none;" id="packagingFee" class="py-2" required type="text" name="packagingFee" autocomplete="off" [(ngModel)]="cloudKitchen.packagingFee" #ctrl="ngModel"></td>
+                <td><input style="width: 100px;" id="packagingFee"
+                    class="input-white" required type="text" name="packagingFee" autocomplete="off"
+                        [(ngModel)]="cloudKitchen.packagingFee" #ctrl="ngModel"></td>
             </tr>
         </table>
         <div class="flex-column my-2">
             <div class="input-group my-1">
-                <input required type="text" name="mobile" autocomplete="off" class="input" [(ngModel)]="cloudKitchen.allergenAdvice" #ctrl="ngModel">
+                <input required type="text" name="mobile" autocomplete="off" class="input-white"
+                    [(ngModel)]="cloudKitchen.allergenAdvice" #ctrl="ngModel">
                 <label class="user-label">Allergen Advice</label>
             </div>
             <div class="input-group my-1">
-                <input required type="text" name="mobile" autocomplete="off" class="input" [(ngModel)]="cloudKitchen.partyDescription" #ctrl="ngModel">
+                <input required type="text" name="mobile" autocomplete="off" class="input-white"
+                    [(ngModel)]="cloudKitchen.partyDescription" #ctrl="ngModel">
                 <label class="user-label">Party Description</label>
             </div>
 
             <div class="input-group my-1">
-                <input required type="text" name="mobile" autocomplete="off" class="input" [(ngModel)]="cloudKitchen.minimumOrder" #ctrl="ngModel">
+                <input required type="text" name="mobile" autocomplete="off" class="input-white"
+                    [(ngModel)]="cloudKitchen.minimumOrder" #ctrl="ngModel">
                 <label class="user-label">Minimum Order</label>
             </div>
         </div>
@@ -422,24 +444,25 @@
             <span class="bolder">We do party orders?</span>
             <div class="theme_switcher">
                 <label id="switch" class="switch">
-                    <input type="checkbox"
-                        (change)="handlePartyOrders($event)"
-                        [checked]="cloudKitchen.doPartyOrders"><span
-                        class="slider round"></span>
+                    <input type="checkbox" (change)="handlePartyOrders($event)"
+                        [checked]="cloudKitchen.doPartyOrders"><span class="slider round"></span>
                 </label>
             </div>
         </div>
         <div *ngIf="cloudKitchen.doPartyOrders" class="flex-column gap-3">
             <div class="input-group my-1">
-                <input required type="text" name="mobile" autocomplete="off" class="input" [(ngModel)]="cloudKitchen.partyDescription" #ctrl="ngModel">
+                <input required type="text" name="mobile" autocomplete="off" class="input"
+                    [(ngModel)]="cloudKitchen.partyDescription" #ctrl="ngModel">
                 <label class="user-label">Party Description</label>
             </div>
             <div class="input-group my-1">
-                <input required type="text" name="mobile" autocomplete="off" class="input" [(ngModel)]="cloudKitchen.partyOrderLeadDays" #ctrl="ngModel">
+                <input required type="text" name="mobile" autocomplete="off" class="input"
+                    [(ngModel)]="cloudKitchen.partyOrderLeadDays" #ctrl="ngModel">
                 <label class="user-label">Party Order Lead Days</label>
             </div>
             <div class="input-group my-1">
-                <input required type="text" name="mobile" autocomplete="off" class="input" [(ngModel)]="cloudKitchen.minimumPartyOrder" #ctrl="ngModel">
+                <input required type="text" name="mobile" autocomplete="off" class="input"
+                    [(ngModel)]="cloudKitchen.minimumPartyOrder" #ctrl="ngModel">
                 <label class="user-label">Minimum Party Order</label>
             </div>
         </div>
@@ -448,19 +471,23 @@
 <ng-template #contactTemplate>
     <div class="flex-column">
         <div class="input-group my-1">
-            <input required type="text" name="person" autocomplete="off" class="input" [(ngModel)]="cloudKitchen.contact.person" #ctrl="ngModel">
+            <input required type="text" name="person" autocomplete="off" class="input"
+                [(ngModel)]="cloudKitchen.contact.person" #ctrl="ngModel">
             <label class="user-label">Person</label>
         </div>
         <div class="input-group my-1">
-            <input readonly type="text" name="email" autocomplete="off" class="input" [(ngModel)]="cloudKitchen.contact.email" #ctrl="ngModel">
+            <input readonly type="text" name="email" autocomplete="off" class="input"
+                [(ngModel)]="cloudKitchen.contact.email" #ctrl="ngModel">
             <!-- <label class="user-label">Business Email</label> -->
         </div>
         <div class="input-group my-1">
-            <input required type="text" name="mobile" autocomplete="off" class="input" [(ngModel)]="cloudKitchen.contact.mobile" #ctrl="ngModel">
+            <input required type="text" name="mobile" autocomplete="off" class="input"
+                [(ngModel)]="cloudKitchen.contact.mobile" #ctrl="ngModel">
             <label class="user-label">Mobile</label>
         </div>
         <div class="input-group my-1">
-            <input required type="text" name="mobile" autocomplete="off" class="input" [(ngModel)]="cloudKitchen.contact.telephone" #ctrl="ngModel">
+            <input required type="text" name="mobile" autocomplete="off" class="input"
+                [(ngModel)]="cloudKitchen.contact.telephone" #ctrl="ngModel">
             <label class="user-label">Telephone</label>
         </div>
     </div>
@@ -472,18 +499,18 @@
             <span class="bolder fs-5 my-2">Menus</span>
         </div>
         <div class="flex-row gap-3">
-            <button class="flex-column jcc aic p-3 no-br">
+            <div class="flex-column bg-white jcc aic p-3 no-br">
                 <span>Menus</span>
                 <strong style="font-size: 30px;">{{menus === null || menus ===
                     undefined ? 0: menus.length}}</strong>
-            </button>
-            <button class="flex-column jcc aic p-3 no-br">
+            </div>
+            <button class="flex-column bg-white jcc aic p-3 no-br">
                 <span>Collections</span>
                 <strong style="font-size: 30px;">{{collections === null ||
                     collections === undefined ? 0:
                     collections.length}}</strong>
             </button>
-            <button class="flex-column jcc aic p-3 no-br">
+            <button class="flex-column bg-white jcc aic p-3 no-br">
                 <span>Specials</span>
                 <strong style="font-size: 30px;">{{collections === null ||
                     collections === undefined ? 0:
@@ -502,37 +529,31 @@
             <span class="bolder fs-5 my-2">Orders & Revenue</span>
         </div>
         <div class="flex-row gap-3 my-2">
-            <button class="flex-column jcc aic p-3 no-br flex-grow" [routerLink]="['/kitchen/orders']">
+            <button class="flex-column bg-white jcc aic p-3 no-br flex-grow" [routerLink]="['/kitchen/orders']">
                 <span>Today</span>
-                <strong
-                    style="font-size: 30px;">{{orderProfile?.today.length}}</strong>
+                <strong style="font-size: 30px;">{{orderProfile?.today.length}}</strong>
             </button>
-            <button class="flex-column jcc aic p-3 no-br flex-grow">
+            <button class="flex-column bg-white jcc aic p-3 no-br flex-grow">
                 <span>This Week</span>
-                <strong
-                    style="font-size: 30px;">{{orderProfile?.sevenDays.length}}</strong>
+                <strong style="font-size: 30px;">{{orderProfile?.sevenDays.length}}</strong>
             </button>
-            <button class="flex-column jcc aic p-3 no-br flex-grow">
+            <button class="flex-column bg-white jcc aic p-3 no-br flex-grow">
                 <span>This Month</span>
-                <strong
-                    style="font-size: 30px;">{{orderProfile?.month.length}}</strong>
+                <strong style="font-size: 30px;">{{orderProfile?.month.length}}</strong>
             </button>
         </div>
         <div class="flex-row gap-3">
-            <button class="flex-column jcc aic p-3 no-br flex-grow">
+            <button class="flex-column bg-white jcc aic p-3 no-br flex-grow">
                 <span>Last Month</span>
-                <strong
-                    style="font-size: 30px;">{{orderProfile?.lastMonth.length}}</strong>
+                <strong style="font-size: 30px;">{{orderProfile?.lastMonth.length}}</strong>
             </button>
-            <button class="flex-column jcc aic p-3 no-br flex-grow">
+            <button class="flex-column bg-white jcc aic p-3 no-br flex-grow">
                 <span>6 Months</span>
-                <strong
-                    style="font-size: 30px;">{{orderProfile?.sixMonth.length}}</strong>
+                <strong style="font-size: 30px;">{{orderProfile?.sixMonth.length}}</strong>
             </button>
-            <button class="flex-column jcc aic p-3 no-br flex-grow">
+            <button class="flex-column bg-white jcc aic p-3 no-br flex-grow">
                 <span>This Year</span>
-                <strong
-                    style="font-size: 30px;">{{orderProfile?.year.length}}</strong>
+                <strong style="font-size: 30px;">{{orderProfile?.year.length}}</strong>
             </button>
         </div>
     </div>
@@ -548,8 +569,9 @@
             </div>
         </div>
         <div class="flex-row gap-3 mt-2">
-            <input id="keyword" required type="text" name="keyword" autocomplete="off" [(ngModel)]="keyword" #ctrl="ngModel">
-            <button class="btn-2" (click)="addNewKeyword()">Add</button>
+            <input id="keyword" required type="text" name="keyword" autocomplete="off" [(ngModel)]="keyword"
+                #ctrl="ngModel">
+            <button class="btn-info" (click)="addNewKeyword()">Add</button>
         </div>
     </div>
 </ng-template>

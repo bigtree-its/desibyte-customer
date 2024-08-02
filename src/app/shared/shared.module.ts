@@ -17,6 +17,7 @@ import { WriteReviewComponent } from './pages/write-review/write-review.componen
 import { AuthGuard } from '../services/auth/auth-guard.service';
 import { DragScrollComponent, DragScrollItemDirective } from 'ngx-drag-scroll';
 import { RatingComponent } from './pages/rating/rating.component';
+import { OrderProgressComponent } from './pages/order-progress/order-progress.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -34,7 +35,8 @@ const routes: Routes = [
     FooterComponent,
     SandboxComponent,
     WriteReviewComponent,
-    RatingComponent
+    RatingComponent,
+    OrderProgressComponent
   ],
   imports: [
     CommonModule,
@@ -56,6 +58,7 @@ const routes: Routes = [
     PaymentFormComponent,
     ReviewItemComponent,
     RatingComponent,
+    OrderProgressComponent,
     NgbModule
   ]
 })

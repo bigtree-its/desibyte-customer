@@ -1,4 +1,5 @@
 import { DecimalPipe } from '@angular/common';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   Component,
   inject,
@@ -6,7 +7,6 @@ import {
   OnInit,
   PipeTransform,
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import {
   faArrowLeft,
@@ -38,10 +38,15 @@ import { Utils } from 'src/app/services/common/utils';
   styleUrls: ['./my-ads.component.css'],
 })
 export class MyAdsComponent implements OnInit, OnDestroy {
+
   adService = inject(AdsService);
   accountService = inject(AccountService);
 
   destroy$ = new Subject<void>();
+
+  adForm: FormGroup;
+  propertyForm: FormGroup;
+
   user: User;
   ads: GeneralAd[] = [];
   myAds$: Observable<GeneralAd[]>;
@@ -72,6 +77,10 @@ export class MyAdsComponent implements OnInit, OnDestroy {
   enquiries: AdEnquiry[] = [];
   viewEnquiries: boolean;
   enquiry: AdEnquiry;
+  editingAd: GeneralAd;
+  editingProperty: PropertyAd;
+  errorMessage: null;
+  updateSuccess: boolean;
 
   ngOnInit(): void {
     this.accountService.getData();
@@ -86,6 +95,19 @@ export class MyAdsComponent implements OnInit, OnDestroy {
         console.log('CustomerObject emitted the complete notification'),
     });
     this.selectedTab = 'Ads';
+
+
+    this.adForm = new FormGroup({
+      title: new FormControl('', [Validators.required]),
+      price: new FormControl('', [Validators.required]),
+      description: new FormControl('', [Validators.required]),
+    });
+
+    this.propertyForm = new FormGroup({
+      title: new FormControl('', [Validators.required]),
+      price: new FormControl('', [Validators.required]),
+      description: new FormControl('', [Validators.required]),
+    });
   }
 
   fetchMyAds() {
@@ -124,7 +146,7 @@ export class MyAdsComponent implements OnInit, OnDestroy {
     });
   }
 
-  goBackToEnquiries(){
+  goBackToEnquiries() {
     this.enquiry = null;
   }
   goHome() {
@@ -152,10 +174,10 @@ export class MyAdsComponent implements OnInit, OnDestroy {
   }
 
   respondToEnquiry() {
-    if (Utils.isEmpty(this.responseMessage)){
+    if (Utils.isEmpty(this.responseMessage)) {
       return;
     }
-    if (this.enquiry.responses){
+    if (this.enquiry.responses) {
       var resp: AdEnquiryResponse = {};
       resp.date = new Date();
       resp.message = this.responseMessage;
@@ -210,6 +232,90 @@ export class MyAdsComponent implements OnInit, OnDestroy {
     this.viewAd = null;
     this.retrieveEnquiries(p.reference, 'Property');
     this.selectedAdTab = 'AdDetailTab';
+  }
+
+  deleteAd(ref: string) {
+    let observable = this.adService.deleteAd(ref);
+    observable.subscribe((e) => {
+      if (Utils.isValid(e)) {
+        this.viewAd = null;
+      }
+    });
+  }
+
+  deleteProperty(ref: string) {
+    let observable = this.adService.deleteProperty(ref);
+    observable.subscribe((e) => {
+      if (Utils.isValid(e)) {
+        this.viewProperty = null;
+      }
+    });
+  }
+
+  editAd(ad: GeneralAd) {
+    this.editingAd = ad;
+  }
+
+  editProperty(property: PropertyAd) {
+    this.editingProperty = property;
+  }
+
+  updateAd() {
+    this.errorMessage= null;
+    this.updateSuccess = false;
+    this.loading = true;
+    if (this.adForm.valid) {
+      this.viewAd.title = this.adForm.get('title').value,
+      this.viewAd.price = this.adForm.get('price').value,
+      this.viewAd.description = this.adForm.get('description').value,
+      console.log('Updating ad '+ JSON.stringify(this.viewAd))
+      this.loading = true;
+      var observable = this.adService.updateAd(this.viewAd);
+      observable.subscribe(
+        (data) => {
+          console.warn(JSON.stringify(data, null, 2));
+          this.updateSuccess = true;
+          this.loading = false;
+        },
+        (err) => {
+          this.updateSuccess = false;
+          this.loading = false;
+          this.errorMessage = err.error?.detail;
+        }
+      );
+    } else {
+      console.log('Form is not valid');
+      this.loading = false;
+    }
+  }
+
+  updateProperty() {
+    this.errorMessage= null;
+    this.updateSuccess = false;
+    this.loading = true;
+    if (this.propertyForm.valid) {
+      this.viewProperty.title = this.adForm.get('title').value,
+      this.viewProperty.price = this.adForm.get('price').value,
+      this.viewProperty.description = this.adForm.get('description').value,
+      console.log('Updating property '+ JSON.stringify(this.viewProperty))
+      this.loading = true;
+      var observable = this.adService.updateProperty(this.viewProperty);
+      observable.subscribe(
+        (data) => {
+          console.warn(JSON.stringify(data, null, 2));
+          this.updateSuccess = true;
+          this.loading = false;
+        },
+        (err) => {
+          this.updateSuccess = false;
+          this.loading = false;
+          this.errorMessage = err.error?.detail;
+        }
+      );
+    } else {
+      console.log('Form is not valid');
+      this.loading = false;
+    }
   }
 
   goBack() {

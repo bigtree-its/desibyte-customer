@@ -9,6 +9,12 @@
     font-size: 15px;
 }
 
+.navSection{
+    font-size: 15px;
+    padding: 10px 0;
+}
+
+
 .navItem:hover {
     cursor: pointer;
     color: var(--green);

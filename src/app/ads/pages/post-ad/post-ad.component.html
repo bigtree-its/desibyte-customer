@@ -25,7 +25,10 @@
         <div class="flex-column my-1">
             <span class="bolder py-1">Ad Location</span>
             <div class="bg-dark-grey br-25 py-2">
-                <app-postcode-lookup (addressEmitter)="onSelectAddress($event)"></app-postcode-lookup>
+                <app-postcode-lookup (postcodeEmitter)="onSelectPostcode($event)"></app-postcode-lookup>
+            </div>
+            <div class="flex-row" *ngIf="postcodeDistrict">
+                <span>{{postcodeDistrict.prefix}} {{postcodeDistrict.coverage}} {{postcodeDistrict.city}}</span>
             </div>
         </div>
 

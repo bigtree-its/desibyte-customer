@@ -11,8 +11,7 @@
                     #{{viewProperty.reference}}</span>
                 <span *ngIf="!viewAd && !viewProperty" class="py-2 fs-3 bolder">My Ads</span>
             </div>
-            <span class="color-red f-size-md bold" *ngIf="viewAd">{{viewAd.price
-                | currency: 'GBP'}}</span>
+           
         </div>
 
         <div *ngIf="!viewAd && !viewProperty" class="flex-row gap-1 border-bottom py-2">
@@ -25,60 +24,92 @@
                 <ng-container *ngSwitchCase="'Properties'" [ngTemplateOutlet]="propertiesTable"></ng-container>
             </ng-container>
         </div>
-        <ng-container *ngIf="viewAd" [ngTemplateOutlet]="detail" [ngTemplateOutletContext]="{item: viewAd}"></ng-container>
-        <ng-container *ngIf="viewProperty" [ngTemplateOutlet]="detail" [ngTemplateOutletContext]="{item: viewProperty}"></ng-container>
+        <ng-container *ngIf="viewAd" [ngTemplateOutlet]="viewAdTemplate" [ngTemplateOutletContext]="{item: viewAd}"></ng-container>
+        <ng-container *ngIf="viewProperty" [ngTemplateOutlet]="viewAdTemplate" [ngTemplateOutletContext]="{item: viewProperty}"></ng-container>
+        <ng-container *ngIf="editingAd" [ngTemplateOutlet]="editAdTemplate" [ngTemplateOutletContext]="{item: editingAd}"></ng-container>
     </div>
 </div>
 
-<ng-template #detail let-item="item">
+<ng-template #viewAdTemplate let-ad="item">
     <div class="mb-100">
         <ng-container [ngSwitch]="selectedAdTab">
-            <ng-container *ngSwitchCase="'AdDetailTab'" [ngTemplateOutlet]="adDetailTab" [ngTemplateOutletContext]="{item:item}"></ng-container>
+            <ng-container *ngSwitchCase="'AdDetailTab'" [ngTemplateOutlet]="adDetailTab" [ngTemplateOutletContext]="{item:ad}"></ng-container>
             <ng-container *ngSwitchCase="'AdEnquiriesTab'" [ngTemplateOutlet]="adEnquiryListTab"></ng-container>
+            <ng-container *ngSwitchCase="'EditAdTab'" [ngTemplateOutlet]="editAdTemplate"></ng-container>
         </ng-container>
         <div *ngIf="!enquiry" class="sm sticky-footer d-flex jcsb aic py-2 px-2 border-top">
-            <fa-icon [icon]="faAd" class="clickableIcon" (click)="selectAdTab('AdDetailTab')"></fa-icon>
-            <div class="flex-row">
+            <fa-icon [icon]="faAd"  size="2x" class="clickableIcon" (click)="selectAdTab('AdDetailTab')"></fa-icon>
+            <!-- <div class="flex-row">
                 <fa-icon [icon]="faEye" class="clickableIcon"></fa-icon>
                 <span class="badge" style="position: relative;
                     top: -8px;
                     left: -8px;">{{item.views}}</span>
-            </div>
+            </div> -->
+            <button class="btn-warn" (click)="deleteAd(ad.reference)">Delete</button>
             <div class="flex-row">
                 <fa-icon [icon]="faEnvelop" class="clickableIcon" (click)="selectAdTab('AdEnquiriesTab')"></fa-icon>
                 <span class="badge" style="position: relative;
                     top: -8px;
                     left: -8px;">{{enquiries?.length}}</span>
             </div>
-            <button class="btn-9">Edit</button>
+            <button class="btn-sec" title="Edit" (click)="selectAdTab('EditAdTab')">Edit</button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #viewPropertyTemplate let-property="item">
+    <div class="mb-100">
+        <ng-container [ngSwitch]="selectedAdTab">
+            <ng-container *ngSwitchCase="'AdDetailTab'" [ngTemplateOutlet]="adDetailTab" [ngTemplateOutletContext]="{item:property}"></ng-container>
+            <ng-container *ngSwitchCase="'AdEnquiriesTab'" [ngTemplateOutlet]="adEnquiryListTab"></ng-container>
+            <ng-container *ngSwitchCase="'EditPropertyTab'" [ngTemplateOutlet]="editPropertyTemplate"></ng-container>
+        </ng-container>
+        <div *ngIf="!enquiry" class="sm sticky-footer d-flex jcsb aic py-2 px-2 border-top">
+            <fa-icon [icon]="faAd"  size="2x" class="clickableIcon" (click)="selectAdTab('AdDetailTab')"></fa-icon>
+            <!-- <div class="flex-row">
+                <fa-icon [icon]="faEye" class="clickableIcon"></fa-icon>
+                <span class="badge" style="position: relative;
+                    top: -8px;
+                    left: -8px;">{{item.views}}</span>
+            </div> -->
+            <button class="btn-warn" (click)="deleteAd(property.reference)">Delete</button>
+            <div class="flex-row">
+                <fa-icon [icon]="faEnvelop" class="clickableIcon" (click)="selectAdTab('AdEnquiriesTab')"></fa-icon>
+                <span class="badge" style="position: relative;
+                    top: -8px;
+                    left: -8px;">{{enquiries?.length}}</span>
+            </div>
+            <button class="btn-sec" title="Edit"  (click)="selectAdTab('EditPropertyTab')">Edit</button>
         </div>
     </div>
 </ng-template>
 
 <ng-template #adDetailTab let-item="item">
-    <div class="row flex-row gap-1 mt-3">
-        <div class="col-md-3">
-            <img *ngIf="!item.image" src="/assets/images/default-image.jpeg" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
-            <img *ngIf="item.image" src="{{item.image}}" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
-        </div>
-        <div class="col-md-9 flex-column p-1">
-            <span class="bolder fs-4 py-2">{{item.title}}</span>
-            <table>
-                <tr>
-                    <th>Posted</th>
-                    <td><span>{{item.datePosted | date : 'EE d LLL'
-                            }}</span></td>
-                </tr>
-                <tr>
-                    <th>Address</th>
-                    <td><span class="fs-7 bold">{{item.address.addressLine2}},
-                            {{item.address.city}}</span></td>
-                </tr>
-            </table>
-            <p class="mt-2">
-                {{item.description}}
-            </p>
-        </div>
+    <div class="flex-column gap-1 mt-3">
+        <img *ngIf="!item.image" src="/assets/images/default-image.jpeg" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
+        <img *ngIf="item.image" src="{{item.image}}" style="height: 290px;width:100%;object-fit: cover;border-radius: 12px;">
+        <span class="bolder fs-4 py-2">{{item.title}}</span>
+        <span class="color-red f-size-md bold">{{viewAd.price
+            | currency: 'GBP'}}</span>
+        <table>
+            <tr>
+                <th>Posted</th>
+                <td><span>{{item.datePosted | date : 'EE d LLL'
+                        }}</span></td>
+            </tr>
+            <tr>
+                <th>Views</th>
+                <td><span>{{item.views}}</span></td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td><span class="fs-7 bold">{{item.address.addressLine2}},
+                        {{item.address.city}}</span></td>
+            </tr>
+        </table>
+        <p class="mt-2">
+            {{item.description}}
+        </p>
     </div>
 </ng-template>
 
@@ -155,7 +186,6 @@
                         <th scope="col">Reference</th>
                         <th scope="col">Price</th>
                         <th scope="col">Posted</th>
-                        <th scope="col">Views</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -172,9 +202,6 @@
                         </td>
                         <td>
                             <ngb-highlight [result]="ad.datePosted | date " [term]="adFilter.value" />
-                        </td>
-                        <td>
-                            <span>{{ad.views}}</span>
                         </td>
                     </tr>
                 </tbody>
@@ -225,5 +252,43 @@
                 </tbody>
             </table>
         </div>
+    </div>
+</ng-template>
+
+<ng-template #editAdTemplate let-ad="item">
+    <div class="flex-column py-3">
+        <form (ngSubmit)="updateAd()" [formGroup]="adForm" >
+            <div class="flex-column mb-2">
+                <span>Title</span>
+                <input required type="text" name="title" autocomplete="off" formControlName="title" class="p-2" placeholder="Title">
+            </div>
+            <div class="flex-column mb-2">
+                <span>Price</span>
+                <input required type="text" name="price" autocomplete="off" formControlName="price" class="p-2" placeholder="Price">
+            </div>
+            <div class="flex-column mb-2">
+                <span>Description</span>
+                <input required type="text" name="description" autocomplete="off" formControlName="description" class="p-2" placeholder="Description">
+            </div>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #editPropertyTemplate let-property="item">
+    <div class="flex-column py-3">
+        <form (ngSubmit)="updateProperty()" [formGroup]="propertyForm" >
+            <div class="flex-column mb-2">
+                <span>Title</span>
+                <input required type="text" name="title" autocomplete="off" formControlName="title" class="p-2" placeholder="Title">
+            </div>
+            <div class="flex-column mb-2">
+                <span>Price</span>
+                <input required type="text" name="price" autocomplete="off" formControlName="price" class="p-2" placeholder="Price">
+            </div>
+            <div class="flex-column mb-2">
+                <span>Description</span>
+                <input required type="text" name="description" autocomplete="off" formControlName="description" class="p-2" placeholder="Description">
+            </div>
+        </form>
     </div>
 </ng-template>

@@ -21,30 +21,23 @@
             </p>
         </div>
         <form (ngSubmit)="registerUser()" [formGroup]="registerForm" *ngIf="!signupSuccess">
-            <div class="h-flex">
-                <div class="input-group my-1">
-                    <input required type="text" name="firstName" autocomplete="off" class="input" formControlName="firstName" required>
-                    <label class="user-label">First name</label>
-                </div>
-                <div class="input-group my-1">
-                    <input required type="text" name="lastName" autocomplete="off" class="input" formControlName="lastName" required>
-                    <label class="user-label">Last name</label>
-                </div>
+            <div class="flex-column mb-2">
+                <span>Your Name</span>
+                <input required type="text" name="name" autocomplete="off" formControlName="name" class="p-2" placeholder="Name">
             </div>
-            <div class="h-flex">
-                <div class="input-group my-1">
-                    <input required type="text" name="email" autocomplete="off" class="input" formControlName="email" required>
-                    <label class="user-label">Email address</label>
-                </div>
-                <div class="input-group my-1">
-                    <input required type="text" name="mobile" autocomplete="off" class="input" formControlName="mobile" required>
-                    <label class="user-label">Mobile</label>
-                </div>
+            <div class="flex-column mb-2">
+                <span>Your Email Address</span>
+                <input required type="email" name="email" autocomplete="off" formControlName="email" class="p-2" placeholder="Email">
             </div>
-            <div class="input-group my-1">
-                <input required type="password" name="password" autocomplete="off" class="input" formControlName="password" required>
-                <label class="user-label">Password</label>
+            <div class="flex-column mb-2">
+                <span>Your Mobile</span>
+                <input required type="text" name="mobile" autocomplete="off" formControlName="mobile" class="p-2" placeholder="Mobile">
             </div>
+            <div class="flex-column mb-2">
+                <span>Your Password</span>
+                <input required type="password" name="password" autocomplete="off" formControlName="password" class="p-2" placeholder="Password">
+            </div>
+           
             <button type="submit" class="btn-arrow mt-3 d-flex jcc aic w-100" [class.disabled]="loading">
                 <span>{{loading? 'Registering...' :
                     'Create Account'}}</span>

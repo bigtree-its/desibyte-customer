@@ -16,12 +16,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   successful: boolean = false;
   password: string = '';
-  error: string;
   email: string;
   returnUrl: string;
   destroy$ = new Subject<void>();
   errors: Errors = { errors: {} };
-  errorMessage: any;
+  errorMessage: string;
   
   constructor(
     private route: ActivatedRoute,
@@ -33,6 +32,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loading = false;
     this.submitted = false;
     this.successful = false;
+    this.errorMessage = null;
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'];
     if ( this.returnUrl !== null && this.returnUrl !== undefined){
@@ -43,11 +43,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   submit() {
     // stop here if form is invalid
     if (Utils.isEmpty(this.email)) {
-      this.error = 'Email is mandatory';
+      this.errorMessage = 'Email is mandatory';
       return;
     }
     if (Utils.isEmpty(this.password)) {
-      this.error = 'Password is mandatory';
+      this.errorMessage = 'Password is mandatory';
       return;
     }
     this.submitted = true;
@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     let observable = this.accountService.customerLogin(this.email, this.password);
     observable.pipe(takeUntil(this.destroy$)).subscribe({
       next: () => {
-        this.errorMessage = undefined;
+        this.errorMessage = null;
       },
       error: (err) => {
         console.error('Errors from reset submit.'+ JSON.stringify(err))

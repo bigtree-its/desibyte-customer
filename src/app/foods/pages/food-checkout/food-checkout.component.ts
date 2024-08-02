@@ -13,6 +13,8 @@ import {
 import {
   Address,
   PaymentIntentResponse,
+  PostcodeDistrict,
+  PostcodeDistrictQuery,
   RapidApiByPostcodeResponse,
   RapidApiByPostcodeResponseSummary,
 } from 'src/app/model/common';
@@ -26,6 +28,7 @@ import { FoodOrderService } from 'src/app/services/foods/food-order.service';
 import { AccountService } from 'src/app/services/auth/account.service';
 import { Utils } from 'src/app/services/common/utils';
 import { CloudKitchenService } from 'src/app/services/foods/cloudkitchen.service';
+import { LocationService } from 'src/app/services/common/location.service';
 
 @Component({
   selector: 'app-food-checkout',
@@ -65,6 +68,12 @@ export class FoodCheckoutComponent implements OnDestroy {
   hidePostcodeLookupForm: boolean;
   postcodeAddressList: RapidApiByPostcodeResponseSummary[];
   rapidApiByPostcodeResponseSummary: RapidApiByPostcodeResponseSummary;
+
+
+
+  addressLine1: string;
+  addressLine2: string;
+  city: string;
   postcode: string;
   addressSelected: boolean;
   lookupAddress: boolean = true;
@@ -83,18 +92,24 @@ export class FoodCheckoutComponent implements OnDestroy {
   orderSubmitted: boolean = false;
   showOrderConfirmation: boolean = false;
   loading: any;
+  displayAddressForm: boolean;
+  deliveryPostcodeOutsideRange: boolean;
+  serviceAreas: PostcodeDistrict[] = [];
+  deliveryAddressError: string;
+  deliveryPostcodeInsideRange: boolean;
 
   constructor(
     private rapidApiService: RapidApiService,
     private stripeService: StripeService,
     private _location: Location,
     private modalService: NgbModal,
+    private locationService: LocationService,
     private orderService: FoodOrderService,
     private kitchenService: CloudKitchenService,
     private accountService: AccountService,
     private router: Router,
     private titleService: Title
-  ) {}
+  ) { }
 
   public loadStripe$: Observable<any> = this.stripeService.LoadStripe();
 
@@ -106,8 +121,23 @@ export class FoodCheckoutComponent implements OnDestroy {
     });
 
     this.kitchenService.getData();
-    this.kitchenService.cloudKitchenSubject$.subscribe(e=>{
+    this.kitchenService.cloudKitchenSubject$.subscribe(e => {
       this.kitchen = e;
+      if (e) {
+        e.serviceAreas.forEach(sa => {
+          var q = new PostcodeDistrictQuery();
+          q.prefix = sa;
+          let observable = this.locationService.fetchPostcodeDistricts(q);
+          observable.subscribe({
+            next: (value) => {
+              this.serviceAreas.push(value[0]);
+            },
+            error: (value) => { console.log('Unable to fetch postcode district for ' + sa) },
+            complete: () =>
+              console.log('Complete fetching postcode district'),
+          });
+        });
+      }
     });
     this.orderService.getData();
     this.orderService.foodOrderSubject$.subscribe({
@@ -127,7 +157,7 @@ export class FoodCheckoutComponent implements OnDestroy {
         console.log('Customer subject ' + JSON.stringify(value));
         this.customer = value;
         if (this.customer !== null && this.customer !== undefined) {
-          this.customerName = this.customer.firstName + this.customer.lastName;
+          this.customerName = this.customer.name;
           this.customerEmail = this.customer.email;
           this.customerMobile = this.customer.mobile;
           this.showCustomerDetailsSection = true;
@@ -180,7 +210,7 @@ export class FoodCheckoutComponent implements OnDestroy {
         theOrder.items === undefined ||
         theOrder.items.length === 0
       ) {
-        if (this.kitchen ) {
+        if (this.kitchen) {
           this.router.navigate(['/cloud-kitchens', this.kitchen._id]).then();
         }
       }
@@ -217,7 +247,6 @@ export class FoodCheckoutComponent implements OnDestroy {
   validateServiceMode(): boolean {
     if (
       this.serviceMode === 'DELIVERY' &&
-      this.addressSelected &&
       Utils.isValid(this.customerAddress) &&
       !Utils.isEmpty(this.customerAddress.addressLine1)
     ) {
@@ -254,6 +283,34 @@ export class FoodCheckoutComponent implements OnDestroy {
     });
   }
 
+
+  onSelectPostcode(postcode: string) {
+    this.postcode = postcode;
+    this.customerAddress = null;
+    this.addressLine1 = "";
+    this.addressLine2 = "";
+    this.city = "";
+    if (postcode) {
+      var postcodeSanitized: string = postcode.toUpperCase();
+      var area = postcodeSanitized.match(/^(((([A-Z][A-Z]{0,1})[0-9][A-Z0-9]{0,1}) {0,}[0-9])[A-Z]{2})$/)[3];
+      if (area) {
+        if (this.kitchen) {
+          if (this.kitchen.serviceAreas.indexOf(area) !== -1) {
+            this.showAddressForm(true);
+            this.deliveryPostcodeOutsideRange = false;
+            this.deliveryPostcodeInsideRange = true;
+          } else {
+            this.showAddressForm(false);
+            this.deliveryPostcodeOutsideRange = true;
+          }
+        }
+      }
+    }
+  }
+  showAddressForm(value: boolean) {
+    this.displayAddressForm = value;
+  }
+
   orderConfirmed() {
     this.showCustomerDetailsSection = false;
     this.showServiceModeSection = false;
@@ -279,20 +336,49 @@ export class FoodCheckoutComponent implements OnDestroy {
   selectDelivery() {
     this.serviceMode = 'DELIVERY';
     this.order.serviceMode = 'DELIVERY';
-    if ( this.kitchen){
-      if ( this.kitchen.freeDeliveryOver > 0){
-        if ( this.order.total >= this.kitchen.freeDeliveryOver){
+    if (this.kitchen) {
+      if (this.kitchen.freeDeliveryOver > 0) {
+        if (this.order.total >= this.kitchen.freeDeliveryOver) {
           this.order.deliveryFee = 0;
-        }else{
+        } else {
           var deliveryQualify = this.kitchen.freeDeliveryOver - this.order.total;
-          if ( deliveryQualify > 0){
-            
+          if (deliveryQualify > 0) {
+
           }
           this.order.deliveryFee = this.kitchen.deliveryFee;
         }
       }
     }
     this.order.total = this.order.total + this.kitchen.deliveryFee;
+  }
+
+  submitDeliveryAddress(){
+    this.deliveryAddressError = null;
+    if ( Utils.isEmpty(this.addressLine1)){
+      this.deliveryAddressError = "Address Line1 is mandatory";
+      return;
+    }
+    if ( Utils.isEmpty(this.addressLine2)){
+      this.deliveryAddressError = "Address Line2 is mandatory";
+      return;
+    }
+    if ( Utils.isEmpty(this.city)){
+      this.deliveryAddressError = "City is mandatory";
+      return;
+    }
+    if ( Utils.isEmpty(this.postcode)){
+      this.deliveryAddressError = "Postcode is mandatory";
+      return;
+    }
+    this.customerAddress = new Address();
+    this.customerAddress.addressLine1 = this.addressLine1;
+    this.customerAddress.addressLine2 = this.addressLine2;
+    this.customerAddress.city = this.city;
+    this.customerAddress.postcode = this.postcode;
+    this.displayAddressForm = false;
+    this.deliveryPostcodeOutsideRange = false;
+    this.deliveryPostcodeInsideRange = false;
+    this.lookupAddress = false;
   }
 
   getAddress(): string {
@@ -349,7 +435,7 @@ export class FoodCheckoutComponent implements OnDestroy {
           this.addressSelected = false;
           console.log(
             'Address Lookup response ' +
-              JSON.stringify(this.postcodeAddressList)
+            JSON.stringify(this.postcodeAddressList)
           );
         },
         (error) => {
@@ -377,7 +463,7 @@ export class FoodCheckoutComponent implements OnDestroy {
 
   showAddressLookup() {
     this.lookupAddress = true;
-    this.customerAddress = undefined;
+    this.customerAddress = null;
   }
 
   findAddress() {

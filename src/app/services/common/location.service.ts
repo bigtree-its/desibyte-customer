@@ -44,11 +44,8 @@ export class LocationService {
     if (query.prefix) {
       params = params.set('prefix', query.prefix);
     }
-    if (query.council) {
-      params = params.set('council', query.council);
-    }
-    if (query.area) {
-      params = params.set('area', query.area);
+    if (query.city) {
+      params = params.set('city', query.city);
     }
     if (query.coverage) {
       params = params.set('coverage', query.coverage);

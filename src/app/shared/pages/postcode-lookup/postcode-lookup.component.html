@@ -1,7 +1,7 @@
 <div class="flex-column w-100" style="position:relative;">
     <div class="flex-row jcsb w-100 p-1 aic">
         <fa-icon size="2x" class="mx-2 bolder color-y" [icon]="faLocation"></fa-icon>
-        <input *ngIf="!selectedAddress" class="input-postcode" type="text" name="postcode" id="postcode" tabindex="4" autocomplete="off" value [(ngModel)]="addressLookupPostcode" #ctrl="ngModel" placeholder="Enter your postcode" (keyup.enter)="findAddress()">
+        <input *ngIf="!selectedAddress" class="input-postcode" type="text" name="postcode" id="postcode" tabindex="4" autocomplete="off" value [(ngModel)]="postcode" #ctrl="ngModel" placeholder="Enter your postcode" (keyup.enter)="findAddress()">
         <span *ngIf="selectedAddress" class="px-2">{{selectedAddress}}</span>
         <!-- <button *ngIf="!showAddressList && !selectedAddress" class="btn-12 py-2 ml-2 br-25" (click)="findAddress()">Find</button> -->
         <fa-icon class="mx-2 postcode-search-icon" (click)="findAddress()" *ngIf="!showAddressList && !selectedAddress" [icon]="faSearch"></fa-icon>

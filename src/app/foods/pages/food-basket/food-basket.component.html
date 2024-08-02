@@ -1,7 +1,7 @@
 <div class="container-fluid flex-column">
-    <div class="flex-row aic my-2">
+    <div class="flex-row aic my-2 gap-3 mb-3">
         <fa-icon *ngIf="standAlone" [icon]="faArrowLeft" class="btn-circle" (click)="goback()"></fa-icon>
-        <span class="bolder fs-3 ml-5">Your Cart</span>
+        <span class="bolder fs-3">Your Basket</span>
     </div>
     <div *ngIf="foodOrder && foodOrder.items.length > 0" class="felx-column border br-7 p-3 my-3">
         <div class="flex-row jcsb aic py-2">

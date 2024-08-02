@@ -2,11 +2,12 @@ import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { faCalendar, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject, takeUntil } from 'rxjs';
 import { CloudKitchen, Collection, Extra, Menu } from 'src/app/model/all-foods';
 import { AccountService } from 'src/app/services/auth/account.service';
+import { Utils } from 'src/app/services/common/utils';
 import { CloudKitchenService } from 'src/app/services/foods/cloudkitchen.service';
 import { MenuService } from 'src/app/services/foods/menu.service';
 import { ProfileService } from 'src/app/services/supplier/profile.service';
@@ -39,6 +40,7 @@ export class KitchenMenuComponent implements OnInit,OnDestroy {
   itemPrice: number;
   itemDiscountedPrice: string;
   vegetarian: boolean;
+  timeBound: boolean;
   doPartyOrders: boolean;
   doDelivery: boolean;
   selectedCollection: Collection;
@@ -58,6 +60,11 @@ export class KitchenMenuComponent implements OnInit,OnDestroy {
   menuPriceErrMsg: string;
   menuCollErr: boolean;
   menuCollErrMsg: string;
+
+  readyBy: NgbDateStruct;
+  orderBy: NgbDateStruct;
+  minDate: any;
+  faCalendar = faCalendar;
 
   extra: Extra = new Extra();
   choices: Extra[] = [];
@@ -134,6 +141,15 @@ export class KitchenMenuComponent implements OnInit,OnDestroy {
       this.vegetarian = true;
     } else {
       this.vegetarian = false;
+    }
+  }
+
+  handleTimebound(evt){
+    var target = evt.target;
+    if (target.checked) {
+      this.timeBound = true;
+    } else {
+      this.timeBound = false;
     }
   }
 
@@ -330,6 +346,17 @@ export class KitchenMenuComponent implements OnInit,OnDestroy {
   }
 
   saveNewCollection() {
+    var collection: Collection = {};
+    collection.cloudKitchenId = this.cloudKitchen._id;
+    collection.name = this.collectionName;
+    collection.timeBound = this.timeBound;
+    if ( this.timeBound){
+      if ( !this.readyBy || !this.orderBy){
+        // notifia
+      }
+      collection.readyBy = Utils.getJsDate(this.readyBy);
+      collection.orderBy = Utils.getJsDate(this.orderBy);
+    }
     this.menuSvc
       .saveCollection(this.collectionName, this.cloudKitchen._id)
       .subscribe(
@@ -338,6 +365,7 @@ export class KitchenMenuComponent implements OnInit,OnDestroy {
           this.collections.push(col);
           this.subLayout = 'listCollection';
           this.closeModal();
+          this.collectionName = null;
         },
         (err) => {}
       );

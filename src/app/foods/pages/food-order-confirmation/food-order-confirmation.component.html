@@ -1,10 +1,8 @@
-<div class="container flex-column">
+<div class="container">
     <div class="row">
         <div class="flex-row aic jcsb bg-white p-4 my-3 br-7">
             <span class="bolder fs-3">Order Confirmation</span>
-            <strong *ngIf="order" class="fs-5 color-o bolder">{{order?.total|
-                currency:
-                'GBP'}}</strong>
+            <strong class="fs-5 color-o bolder">{{order?.reference}}</strong>
         </div>
     </div>
 
@@ -15,78 +13,54 @@
 
 
 
-    <div class="row" *ngIf="!loading">
-        <div class="col br-7 bg-white p-3">
+    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 gap-3" *ngIf="!loading">
+        <div class="col bg-white p-3 flex-grow">
+            <app-order-progress [status]="order?.status"  [serviceMode]="order?.serviceMode"></app-order-progress>
+        </div>
+        <div class="col bg-white p-3 flex-grow">
             <app-f-order-item *ngFor="let item of order?.items" [item]="item" [editable]=false></app-f-order-item>
             <ng-template [ngTemplateOutlet]="summary"></ng-template>
         </div>
-        <div class="col bg-white p-3">
-            <div class="flex-column" *ngIf="order">
-                <div class="bg-light p-3 my-2">
-                    <div class="flex-row aic">
-                        <span class="bolder fs-5">Your Order</span>
-                        <span class="bolder fs-3 big-text ml-3">{{order.reference}}</span>
-                    </div>
-                    <div class="progress_container">
-                        <div class="progress" id="progress"></div>
-                        <div class="flex-column jcc aic">
-                            <div class="circle mt-3" [class.active]="order?.status === 'Draft' || order?.status === 'Paid' || order?.status === 'Collected' || order?.status === 'Delivered' || order?.status === 'Ready'">
-                            </div>
-                            <span>New</span>
-                        </div>
-                        <div class="flex-column  jcc aic">
-                            <div class="circle mt-3" [class.active]="order?.status === 'Paid' || order?.status === 'Collected' || order?.status === 'Delivered' || order?.status === 'Ready'">
-                            </div>
-                            <span>In Progress</span>
-                        </div>
-                        <div class="flex-column  jcc aic">
-                            <div class="circle mt-3" [class.active]="order?.status === 'Ready' || order?.status === 'Cancelled'"></div>
-                            <span *ngIf="order?.status === 'Paid'">Ready</span>
-                            <span *ngIf="order?.status === 'Cancelled'">Cancelled</span>
-                        </div>
-                        <div class="flex-column jcc aie" *ngIf="order?.status !== 'Cancelled'">
-                            <div class="circle mt-3" [class.active]="order?.status === 'Collected' || order?.status === 'Delivered'"></div>
-                            <span>Completed</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex-column p-4 bg-light my-3 jcc aic fs-6 bold">
-                    <span>You will be notified once your order is ready to be {{order.serviceMode === 'DELIVERY'?
-                        'Delivered':'Collected'}}</span>
-                    <span class="fs-6 py-2">You can also track your order at <a href="/my_orders">Orders</a></span>
-                </div>
-                <!-- <ng-container *ngIf="showOrder" [ngTemplateOutlet]="orderLayout"></ng-container> -->
-                <div class="flex-column border p-2 br-7">
-                    <span class="bolder py-2">{{order.serviceMode === 'DELIVERY'? 'Delivery Address': 'Collection Address'}}</span>
-                    <div class="flex-row" *ngIf="order.serviceMode === 'DELIVERY'">
-                        <span>{{order.customer.address.addressLine1}},</span>
-                        <span>{{order.customer.address.addressLine2}}</span>
-                    </div>
-                    <div class="flex-row" *ngIf="order.serviceMode === 'DELIVERY'">
-                        <span>{{order.customer.address.city}}, </span>
-                        <span class="pl-1">{{order.customer.address.postcode}}</span>
-                    </div>
-                    <div class="flex-row" *ngIf="order.serviceMode === 'COLLECTION'">
-                        <span>{{cloudKitchenMini.address.addressLine1}},</span>
-                        <span>{{cloudKitchenMini.address.addressLine2}}</span>
-                    </div>
-                    <div class="flex-row" *ngIf="order.serviceMode === 'COLLECTION'">
-                        <span>{{cloudKitchenMini.address.city}}, </span>
-                        <span class="pl-1">{{cloudKitchenMini.address.postcode}}</span>
-                    </div>
-                </div>
-                <div class="flex-column border p-2 br-7 my-1" *ngIf="order.serviceMode === 'DELIVERY'">
-                    <span class="bolder py-2">Order prepared by</span>
-                    <span [routerLink]="[ '/cloud-kitchens', cloudKitchenMini?._id] " style="font-size: 15px;cursor: pointer;color:coral;" class="bold py-1">{{cloudKitchenMini?.name}}</span>
-                    <div class="flex-row">
-                        <span>{{cloudKitchenMini.address.addressLine1}},</span>
-                        <span>{{cloudKitchenMini.address.addressLine2}}</span>
-                    </div>
-                    <div class="flex-row">
-                        <span>{{cloudKitchenMini.address.city}}, </span>
-                        <span>{{cloudKitchenMini.address.postcode}}</span>
-                    </div>
-                </div>
+        
+        
+    </div>
+    <div class="col bg-white  flex-grow">
+        <div class="flex-column p-4 my-3 jcc">
+            <span class="fs-6 bolder">You will be notified once your order is ready to be {{order.serviceMode === 'DELIVERY'?
+                'Delivered':'Collected'}}</span>
+            <span class="fs-6 py-2">You can also track your order at <a href="/my_orders">Orders</a></span>
+        </div>
+    </div>
+    <div class="bg-white flex-grow">
+        <div class="flex-column p-4 ">
+            <span class="bolder py-2">{{order.serviceMode === 'DELIVERY'? 'Delivery Address': 'Collection Address'}}</span>
+            <div class="flex-row" *ngIf="order.serviceMode === 'DELIVERY'">
+                <span>{{order.customer.address.addressLine1}},</span>
+                <span>{{order.customer.address.addressLine2}}</span>
+            </div>
+            <div class="flex-row" *ngIf="order.serviceMode === 'DELIVERY'">
+                <span>{{order.customer.address.city}}, </span>
+                <span class="pl-1">{{order.customer.address.postcode}}</span>
+            </div>
+            <div class="flex-row" *ngIf="order.serviceMode === 'COLLECTION'">
+                <span>{{cloudKitchenMini.address.addressLine1}},</span>
+                <span>{{cloudKitchenMini.address.addressLine2}}</span>
+            </div>
+            <div class="flex-row" *ngIf="order.serviceMode === 'COLLECTION'">
+                <span>{{cloudKitchenMini.address.city}}, </span>
+                <span class="pl-1">{{cloudKitchenMini.address.postcode}}</span>
+            </div>
+        </div>
+        <div class="flex-column border p-2 br-7 my-1" *ngIf="order.serviceMode === 'DELIVERY'">
+            <span class="bolder py-2">Order prepared by</span>
+            <span [routerLink]="[ '/cloud-kitchens', cloudKitchenMini?._id] " style="font-size: 15px;cursor: pointer;color:coral;" class="bold py-1">{{cloudKitchenMini?.name}}</span>
+            <div class="flex-row">
+                <span>{{cloudKitchenMini.address.addressLine1}},</span>
+                <span>{{cloudKitchenMini.address.addressLine2}}</span>
+            </div>
+            <div class="flex-row">
+                <span>{{cloudKitchenMini.address.city}}, </span>
+                <span>{{cloudKitchenMini.address.postcode}}</span>
             </div>
         </div>
     </div>

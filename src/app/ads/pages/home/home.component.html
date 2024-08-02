@@ -1,4 +1,4 @@
-<div class="container overflow-y mb-5">
+<div class="container overflow-y mb-5 flex-column jcc">
 
     <div class="full-screen my-1 px-2 flex-row jcc my-3">
         <div class="flex-row-scrollable">
@@ -9,95 +9,77 @@
             </div>
         </div>
     </div>
-
-    <div class="sm my-2 p-2 flex-column">
+    <div class="w-100 my-1">
         <div class="bg-dark-grey br-25 py-2">
-            <app-postcode-lookup (addressEmitter)="onEmitAddress($event)"></app-postcode-lookup>
+            <app-postcode-lookup (postcodeEmitter)="onSelectPostcode($event)"></app-postcode-lookup>
         </div>
-        <div class="flex-column" *ngIf="location">
-            <div class="radio-buttons-container">
-                <div class="radio-button">
-                    <input name="rental-period" id="Monthly" value="Monthly" class="radio-button__input" checked
-                        type="radio" (change)="handleSearchRadius($event)">
-                    <label for="Monthly" class="radio-button__label">
-                        <span class="radio-button__custom"></span>This postcode
-                        only
-                    </label>
-                </div>
-                <div class="radio-button">
-                    <input name="rental-period" id="Weekly" value="Weekly" class="radio-button__input" type="radio"
-                        (change)="handleSearchRadius($event)">
-                    <label for="Weekly" class="radio-button__label">
-                        <span class="radio-button__custom"></span>This area
-                    </label>
-                </div>
-                <div class="radio-button">
-                    <input name="rental-period" id="Weekly" value="Weekly" class="radio-button__input" type="radio"
-                        (change)="handleSearchRadius($event)">
-                    <label for="Weekly" class="radio-button__label">
-                        <span class="radio-button__custom"></span>This city
-                    </label>
-                </div>
-            </div>
+    </div>
+
+    <div class="flex-row" *ngIf="postcodeDistrict">
+        <span>{{postcodeDistrict.prefix}} {{postcodeDistrict.coverage}} {{postcodeDistrict.city}}</span>
+    </div>
+
+    <div class="flex-row jcsb aic p-2 gap-1 w-100">
+        <div class="flex-row border p-2 br-7 gap-1 px-3 bg-white" (click)="openModal(filterModal)">
+            <fa-icon [icon]="faFilter"></fa-icon>
+            <span>Filters</span>
         </div>
-        <div class="flex-row jcsb aic p-2 gap-1 w-100">
-            <div class="flex-row border p-2 br-7 gap-1 px-3" (click)="openModal(filterModal)">
-                <fa-icon [icon]="faFilter"></fa-icon>
-                <span>Filters</span>
+        <div class="flex-row border p-2 br-7 gap-1 px-3 bg-white">
+            <fa-icon [icon]="faSort"></fa-icon>
+            <span>Sort</span>
+        </div>
+    </div>
+    <div class="flex-column" *ngIf="location">
+        <div class="radio-buttons-container">
+            <div class="radio-button">
+                <input name="rental-period" id="Monthly" value="Monthly" class="radio-button__input" checked
+                    type="radio" (change)="handleSearchRadius($event)">
+                <label for="Monthly" class="radio-button__label">
+                    <span class="radio-button__custom"></span>This postcode
+                    only
+                </label>
             </div>
-            <div class="flex-row border p-2 br-7 gap-1 px-3">
-                <fa-icon [icon]="faSort"></fa-icon>
-                <span>Sort</span>
+            <div class="radio-button">
+                <input name="rental-period" id="Weekly" value="Weekly" class="radio-button__input" type="radio"
+                    (change)="handleSearchRadius($event)">
+                <label for="Weekly" class="radio-button__label">
+                    <span class="radio-button__custom"></span>This area
+                </label>
+            </div>
+            <div class="radio-button">
+                <input name="rental-period" id="Weekly" value="Weekly" class="radio-button__input" type="radio"
+                    (change)="handleSearchRadius($event)">
+                <label for="Weekly" class="radio-button__label">
+                    <span class="radio-button__custom"></span>This city
+                </label>
             </div>
         </div>
     </div>
-    <!-- Filter-->
-    <div class="row">
-        <div class="lg col-lg-3 flex-column gap-1">
-            <span class="bolder fs-6 pb-3">Filters</span>
-            <div class="flex-column mb-2 gap-2">
-                <span class="bolder">Location</span>
-                <div class="bg-dark-grey br-25 py-2">
-                    <app-postcode-lookup (addressEmitter)="onEmitAddress($event)"></app-postcode-lookup>
-                </div>
+    <div class="flex-column" *ngIf="category==='All'">
+        <div *ngIf="properties && properties.length > 0" class="flex-column">
+            <div class="d-flex jcsb aic gap-1 my-2">
+                <b class="bolder fs-5 ">Properties </b>
+                <b (click)="onSelectCategory('Property')" class="cursor-pointer link">See all</b>
             </div>
-            <ng-container *ngIf="category === 'Property'" [ngTemplateOutlet]="propertyTypeList"></ng-container>
-            <ng-container *ngIf="category === 'Property'" [ngTemplateOutlet]="consumptionTypeFilter"></ng-container>
-            <ng-container
-                *ngIf="category === 'Property' || category === 'Cars' || category === 'Books' || category === 'Furniture'  || category === 'Electronics'   || category === 'Toys'"
-                [ngTemplateOutlet]="priceRangeFilter"></ng-container>
-            <ng-container *ngIf="category === 'Property' && propertyType !=='Garage'  && propertyType !=='Commercial'"
-                [ngTemplateOutlet]="bedroomsFilter"></ng-container>
-            <button *ngIf="category" type="button" class="btn-solid" (click)="searchProperties()">Go</button>
+            <ng-container [ngTemplateOutlet]="propertyListScroller"></ng-container>
         </div>
-        <div class="col-lg-9">
-            <div class="flex-column" *ngIf="category==='All'">
 
-                <div *ngIf="properties && properties.length > 0" class="flex-column">
-                    <div class="d-flex jcsb aic gap-1 my-2">
-                        <b class="bolder fs-5 ">Properties </b>
-                        <b (click)="onSelectCategory('Property')" class="cursor-pointer link">See all</b>
-                    </div>
-                    <ng-container [ngTemplateOutlet]="propertyListScroller"></ng-container>
-                </div>
-
-                <div class="mb-5 p-2" *ngFor="let group of groupedAds | keyvalue">
-                    <div class="d-flex jcsb aic gap-1 mb-5">
-                        <b></b>
-                        <b class="bolder fs-3 ">{{group.key}} <span
-                                style="font-size: 12px;color: #999;">({{group.value.length}})</span></b>
-                        <b (click)="onSelectCategory(group.key)" class="cursor-pointer link">See all</b>
-                    </div>
-                    <ng-container [ngTemplateOutlet]="adListScroller"
-                        [ngTemplateOutletContext]="{ items: group.value }"></ng-container>
-                </div>
+        <div class="mb-5 p-2" *ngFor="let group of groupedAds | keyvalue">
+            <div class="d-flex jcsb aic gap-1 mb-5">
+                <b></b>
+                <b class="bolder fs-3 ">{{group.key}} <span
+                        style="font-size: 12px;color: #999;">({{group.value.length}})</span></b>
+                <b (click)="onSelectCategory(group.key)" class="cursor-pointer link">See all</b>
             </div>
-            <div class="flex-column" *ngIf="category!=='All'">
-                <ng-container *ngIf="category === 'Property'" [ngTemplateOutlet]="propertyList"></ng-container>
-                <ng-container *ngIf="category !== 'Property'" [ngTemplateOutlet]="adList"></ng-container>
-            </div>
+            <ng-container [ngTemplateOutlet]="adListScroller"
+                [ngTemplateOutletContext]="{ items: group.value }"></ng-container>
         </div>
     </div>
+    <div class="flex-column" *ngIf="category!=='All'">
+        <ng-container *ngIf="category === 'Property'" [ngTemplateOutlet]="propertyList"></ng-container>
+        <ng-container *ngIf="category !== 'Property'" [ngTemplateOutlet]="adList"></ng-container>
+    </div>
+    
 </div>
 
 <ng-template #propertyListScroller>
@@ -154,7 +136,7 @@
                     <div class="flex-row gap-2 aic">
                         <fa-icon class="color-y" [icon]="faLocation"></fa-icon>
                         <span class="color-y" style="text-overflow: ellipsis;overflow: hidden;"
-                            title="{{ad.address.addressLine2}}">{{ad.address.city | titlecase}}</span>
+                            title="{{ad.location?.postcodeDistrict">{{ad.location?.city}}</span>
                     </div>
                     <span class="card-price">{{ad.price | currency: 'GBP' }}</span>
                 </div>
@@ -186,7 +168,7 @@
 </ng-template>
 <ng-template #adCard let-ad="item">
     <div class="col">
-        <div class="chef-card" [routerLink]="['/ads/g', ad.reference]">
+        <div class="chef-card bg-white" [routerLink]="['/ads/g', ad.reference]">
             <img [src]="ad.gallery[0]?.url" class="card-img-top" alt="..."
                 style="max-height: 200px;min-height: 200px;object-fit: cover;">
             <div class="card-body p-1">
@@ -194,7 +176,7 @@
                 <div class="flex-row gap-2 aic">
                     <fa-icon class="color-y" [icon]="faLocation"></fa-icon>
                     <span class="color-y" style="text-overflow: ellipsis;overflow: hidden;"
-                        title="{{ad.address.addressLine2}}">{{ad.address.city | titlecase}}</span>
+                        title="{{ad.location.coverage}}">{{ad.location.city}}</span>
                 </div>
                 <span class="card-price">{{ad.price | currency: 'GBP' }}</span>
             </div>
@@ -214,7 +196,7 @@
                     <div class="flex-row gap-2 aic">
                         <fa-icon class="color-y" [icon]="faLocation"></fa-icon>
                         <span class="color-y" style="text-overflow: ellipsis;overflow: hidden;"
-                            title="{{ad.address.addressLine2}}">{{ad.address.city | titlecase}}</span>
+                            title="{{ad.location.coverage}}">{{ad.location.city}}</span>
                     </div>
                     <span class="card-price">{{ad.price | currency: 'GBP' }}</span>
                 </div>
@@ -304,15 +286,16 @@
                         (change)="onChangeConsumptionType($event)">
                     <span>Sale</span>
                 </label>
-                <label  *ngIf="propertyType === 'Rooms'">
-                    <input id="Rent" value="Rent" type="radio" name="radio" (change)="onChangeConsumptionType($event)" checked>
+                <label *ngIf="propertyType === 'Rooms'">
+                    <input id="Rent" value="Rent" type="radio" name="radio" (change)="onChangeConsumptionType($event)"
+                        checked>
                     <span>Rent</span>
                 </label>
-                <label  *ngIf="propertyType !== 'Rooms'">
+                <label *ngIf="propertyType !== 'Rooms'">
                     <input id="Rent" value="Rent" type="radio" name="radio" (change)="onChangeConsumptionType($event)">
                     <span>Rent</span>
                 </label>
-                <label  *ngIf="propertyType !== 'Rooms'">
+                <label *ngIf="propertyType !== 'Rooms'">
                     <input id="Share" value="Share" type="radio" name="radio"
                         (change)="onChangeConsumptionType($event)">
                     <span>Share</span>
@@ -484,9 +467,22 @@
         <ng-container [ngTemplateOutlet]="categoryList"></ng-container>
         <ng-container *ngIf="category === 'Property'" [ngTemplateOutlet]="propertyTypeList"></ng-container>
         <ng-container *ngIf="category === 'Property'" [ngTemplateOutlet]="consumptionTypeFilter"></ng-container>
-        <ng-container *ngIf="category === 'Property' || category === 'Car' || category === 'Books'"
-            [ngTemplateOutlet]="priceRangeFilter"></ng-container>
+        <ng-container [ngTemplateOutlet]="priceRangeFilter"></ng-container>
         <ng-container *ngIf="category === 'Property'" [ngTemplateOutlet]="bedroomsFilter"></ng-container>
+        <div class="flex-row gap-3">
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="freeSwitch">
+                <label class="form-check-label" for="freeSwitch">Free</label>
+            </div>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="deliverySwitch">
+                <label class="form-check-label" for="deliverySwitch">Delivery</label>
+            </div>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="freeDeliverySwitch">
+                <label class="form-check-label" for="freeDeliverySwitch">Free Delivery</label>
+            </div>
+        </div>
     </div>
     <div class="modal-sticky-footer flex-row jcsb aic" style="margin: 10px;padding: 10px;gap:.6rem;">
         <button type="button" class="btn-solid-success" (click)="searchProperties()">Apply</button>

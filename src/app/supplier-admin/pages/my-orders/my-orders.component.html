@@ -21,16 +21,21 @@
             </div>
         </div>
         <div class="flex-row jcc my-2">
-            <div class="flex-row jcc aic py-2 gap-2 border-o br-7" style="width: 360px;">
-                <span class="selectable-btn" (click)="filterStatus('All')"
-                    [class.selected-btn]="filteredStatus === 'All'">All</span>
-                <span class="selectable-btn" (click)="filterStatus('Paid')"
-                    [class.selected-btn]="filteredStatus === 'Paid'">Open</span>
-                <span class="selectable-btn" (click)="filterStatus('In Progress')"
-                    [class.selected-btn]="filteredStatus === 'In Progress'">In Progress</span>
-                <span class="selectable-btn" (click)="filterStatus('Completed')"
-                    [class.selected-btn]="filteredStatus === 'Completed'">Completed</span>
+            <div class="jcc aic px-2">
+                <div class="flex-row jcc aic py-2 gap-2 br-12" >
+                    <span class="selectable-btn" (click)="filterStatus('All')"
+                        [class.selected-btn]="filteredStatus === 'All'">All</span>
+                    <span class="selectable-btn" (click)="filterStatus('Paid')"
+                        [class.selected-btn]="filteredStatus === 'Paid'">Open</span>
+                    <span class="selectable-btn" (click)="filterStatus('In Progress')"
+                        [class.selected-btn]="filteredStatus === 'In Progress'">In Progress</span>
+                    <span class="selectable-btn" (click)="filterStatus('Completed')"
+                        [class.selected-btn]="filteredStatus === 'Completed'">Completed</span>
+                    <span class="selectable-btn" (click)="filterStatus('Cancelled')"
+                        [class.selected-btn]="filteredStatus === 'Cancelled'">Cancelled</span>
+                </div>
             </div>
+            
         </div>
         <form>
             <div class="my-2 row">
@@ -107,53 +112,36 @@
                 </div>
             </div>
         </div>
-       
-        <div class="progress_container">
-            <div class="progress" id="progress"></div>
-            <div class="flex-column jcc aic">
-                <div class="circle mt-3" [class.active]="viewOrder?.status === 'Paid'">
-                </div>
-                <span>Open</span>
-            </div>
-            <div class="flex-column  jcc aic">
-                <div class="circle mt-3" [class.active]="viewOrder?.status === 'Accepted'">
-                </div>
-                <span>In Progress</span>
-            </div>
-            <div class="flex-column  jcc aic">
-                <div class="circle mt-3"
-                    [class.active]="viewOrder?.status === 'Ready' || viewOrder?.status === 'Cancelled'"></div>
-                <span *ngIf="viewOrder?.status === 'Paid'">Ready</span>
-                <span *ngIf="viewOrder?.status === 'Cancelled'">Cancelled</span>
-            </div>
-            <div class="flex-column jcc aie" *ngIf="viewOrder?.status !== 'Cancelled'">
-                <div class="circle mt-3"
-                    [class.active]="viewOrder?.status === 'Collected' || viewOrder?.status === 'Delivered'"></div>
-                <span>Completed</span>
-            </div>
-        </div>
+
+        <app-order-progress [status]="viewOrder?.status"  [serviceMode]="viewOrder?.serviceMode"></app-order-progress>
 
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 gap-3 mt-5">
             <ng-container [ngTemplateOutlet]="itemsTemplate"></ng-container>
             <ng-container [ngTemplateOutlet]="summaryTemplate"></ng-container>
         </div>
 
-        <div class="lg row bg-white p-3 mt-5 br-7">
+        <div class="lg row bg-white p-3 mt-5 br-7" *ngIf="viewOrder?.status !== 'Refund Started' && viewOrder?.status !== 'Refunded' && viewOrder?.status !== 'Collected'  && viewOrder?.status !== 'Delivered'">
             <div class="col">
-                <div class="flex-row jcc aic gap-3">
-                    <span class="btn-success" (click)="performAction('Accept')">Accept</span>
-                    <span class="btn-warning" (click)="obtainDeclineReason(declineReasonModal)">Decline</span>
-                </div>
+                <ng-container [ngTemplateOutlet]="actionTemplate"></ng-container>
             </div>
         </div>
     </div>
-    <div class="sm sticky-footer bg-white p-3 flex-row jcc aic gap-3">
-        <span class="btn-success" (click)="performAction('Accept')">Accept</span>
-        <span class="btn-warning" (click)="obtainDeclineReason(declineReasonModal)">Decline</span>
+    <div class="sm sticky-footer w-100" *ngIf="viewOrder?.status !== 'Refund Started' && viewOrder?.status !== 'Refunded' && viewOrder?.status !== 'Collected'  && viewOrder?.status !== 'Delivered'"> 
+        <ng-container [ngTemplateOutlet]="actionTemplate"></ng-container>
     </div>
 
 </div>
 
+<ng-template #actionTemplate>
+    <div class="bg-white p-3 flex-row jcc aic gap-3 w-100">
+        <span *ngIf="viewOrder?.status === 'Paid'" class="btn-success" (click)="performAction('Pickup')">Pickup</span>
+        <span *ngIf="viewOrder?.status === 'Paid'" class="btn-warning" (click)="obtainDeclineReason(declineReasonModal)">Decline</span>
+        <span *ngIf="viewOrder?.status === 'In Progress'" class="btn-success" (click)="performAction('Ready')">Ready</span>
+        <span *ngIf="viewOrder?.status === 'Ready' && viewOrder?.serviceMode === 'COLLECTION'" class="btn-success" (click)="performAction('Collected')">Collected</span>
+        <span *ngIf="viewOrder?.status === 'Ready' && viewOrder?.serviceMode === 'DELIVERY'" class="btn-success" (click)="performAction('Out for delivery')">Out for delivery</span>
+        <span *ngIf="viewOrder?.status === 'Ready' && viewOrder?.serviceMode === 'DELIVERY'" class="btn-success" (click)="performAction('Delivered')">Delivered</span>
+    </div>
+</ng-template>
 
 
 <ng-template #emptyOrders>
@@ -227,7 +215,8 @@
                 </p>
             </div>
             <div class="input-div">
-                <textarea rows="5" class="_381tA" name="declineReason" id="declineReason" value [(ngModel)]="declineReason" tabindex="3" #ctrl="ngModel" style="height: 100px;"></textarea>
+                <textarea rows="5" class="_381tA" name="declineReason" id="declineReason" value
+                    [(ngModel)]="declineReason" tabindex="3" #ctrl="ngModel" style="height: 100px;"></textarea>
                 <div class="_2EeI1 _26LFr"></div>
                 <label class="_1CvtA _2tL9P" for="message">Your Message</label>
             </div>
@@ -235,7 +224,7 @@
                 <span *ngIf="declineReason" class="btn-danger my-3" (click)="performAction('Decline')">Decline</span>
                 <span class="btn-warning" (click)="closeModal()">Cancel</span>
             </div>
-            
+
         </div>
     </div>
 </ng-template>

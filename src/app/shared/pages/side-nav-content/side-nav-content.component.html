@@ -1,24 +1,38 @@
 <div class="side-nav-bar-content">
     <div *ngIf="user" class="flex-column jcc aic mb-5 p-3">
         <div class="flex-column jcc aic" style="font-weight: 900;height: 50px;width:50px;background-color: #81c408;border-radius:50%;justify-content:center;color:#fff;">
-            <span style="font-size: 20px;">{{user.firstName | slice:0:1}}{{user.lastName | slice:0:1}}</span>
+            <span style="font-size: 20px;">{{user.name | slice:0:1}}</span>
         </div>
         <span style="text-align: center;word-break: break-all;">{{user.name}}</span>
     </div>
     <div class="flex-column p-3">
-        <span *ngIf="!user" class="navItem" routerLink="/login">Login</span>
-        <span *ngIf="!user" class="navItem" routerLink="/register">Signup</span>
-
-        <span *ngIf="user && !supplier" class="navItem" routerLink="/my_orders">My Orders</span>
-        <span *ngIf="user && !supplier" class="navItem" routerLink="/my_ads">My Ads</span>
-
-        <span *ngIf="user && supplier" class="navItem" routerLink="/kitchen/products">My Products</span>
-        <span *ngIf="user && supplier" class="navItem" routerLink="/kitchen/settings">My Settings</span>
-        <span *ngIf="user && supplier" class="navItem" routerLink="/kitchen/orders">My Orders</span>
-        <span *ngIf="user && supplier" class="navItem" routerLink="/kitchen/home">My Business</span>
-        <span *ngIf="user" class="navItem" routerLink="/my_messages">My Messages</span>
-        <span class="navItem" routerLink="/contact_us">Become a partner</span>
-        <span *ngIf="user && !supplier" class="navItem" routerLink="/my_profile">Profile</span>
+        <span class="navItem border-bottom" routerLink="/ck/home">Foods</span>
+        <span class="navItem border-bottom" routerLink="/events/home">Events</span>
+        <span class="navItem  border-bottom">Clothing</span>
+        <span class="navItem  border-bottom"  routerLink="/ads/home/all">Ads</span>
+        <span *ngIf="!user" class="navItem  border-bottom" routerLink="/login">Login</span>
+        <span *ngIf="!user" class="navItem  border-bottom" routerLink="/register">Signup</span>
+        <span class="navItem  border-bottom" routerLink="/contact_us">Contact Us</span>
+        <div class="flex-column navSection border-bottom" *ngIf="user">
+            <div class="flex-row jcsb aic">
+                <span>Account</span>
+                <fa-icon *ngIf="!showingAccounts" [icon]="faArrowDown" class="btn-circle" (click)="showAccounts()"></fa-icon>
+                <fa-icon *ngIf="showingAccounts" [icon]="faArrowUp" class="btn-circle" (click)="closeAccounts()"></fa-icon>
+            </div>
+            <div #navSectionBody *ngIf="showingAccounts" class="flex-column pl-3">
+                <span *ngIf="!supplier" class="navItem  border-bottom" routerLink="/my_profile">Profile</span>
+                <span *ngIf="!supplier" class="navItem  border-bottom" routerLink="/my_orders">My Orders</span>
+                <span *ngIf="!supplier" class="navItem  border-bottom" routerLink="/my_ads">My Ads</span>
+                <span *ngIf="supplier" class="navItem  border-bottom" routerLink="/kitchen/products">My Products</span>
+                <span *ngIf="supplier" class="navItem  border-bottom" routerLink="/kitchen/settings">My Settings</span>
+                <span *ngIf="supplier" class="navItem  border-bottom" routerLink="/kitchen/orders">My Orders</span>
+                <span *ngIf="supplier" class="navItem  border-bottom" routerLink="/kitchen/home">My Business</span>
+                <span *ngIf="user" class="navItem" routerLink="/my_messages">My Messages</span>
+            </div>
+        </div>
+       
+       
+        
     </div>
 
     <div *ngIf="user" style="position: absolute;bottom: 0;background-color: #f8f8f8;padding: 5px;border-top: 1px solid #d2d2d2;width: 100%;">

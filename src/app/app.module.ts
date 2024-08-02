@@ -18,6 +18,7 @@ import { AdsModule } from './ads/ads.module';
 import { ImagekitioAngularModule } from 'imagekitio-angular';
 import { environment } from 'src/environments/environment';
 import { SupplierAdminModule } from './supplier-admin';
+import { EventsModule } from './events/events.module';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { SupplierAdminModule } from './supplier-admin';
     BrowserModule,
     SharedModule,
     FoodsModule,
+    EventsModule,
     SupplierAdminModule,
     AdminModule,
     AuthModule,

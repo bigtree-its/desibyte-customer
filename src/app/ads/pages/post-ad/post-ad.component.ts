@@ -11,10 +11,11 @@ import {
   SuperStore,
 } from 'src/app/model/all-ads';
 import { User } from 'src/app/model/all-auth';
-import { Address, NameValue } from 'src/app/model/common';
+import { Address, NameValue, PostalLocation, PostcodeDistrict, PostcodeDistrictQuery } from 'src/app/model/common';
 import { AdsService } from 'src/app/services/ads/ads.service';
 import { AccountService } from 'src/app/services/auth/account.service';
 import { FileUploadService } from 'src/app/services/common/image-upload.service';
+import { LocationService } from 'src/app/services/common/location.service';
 import { ServiceLocator } from 'src/app/services/common/service.locator';
 import { Utils } from 'src/app/services/common/utils';
 
@@ -38,6 +39,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
   serviceLocator = inject(ServiceLocator);
   http = inject(HttpClient);
   uploadService = inject(FileUploadService);
+  locationService = inject(LocationService);
 
   submitted: boolean = false;
   loading: boolean = false;
@@ -98,6 +100,8 @@ export class PostAdComponent implements OnInit, OnDestroy {
   preview = '';
 
   imageInfos?: Observable<any>;
+  postcodeDistrict: PostcodeDistrict;
+  postalLocation: PostalLocation;
 
   ngOnInit() {
     this.accountService.getData();
@@ -193,7 +197,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
       this.errorMessage = 'Ad category is mandatory';
       return null;
     }
-    if (!this.adAddress) {
+    if (!this.postalLocation) {
       this.error = true;
       this.errorMessage = 'Ad Location is mandatory';
       return null;
@@ -213,25 +217,24 @@ export class PostAdComponent implements OnInit, OnDestroy {
       this.errorMessage = 'Title is mandatory';
       return null;
     }
-    if (Utils.isEmpty(this.description) || this.description.length < 50) {
+    if (Utils.isEmpty(this.description) || this.description.length < 10) {
       this.error = true;
       this.errorMessage =
-        'Description is mandatory and at least 50 chars in length';
+        'Give some resoanble description';
       return null;
     }
-
     return {
       title: this.title,
       category: this.category,
       description: this.description?.split('[n]'),
       status: 'Available',
-      address: this.adAddress,
+      location: this.postalLocation,
       price: this.price,
       dateAvailable: Utils.getJsDate(this.dateAvailable),
       datePosted: new Date(),
       adOwner: {
         _id: this.user._id,
-        name: this.user.firstName + ' ' + this.user.lastName,
+        name: this.user.name,
         email: this.user.email,
         mobile: this.user.mobile,
         address: null,
@@ -239,7 +242,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
     };
   }
 
-  postNewAd(){
+  postNewAd() {
     this.postSuccessful = false;
     this.postedAd = null;
   }
@@ -376,12 +379,44 @@ export class PostAdComponent implements OnInit, OnDestroy {
       featured: false,
       adOwner: {
         _id: this.user._id,
-        name: this.user.firstName + ' ' + this.user.lastName,
+        name: this.user.name,
         email: this.user.email,
         mobile: this.user.mobile,
         address: null,
       },
     };
+  }
+
+  onSelectPostcode(postcode: string) {
+    if (postcode) {
+      var postcodeSanitized: string = postcode.toUpperCase();
+      var area = postcodeSanitized.match(/^(((([A-Z][A-Z]{0,1})[0-9][A-Z0-9]{0,1}) {0,}[0-9])[A-Z]{2})$/)[3];
+      if (area) {
+        var query = new PostcodeDistrictQuery();
+        query.prefix = area;
+        var observable = this.locationService.fetchPostcodeDistricts(query);
+        observable.pipe(takeUntil(this.destroy$)).subscribe({
+          next: (e) => {
+            console.log('Fetched postcode district from prefix ' + area + ". List " + JSON.stringify(e));
+            if ( e && e.length > 0){
+              this.postcodeDistrict = e[0];
+              this.postalLocation = new PostalLocation();
+              this.postalLocation.postcode = postcode;
+              this.postalLocation.city = this.postcodeDistrict.city;
+              this.postalLocation.coverage = this.postcodeDistrict.coverage;
+              this.postalLocation.postcodeDistrict = this.postcodeDistrict.prefix;
+            }
+          },
+          error: (err) => {
+            console.error('Errors during posting ad. ' + JSON.stringify(err));
+            this.error = true;
+            this.errorMessage =
+              'Oops. There was a problem when posting your ad. Please contact customer support quoting reference ' +
+              err.error.reference;
+          },
+        });
+      }
+    }
   }
 
   onChangeCategory(e: any) {
@@ -539,7 +574,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
 
       //We deconstruct this.files to convert the FileList to an array, enabling us to utilize array methods like map or forEach.
       [...this.files].forEach((file) => {
-        console.log('Uploading image '+ file.name)
+        console.log('Uploading image ' + file.name)
         formData.append("files", file, file.name);
       });
 
@@ -555,7 +590,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
           this.status = 'fail';
         },
       });
-    }else{
+    } else {
       console.error('No images files selected.')
     }
   }

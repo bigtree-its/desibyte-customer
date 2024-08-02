@@ -93,4 +93,19 @@ export class JwtService {
     console.log('The user is NOT a supplier');
     return false;
   }
+
+  isCloudKitchen(token){
+    var tokenClaims;
+    if ( token){
+      tokenClaims = this.getDecodedAccessToken(token);
+    }else{
+      tokenClaims = this.getDecodedAccessToken(this.getAccessToken());
+    }
+    if (tokenClaims && tokenClaims.userType && tokenClaims.userType === 'Business' && tokenClaims.businessType === 'CloudKitchen') {
+      console.log('The user is a supplier');
+      return true;
+    }
+    console.log('The user is NOT a supplier');
+    return false;
+  }
 }

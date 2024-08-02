@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 import { User } from 'src/app/model/all-auth';
 import { AccountService } from 'src/app/services/auth/account.service';
 
@@ -14,6 +15,8 @@ export class SideNavContentComponent implements OnInit {
 
   accountService = inject(AccountService);
   user: User;
+  faArrowDown = faAngleDown;
+  faArrowUp = faAngleUp;
   
   navItems = [
     { label: 'Login', route: '/apps'},
@@ -23,6 +26,7 @@ export class SideNavContentComponent implements OnInit {
     { label: 'Profile', route: '/profile'}
   ];
   supplier: boolean;
+  showingAccounts: boolean;
   
 
   constructor(private router: Router) { }
@@ -46,6 +50,13 @@ export class SideNavContentComponent implements OnInit {
 
   onNavigationSelection(navItem: any) {
     this.router.navigate([navItem.route]);
+  }
+
+  showAccounts(){
+    this.showingAccounts = true;
+  }
+  closeAccounts(){
+    this.showingAccounts = false;
   }
 
   logout(){

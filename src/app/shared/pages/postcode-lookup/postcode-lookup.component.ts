@@ -23,7 +23,7 @@ export class PostcodeLookupComponent {
   selectedAddress: string;
   addressSelected: boolean;
   customerAddress: Address;
-  addressLookupPostcode: string;
+  postcode: string;
   postcodeAddressList: RapidApiByPostcodeResponseSummary[];
   rapidApiByPostcodeResponseSummary: RapidApiByPostcodeResponseSummary;
 
@@ -33,7 +33,7 @@ export class PostcodeLookupComponent {
 
 
   onEnter() {
-    if (this.addressLookupPostcode && this.addressLookupPostcode.length >= 5) {
+    if (this.postcode && this.postcode.length >= 5) {
       this.doFakeLookup();
     }
 
@@ -41,26 +41,26 @@ export class PostcodeLookupComponent {
   closeServiceLocations() {
     this.showAddressList = false;
     this.selectedAddress = undefined;
-    this.addressLookupPostcode = undefined;
+    this.postcode = undefined;
     this.postcodeAddressList = [];
   }
 
   findAddress() {
-    if (this.addressLookupPostcode && this.addressLookupPostcode.length >= 5) {
-      this.postcodeEmitter.emit(this.addressLookupPostcode);
+    if (this.postcode && this.postcode.length >= 5) {
+      this.postcodeEmitter.emit(this.postcode);
     }
   }
 
   onSubmitPostcodeLookup() {
     console.log('Search address form submitted..');
-    if (this.addressLookupPostcode && this.addressLookupPostcode.length >= 5) {
+    if (this.postcode && this.postcode.length >= 5) {
       this.doApiTierPostcodeLookup();
     }
   }
 
   doApiTierPostcodeLookup() {
     this.apiTierService
-      .lookupAddresses(this.addressLookupPostcode.trim())
+      .lookupAddresses(this.postcode.trim())
       // .pipe(first())
       .subscribe(
         (data: APITierResponse) => {
@@ -82,7 +82,7 @@ export class PostcodeLookupComponent {
 
   doFakeLookup() {
     this.apiTierService
-    .doFakeLookup(this.addressLookupPostcode.trim())
+    .doFakeLookup(this.postcode.trim())
     // .pipe(first())
     .subscribe(
       (data: APITierResponse) => {
@@ -104,7 +104,7 @@ export class PostcodeLookupComponent {
 
   doPostcodeLookup() {
     this.rapidApiService
-      .lookupAddresses(this.addressLookupPostcode.trim())
+      .lookupAddresses(this.postcode.trim())
       // .pipe(first())
       .subscribe(
         (data: RapidApiByPostcodeResponse) => {
@@ -128,7 +128,7 @@ export class PostcodeLookupComponent {
       addressLine1: selectAddress.StreetAddress,
       addressLine2: selectAddress.Place,
       country: 'UK',
-      postcode: this.addressLookupPostcode,
+      postcode: this.postcode,
       latitude: '',
       longitude: '',
     };

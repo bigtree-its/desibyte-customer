@@ -75,41 +75,19 @@
         <!-- Single Order -->
         <div class="flex-column" *ngIf="viewOrder">
 
-            <div class="bg-light p-3 my-2">
-                <div class="flex-row py-2 aic">
-                    <span *ngIf="!loading" class="bolder fs-5 ">{{viewOrder.status |
-                        titlecase}}</span>
-                    <div *ngIf="loading" class="d-flex jcc aic p-3">
-                        <div class="loader"></div>
-                    </div>
-                    <button class="btn-9 ml-2 " *ngIf="viewOrder?.status==='Draft' " (click)="makePayment(paymentForm)">Pay</button>
-                    <button class="btn-9 ml-2 " *ngIf="viewOrder?.status==='Draft' " (click)="cancel()">Cancel</button>
+            <div class="flex-row py-2 aic">
+                <span *ngIf="!loading" class="bolder fs-5 ">{{viewOrder.status |
+                    titlecase}}</span>
+                <div *ngIf="loading" class="d-flex jcc aic p-3">
+                    <div class="loader"></div>
                 </div>
-
-                <div class="progress_container">
-                    <div class="progress" id="progress"></div>
-                    <div class="flex-column jcc aic">
-                        <div class="circle mt-3" [class.circle-active]="viewOrder?.status === 'Draft' || viewOrder?.status === 'Paid' || viewOrder?.status === 'Collected' || viewOrder?.status === 'Delivered' || viewOrder?.status === 'Ready'">
-                        </div>
-                        <span>New</span>
-                    </div>
-                    <div class="flex-column  jcc aic">
-                        <div class="circle mt-3" [class.circle-active]="viewOrder?.status === 'Paid' || viewOrder?.status === 'Collected' || viewOrder?.status === 'Delivered' || viewOrder?.status === 'Ready'">
-                        </div>
-                        <span>In Progress</span>
-                    </div>
-                    <div class="flex-column  jcc aic">
-                        <div class="circle mt-3" [class.circle-active]="viewOrder?.status === 'Ready' || viewOrder?.status === 'Cancelled' || viewOrder?.status === 'Declined'"></div>
-                        <span *ngIf="viewOrder?.status === 'Paid'">Ready</span>
-                        <span *ngIf="viewOrder?.status === 'Cancelled'">Cancelled</span>
-                        <span *ngIf="viewOrder?.status === 'Declined'">Declined</span>
-                    </div>
-                    <div class="flex-column jcc aie" *ngIf="viewOrder?.status !== 'Cancelled'">
-                        <div class="circle mt-3" [class.circle-active]="viewOrder?.status === 'Collected' || viewOrder?.status === 'Delivered'"></div>
-                        <span>Completed</span>
-                    </div>
-                </div>
+                <button class="btn-9 ml-2 " *ngIf="viewOrder?.status==='New' " (click)="makePayment(paymentForm)">Pay</button>
+                <button class="btn-9 ml-2 " *ngIf="viewOrder?.status==='New' " (click)="cancel()">Cancel</button>
             </div>
+            <div class="my-3">
+                <app-order-progress [status]="viewOrder?.status" [serviceMode]="viewOrder?.serviceMode"></app-order-progress>
+            </div>
+            
             <!-- <ng-container *ngIf="showOrder" [ngTemplateOutlet]="orderLayout"></ng-container> -->
             <div class="flex-column border p-2 br-7">
                 <span class="bolder py-2">{{viewOrder.serviceMode === 'DELIVERY'? 'Delivery Address': 'Collection Address'}}</span>
@@ -143,13 +121,13 @@
                     <span>{{supplier.address.postcode}}</span>
                 </div>
             </div>
-            <div class="flex-row-space-between border-bottom py-3">
+            <div class="my-2 py-3 flex-row jcsb">
                 <span class="bold f-size-lg ">Your Items</span>
                 <fa-icon class="btn-circle" *ngIf="!showItems" [icon]="chevronDown" (click)="openCloseItems()"></fa-icon>
                 <fa-icon class="btn-circle" *ngIf="showItems" [icon]="chevronUp" (click)="openCloseItems()"></fa-icon>
             </div>
             <ng-container *ngIf="showItems" [ngTemplateOutlet]="itemsLayout"></ng-container>
-            <div class="bg-light p-3 my-2">
+            <div class="bg-white p-3 my-2">
                 <div class="flex-column justify-content-center align-items-center">
                     <div style=" display: flex; flex-direction: column;width: 100%;padding: 5px 30px;">
                         <div class="flex-row-space-between">
@@ -257,7 +235,7 @@
     </div>
 </ng-template>
 <ng-template #itemsLayout>
-    <table class="mt-1 mb-4">
+    <table class="my-2 bg-white">
         <tr>
             <th>Name</th>
             <th>Quantity</th>

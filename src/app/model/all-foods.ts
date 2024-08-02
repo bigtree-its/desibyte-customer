@@ -70,6 +70,9 @@ export class Collection {
     cloudKitchenId?: string;
     slug?: String;
     image?: String;
+    timeBound?: boolean;
+    readyBy?: Date;
+    orderBy?: Date;
 }
 
 export class Extra {

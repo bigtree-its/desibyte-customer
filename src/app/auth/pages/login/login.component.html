@@ -7,24 +7,14 @@
                     Enter the email address and your password. For security reasons, do not share your login credentials with anyone
                 </p>
             </div>
-            <div class="input-group my-1">
-                <input required="" type="text" name="email" autocomplete="off" class="input-white" [(ngModel)]="email" #ctrl="ngModel">
-                <label class="user-label">Email</label>
+            <div class="flex-column mb-2">
+                <span>Email</span>
+                <input required type="text" name="email" autocomplete="off" [(ngModel)]="email" class="p-2" #ctrl="ngModel" placeholder="Email">
             </div>
-            <div class="input-group my-1">
-                <input required="" type="password" name="password" autocomplete="off" class="input-white" [(ngModel)]="password" #ctrl="ngModel" (keyup.enter)="submit()">
-                <label class="user-label">Password</label>
+            <div class="flex-column mb-2">
+                <span>Password</span>
+                <input required type="password" name="password" autocomplete="off" class="p-2" [(ngModel)]="password" #ctrl="ngModel" (keyup.enter)="submit()" placeholder="Password">
             </div>
-            <!-- <div class="input-div">
-                <input class="_381fS" type="email" name="email" id="email" tabindex="1" autocomplete="off" value="" [(ngModel)]="email" #ctrl="ngModel">
-                <div class="_2EeI1 _26LFr"></div>
-                <label class="_1Cvlf _2tL9P" for="email">Email</label>
-            </div> -->
-            <!-- <div class="input-div">
-                <input class="_381fS" type="password" name="password" id="password" tabindex="1" autocomplete="off" value="" [(ngModel)]="password" #ctrl="ngModel">
-                <div class="_2EeI1 _26LFr"></div>
-                <label class="_1Cvlf _2tL9P" for="password">Password</label>
-            </div> -->
             <span class="clickable-link" [routerLink]="['/password_reset/new']">Forgot?</span>
             <br>
             <button class="btn-arrow mt-3 d-flex jcc aic" (click)="submit()">
@@ -40,7 +30,7 @@
             <div style="text-align: center;padding: 10px;font-weight: 600;">
                 Don't have an account? <span (click)="joinUs()" class="clickable-link">Sign up</span>
             </div>
-            <div *ngIf="errorMessage !== undefined" style="font-weight: normal;text-align: center;display: block;background-color: rgb(241, 215, 215);color: #bc3737;padding: 20px;">
+            <div *ngIf="errorMessage" class="my-5 p-3 box-warning">
                 <p>{{errorMessage}}</p>
             </div>
         </div>

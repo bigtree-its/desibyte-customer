@@ -9,7 +9,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100;300;400;500;700;900&display=swap');
 
 /** Logo **/
-@import url('https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Paytone+One&display=swap');
 
 :root {
     --body: #f5f7f8;
@@ -88,6 +88,7 @@ html {
     -ms-overflow-style: none;
     scrollbar-width: none;
     -webkit-text-size-adjust: 100%;
+    scrollbar-color: transparent transparent;
 }
 
 p {
@@ -103,8 +104,10 @@ p {
     width: 0;
     /* Remove scrollbar space */
     background: transparent;
+    scrollbar-color: transparent transparent;
     /* Optional: just make scrollbar invisible */
 }
+
 
 
 /* Optional: show position indicator in red */
@@ -147,16 +150,18 @@ input[type="number"] {
     border-radius: 10px;
 }
 
-.input, .input-white{
+.input,
+.input-white {
     border-radius: 10px;
     padding: 1rem;
     border: none;
     background-color: #f8f8f8;
 }
 
-.input-white{
+.input-white {
     background-color: #fff;
 }
+
 /* .input {
     border: solid 1px #e2dfdf;
     background-color: #fff;
@@ -170,8 +175,6 @@ input[type="number"] {
 .user-label {
     position: absolute;
     left: 15px;
-    font-size: 14px;
-    color: #828181;
     background-color: transparent;
     pointer-events: none;
     transform: translateY(1rem);
@@ -184,14 +187,13 @@ input:valid {
     /* border: 1px solid var(--brand-color); */
 }
 
-input:focus~label,
-input:valid~label {
+input[type="text"]:focus~label,
+input[type="text"]:valid~label {
     transform: translateY(-50%) scale(0.8);
     background-color: transparent;
     padding: 0 0.2em;
-    font-weight: 600;
     color: #ff8859;
-    font-size: 17px;
+    font-size: 15px;
 }
 
 .container {
@@ -218,6 +220,18 @@ img {
     overflow: clip;
 }
 
+.hide-scrollbar {
+    overflow: auto;
+    -ms-overflow-style: none;
+    /* IE 11 */
+    scrollbar-width: none;
+    /* Firefox 64 */
+}
+
+md-content {
+    scrollbar-width: none;
+}
+
 body {
     margin: 0px;
     padding: 0px;
@@ -235,7 +249,13 @@ body {
     overflow-x: hidden;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
+    scrollbar-color: transparent transparent;
 }
+
+/* body::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+} */
 
 ::ng-deep .modal-content {
     border: none;
@@ -246,15 +266,17 @@ body {
 ul {
     padding: 0;
 }
-.font-courier{
+
+.font-courier {
     font-family: 'Courier New', Courier, monospace;
 }
 
-.highlight{
+.highlight {
     background-color: rgb(255, 251, 180);
     border: 1px double yellow;
     color: red;
     border-radius: 25px;
+    padding: 5px;
 }
 
 .big-text {
@@ -263,10 +285,11 @@ ul {
 }
 
 .logo-text {
-    font-family: "Cherry Bomb One", system-ui;
+    font-family: "Paytone One", sans-serif;
     font-weight: 900;
     cursor: pointer;
-    color: #81c408;
+    color: orange;
+    font-size: xx-large;
     /* background: -webkit-linear-gradient(#0efa22, #333); */
 }
 
@@ -313,11 +336,15 @@ ul {
     color: #656c72;
 }
 
-.text-primary{
+.text-primary {
     color: #81c408 !important;
 }
+
 .text-shadow {
     text-shadow: 0 0px 5px rgba(0, 0, 0, 1);
+}
+.text-dull{
+    color: #707070;
 }
 
 .clickable-row {
@@ -440,8 +467,6 @@ ul {
     font-family: ui-sans-serif, system-ui, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     font-size: 0.875rem;
     font-weight: 600;
-    /* line-height: 1.25rem; */
-    /* padding: 0.75rem 1rem; */
     padding: 5px 15px;
     text-align: center;
     -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -1005,6 +1030,9 @@ ul {
 .bg-light {
     background-color: #f9f9f9;
 }
+.bg-o{
+    background-color: orange;
+}
 
 .bg-white {
     background-color: #fff;
@@ -1083,6 +1111,9 @@ ul {
     cursor: pointer;
     background-color: #c3c4c5;
 }
+.btn-sm{
+    padding: 5px 7px;
+}
 
 .box-success,
 .btn-success,
@@ -1094,44 +1125,95 @@ ul {
     background-color: #e7f5e7;
     padding: 7px 20px;
     color: #53d900;
-    font-weight: 700;
     border-radius: 8px;
     font-size: 16px;
+    text-align: center;
 }
-.btn-info{
-    background-color: #dfedfc;
+
+.btn-pri, .btn-warn, .btn-sec{
+    background-color: #e3dfdf;
+    padding: 5px 10px;
+    border-radius: 6px;
+    color: #000;
+    font-size: 12px;
+    border: 1px solid #ddd;
+    box-shadow: rgba(14, 63, 126, 0.04) 0px 0px 0px 1px, rgba(42, 51, 69, 0.04) 0px 1px 1px -0.5px, rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px, rgba(42, 51, 70, 0.04) 0px 6px 6px -3px, rgba(14, 63, 126, 0.04) 0px 12px 12px -6px, rgba(14, 63, 126, 0.04) 0px 24px 24px -12px;
+}
+
+.btn-warn{
+    border: 1px solid #ffb524;
+    background-color: #f8e6c3;
+    color: #ffaa00;
+}
+
+.btn-warn:hover{
+    border: 1px solid #ffaa00;
+    background-color: #ffaa00;
+    color: #fff;
+    cursor: pointer;
+}
+.btn-pri:hover{
+    border: 1px solid #ddd;
+    background-color: #ddd;
+    color: #222;
+    cursor: pointer;
+}
+.btn-sec{
+    border: 1px solid #dfedfc;
+    background-color: #a2cbf6;
     color: #248eff;
 }
-.btn-info{
-    background-color: #dfedfc;
-    color: #248eff;
-}
-.btn-info:hover{
+.btn-sec:hover{
+    border: 1px solid #248eff;
     background-color: #248eff;
     color: #fff;
     cursor: pointer;
 }
-.box-warning{
-    background-color: #f8e6c3;
-    color: #ffb524;
+.btn-info {
+    background-color: #dfedfc;
+    color: #248eff;
 }
-.btn-warning{
+
+.btn-info {
+    background-color: #dfedfc;
+    color: #248eff;
+}
+
+.btn-info:hover {
+    background-color: #248eff;
+    color: #fff;
+    cursor: pointer;
+}
+
+.box-warning {
+    background-color: #f8e6c3;
+    color: #ffaa00;
+}
+
+.btn-warning {
     background-color: #f8e6c3;
     color: #ffb524;
 }
 
-.btn-success:hover{
+.btn-success:hover {
     background-color: #53d900;
     color: #fff;
     cursor: pointer;
 }
-.btn-warning:hover{
+
+.btn-warning:hover {
     background-color: #ffb524;
     color: #fff;
     cursor: pointer;
 }
+.box-danger{
+    background-color: rgba(255, 0, 0, 0.091);
+    color: red;
+    padding: 10px;
+}
 
-.closed, .btn-danger {
+.closed,
+.btn-danger {
     background-color: #f5ebe7;
     padding: 7px 20px;
     color: #ec330a;
@@ -1139,6 +1221,7 @@ ul {
     border-radius: 8px;
     font-size: 16px;
 }
+
 .btn-danger:hover {
     background-color: #ec330a;
     color: #fff;
@@ -1265,12 +1348,15 @@ select {
 .br {
     border: 1px solid #9efafa;
 }
-.border-o{
+
+.border-o {
     border: 1px solid #ffb524 !important;
 }
-.border-g{
+
+.border-g {
     border: 1px solid #81c408 !important;
 }
+
 .border-box {
     border: 2px solid #0abdbd;
 }
@@ -1334,6 +1420,9 @@ select {
 .w-50 {
     width: 50%;
 }
+.fs-hero{
+    font-size: 60px;
+}
 
 .fs-l {
     font-size: 40px;
@@ -1350,7 +1439,8 @@ select {
 .color-y {
     color: #ffb524;
 }
-.color-g{
+
+.color-g {
     color: #81c408;
 }
 
@@ -2117,14 +2207,16 @@ input:checked+.slider:before {
     background-color: var(--yellow);
     color: #fff;
 }
-.btn-g{
+
+.btn-g {
     padding: 8px 15px;
     background-color: var(--yellow);
     font-weight: 900;
     border-radius: 18px;
     border: none;
 }
-.btn-g:hover{
+
+.btn-g:hover {
     background-color: #81c408;
     color: #fff;
 }
@@ -2216,12 +2308,12 @@ input:checked+.slider:before {
     height: 30px;
     width: 30px;
     border: none;
-    border: 1px solid orange;
     border-radius: 50%;
-    background-color: yellow;
+    background-color: var(--yellow);
     display: flex;
     justify-content: center;
     align-items: center;
+    color: #fff;
 }
 
 .btn-circle:focus {
@@ -2412,7 +2504,7 @@ input:checked+.slider:before {
     margin-top: 0.5rem; */
     /* border-radius: 0.75rem; */
     padding: 10px;
-    border:none;
+    border: none;
     margin-right: 10px;
     border-radius: 0%;
 }
@@ -2445,8 +2537,9 @@ input:checked+.slider:before {
     margin-bottom: 10px;
 }
 
-.chef-card:hover{
+.chef-card:hover {
     cursor: pointer;
+    background-color: #fff;
     box-shadow: var(--bs-box-shadow-sm) !important;
 }
 
@@ -3135,6 +3228,9 @@ input:checked+.slider:before {
     display: flex;
     border: 2px solid #fff;
     border-radius: 7px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .selectable:hover {
@@ -3305,7 +3401,7 @@ input:checked+.slider:before {
 }
 
 .circle-active {
-    background-color: var(--yellow);
+    background-color: rgb(141, 218, 141);
 }
 
 @keyframes l1 {

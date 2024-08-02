@@ -1,5 +1,5 @@
 <div class="flex-column mt-3 jcc aic">
-    <span class="bolder fs-4 jcc aic">My Profile</span>
+    <span class="bolder fs-4 jcc aic mb-3">My Profile</span>
     <div class="flex-row jcc aic py-2">
         <span class="menu bolder mr-2 px-3" [class.selectedMenu]="activeLayout === 'Personal Details'" (click)="selectLayout('Personal Details')">Personal Details</span>
         <span class="menu bolder mr-2 px-3" [class.selectedMenu]="activeLayout === 'Security'" (click)="selectLayout('Security')">Security</span>
@@ -16,17 +16,13 @@
 <ng-template #profileLayout>
     <div class="d-flex jcc">
         <div class="flex-column  mobile-w">
-            <div class="input-group my-1">
-                <input required="" type="text" name="firstName" autocomplete="off" class="input" [(ngModel)]="firstName" #ctrl="ngModel">
-                <label class="user-label"> First Name </label>
+            <div class="flex-column mb-2">
+                <span>Name</span>
+                <input required type="text" name="name" autocomplete="off" [(ngModel)]="name" class="p-2" #ctrl="ngModel" placeholder="Name">
             </div>
-            <div class="input-group my-1">
-                <input required="" type="text" name="lastName" autocomplete="off" class="input" [(ngModel)]="lastName" #ctrl="ngModel">
-                <label class="user-label">Last name</label>
-            </div>
-            <div class="input-group my-1">
-                <input required="" type="text" name="mobile" autocomplete="off" class="input" [(ngModel)]="mobile" #ctrl="ngModel">
-                <label class="user-label">Mobile</label>
+            <div class="flex-column mb-2">
+                <span>Mobile</span>
+                <input required type="text" name="mobile" autocomplete="off" [(ngModel)]="mobile" class="p-2" #ctrl="ngModel" placeholder="Mobile">
             </div>
             <button class="btn-arrow mt-3 d-flex jcc aic" (click)="changePersonal()">
                 <span>Update Personal Details</span>

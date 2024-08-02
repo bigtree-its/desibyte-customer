@@ -1,0 +1,49 @@
+<div class="progress_container">
+    <div class="progress" id="progress"></div>
+    <div class="flex-column jcc aic">
+        <div class="circle mt-3 circle-active">
+        </div>
+        <span>New</span>
+    </div>
+    <div class="flex-column  jcc aic" *ngIf="status === 'Paid' || status === 'In Progress' || status === 'Ready' || status === 'Collected' || status === 'Delivered'">
+        <div class="circle mt-3 circle-active"  [class.circle-active]="status === 'In Progress' || status === 'Ready' || status === 'Collected' || status === 'Delivered'">
+        </div>
+        <span>In Progress</span>
+    </div>
+    <div class="flex-column  jcc aic" *ngIf="status === 'Cancelled'">
+        <div class="circle mt-3 circle-active">
+        </div>
+        <span>Cancelled</span>
+    </div>
+    <div class="flex-column  jcc aic" *ngIf="status === 'Declined'">
+        <div class="circle mt-3 circle-active">
+        </div>
+        <span>Declined</span>
+    </div>
+    <div class="flex-column  jcc aic" *ngIf="status === 'Refund Started'  || status === 'Declined' || status === 'Cancelled'">
+        <div class="circle mt-3" [class.circle-active]="status === 'Refund Started'">
+        </div>
+        <span>Refund Started</span>
+    </div>
+    <div class="flex-column  jcc aic" *ngIf="status === 'Refunded' || status === 'Refund Started' || status === 'Declined' || status === 'Cancelled'">
+        <div class="circle mt-3"  [class.circle-active]="status === 'Refunded'">
+        </div>
+        <span>Refunded</span>
+    </div>
+    <div class="flex-column  jcc aic" *ngIf="(status === 'Paid' || status === 'In Progress' || status === 'Ready' || status === 'Collected' || status === 'Delivered' ) ">
+        <div class="circle mt-3"  [class.circle-active]="status === 'Ready' || status === 'Collected' || status === 'Delivered' ">
+        </div>
+        <span>Ready</span>
+    </div>
+    <div class="flex-column  jcc aic" *ngIf="(status === 'Paid' || status === 'In Progress' || status === 'Ready' || status === 'Collected' ) && (serviceMode ==='COLLECTION')">
+        <div class="circle mt-3"  [class.circle-active]="status === 'Collected'">
+        </div>
+        <span>Collected</span>
+    </div>
+
+    <div class="flex-column  jcc aic" *ngIf="(status === 'Paid' ||  status === 'In Progress' || status === 'Ready' || status === 'Delivered' )  && (serviceMode ==='DELIVERY')">
+        <div class="circle mt-3"  [class.circle-active]="status === 'Delivered'">
+        </div>
+        <span>Delivered</span>
+    </div>
+</div>

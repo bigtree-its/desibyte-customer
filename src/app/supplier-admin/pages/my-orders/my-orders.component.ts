@@ -1,4 +1,4 @@
-import { DecimalPipe, Location } from '@angular/common';
+import { DecimalPipe } from '@angular/common';
 import {
   Component,
   inject,
@@ -7,22 +7,17 @@ import {
   PipeTransform,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { map, Observable, startWith, Subject, takeUntil } from 'rxjs';
 import {
   KitchenOrder,
   KitchenOrderProfileResponse,
-  KitchenOrderTracking,
   Note,
 } from 'src/app/model/all-food-supplier';
-import { AccountService } from 'src/app/services/auth/account.service';
 import { SupplierOrderService } from 'src/app/services/supplier/supplier-order.service';
-import { NgbHighlight } from '@ng-bootstrap/ng-bootstrap';
 import { CloudKitchenService } from 'src/app/services/foods/cloudkitchen.service';
 import { CloudKitchen } from 'src/app/model/all-foods';
-import { faArrowLeft, faChevronDown, faChevronUp, faFaceSmile, faPeopleArrows, faStar } from '@fortawesome/free-solid-svg-icons';
-import { FoodOrderService } from 'src/app/services/foods/food-order.service';
+import { faArrowLeft, faChevronRight, faChevronUp, faFaceSmile, faPeopleArrows, faStar } from '@fortawesome/free-solid-svg-icons';
 import { Utils } from 'src/app/services/common/utils';
 
 @Component({
@@ -72,7 +67,7 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
   faStar = faStar;
   faPeopleArrows = faPeopleArrows;
   faFaceSmile = faFaceSmile;
-  chevronDown = faChevronDown;
+  chevronDown = faChevronRight;
   chevronUp = faChevronUp;
 
 
@@ -269,8 +264,14 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
     let filteredOrderes = [];
     if (status !== 'All') {
       for (let i = 0; i < this.orders.length; i++) {
-        if (this.orders[i].status === status) {
-          filteredOrderes = [...filteredOrderes, this.orders[i]];
+        if ( status === 'Cancelled'){
+          if (this.orders[i].status === 'Cancelled' || this.orders[i].status === 'Declined') {
+            filteredOrderes = [...filteredOrderes, this.orders[i]];
+          }
+        }else{
+          if (this.orders[i].status === status) {
+            filteredOrderes = [...filteredOrderes, this.orders[i]];
+          }
         }
       }
       this.prepareOrderToView(filteredOrderes)

@@ -50,7 +50,7 @@
     text-align: center;
     margin: 10px 0;
     border-radius: 20px;
-    color: darkgrey;
+    color: rgb(249, 10, 10);
 }
 
 .textSlider div {
@@ -60,7 +60,7 @@
     text-align: center;
     box-sizing: border-box;
     font-weight: 900;
-    font-size: 40px;
+    font-size: 30px;
 }
 
 .textSlider-text1 {

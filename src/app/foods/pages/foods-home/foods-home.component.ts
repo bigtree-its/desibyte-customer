@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { faClose, faFireBurner, faLocation, faLocationDot, faMugHot, faReceipt, faSearch, faUtensils } from '@fortawesome/free-solid-svg-icons';
+import { faFacebook, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faClose, faCopyright, faLocation, faLocationDot, faMugHot, faReceipt, faSearch, faUtensils } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Cuisine } from 'src/app/model/all-foods';
 import { Address, PostcodeDistrict, PostcodeDistrictQuery, RapidApiByPostcodeResponse, RapidApiByPostcodeResponseSummary, ServiceLocation } from 'src/app/model/common';
@@ -24,6 +25,10 @@ export class FoodsHomeComponent implements OnInit{
   faMugHot = faMugHot;
   faReceipt = faReceipt;
   faUtensils = faUtensils;
+  faFacebook = faFacebook;
+  faTwitter= faTwitter;
+  faInstagram= faInstagram;
+  faCopyright = faCopyright;
 
   router = inject(Router);
   cuisinesService = inject(CuisinesService);
@@ -145,7 +150,8 @@ export class FoodsHomeComponent implements OnInit{
 
   onSelectPostcode(postcode: string) {
     if (postcode){
-      var area = postcode.match(/^(((([A-Z][A-Z]{0,1})[0-9][A-Z0-9]{0,1}) {0,}[0-9])[A-Z]{2})$/)[3];
+      var postcodeSanitized: string = postcode.toUpperCase();
+      var area = postcodeSanitized.match(/^(((([A-Z][A-Z]{0,1})[0-9][A-Z0-9]{0,1}) {0,}[0-9])[A-Z]{2})$/)[3];
       if ( area){
         this.router.navigateByUrl(
           '/ck/area/' + area
@@ -190,30 +196,30 @@ export class FoodsHomeComponent implements OnInit{
       );
   }
 
-  onSelectDeliveryAddress(selectAddress: RapidApiByPostcodeResponseSummary) {
-    var city = selectAddress.Place.split(/[\s ]+/).pop();
-    this.customerAddress = {
-      city: city,
-      addressLine1: selectAddress.StreetAddress,
-      addressLine2: selectAddress.Place,
-      country: 'UK',
-      postcode: this.addressLookupPostcode,
-      latitude: '',
-      longitude: '',
-    };
-    this.addressSelected = true;
-    var area = this.addressLookupPostcode.trim().substring(0,3);
-    var query: PostcodeDistrictQuery= {};
-    query.area = area;
-    this.locationService.fetchPostcodeDistricts(query).subscribe((pd) => {
-      if (Utils.isValid(pd)) {
-        this.postcodeDistrict = pd[0];
-        this.router.navigateByUrl("f/area/"+this.postcodeDistrict.slug);
-      }else{
-        this.invalidPostcodeDistrict = true;
-      }
-    });
-  }
+  // onSelectDeliveryAddress(selectAddress: RapidApiByPostcodeResponseSummary) {
+  //   var city = selectAddress.Place.split(/[\s ]+/).pop();
+  //   this.customerAddress = {
+  //     city: city,
+  //     addressLine1: selectAddress.StreetAddress,
+  //     addressLine2: selectAddress.Place,
+  //     country: 'UK',
+  //     postcode: this.addressLookupPostcode,
+  //     latitude: '',
+  //     longitude: '',
+  //   };
+  //   this.addressSelected = true;
+  //   var area = this.addressLookupPostcode.trim().substring(0,3);
+  //   var query: PostcodeDistrictQuery= {};
+  //   query.area = area;
+  //   this.locationService.fetchPostcodeDistricts(query).subscribe((pd) => {
+  //     if (Utils.isValid(pd)) {
+  //       this.postcodeDistrict = pd[0];
+  //       this.router.navigateByUrl("f/area/"+this.postcodeDistrict.slug);
+  //     }else{
+  //       this.invalidPostcodeDistrict = true;
+  //     }
+  //   });
+  // }
 
   close() {
     this.modalService.dismissAll();

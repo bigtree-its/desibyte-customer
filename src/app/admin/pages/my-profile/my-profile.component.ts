@@ -26,8 +26,7 @@ export class MyProfileComponent implements OnInit, OnDestroy{
   public widgetsContent: ElementRef<any>;
 
   activeLayout: string = "Personal Details";
-  firstName: string;
-  lastName: string;
+  name: string;
   email: string;
   mobile: string;
   password: string;
@@ -47,8 +46,7 @@ export class MyProfileComponent implements OnInit, OnDestroy{
       next: (value) => {
         this.user = value;
         if ( this.user !== null && this.user !== undefined){
-          this.firstName = this.user.firstName;
-          this.lastName = this.user.lastName;
+          this.name = this.user.name;
           this.email = this.user.email;
           this.mobile = this.user.mobile;
         }
@@ -99,8 +97,7 @@ export class MyProfileComponent implements OnInit, OnDestroy{
     
     var pd: PersonalDetails = {
       "customerId": this.user._id,
-      "firstName": this.firstName,
-      "lastName": this.lastName,
+      "name": this.name,
       "mobile": this.mobile,
     }
     

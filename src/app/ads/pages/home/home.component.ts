@@ -34,16 +34,17 @@ import {
 import { faStar as starReg } from '@fortawesome/free-regular-svg-icons';
 import { faStar as starSolid } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   AdSearchQuery,
   GeneralAd,
   PropertyAd,
   PropertySearchQuery,
 } from 'src/app/model/all-ads';
-import { Address } from 'src/app/model/common';
+import { Address, PostcodeDistrict, PostcodeDistrictQuery } from 'src/app/model/common';
 import { AdsService } from 'src/app/services/ads/ads.service';
 import { ActivatedRoute } from '@angular/router';
+import { LocationService } from 'src/app/services/common/location.service';
 
 @Component({
   selector: 'app-home',
@@ -62,6 +63,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   adService = inject(AdsService);
   modalService = inject(NgbModal);
+  locationService = inject(LocationService);
 
   location: Address;
   category: string;
@@ -98,6 +100,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   faStarS = starSolid;
 
   isNavCollapse = false;
+  postcodeDistrict: PostcodeDistrict;
+  error: boolean;
+  errorMessage: string;
+
   @HostListener('window:scroll', []) onScroll() {
     if (this.scroll.getScrollPosition()[1] > 70) {
       this.isNavCollapse = true;
@@ -142,10 +148,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     {
       name: 'Services',
       icon: this.faServices,
-    },
-    {
-      name: 'Events',
-      icon: this.faEvents,
     },
     {
       name: 'Classes',
@@ -250,6 +252,67 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
+
+  onSelectPostcode(postcode: string) {
+    if (postcode) {
+      var postcodeSanitized: string = postcode.toUpperCase();
+      var area = postcodeSanitized.match(/^(((([A-Z][A-Z]{0,1})[0-9][A-Z0-9]{0,1}) {0,}[0-9])[A-Z]{2})$/)[3];
+      if (area) {
+        this.fetchPostcodeDistrict(area);
+        if (this.category) {
+          if (this.category === 'Property' || this.category === 'Propertes' || this.category === 'property' || this.category === 'propertes') {
+            var query: PropertySearchQuery = {};
+            query.area = area;
+            query.postcode = postcode;
+            this.adService.getProperties(query).subscribe((d) => {
+              this.properties = d;
+            });
+          } else {
+            var adQuery: AdSearchQuery = {};
+            adQuery.postcodeDistrict = area;
+            adQuery.category = this.category;
+            adQuery.postcode = postcode;
+            this.getAds(adQuery);
+          }
+        }
+      } else {
+        var query: PropertySearchQuery = {};
+        query.area = area;
+        query.postcode = postcode;
+        this.adService.getProperties(query).subscribe((d) => {
+          this.properties = d;
+        });
+        var adQuery: AdSearchQuery = {};
+        adQuery.postcodeDistrict = area;
+        adQuery.category = this.category;
+        adQuery.postcode = postcode;
+        this.getAds(adQuery);
+      }
+
+    }
+  }
+  fetchPostcodeDistrict(area: string) {
+    var query = new PostcodeDistrictQuery();
+    query.prefix = area;
+    var observable = this.locationService.fetchPostcodeDistricts(query);
+    observable.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (e) => {
+        console.log('Fetched postcode district from prefix ' + area + ". List " + JSON.stringify(e));
+        if ( e && e.length > 0){
+          this.postcodeDistrict = e[0];
+          
+        }
+      },
+      error: (err) => {
+        console.error('Errors during posting ad. ' + JSON.stringify(err));
+        this.error = true;
+        this.errorMessage =
+          'Oops. There was a problem. Please contact customer support quoting reference ' +
+          err.error.reference;
+      },
+    });
+  }
+
   onChangeLocation(e: any) {
     this.location = e.target.value;
   }
@@ -326,9 +389,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   private getAds(adQuery: AdSearchQuery) {
     this.adService.getAds(adQuery).subscribe((d) => {
       this.ads = d;
-      console.log(
-        'Result of ' + adQuery.category + ': ' + JSON.stringify(this.ads)
-      );
+      console.log('Total ads retrieved ' + this.ads.length)
+      this.groupedAds = this.ads.reduce(
+        (result: any, currentValue: any) => {
+          (result[currentValue['category']] = result[currentValue['category']] || []).push(currentValue);
+          return result;
+        }, {});
     });
   }
 
@@ -341,9 +407,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   onChangePropertyTypeList(e: any) {
     this.propertyType = e.target.value;
-    if ( this.propertyType === 'Rooms'){
+    if (this.propertyType === 'Rooms') {
       this.consumptionType = "Rent";
-    }else{
+    } else {
       this.consumptionType = "Sale";
     }
   }

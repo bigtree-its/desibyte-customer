@@ -86,7 +86,7 @@
                 <ng-container *ngSwitchCase="'Party'" [ngTemplateOutlet]="partyLayout"></ng-container>
             </ng-container>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4" style="box-shadow: 0px 0px 10px 1px #cfcece;">
             <app-basket [standAlone]="false" [eventDate]="eventDate"></app-basket>
         </div>
     </div>
@@ -114,8 +114,8 @@
         </div> -->
         <div class="flex-column jcc aic p-3 icon-text" (click)="selectLayout('Info')"
             [class.icon-text-selected]="activeLayout === 'Info'">
-            <fa-icon [icon]="faHouse"></fa-icon>
-            <small>Home</small>
+            <fa-icon [icon]="faInfo"></fa-icon>
+            <small>Info</small>
         </div>
         <div class="flex-row jcc aic">
             <div class="flex-column jcc aic icon-text" [routerLink]="['/ck/basket']">
@@ -233,7 +233,7 @@
                 Review</button>
         </div>
         <div *ngIf="reviews !== null && reviews !== undefined &&  reviews.length > 0"
-            style="max-height: 300px;overflow-y: auto;">
+            style="overflow-y: auto;margin-bottom: 100px;">
             <app-review-item *ngFor="let r of reviews" [review]="r"></app-review-item>
         </div>
         <div *ngIf="reviews === null || reviews === undefined ||  reviews.length === 0">
@@ -311,7 +311,7 @@
                 <div class="d-flex jcsb aic p-2 border-bottom">
                     <span class="bolder">{{c?.name}}</span>
                     <fa-icon class="btn-circle" *ngIf="selectedCategory === null || selectedCategory.name !== c.name"
-                        [icon]="faAngleDown" (click)="onSelectCategory(c)"></fa-icon>
+                        [icon]="faAngleRight" (click)="onSelectCategory(c)"></fa-icon>
                     <fa-icon class="btn-circle" *ngIf="selectedCategory === c" [icon]="faAngleUp"
                         (click)="onSelectCategory(null)"></fa-icon>
                 </div>

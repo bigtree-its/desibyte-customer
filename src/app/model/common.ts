@@ -47,6 +47,16 @@ export class Address {
   longitude?: string;
 }
 
+export class PostalLocation{
+  postcode?: string;
+  city?: string;
+  country?: string;
+  // Clarkston
+  coverage?: string;
+  // Postcode District Prefix. i.e G76, G77 etc
+  postcodeDistrict?: string;
+}
+
 export class Contact {
   person?: string;
   email?: string;
@@ -81,16 +91,15 @@ export class PostcodeDistrict {
   public _id: string;
   public active: boolean;
   public prefix: string;
-  public area: string;
+  public city: string;
   public coverage: string;
-  public council: string;
   public slug: string;
 }
+
 export class PostcodeDistrictQuery {
   public prefix?: string;
-  public area?: string;
+  public city?: string;
   public coverage?: string;
-  public council?: string;
   public popular?: boolean;
 }
 

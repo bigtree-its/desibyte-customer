@@ -70,14 +70,19 @@ export class AccountService {
       .pipe(
         tap((result) => {
           console.log('Login response ' + JSON.stringify(result));
+          this.setUser(result);
           if (this.redirectUrl) {
             console.log('redirecting to ' + this.redirectUrl);
             this.router.navigateByUrl(this.redirectUrl);
             this.redirectUrl = null;
           } else {
-            this.router.navigate(['/']);
+            if ( this.jwtService.isCloudKitchen(null)){
+              this.router.navigate(['/kitchen/home']);
+            }else{
+              this.router.navigate(['/']);
+            }
           }
-          this.setUser(result);
+          
         })
       );
   }
@@ -183,12 +188,12 @@ export class AccountService {
     if ( tokenClaims){
       var user: User = {
         _id: tokenClaims.recordId,
-        firstName: tokenClaims.firstName,
-        lastName: tokenClaims.lastName,
-        name: tokenClaims.firstName + ' ' + tokenClaims.lastName,
+        name: tokenClaims.name ,
         email: tokenClaims.sub,
         mobile: tokenClaims.mobile,
         userType: tokenClaims.userType,
+        businessId: tokenClaims.businessId,
+        businessType: tokenClaims.businessType,
       };
       return user;
     }

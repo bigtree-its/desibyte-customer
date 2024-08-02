@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import {
   faArrowLeft,
   faChevronDown,
+  faChevronRight,
   faChevronUp,
   faFaceSmile,
   faPeopleArrows,
@@ -27,7 +28,6 @@ import { AccountService } from 'src/app/services/auth/account.service';
 import { ToastService } from 'src/app/services/common/toast.service';
 import { Utils } from 'src/app/services/common/utils';
 import { FoodOrderService } from 'src/app/services/foods/food-order.service';
-import { NgbHighlight } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl } from '@angular/forms';
 import { DecimalPipe } from '@angular/common';
 import { CloudKitchenService } from 'src/app/services/foods/cloudkitchen.service';
@@ -58,7 +58,7 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
   faStar = faStar;
   faPeopleArrows = faPeopleArrows;
   faFaceSmile = faFaceSmile;
-  chevronDown = faChevronDown;
+  chevronDown = faChevronRight;
   chevronUp = faChevronUp;
 
   openSupplier: boolean = true;

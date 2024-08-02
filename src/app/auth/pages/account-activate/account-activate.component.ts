@@ -68,7 +68,7 @@ export class AccountActivateComponent implements OnInit, OnDestroy {
         this.loading = false;
         this.success = true;
         console.log('account activation has been submitted')
-        void this.router.navigate(["/login"])
+        // void this.router.navigate(["/login"])
       },
       error: (err) => {
         console.error('Errors from account activation.'+ JSON.stringify(err))

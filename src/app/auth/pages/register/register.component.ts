@@ -22,8 +22,7 @@ export class RegisterComponent {
 
   ngOnInit() {
     this.registerForm = new FormGroup({
-      firstName: new FormControl('', [Validators.required]),
-      lastName: new FormControl('', [Validators.required]),
+      name: new FormControl('', [Validators.required]),
       mobile: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [
@@ -38,8 +37,7 @@ export class RegisterComponent {
     this.signupSuccess = false;
     if (this.registerForm.valid) {
       this.register = {
-        firstName: this.registerForm.get('firstName').value,
-        lastName: this.registerForm.get('lastName').value,
+        name: this.registerForm.get('name').value,
         email: this.registerForm.get('email').value,
         password: this.registerForm.get('password').value,
         mobile: this.registerForm.get('mobile').value,

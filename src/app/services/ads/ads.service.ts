@@ -183,10 +183,65 @@ export class AdsService {
     if (query.lastMonth) {
       params = params.set('lastMonth', query.lastMonth);
     }
+    if (query.postcodeDistrict) {
+      params = params.set('postcodeDistrict', query.postcodeDistrict);
+    }
+    if (query.city) {
+      params = params.set('city', query.city);
+    }
+    if (query.postcode) {
+      params = params.set('postcode', query.postcode);
+    }
+    if (query.coverage) {
+      params = params.set('coverage', query.coverage);
+    }
     console.log('Finding ads with query ' + JSON.stringify(params));
     return this.httpClient.get<GeneralAd[]>(this.serviceLocator.AdsUrl, {
       params,
     });
+  }
+
+
+  deleteAd(ref: string): Observable<any> {
+    return this.httpClient
+      .delete<any>(this.serviceLocator.AdsUrl + '/' + ref)
+      .pipe(
+        tap((result) => {
+          console.log('Ad deleted ' + result);
+        })
+      );
+  }
+
+  updateProperty(property: PropertyAd): Observable<PropertyAd> {
+    console.log('Updating property ' + JSON.stringify(property));
+    return this.httpClient
+      .put<PropertyAd>(this.serviceLocator.AdPropertyUrl +"/" + property.reference, property)
+      .pipe(
+        tap((result) => {
+          console.log('Property update response ' + JSON.stringify(result));
+        })
+      );
+  }
+
+  updateAd(ad: GeneralAd): Observable<GeneralAd> {
+    console.log('Updating ad ' + JSON.stringify(ad));
+    return this.httpClient
+      .put<GeneralAd>(this.serviceLocator.AdsUrl +"/" + ad.reference, ad)
+      .pipe(
+        tap((result) => {
+          console.log('Ad update response ' + JSON.stringify(result));
+        })
+      );
+  }
+
+  deleteProperty(ref: string): Observable<any> {
+    return this.httpClient
+      .delete<any>(this.serviceLocator.AdPropertyUrl + '/' + ref)
+      .pipe(
+        tap((result) => {
+          console.log('Property deleted ' + result);
+        })
+      );
   }
 
   getProperty(reference: string): Observable<PropertyAd[]> {

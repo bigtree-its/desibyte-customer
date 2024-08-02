@@ -1,6 +1,5 @@
 export interface RegisterRequest {
-    firstName: string;
-    lastName: string;
+    name: string;
     email: string;
     mobile: string;
     userType: string;
@@ -32,12 +31,12 @@ export interface SignupResponse {
 
 export class User{
     _id: string;
-    firstName: string;
-    lastName: string;
     name: string;
     email: string;
     mobile: string;
     userType: string;
+    businessType?: string;
+    businessId?: string;
 }
 
 export class Role{
@@ -71,8 +70,7 @@ export interface CustomerPreferences{
 
 export interface PersonalDetails {
     customerId: string;
-    firstName: string;
-    lastName: string;
+    name: string;
     mobile: string;
 }
 

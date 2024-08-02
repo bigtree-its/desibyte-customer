@@ -26,7 +26,7 @@
                         fill="white"></path>
                 </svg>
             </button>
-            <div *ngIf="errorMessage !== undefined" style="font-weight: normal;text-align: center;display: block;background-color: rgb(241, 215, 215);color: #bc3737;padding: 20px;">
+            <div *ngIf="error !== undefined" class="my-5 p-3 box-warning">
                 <p>{{errorMessage}}</p>
             </div>
         </div>

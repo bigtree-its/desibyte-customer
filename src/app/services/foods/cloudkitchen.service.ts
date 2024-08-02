@@ -87,23 +87,6 @@ export class CloudKitchenService {
     });
   }
 
-  fetchKitchen(email: string): Observable<CloudKitchen[]> {
-    console.log('Getting Kitchen for : ' + email);
-    var params = new HttpParams();
-    if (email) {
-      params = params.set('email', email);
-    }
-    return this.http
-      .get<CloudKitchen[]>(this.serviceLocator.CloudKitchenUrl, {
-        params,
-      })
-      .pipe(
-        tap((result) => {
-          this.setCloudKitchenOnBrowserStorage(result[0]);
-        })
-      );
-  }
-
   retrieveKitchen(id: string): Observable<CloudKitchen> {
     console.log('Retrieving kitchen ' + id);
     var url = this.serviceLocator.CloudKitchenUrl + '/' + id;
@@ -161,9 +144,7 @@ export class CloudKitchenService {
     if (cloudKitchenId) {
       params = params.set('cloudKitchenId', cloudKitchenId);
     }
-    return this.http.get<Collection[]>(this.serviceLocator.collectionsUrl, {
-      params,
-    });
+    return this.http.get<Collection[]>(this.serviceLocator.collectionsUrl, {params});
   }
 
   getIPAddress() {

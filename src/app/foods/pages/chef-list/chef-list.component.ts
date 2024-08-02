@@ -107,19 +107,19 @@ export class ChefListComponent implements OnDestroy {
     console.log('location: ' + this.areaQuery);
     console.log('cuisine: ' + this.cuisineQuery);
     if (this.areaQuery) {
-      this.getChefs();
+      this.getKitchens();
     }
     this.loadDishes();
   }
 
-  private getChefs() {
+  private getKitchens() {
     var query: PostcodeDistrictQuery= {};
     query.prefix = this.areaQuery;
     this.locationService.fetchPostcodeDistricts(query).subscribe((pd) => {
       if (Utils.isValid(pd)) {
         this.postcodeDistrict = pd[0];
-        this.fetchChefsByPostcodeDistrict(this.postcodeDistrict);
-        this.titleService.setTitle("Home Chefs in "+this.postcodeDistrict.area+", "+ this.postcodeDistrict.prefix.toUpperCase());
+        this.fetchKitchensByPostcodeDistrict(this.postcodeDistrict);
+        this.titleService.setTitle("Home Chefs in "+this.postcodeDistrict.prefix.toUpperCase()+", "+ this.postcodeDistrict.city);
         this.localService.saveData(Constants.StorageItem_Location, JSON.stringify(this.postcodeDistrict));
       }else{
         this.invalidPostcodeDistrict = true;
@@ -249,7 +249,7 @@ export class ChefListComponent implements OnDestroy {
     this.router.navigate(['kitchens', cloudKitchen._id]).then();
   }
 
-  fetchChefsByPostcodeDistrict(postcodeDistrict: PostcodeDistrict) {
+  fetchKitchensByPostcodeDistrict(postcodeDistrict: PostcodeDistrict) {
     const chefSearchQuery = {} as CloudKitchenSearchQuery;
     chefSearchQuery.serviceAreas = postcodeDistrict.prefix;
     this.kitchenService
@@ -262,6 +262,7 @@ export class ChefListComponent implements OnDestroy {
           this.filteredKitchens.forEach((ck, i) => {
             this.keywords = this.keywords.concat(ck.keywords)
           });
+          this.keywords = [...new Set(this.keywords)];
           console.log('Keywords ='+ this.keywords)
         }
       });

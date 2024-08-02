@@ -8,7 +8,7 @@ import { MyHomeComponent } from './pages';
 import { SharedModule } from '../shared';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ImagekitioAngularModule } from 'imagekitio-angular';
-import { NgbDropdownModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerModule, NgbDropdownModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SupplierGuard } from '../services/auth/supplier-guard.service';
 import { KitchenMenuComponent } from './pages/kitchen-menu/kitchen-menu.component';
@@ -57,6 +57,7 @@ const routes: Routes = [
     ImagekitioAngularModule,
     NgbDropdownModule,
     FontAwesomeModule,
+    NgbDatepickerModule,
     NgbModule,
     RouterModule.forChild(routes),
   ],

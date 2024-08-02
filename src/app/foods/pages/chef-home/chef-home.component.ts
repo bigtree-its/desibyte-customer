@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import {
   faAngleDown,
+  faAngleRight,
   faAngleUp,
   faArrowLeft,
   faArrowRight,
@@ -18,9 +19,11 @@ import {
   faBatteryEmpty,
   faBookOpen,
   faCalendar,
+  faCircleInfo,
   faCommentDots,
   faFaceSmile,
   faHouse,
+  faInfo,
   faPeopleArrows,
   faStar,
   faStarHalf,
@@ -62,9 +65,11 @@ export class ChefHomeComponent implements AfterViewInit, OnDestroy {
   faFaceSmile = faFaceSmile;
   faCalendar = faCalendar;
   faAngleDown = faAngleDown;
+  faAngleRight = faAngleRight;
   faAngleUp = faAngleUp;
   faBag = faBagShopping;
   faHouse = faHouse;
+  faInfo = faCircleInfo;
   faMenu = faBookOpen;
   faComments = faCommentDots;
   faParty = faUserGroup;

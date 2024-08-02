@@ -1,4 +1,4 @@
-import { Address, AdOwner, Customer, NameValue } from './common';
+import { Address, AdOwner, Customer, NameValue, PostalLocation } from './common';
 
 export class GeneralAd {
   category: string;
@@ -9,7 +9,8 @@ export class GeneralAd {
   reference?: string;
   description: string[];
   gallery?: ImageKitImg[];
-  address: Address;
+  address?: Address;
+  location?: PostalLocation;
   price: number;
   dateAvailable: Date;
   datePosted: Date;
@@ -85,8 +86,10 @@ export interface SuperStore {
 export class AdSearchQuery {
   category?: string;
   adOwner?: string;
+  postcodeDistrict?: string;
   postcode?: string;
-  location?: string;
+  city?: string;
+  coverage?: string;
   reference?: string;
   minAmount?: number;
   maxAmount?: number;
@@ -98,6 +101,7 @@ export class PropertySearchQuery {
   location?: string;
   postcode?: string;
   type?: string;
+  area?: string;
   reference?: string;
   minAmount?: number;
   maxAmount?: number;

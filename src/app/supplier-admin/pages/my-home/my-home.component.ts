@@ -111,14 +111,15 @@ export class MyHomeComponent implements OnInit, OnDestroy {
 
   private fetchMyKitchen(e: User) {
     this.loadingKitchen = true;
-    let observable = this.kitchenService.fetchKitchen(e.email);
+    console.log('Getting kitchen for '+ e.businessId)
+    let observable = this.kitchenService.retrieveKitchen(e.businessId);
     observable.pipe(takeUntil(this.destroy$)).subscribe({
       next: (data) => {
         console.log('Kitchen ' + data);
         this.loadingKitchen = false;
         this.loadingError = false;
         if (data) {
-          this.cloudKitchen = data[0];
+          this.cloudKitchen = data;
           if (!this.cloudKitchen) {
             var kitchen: CloudKitchen = {};
             var contact: Contact = {};

@@ -1,8 +1,8 @@
 <div class="container">
     <div class="d-flex jcc">
         <div class="flex-column mt-3 p-3 jcs width-m" style="border:none;">
-            <span class="py-2 bolder fs-1">Contact Us</span>
-            <select class="form-select" (change)="onChangeAbout($event)">
+            <span class="py-4 fs-3">STAY CONNECTED</span>
+            <select class="form-select my-2" (change)="onChangeAbout($event)">
                 <option default>How can we help you? *</option>
                 <option value="I found incorrect outdated/information on a page">I found incorrect outdated/information on a page</option>
                 <option value="I would like to give feedback/suggestions">I would like to give feedback/suggestions</option>
@@ -10,15 +10,15 @@
                 <option value="Other">Other</option>
             </select>
             <div class="input-group my-1">
-                <input required="" type="text" name="fullName" autocomplete="off" class="input" [(ngModel)]="fullName" #ctrl="ngModel">
+                <input required="" type="text" name="fullName" autocomplete="off" class="input-white" [(ngModel)]="fullName" #ctrl="ngModel">
                 <label class="user-label">FullName</label>
             </div>
             <div class="input-group my-1">
-                <input required="" type="text" name="email" autocomplete="off" class="input" [(ngModel)]="email" #ctrl="ngModel">
+                <input required="" type="text" name="email" autocomplete="off" class="input-white" [(ngModel)]="email" #ctrl="ngModel">
                 <label class="user-label">Email</label>
             </div>
             <div class="input-group my-1">
-                <input required="" type="text" name="mobile" autocomplete="off" class="input" [(ngModel)]="mobile" #ctrl="ngModel">
+                <input required="" type="text" name="mobile" autocomplete="off" class="input-white" [(ngModel)]="mobile" #ctrl="ngModel">
                 <label class="user-label">Mobile</label>
             </div>
 
