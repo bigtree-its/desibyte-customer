@@ -75,23 +75,23 @@
         <!-- Single Order -->
         <div class="flex-column" *ngIf="viewOrder">
 
-            <div class="flex-row py-2 aic">
+            <div class="flex-row py-2 aic mt-3">
                 <span *ngIf="!loading" class="bolder fs-5 ">{{viewOrder.status |
                     titlecase}}</span>
                 <div *ngIf="loading" class="d-flex jcc aic p-3">
                     <div class="loader"></div>
                 </div>
-                <button class="btn-9 ml-2 " *ngIf="viewOrder?.status==='New' " (click)="makePayment(paymentForm)">Pay</button>
-                <button class="btn-9 ml-2 " *ngIf="viewOrder?.status==='New' " (click)="cancel()">Cancel</button>
+                <button class="btn-9 ml-2 py-1 px-2" *ngIf="viewOrder?.status==='New' " (click)="makePayment(paymentForm)">Pay</button>
+                <button class="btn-9 ml-2 py-1 px-2" *ngIf="viewOrder?.status==='New' " (click)="cancel()">Cancel</button>
             </div>
-            <div class="my-3">
+            <div class="my-4">
                 <app-order-progress [status]="viewOrder?.status" [serviceMode]="viewOrder?.serviceMode"></app-order-progress>
             </div>
             
             <!-- <ng-container *ngIf="showOrder" [ngTemplateOutlet]="orderLayout"></ng-container> -->
             <div class="flex-column border p-2 br-7">
                 <span class="bolder py-2">{{viewOrder.serviceMode === 'DELIVERY'? 'Delivery Address': 'Collection Address'}}</span>
-                <span [routerLink]="[ '/cloud-kitchens', supplier?._id] " style="font-size: 15px;cursor: pointer;color:coral;" class="bold py-1" *ngIf="viewOrder.serviceMode === 'COLLECTION'">{{supplier.name}}</span>
+                <span [routerLink]="[ '/cloud-kitchens', viewOrder.cloudKitchen?._id] " style="font-size: 15px;cursor: pointer;color:coral;" class="bold py-1" *ngIf="viewOrder.serviceMode === 'COLLECTION'">{{viewOrder.cloudKitchen.name}}</span>
                 <div class="flex-row" *ngIf="viewOrder.serviceMode === 'DELIVERY'">
                     <span>{{viewOrder.customer.address.addressLine1}},</span>
                     <span>{{viewOrder.customer.address.addressLine2}}</span>
@@ -101,24 +101,24 @@
                     <span class="pl-1">{{viewOrder.customer.address.postcode}}</span>
                 </div>
                 <div class="flex-row" *ngIf="viewOrder.serviceMode === 'COLLECTION'">
-                    <span>{{supplier.address.addressLine1}},</span>
-                    <span>{{supplier.address.addressLine2}}</span>
+                    <span>{{viewOrder.cloudKitchen.address.addressLine1}},</span>
+                    <span>{{viewOrder.cloudKitchen.address.addressLine2}}</span>
                 </div>
                 <div class="flex-row" *ngIf="viewOrder.serviceMode === 'COLLECTION'">
-                    <span>{{supplier.address.city}}, </span>
-                    <span class="pl-1">{{supplier.address.postcode}}</span>
+                    <span>{{viewOrder.cloudKitchen.address.city}}, </span>
+                    <span class="pl-1">{{viewOrder.cloudKitchen.address.postcode}}</span>
                 </div>
             </div>
             <div class="flex-column border p-2 br-7 my-1" *ngIf="viewOrder.serviceMode === 'DELIVERY'">
                 <span class="bolder py-2">Order prepared by</span>
-                <span [routerLink]="[ '/cloud-kitchens', supplier?._id] " style="font-size: 15px;cursor: pointer;color:coral;" class="bold py-1">{{supplier?.name}}</span>
+                <span [routerLink]="[ '/cloud-kitchens', viewOrder.cloudKitchen?._id] " style="font-size: 15px;cursor: pointer;color:coral;" class="bold py-1">{{viewOrder.cloudKitchen?.name}}</span>
                 <div class="flex-row">
-                    <span>{{supplier.address.addressLine1}},</span>
-                    <span>{{supplier.address.addressLine2}}</span>
+                    <span>{{viewOrder.cloudKitchen.address.addressLine1}},</span>
+                    <span>{{viewOrder.cloudKitchen.address.addressLine2}}</span>
                 </div>
                 <div class="flex-row">
-                    <span>{{supplier.address.city}}, </span>
-                    <span>{{supplier.address.postcode}}</span>
+                    <span>{{viewOrder.cloudKitchen?.address.city}}, </span>
+                    <span>{{viewOrder.cloudKitchen?.address.postcode}}</span>
                 </div>
             </div>
             <div class="my-2 py-3 flex-row jcsb">
@@ -235,18 +235,21 @@
     </div>
 </ng-template>
 <ng-template #itemsLayout>
-    <table class="my-2 bg-white">
-        <tr>
-            <th>Name</th>
-            <th>Quantity</th>
-            <th>price</th>
-        </tr>
-        <tr class="border-bottom py-3" *ngFor="let item of viewOrder?.items">
-            <td>{{item.name}}</td>
-            <td class="pl-2">{{item.quantity}}</td>
-            <td>{{item.subTotal | currency: 'GBP'}}</td>
-        </tr>
-    </table>
+    <div class="my-2 bg-white p-3">
+        <table class="w-100">
+            <tr class="mb-3">
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>price</th>
+            </tr>
+            <tr class="border-bottom py-3" *ngFor="let item of viewOrder?.items">
+                <td>{{item.name}}</td>
+                <td class="pl-2">{{item.quantity}}</td>
+                <td>{{item.subTotal | currency: 'GBP'}}</td>
+            </tr>
+        </table>
+    </div>
+    
 </ng-template>
 
 <ng-template #paymentForm let-modal>

@@ -3,7 +3,7 @@
         <span class="page-hash bold px-3">#1 Desi Home Foods</span>
     </div> -->
 
-    <div class="sm flex-column jcc bg-o  br-12 pb-3 px-1">
+    <div class="sm flex-column jcc bg-o pb-3 px-1">
         <img src="/assets/images/home-food-3.webp" class="mt-2 mb-4 p-3">
 
         <span class="bolder fs-1 text-center text-white">Are you starving?</span>
@@ -111,29 +111,32 @@
 </div>
 
 <ng-template #bottomFeed>
-    <div class="flex-column bg-dark text-white p-3 mt-3">
-        <div class="border-bottom py-4 flex-column">
-            <span class="bolder mb-3">OUT TOP CITIES</span>
-            <span> Glasgow </span>
+    <div class="flex-column jcc aic bg-dark text-white p-3 mt-3">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 jcc mt-2">
+            <div class="py-3 flex-column gap-3">
+                <span class="bolder mb-3">OUT TOP CITIES</span>
+                <span> Glasgow </span>
+            </div>
+            <div class="py-3 flex-column gap-3">
+                <span class="bolder mb-3">COMPANY</span>
+                <span> Team </span>
+                <span> Careers </span>
+                <span> Blog </span>
+            </div>
+            <div class="py-3 flex-column gap-3">
+                <span class="bolder mb-3">LEGAL</span>
+                <span> Terms & Conditions </span>
+                <span> Refund & Cancellation </span>
+                <span> Privacy Policy </span>
+                <span> Cookie Policy </span>
+            </div>
+            <div class="flex-row py-2 w-100 jcc">
+                <span class="pr-1">All rights reserved </span>
+                <fa-icon [icon]="faCopyright "></fa-icon>
+                <span>2024 <span class="bolder">Beku</span></span>
+            </div>
         </div>
-        <div class="border-bottom py-4 flex-column gap-3">
-            <span class="bolder mb-3">COMPANY</span>
-            <span> Team </span>
-            <span> Careers </span>
-            <span> Blog </span>
-        </div>
-        <div class="border-bottom py-4 flex-column gap-3">
-            <span class="bolder mb-3">LEGAL</span>
-            <span> Terms & Conditions </span>
-            <span> Refund & Cancellation </span>
-            <span> Privacy Policy </span>
-            <span> Cookie Policy </span>
-        </div>
-        <div class="flex-row py-2">
-            <span class="pr-1">All rights reserved </span>
-            <fa-icon [icon]="faCopyright "></fa-icon>
-            <span>2024 <span class="bolder">Beku</span></span>
-        </div>
+       
     </div>
 </ng-template>
 

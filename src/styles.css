@@ -67,7 +67,7 @@
     text-decoration: none;
     outline: none;
     border: none;
-    color: var(--black);
+    color: #111;
     /* font-size: clamp(.5rem, 0.5rem + 10vw, .8rem); */
     box-sizing: content-box;
 }
@@ -89,6 +89,7 @@ html {
     scrollbar-width: none;
     -webkit-text-size-adjust: 100%;
     scrollbar-color: transparent transparent;
+    color: #000;
 }
 
 p {
@@ -235,7 +236,7 @@ md-content {
 body {
     margin: 0px;
     padding: 0px;
-    font-size: 13px;
+    font-size: 14px;
     /* line-height: 2.6rem; */
     letter-spacing: 0.1px;
     background-color: #f7f9fa;
@@ -244,7 +245,7 @@ body {
     overflow: -moz-scrollbars-none;
     -ms-overflow-style: none;
     /* color: #162127; */
-    color: #2f2f2f;
+    color: #000;
     scrollbar-width: none;
     overflow-x: hidden;
     text-rendering: optimizeLegibility;

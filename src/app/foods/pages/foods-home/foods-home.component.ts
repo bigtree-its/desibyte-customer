@@ -1,7 +1,8 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faClose, faCopyright, faLocation, faLocationDot, faMugHot, faReceipt, faSearch, faUtensils } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subject, takeUntil } from 'rxjs';
 import { Cuisine } from 'src/app/model/all-foods';
 import { Address, PostcodeDistrict, PostcodeDistrictQuery, RapidApiByPostcodeResponse, RapidApiByPostcodeResponseSummary, ServiceLocation } from 'src/app/model/common';
 import { LocationService } from 'src/app/services/common/location.service';
@@ -14,8 +15,9 @@ import { CuisinesService } from 'src/app/services/foods/cusines.service';
   templateUrl: './foods-home.component.html',
   styleUrls: ['./foods-home.component.css']
 })
-export class FoodsHomeComponent implements OnInit{
+export class FoodsHomeComponent implements OnInit, OnDestroy{
  
+  destroy$ = new Subject<void>();
 
   faLocation = faLocation;
   faSearch = faSearch;
@@ -51,6 +53,8 @@ export class FoodsHomeComponent implements OnInit{
   addressSelected: boolean;
   postcodeDistrict: PostcodeDistrict;
   invalidPostcodeDistrict: boolean;
+  error: boolean;
+  errorMessage: string;
 
   ngOnInit(): void {
     this.fetchPopularPostcodeDistricts();
@@ -113,12 +117,12 @@ export class FoodsHomeComponent implements OnInit{
     console.log('Selected location: ' + selectedPostcodeDistrict.prefix);
   }
   
-  onEnter(content) {
-    if (this.addressLookupPostcode &&this.addressLookupPostcode.length >= 5) {
-      this.doPostcodeLookup();
-    }
+  // onEnter(content) {
+  //   if (this.addressLookupPostcode &&this.addressLookupPostcode.length >= 5) {
+  //     this.doPostcodeLookup();
+  //   }
    
-  }
+  // }
   open(content) {
     this.modalService
       .open(content, {
@@ -133,27 +137,49 @@ export class FoodsHomeComponent implements OnInit{
       );
   }
 
-  onSelectAddress(address: Address) {
-    if (address){
-      var area = address.postcode.match(/^(((([A-Z][A-Z]{0,1})[0-9][A-Z0-9]{0,1}) {0,}[0-9])[A-Z]{2})$/)[3];
-      if ( area){
-        this.router.navigateByUrl(
-          '/ck/area/' + area
-        );
-      }
-    }
-  }
 
   onSelectPostcode(postcode: string) {
     if (postcode){
       var postcodeSanitized: string = postcode.toUpperCase();
       var area = postcodeSanitized.match(/^(((([A-Z][A-Z]{0,1})[0-9][A-Z0-9]{0,1}) {0,}[0-9])[A-Z]{2})$/)[3];
       if ( area){
-        this.router.navigateByUrl(
-          '/ck/area/' + area
-        );
+        this.fetchPostcodeDistrict(area);
       }
     }
+  }
+
+  fetchPostcodeDistrict(area: string) {
+    var query = new PostcodeDistrictQuery();
+    query.prefix = area;
+    var observable = this.locationService.fetchPostcodeDistricts(query);
+    observable.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (e) => {
+        console.log('Fetched postcode district from prefix ' + area + ". List " + JSON.stringify(e));
+        if ( e && e.length > 0){
+          this.postcodeDistrict = e[0];
+          if ( this.postcodeDistrict){
+            this.router.navigateByUrl(
+              '/ck/area/' + area
+            );
+          }else{
+            this.error = true;
+            this.errorMessage =
+              'Oops. There was a problem. There are no home kitchens in this area. Plese try other postcodes' ;
+          }
+        }else{
+          this.error = true;
+          this.errorMessage =
+            'Oops. There was a problem. There are no home kitchens in this area. Plese try other postcodes' ;
+        }
+      },
+      error: (err) => {
+        console.error('Errors during posting ad. ' + JSON.stringify(err));
+        this.error = true;
+        this.errorMessage =
+          'Oops. There was a problem. Please contact customer support quoting reference ' +
+          err.error.reference;
+      },
+    });
   }
 
   closeServiceLocations() {
@@ -216,6 +242,11 @@ export class FoodsHomeComponent implements OnInit{
   //     }
   //   });
   // }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   close() {
     this.modalService.dismissAll();

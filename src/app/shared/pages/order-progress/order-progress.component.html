@@ -5,7 +5,7 @@
         </div>
         <span>New</span>
     </div>
-    <div class="flex-column  jcc aic" *ngIf="status === 'Paid' || status === 'In Progress' || status === 'Ready' || status === 'Collected' || status === 'Delivered'">
+    <div class="flex-column  jcc aic" *ngIf="status === 'New' || status === 'Paid' || status === 'In Progress' || status === 'Ready' || status === 'Collected' || status === 'Delivered'">
         <div class="circle mt-3 circle-active"  [class.circle-active]="status === 'In Progress' || status === 'Ready' || status === 'Collected' || status === 'Delivered'">
         </div>
         <span>In Progress</span>
@@ -30,18 +30,18 @@
         </div>
         <span>Refunded</span>
     </div>
-    <div class="flex-column  jcc aic" *ngIf="(status === 'Paid' || status === 'In Progress' || status === 'Ready' || status === 'Collected' || status === 'Delivered' ) ">
+    <div class="flex-column  jcc aic" *ngIf="(status === 'New' || status === 'Paid' || status === 'In Progress' || status === 'Ready' || status === 'Collected' || status === 'Delivered' ) ">
         <div class="circle mt-3"  [class.circle-active]="status === 'Ready' || status === 'Collected' || status === 'Delivered' ">
         </div>
         <span>Ready</span>
     </div>
-    <div class="flex-column  jcc aic" *ngIf="(status === 'Paid' || status === 'In Progress' || status === 'Ready' || status === 'Collected' ) && (serviceMode ==='COLLECTION')">
+    <div class="flex-column  jcc aic" *ngIf="(status === 'New' || status === 'Paid' || status === 'In Progress' || status === 'Ready' || status === 'Collected' ) && (serviceMode ==='COLLECTION')">
         <div class="circle mt-3"  [class.circle-active]="status === 'Collected'">
         </div>
         <span>Collected</span>
     </div>
 
-    <div class="flex-column  jcc aic" *ngIf="(status === 'Paid' ||  status === 'In Progress' || status === 'Ready' || status === 'Delivered' )  && (serviceMode ==='DELIVERY')">
+    <div class="flex-column  jcc aic" *ngIf="(status === 'New' || status === 'Paid' ||  status === 'In Progress' || status === 'Ready' || status === 'Delivered' )  && (serviceMode ==='DELIVERY')">
         <div class="circle mt-3"  [class.circle-active]="status === 'Delivered'">
         </div>
         <span>Delivered</span>
