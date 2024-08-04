@@ -2,47 +2,30 @@
     <div *ngIf="error" class="error-page alert alert-warning p-5 m-5">
         <span>{{errorMessage}}</span>
     </div>
-    <div class="flex-row py-2 aic">
-        <fa-icon [icon]="faArrowLeft" (click)="goBack()" class="btn-circle mr-3"></fa-icon>
-        <span class="bolder fs-3">{{ad?.title}}</span>
+    <div class="flex-row py-4 aic">
+        <!-- <fa-icon [icon]="faArrowLeft" (click)="goBack()" class="btn-circle mr-3"></fa-icon> -->
+        <span class="bolder fs-6 clickable-text" [routerLink]="['/ads/home']">Ads</span>
+        <span class="px-2">/</span>
+        <span class="fs-6 card-title">{{ad?.title}}</span>
     </div>
     <div class="sm flex-column" style="margin-bottom: 100px;">
 
-        <ngb-carousel *ngIf="ad?.gallery">
-            <ng-template ngbSlide *ngFor="let gallery of ad?.gallery">
+        <ngb-carousel *ngIf="images">
+            <ng-template ngbSlide *ngFor="let gallery of images">
                 <img src={{gallery.url}} style="object-fit: cover;height: 100%; width: 100%;" />
             </ng-template>
         </ngb-carousel>
-        <div class="asfs p-4 bg-white br-7 flex-column flex-grow my-3">
-            <div class="py-2 flex-column asfs ">
-                <span class="bolder py-2 ">Posted By</span>
-                <span class="py-1 mb-3 ">{{ad?.adOwner?.name}}</span>
-                
-            </div>
-            <div class="flex-row w-100 jcsb aic py-2">
-                <div class="flex-row gap-2">
-                    <fa-icon [icon]="faLocation" class="color-y"></fa-icon>
-                    <span class="card-title bold">{{ad?.address?.city | titlecase}}</span>
-                </div>
-                <span class="fs-6 bold ">{{ad?.price |
-                    currency:'GBP'}}</span>
-            </div>
-            <div class="flex-row w-100 jcsb aic ">
-                <span><b>Posted</b> {{ad?.datePosted | dateAgo}}</span>
-                <span><b>Available from </b>{{ad?.dateAvailable | date:
-                    'dd MMM'}}</span>
-            </div>
-            <ng-container [ngTemplateOutlet]="infoSection "></ng-container>
-            <div class="sticky-footer d-flex jcc aic py-3 border bg-white">
-                <span *ngIf="!user " [routerLink]="[ '/login'] " [queryParams]="{returnUrl: returnUrl} "
-                class="btn-solid text-center">Login to send enquiry</span>
-                <app-contact-form *ngIf="user " [user]="user " [ad]="ad "></app-contact-form>
-            </div>
-           
+        <div class="flex-column flex-grow mt-3">
+            <ng-container [ngTemplateOutlet]="details "></ng-container>
+        </div>
+        <div class="sticky-footer d-flex jcc aic py-3 border bg-white">
+            <span *ngIf="!user " [routerLink]="[ '/login'] " [queryParams]="{returnUrl: returnUrl} "
+            class="btn-solid text-center">Login to send enquiry</span>
+            <app-contact-form *ngIf="user " [user]="user " [ad]="ad "></app-contact-form>
         </div>
     </div>
     <div class="lg flex-row gap-3">
-        <div class="flex-column">
+        <div class="flex-row gap-2">
             <!-- <div class="flex-column flex-grow" style="min-height: 100vh;overflow-y: auto; margin-bottom: 100px;">
                 <ngb-carousel>
                     <ng-template ngbSlide *ngFor="let gallery of ad?.gallery ">
@@ -52,47 +35,45 @@
                     </ng-template>
                 </ngb-carousel>
             </div> -->
-            <div>
-                <img [src]="display_picture" style="height: 500px; width:500px;object-fit: contain;">
+            <div class="flex-column gap-2 my-1">
+                <!-- <img [src]="gallery.url" *ngFor="let gallery of ad?.gallery " style="height: 60px; width:60px;object-fit: cover;" (click)="displayPicture(gallery.url)"> -->
+                <img [src]="image.url" *ngFor="let image of images " style="height: 60px; width:60px;object-fit: cover;" (click)="displayPicture(image.url)">
             </div>
-            <div class="flex-row gap-2 my-3">
-                <img [src]="gallery.url" *ngFor="let gallery of ad?.gallery " style="height: 60px; width:60px;object-fit: cover;" (click)="displayPicture(gallery.url)">
+            <div class="border">
+                <img [src]="display_picture" style="height: 500px; width:500px;object-fit: contain;">
             </div>
         </div>
         <div>
-            <div class="asfs p-4 bg-white br-7 flex-column flex-grow">
-                <div class="py-2 flex-column asfs ">
-                    <span class="bolder py-2 ">Posted By</span>
-                    <span class="py-1 mb-3 ">{{ad?.adOwner.name}}</span>
-                   
-                </div>
-                <div class="flex-row w-100 jcsb aic py-2">
-                    <div class="flex-row gap-2">
-                        <fa-icon [icon]="faLocation" class="color-y"></fa-icon>
-                        <span class="card-title bold">{{ad?.address?.city | titlecase}}</span>
-                    </div>
-                    <span class="fs-6 bold ">{{ad?.price |
-                        currency:'GBP'}}</span>
-                </div>
-                <div class="flex-row w-100 jcsb aic ">
-                    <span><b>Posted</b> {{ad?.datePosted | dateAgo}}</span>
-                    <span><b>Available from </b>{{ad?.dateAvailable | date:
-                        'dd MMM'}}</span>
-                </div>
-                <ng-container [ngTemplateOutlet]="infoSection "></ng-container>
+            <div class="asfs pl-3 flex-column flex-grow">
+                <ng-container [ngTemplateOutlet]="details "></ng-container>
                 <div class="my-3">
                     <span *ngIf="!user " [routerLink]="[ '/login'] " [queryParams]="{returnUrl: returnUrl} "
                     class="btn-solid text-center">Login to send enquiry</span>
                     <app-contact-form *ngIf="user " [user]="user " [ad]="ad "></app-contact-form>
                 </div>
-               
             </div>
         </div>
-        
-        
     </div>
 </div>
 
+<ng-template #details>
+    <div class="flex-column asfs mb-2">
+        <span class="bolder py-2 ">Posted By</span>
+        <span>{{ad?.adOwner.name}}</span>
+    </div>
+    <div class="flex-row w-100 jcsb aic py-2">
+        <div class="flex-row gap-2">
+            <fa-icon [icon]="faLocation" class="color-y"></fa-icon>
+            <span class="card-title bold">{{ad?.location?.postcodeDistrict | titlecase}} - {{ad?.location?.city }}</span>
+        </div>
+    </div>
+    <span class="fs-4 bold text-orange mb-2">{{ad?.price |
+        currency:'GBP'}}</span>
+    <span class="bold mb-2">Posted {{ad?.datePosted | dateAgo}}</span>
+    <span><b>Available from </b>{{ad?.dateAvailable | date:
+        'dd MMM'}}</span>
+    <ng-container [ngTemplateOutlet]="infoSection "></ng-container>
+</ng-template>
 <ng-template #infoSection>
     <div class="flex-column ">
         <span class="bolder py-2 ">Description</span>

@@ -1,28 +1,33 @@
 import { Location } from '@angular/common';
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { faArrowLeft, faBath, faBed, faHouse, faLocationDot, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { first } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { AdSearchQuery, GeneralAd, ImageKitImg } from 'src/app/model/all-ads';
 import { LoginResponse, User } from 'src/app/model/all-auth';
 import { AdsService } from 'src/app/services/ads/ads.service';
 import { AccountService } from 'src/app/services/auth/account.service';
 import { JsonPipe } from '@angular/common';
+import { ImageService } from 'src/app/services/common/image.service';
+import { Subject } from 'rxjs';
+import { Image } from 'src/app/model/common';
 
 @Component({
   selector: 'app-ad-detail',
   templateUrl: './ad-detail.component.html',
   styleUrls: ['./ad-detail.component.css']
 })
-export class AdDetailComponent implements OnInit {
+export class AdDetailComponent implements OnInit, OnDestroy {
+
+  destroy$ = new Subject<void>();
 
   /** Questions */
   questionForm: FormGroup;
   questionSubmissionLoding = false;
   submittedQuestion = false;
   openReviewForm: boolean = false;
-  
+
   customerSession: LoginResponse;
   customer: User;
   ad: GeneralAd;
@@ -49,19 +54,21 @@ export class AdDetailComponent implements OnInit {
   faPlus = faPlus;
   faMinus = faMinus;
   faArrowLeft = faArrowLeft;
-  faHouse= faHouse;
-  faBed= faBed;
-  faBath= faBath;
+  faHouse = faHouse;
+  faBed = faBed;
+  faBath = faBath;
   faLocation = faLocationDot;
 
   user: User;
   adReference: any;
   returnUrl: string;
+  images: Image[]=[];
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private adService: AdsService,
     private accountService: AccountService,
+    private imageService: ImageService,
     private formBuilder: FormBuilder,
     private _location: Location
   ) { }
@@ -81,27 +88,23 @@ export class AdDetailComponent implements OnInit {
     });
     this.activatedRoute.params.subscribe(params => {
       this.adReference = params['id'];
-      this.returnUrl = '/ads/g/'+ this.adReference;
+      this.returnUrl = '/ads/g/' + this.adReference;
       console.log(`Ad Reference: ${this.adReference}`);
-      var query: AdSearchQuery ={};
+      var query: AdSearchQuery = {};
       query.reference = this.adReference;
       this.adService.getAds(query).subscribe(result => {
-        if ( result && result.length > 0){
+        if (result && result.length > 0) {
           this.ad = result[0];
           console.log('The ad : ' + JSON.stringify(this.ad));
+          this.fetchImages(this.ad.reference);
           // this.center = {
           //   lat: this.ad.address.latitude,
           //   lng: this.ad.address.longitude,
           // }
           // this.addMarker();
-          if ( this.ad.image){
-            this.display_picture = this.ad.image.url;
-            this.gallery.push(this.ad.image);
-          }else{
-            this.display_picture = this.ad.gallery[0].url;
-          }
-          
          
+
+
           // this.ad.gallery.forEach(p => {
           //   this.gallery.push(p);
           // })
@@ -133,13 +136,13 @@ export class AdDetailComponent implements OnInit {
     navigator.geolocation.getCurrentPosition((position) => {
       console.log('The current location lat ' + position.coords.latitude);
       console.log('The current location lon ' + position.coords.longitude);
-      
+
     })
 
   }
 
-    // convenience getter for easy access to form fields
-    get getQuestionForm() { return this.questionForm.controls; }
+  // convenience getter for easy access to form fields
+  get getQuestionForm() { return this.questionForm.controls; }
 
   // zoomIn() {
   //   if (this.zoom < this.options.maxZoom) this.zoom++
@@ -148,6 +151,26 @@ export class AdDetailComponent implements OnInit {
   // zoomOut() {
   //   if (this.zoom > this.options.minZoom) this.zoom--
   // }
+
+  fetchImages(reference) {
+    let observable = this.imageService.fetchImages(reference);
+    observable.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (e) => {
+        this.images = e;
+        if ( this.images && this.images.length > 0){
+          this.display_picture = this.images[0].url;
+        }
+      },
+      error: (err) => {
+        console.error('Errors during fetching images. ' + JSON.stringify(err));
+      },
+    });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   displayPicture(img: string) {
     this.display_picture = img;
@@ -188,5 +211,5 @@ export class AdDetailComponent implements OnInit {
     // })
   }
 
- 
+
 }

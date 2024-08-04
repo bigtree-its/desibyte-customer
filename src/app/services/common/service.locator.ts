@@ -51,6 +51,7 @@ export class ServiceLocator {
   UploadImagesUrl: string;
   ImageKitTokenUrl: string;
   ImageKitFilesUrl: string;
+  ImagesUrl: string;
 
 
   // UK Post
@@ -100,6 +101,7 @@ export class ServiceLocator {
     this.AdEnquiryUrl = environment.AdEnquiryUrl;
     this.ImageKitTokenUrl = environment.ImageKitTokenUrl;
     this.ImageKitFilesUrl = environment.ImageKitFilesUrl;
+    this.ImagesUrl = environment.ImagesUrl;
     
   }
 }

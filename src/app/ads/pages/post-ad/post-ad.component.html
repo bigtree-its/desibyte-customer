@@ -58,7 +58,7 @@
                     class="f-dim"><i>(Upto 5, Max file size
                         1MB)</i></small></span>
             <div class="flex-column p-3" style="border: 1px dashed #c3c0c0;">
-                <input type="file" accept="image/png,image/gif,image/jpg,image/jpeg" class="file-input" (change)="onChange($event)" #fileUpload />
+                <input type="file" accept="image/png,image/gif,image/jpg,image/jpeg" class="file-input" (change)="onChange($event)" #fileUpload [disabled]="myMap.size===5"/>
                 <div class="flex-column" *ngIf="myMap.size > 0">
                     <div class="full-screen my-1 px-2 flex-row jcc pt-2">
                         <div class="flex-row-scrollable">
@@ -93,6 +93,7 @@
                     <p *ngSwitchCase="'uploading'">⏳ Uploading...</p>
                     <p *ngSwitchCase="'success'">✅ Done!</p>
                     <p *ngSwitchCase="'fail'">❌ Error!</p>
+                    <p *ngSwitchCase="'fileLimitReached'">✅ Done!</p>
                     <p *ngSwitchDefault>😶 Ads with Images stands out</p>
                 </section>
             </div>

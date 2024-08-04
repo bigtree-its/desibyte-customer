@@ -20,7 +20,7 @@ import { ImagekitioAngularModule } from 'imagekitio-angular';
 const routes: Routes = [
   { path: 'ck/home', component: FoodsHomeComponent },
   { path: 'ck/area/:area', component: ChefListComponent },
-  { path: 'cloud-kitchens/:id', component: ChefHomeComponent },
+  { path: 'ckh/:id', component: ChefHomeComponent },
   { path: 'ck/basket', component: FoodBasketComponent },
   { path: 'ck/checkout', component: FoodCheckoutComponent },
   { path: 'ck/confirmation', component: FoodOrderConfirmationComponent },

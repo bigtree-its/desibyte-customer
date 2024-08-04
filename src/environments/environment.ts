@@ -70,6 +70,7 @@ export const environment = {
   AdEnquiryUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/ad-enquiries',
   ImageKitTokenUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/imagekit/token',
   ImageKitFilesUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/imagekit/files',
+  ImagesUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/images',
 
 
   //GEO

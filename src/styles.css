@@ -9,7 +9,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100;300;400;500;700;900&display=swap');
 
 /** Logo **/
-@import url('https://fonts.googleapis.com/css2?family=Paytone+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
 
 :root {
     --body: #f5f7f8;
@@ -286,10 +286,8 @@ ul {
 }
 
 .logo-text {
-    font-family: "Paytone One", sans-serif;
-    font-weight: 900;
+    font-family: "Archivo Black", sans-serif;
     cursor: pointer;
-    color: orange;
     font-size: xx-large;
     /* background: -webkit-linear-gradient(#0efa22, #333); */
 }
@@ -1123,9 +1121,9 @@ ul {
 .box-info,
 .btn-info,
 .open {
-    background-color: #e7f5e7;
+    color: #0a8800;
+    background: rgba(10,136,0,.06);
     padding: 7px 20px;
-    color: #53d900;
     border-radius: 8px;
     font-size: 16px;
     text-align: center;
@@ -2241,9 +2239,9 @@ input:checked+.slider:before {
 
 .btn-solid-success {
     border: 2px solid rgb(129, 184, 129);
-    background-color: #e7f5e7;
+    color: #0a8800;
+  background: rgba(10,136,0,.06);
     padding: 7px 20px;
-    color: #53d900;
     font-weight: 900;
 }
 
@@ -2409,6 +2407,12 @@ input:checked+.slider:before {
 .text-center {
     text-align: center;
 }
+.text-orange{
+    color: #FB7701;
+}
+.text-green{
+    color: #0A8800;
+}
 
 .qty-icon,
 .plus-icon,
@@ -2534,7 +2538,7 @@ input:checked+.slider:before {
 
 
 .chef-card {
-    padding: 14px;
+    border: 1px solid #e4e2e2;
     margin-bottom: 10px;
 }
 

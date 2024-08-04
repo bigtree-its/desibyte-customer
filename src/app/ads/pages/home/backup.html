@@ -15,10 +15,10 @@
         </div>
     </div>
 
-    <div class="flex-row my-2 bg-light jcc aic" *ngIf="postcodeDistrict">
+    <div class="flex-row my-2 bg-light mx-2" *ngIf="postcodeDistrict">
+        <span>Ads </span>
         <fa-icon size="1x" class="mx-2 bolder color-y" [icon]="faLocation"></fa-icon>
         <span class="bold">{{postcodeDistrict.prefix}} {{postcodeDistrict.coverage}} {{postcodeDistrict.city}}</span>
-        <span class="ml-2 back" (click)="unsetLocation()">X</span>
     </div>
 
     <div class="flex-row jcsb aic p-2 gap-1 w-100">
@@ -59,7 +59,7 @@
     </div>
     <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
         <div *ngFor="let ad of ads; let i = index" [routerLink]="['/ads/g', ad.reference]">
-            <div class="card mb-4">
+            <div class="card">
                 <img *ngIf="!ad.image" src="/assets/images/default-image.jpeg" style="max-height: 200px;min-height: 200px;object-fit: cover;">
                 <img *ngIf="ad.image" [src]="ad.image?.url" class="card-img-top" style="max-height: 200px;min-height: 200px;object-fit: cover;">
                 <h6 class="card-title py-1">{{ad.title}}</h6>
@@ -71,6 +71,36 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="flex-column mt-5" *ngIf="category==='All'">
+        <div *ngIf="properties && properties.length > 0" class="flex-column">
+            <div class="d-flex jcsb aic gap-1 my-2">
+                <b class="bolder fs-5 ">Properties </b>
+                <b (click)="onSelectCategory('Property')" class="cursor-pointer link">See all</b>
+            </div>
+            <ng-container [ngTemplateOutlet]="propertyListScroller"></ng-container>
+        </div>
+
+        <!-- Following will display items by Grou and with a list-horizontal scroller style
+        But it does not look so nice on screen as the vertial browser scroller is not working great with this style
+        So lets comment the below and just display all items as grid -->
+
+        <!-- <div class="mb-5 p-2" *ngFor="let group of groupedAds | keyvalue">
+            <div class="d-flex jcsb aic gap-1 mb-5">
+                <b></b>
+                <b class="bolder fs-3 ">{{group.key}} <span
+                        style="font-size: 12px;color: #999;">({{group.value.length}})</span></b>
+                <b (click)="onSelectCategory(group.key)" class="cursor-pointer link">See all</b>
+            </div>
+            <ng-container [ngTemplateOutlet]="adListScroller"
+                [ngTemplateOutletContext]="{ items: group.value }"></ng-container>
+        </div> -->
+       
+
+    </div>
+    <div class="flex-column" *ngIf="category!=='All'">
+        <ng-container *ngIf="category === 'Property'" [ngTemplateOutlet]="propertyList"></ng-container>
+        <ng-container *ngIf="category !== 'Property'" [ngTemplateOutlet]="adList"></ng-container>
     </div>
     
 </div>

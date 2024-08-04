@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { faArrowLeft, faCheck, faCopyright, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faCheck, faCopyright, faLocationDot, faStar } from '@fortawesome/free-solid-svg-icons';
 import { Subject, takeUntil } from 'rxjs';
 import { CloudKitchen, CloudKitchenSearchQuery, Cuisine, Dish } from 'src/app/model/all-foods';
 import { PostcodeDistrict, PostcodeDistrictQuery, ServiceLocation } from 'src/app/model/common';
@@ -63,6 +63,7 @@ export class ChefListComponent implements OnDestroy {
   faArrowLeft = faArrowLeft;
   faStarR = starReg;
   faStarS = starSolid;
+  faLocation = faLocationDot;
 
   areaQuery: string;
   cuisineQuery: string;

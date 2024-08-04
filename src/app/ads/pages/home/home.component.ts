@@ -298,9 +298,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     observable.pipe(takeUntil(this.destroy$)).subscribe({
       next: (e) => {
         console.log('Fetched postcode district from prefix ' + area + ". List " + JSON.stringify(e));
-        if ( e && e.length > 0){
+        if (e && e.length > 0) {
           this.postcodeDistrict = e[0];
-          
+
         }
       },
       error: (err) => {
@@ -396,6 +396,12 @@ export class HomeComponent implements OnInit, OnDestroy {
           return result;
         }, {});
     });
+  }
+
+  unsetLocation() {
+    this.postcodeDistrict = null;
+    var adQuery: AdSearchQuery = {};
+    this.getAds(adQuery);
   }
 
   isSelectedCategory(c: Category) {

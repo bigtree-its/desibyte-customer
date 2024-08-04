@@ -1,7 +1,9 @@
 <div *ngIf="cloudKitchen !== null && cloudKitchen !== undefined && !incorrectLanding">
 
     <div class="flex-row jcsb p-2 aic border-bottom">
-        <fa-icon [icon]="faArrowLeft" class="btn-circle" (click)="goback()"></fa-icon>
+        <div class="back" (click)="goback()">
+            <fa-icon [icon]="faArrowLeft"></fa-icon>
+        </div>
         <span class="bolder fs-3">{{cloudKitchen.name}}</span>
         <!-- <div class="flex-row">
             <img *ngIf="cloudKitchen.open" src="/assets/images/we-are-open.jpeg" style="width: 50px;height: 50px;">

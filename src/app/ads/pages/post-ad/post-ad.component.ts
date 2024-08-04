@@ -1,6 +1,6 @@
 import { KeyValue } from '@angular/common';
 import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { faCalendar, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { NgbDate, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject, takeUntil, throwError } from 'rxjs';
@@ -27,7 +27,7 @@ import { Utils } from 'src/app/services/common/utils';
 export class PostAdComponent implements OnInit, OnDestroy {
   faTrash = faTrash;
 
-  status: 'initial' | 'uploading' | 'success' | 'fail' = 'initial'; // Variable to store file status
+  status: 'fileLimitReached' | 'initial' | 'uploading' | 'success' | 'fail' = 'initial'; // Variable to store file status
   file: File | null = null; // Variable to store file
   files: any[] = [];
   fileMap: Map<string, File> = new Map<string, File>();
@@ -40,6 +40,8 @@ export class PostAdComponent implements OnInit, OnDestroy {
   http = inject(HttpClient);
   uploadService = inject(FileUploadService);
   locationService = inject(LocationService);
+
+  @ViewChild('ref') ref:ElementRef;
 
   submitted: boolean = false;
   loading: boolean = false;
@@ -551,6 +553,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
 
   // On file Select
   onChange(event: any) {
+   
     const files = event.target.files;
     if (files.length) {
       this.status = 'initial';
@@ -561,6 +564,9 @@ export class PostAdComponent implements OnInit, OnDestroy {
         const reader = new FileReader();
         reader.onload = (e: any) => {
           this.myMap.set(file.name, e.target.result);
+          if ( this.files.length === 5){
+            this.status = 'fileLimitReached';
+          }
         };
         reader.readAsDataURL(file);
       });
