@@ -22,18 +22,18 @@ export const environment = {
   GEO_LOCAL: 'http://localhost:8085',
 
   // Ads
-  CollectionsUrl: "http://localhost:8083/ads/v1/collections",
-  CuisinesUrl: "http://localhost:8083/ads/v1/cuisines",
-  DishesUrl: "http://localhost:8083/ads/v1/dishes",
-  ReviewsUrl: "http://localhost:8083/ads/v1/reviews",
-  MenusUrl: "http://localhost:8083/ads/v1/menus",
-  CalendersUrl: "http://localhost:8083/ads/v1/calendars",
-  GroupsUrl: 'http://localhost:8083/ads/v1/groups',
-  ProductsUrl: 'http://localhost:8083/ads/v1/products',
-  SupplierUrl: 'http://localhost:8083/ads/v1/suppliers',
-  CloudKitchenUrl: 'http://localhost:8083/ads/v1/cloud-kitchens',
-  FeedbacksUrl: 'http://localhost:8083/ads/v1/feedbacks',
-  PartyBundlesUrl: 'http://localhost:8083/ads/v1/party-bundles',
+  CollectionsUrl: "https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/collections",
+  CuisinesUrl: "https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/cuisines",
+  DishesUrl: "https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/dishes",
+  ReviewsUrl: "https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/reviews",
+  MenusUrl: "https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/menus",
+  CalendersUrl: "https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/calendars",
+  GroupsUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/groups',
+  ProductsUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/products',
+  SupplierUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/suppliers',
+  CloudKitchenUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/cloud-kitchens',
+  FeedbacksUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/feedbacks',
+  PartyBundlesUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/party-bundles',
 
 
   // Orders
@@ -64,13 +64,13 @@ export const environment = {
 
 
   //Ads
-  AdPropertyUrl: 'http://localhost:8083/ads/v1/properties',
-  AdsUrl: 'http://localhost:8083/ads/v1/ads',
-  UploadImagesUrl: 'http://localhost:8083/ads/v1/imagekit/upload_images',
-  AdEnquiryUrl: 'http://localhost:8083/ads/v1/ad-enquiries',
-  ImageKitTokenUrl: 'http://localhost:8083/ads/v1/imagekit/token',
-  ImageKitFilesUrl: 'http://localhost:8083/ads/v1/imagekit/files',
-  ImagesUrl: 'http://localhost:8083/ads/v1/images',
+  AdPropertyUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/properties',
+  AdsUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/ads',
+  UploadImagesUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/imagekit/upload_images',
+  AdEnquiryUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/ad-enquiries',
+  ImageKitTokenUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/imagekit/token',
+  ImageKitFilesUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/imagekit/files',
+  ImagesUrl: 'https://ad-service-bd07dee8092c.herokuapp.com/ads/v1/images',
 
 
   //GEO
