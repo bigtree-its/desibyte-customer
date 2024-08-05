@@ -34,3 +34,10 @@ Login email: bigtree.it.services@gmail.com
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+# Backround Image Icons
+https://www.svgrepo.com/vectors/chevron-right/
+Usage:  background-image: url('https://www.svgrepo.com/show/533661/chevron-right.svg');
+
+# Box Shadow Css
+https://getcssscan.com/css-box-shadow-examples

@@ -203,7 +203,7 @@ export class PaymentFormComponent {
         elements,
         confirmParams: {
           // Return URL where the customer should be redirected after the PaymentIntent is confirmed.
-          // return_url: 'http://nongu.co.uk/foods/confirmation',
+          // return_url: 'http://yimly.co.uk/foods/confirmation',
           return_url: 'http://thappad.co.uk/ck/confirmation',
           receipt_email: 'nava.arul@gmail.com',
         },

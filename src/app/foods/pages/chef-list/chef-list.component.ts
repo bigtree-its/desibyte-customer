@@ -69,6 +69,8 @@ export class ChefListComponent implements OnDestroy {
   cuisineQuery: string;
   postcodeDistrict: PostcodeDistrict;
   invalidPostcodeDistrict: boolean;
+  filterTakingOrders: any;
+  filterDoDelivery: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -77,7 +79,7 @@ export class ChefListComponent implements OnDestroy {
     private cuisinesService: CuisinesService,
     private router: Router,
     private _location: Location
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
@@ -85,7 +87,7 @@ export class ChefListComponent implements OnDestroy {
       this.cuisineQuery = params['cuisine'];
     });
     this.cuisinesService.getCuisines().subscribe((d) => {
-      if ( d){
+      if (d) {
         this.cuisines = d;
         for (var i = 0; i < d.length; i++) {
           var theCuisine = d[i];
@@ -101,7 +103,7 @@ export class ChefListComponent implements OnDestroy {
           });
         }
       }
-     
+
     });
     // var location = this.activatedRoute.snapshot.queryParamMap.get('location');
     // const cuisine = this.activatedRoute.snapshot.queryParamMap.get('cuisine');
@@ -114,15 +116,15 @@ export class ChefListComponent implements OnDestroy {
   }
 
   private getKitchens() {
-    var query: PostcodeDistrictQuery= {};
+    var query: PostcodeDistrictQuery = {};
     query.prefix = this.areaQuery;
     this.locationService.fetchPostcodeDistricts(query).subscribe((pd) => {
       if (Utils.isValid(pd)) {
         this.postcodeDistrict = pd[0];
         this.fetchKitchensByPostcodeDistrict(this.postcodeDistrict);
-        this.titleService.setTitle("Home Chefs in "+this.postcodeDistrict.prefix.toUpperCase()+", "+ this.postcodeDistrict.city);
+        this.titleService.setTitle("Home Chefs in " + this.postcodeDistrict.prefix.toUpperCase() + ", " + this.postcodeDistrict.city);
         this.localService.saveData(Constants.StorageItem_Location, JSON.stringify(this.postcodeDistrict));
-      }else{
+      } else {
         this.invalidPostcodeDistrict = true;
       }
     });
@@ -258,13 +260,12 @@ export class ChefListComponent implements OnDestroy {
       .subscribe((result: CloudKitchen[]) => {
         this.kitchens = result;
         this.filteredKitchens = this.kitchens;
-        
-        if ( this.filteredKitchens){
+
+        if (this.filteredKitchens) {
           this.filteredKitchens.forEach((ck, i) => {
             this.keywords = this.keywords.concat(ck.keywords)
           });
           this.keywords = [...new Set(this.keywords)];
-          console.log('Keywords ='+ this.keywords)
         }
       });
   }
@@ -272,7 +273,6 @@ export class ChefListComponent implements OnDestroy {
   fetchChefsByCuisines(cuisine: Cuisine) {
     const chefSearchQuery = {} as CloudKitchenSearchQuery;
     chefSearchQuery.cuisines = cuisine._id;
-    console.log('The Query for chefs ' + JSON.stringify(chefSearchQuery));
     this.kitchenService
       .getAllCloudKitchens(chefSearchQuery)
       .subscribe((result: CloudKitchen[]) => {
@@ -280,6 +280,41 @@ export class ChefListComponent implements OnDestroy {
         this.filteredKitchens = this.kitchens;
         this.serviceLocations = [];
       });
+  }
+
+  filterOpen(e: any) {
+    this.filterTakingOrders =  e.currentTarget.checked;
+    this.filter();
+  }
+
+  filterDelivery(e: any) {
+    this.filterDoDelivery =  e.currentTarget.checked;
+    this.filter();
+  }
+
+  filter(){
+    this.filteredKitchens = [];
+    if ( this.filterTakingOrders &&  this.filterDoDelivery){
+      this.kitchens.forEach((ck) => {
+        if ( ck.open && ck.doDelivery){
+          this.filteredKitchens.push(ck);
+        }
+      });
+    } else if ( this.filterTakingOrders && !this.filterDoDelivery){
+      this.kitchens.forEach((ck) => {
+        if ( ck.open){
+          this.filteredKitchens.push(ck);
+        }
+      });
+    }else if ( !this.filterTakingOrders && this.filterDoDelivery){
+      this.kitchens.forEach((ck) => {
+        if ( ck.doDelivery){
+          this.filteredKitchens.push(ck);
+        }
+      });
+    }else if ( !this.filterTakingOrders && !this.filterDoDelivery){
+      this.filteredKitchens = this.kitchens
+    }
   }
 
   getAddress(cook: CloudKitchen): string {

@@ -82,8 +82,8 @@ html {
     overflow-y: auto;
     scroll-behavior: smooth;
     text-size-adjust: 100%;
-    background-color: #f5f7f8;
-    /* background-color: #f9f7f1; */
+    /* background-color: #f5f7f8; */
+    background-color: #f5f5f5;
     overflow: -moz-scrollbars-none;
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -239,7 +239,7 @@ body {
     font-size: 14px;
     /* line-height: 2.6rem; */
     letter-spacing: 0.1px;
-    background-color: #f7f9fa;
+    background-color: #f5f5f5;
     /* font-family: "Open Sans", sans-serif; */
     font-family: 'Noto Sans SC', sans-serif;
     overflow: -moz-scrollbars-none;
@@ -273,11 +273,9 @@ ul {
 }
 
 .highlight {
-    background-color: rgb(255, 251, 180);
-    border: 1px double yellow;
-    color: red;
+    border: 1px double #888;
     border-radius: 25px;
-    padding: 5px;
+    padding: 5px 10px;
 }
 
 .big-text {
@@ -342,7 +340,8 @@ ul {
 .text-shadow {
     text-shadow: 0 0px 5px rgba(0, 0, 0, 1);
 }
-.text-dull{
+
+.text-dull {
     color: #707070;
 }
 
@@ -1029,7 +1028,8 @@ ul {
 .bg-light {
     background-color: #f9f9f9;
 }
-.bg-o{
+
+.bg-o {
     background-color: orange;
 }
 
@@ -1110,7 +1110,8 @@ ul {
     cursor: pointer;
     background-color: #c3c4c5;
 }
-.btn-sm{
+
+.btn-sm {
     padding: 5px 7px;
 }
 
@@ -1122,14 +1123,16 @@ ul {
 .btn-info,
 .open {
     color: #0a8800;
-    background: rgba(10,136,0,.06);
+    background: rgba(10, 136, 0, .06);
     padding: 7px 20px;
     border-radius: 8px;
     font-size: 16px;
     text-align: center;
 }
 
-.btn-pri, .btn-warn, .btn-sec{
+.btn-pri,
+.btn-warn,
+.btn-sec {
     background-color: #e3dfdf;
     padding: 5px 10px;
     border-radius: 6px;
@@ -1139,35 +1142,39 @@ ul {
     box-shadow: rgba(14, 63, 126, 0.04) 0px 0px 0px 1px, rgba(42, 51, 69, 0.04) 0px 1px 1px -0.5px, rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px, rgba(42, 51, 70, 0.04) 0px 6px 6px -3px, rgba(14, 63, 126, 0.04) 0px 12px 12px -6px, rgba(14, 63, 126, 0.04) 0px 24px 24px -12px;
 }
 
-.btn-warn{
+.btn-warn {
     border: 1px solid #ffb524;
     background-color: #f8e6c3;
     color: #ffaa00;
 }
 
-.btn-warn:hover{
+.btn-warn:hover {
     border: 1px solid #ffaa00;
     background-color: #ffaa00;
     color: #fff;
     cursor: pointer;
 }
-.btn-pri:hover{
+
+.btn-pri:hover {
     border: 1px solid #ddd;
     background-color: #ddd;
     color: #222;
     cursor: pointer;
 }
-.btn-sec{
+
+.btn-sec {
     border: 1px solid #dfedfc;
     background-color: #a2cbf6;
     color: #248eff;
 }
-.btn-sec:hover{
+
+.btn-sec:hover {
     border: 1px solid #248eff;
     background-color: #248eff;
     color: #fff;
     cursor: pointer;
 }
+
 .btn-info {
     background-color: #dfedfc;
     color: #248eff;
@@ -1185,13 +1192,13 @@ ul {
 }
 
 .box-warning {
-    background-color: #f8e6c3;
-    color: #ffaa00;
+    color: rgb(236, 102, 25);
+    background-color: rgb(255, 247, 238);
 }
 
 .btn-warning {
-    background-color: #f8e6c3;
-    color: #ffb524;
+    color: rgb(236, 102, 25);
+    background-color: rgb(255, 247, 238);
 }
 
 .btn-success:hover {
@@ -1205,7 +1212,8 @@ ul {
     color: #fff;
     cursor: pointer;
 }
-.box-danger{
+
+.box-danger {
     background-color: rgba(255, 0, 0, 0.091);
     color: red;
     padding: 10px;
@@ -1308,10 +1316,8 @@ ul {
 }
 
 .toast-warning {
-    background-color: #333 !important;
-    /* border: 1px solid var(--d-orange) !important; */
-    /* border-radius: 7px !important; */
-    color: #fff;
+    color: rgb(236, 102, 25);
+    background-color: rgb(255, 247, 238);
     padding: 10px 40px;
 }
 
@@ -1419,7 +1425,8 @@ select {
 .w-50 {
     width: 50%;
 }
-.fs-hero{
+
+.fs-hero {
     font-size: 60px;
 }
 
@@ -1736,7 +1743,7 @@ select {
     position: relative;
     display: inline-block;
     width: 60px;
-    height: 25px;
+    height: 20px;
 }
 
 .switch input {
@@ -1748,13 +1755,16 @@ select {
 .slider {
     position: absolute;
     cursor: pointer;
-    top: 2px;
+    top: 1px;
     left: 0;
     right: 0;
     bottom: 0;
     background-color: #e9e9e9;
+    border: 1px solid #e5e5e5;
     -webkit-transition: 0.4s;
     transition: 0.4s;
+    border-radius: 25px;
+    padding: 12px 0;
 }
 
 .slider:before {
@@ -1763,13 +1773,15 @@ select {
     height: 25px;
     width: 25px;
     bottom: -1px;
-    background: #999a9b;
+    background: #bebfbf;
+    border-radius: 50%;
     -webkit-transition: 0.4s;
     transition: 0.4s;
 }
 
 .slider.round {
     /* border-radius: 34px; */
+    background: azure;
 }
 
 .slider.round:before {
@@ -1777,15 +1789,29 @@ select {
 }
 
 input:checked+.slider {
-    background-color: #b2fbea;
+    background-color: rgb(255, 247, 238);
+    border: 1px solid orange;
 }
 
 input:checked+.slider:before {
-    -webkit-transform: translateX(35px);
-    -ms-transform: translateX(35px);
-    transform: translateX(35px);
-    background: #21d19c;
+    -webkit-transform: translateX(33px);
+    -ms-transform: translateX(33px);
+    transform: translateX(33px);
+    background-color: rgb(236, 102, 25);
+    border-radius: 50%;
 }
+.carousel-control-prev-icon{
+    background-color: #dfd5d5;
+    border-radius: 50%;
+    background-image: url('https://www.svgrepo.com/show/533659/chevron-left.svg');
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+ }
+ .carousel-control-next-icon{
+    background-color: #dfd5d5;
+    border-radius: 50%;
+    background-image: url('https://www.svgrepo.com/show/533661/chevron-right.svg');
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+ }
 
 .mobile-w {
     width: 480px;
@@ -2240,7 +2266,7 @@ input:checked+.slider:before {
 .btn-solid-success {
     border: 2px solid rgb(129, 184, 129);
     color: #0a8800;
-  background: rgba(10,136,0,.06);
+    background: rgba(10, 136, 0, .06);
     padding: 7px 20px;
     font-weight: 900;
 }
@@ -2252,15 +2278,15 @@ input:checked+.slider:before {
 }
 
 .btn-solid-warning {
-    background-color: rgb(255, 211, 130);
-    border: 2px solid rgb(223, 166, 60);
+    color: rgb(236, 102, 25);
+    background-color: rgb(255, 247, 238);
 }
 
 .btn-solid-warning:hover {
     cursor: pointer;
-    background-color: orange;
     border: 2px solid orange;
-    color: #fff;
+    color: rgb(236, 102, 25);
+    background-color: rgb(255, 247, 238);
 }
 
 .btn-bold {
@@ -2272,9 +2298,8 @@ input:checked+.slider:before {
 
 .btn-bold:hover {
     cursor: pointer;
-    border: 1px solid coral;
-    background-color: coral;
-    color: #fff;
+    color: rgb(236, 102, 25);
+    background-color: rgb(255, 247, 238);
 }
 
 .btn-text {
@@ -2285,13 +2310,13 @@ input:checked+.slider:before {
 
 .btn-text:hover {
     cursor: pointer;
-    border: 1px solid coral;
-    background-color: coral;
-    color: #fff;
+    color: rgb(236, 102, 25);
+    background-color: rgb(255, 247, 238);
 }
 
 .btn-trash {
-    color: coral;
+    color: rgb(236, 102, 25);
+    background-color: rgb(255, 247, 238);
 }
 
 .btn-trash:hover {
@@ -2407,11 +2432,22 @@ input:checked+.slider:before {
 .text-center {
     text-align: center;
 }
-.text-orange{
+
+.text-orange {
     color: #FB7701;
 }
-.text-green{
+
+.text-green {
     color: #0A8800;
+}
+
+.text-hero {
+    /* font-family: "Agrandir", Sans-serif; */
+    color: #fff;
+    font-size: 96px;
+    font-weight: 900;
+    line-height: 99px;
+    text-shadow: 0px 6px 0px rgba(0, 0, 0, 0.25);
 }
 
 .qty-icon,

@@ -18,6 +18,9 @@ import { AuthGuard } from '../services/auth/auth-guard.service';
 import { DragScrollComponent, DragScrollItemDirective } from 'ngx-drag-scroll';
 import { RatingComponent } from './pages/rating/rating.component';
 import { OrderProgressComponent } from './pages/order-progress/order-progress.component';
+import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
+import { CookiePolicyComponent } from './pages/cookie-policy/cookie-policy.component';
+import { TermsAndConditionsComponent } from './pages/terms-and-conditions/terms-and-conditions.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -36,7 +39,10 @@ const routes: Routes = [
     SandboxComponent,
     WriteReviewComponent,
     RatingComponent,
-    OrderProgressComponent
+    OrderProgressComponent,
+    PrivacyPolicyComponent,
+    CookiePolicyComponent,
+    TermsAndConditionsComponent
   ],
   imports: [
     CommonModule,

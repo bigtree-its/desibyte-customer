@@ -5,16 +5,16 @@
             <fa-icon [icon]="faArrowLeft"></fa-icon>
         </div>
         <!-- <span class="bolder fs-3">{{postcodeDistrict?.prefix}}</span> -->
-        <div class="flex-row my-2 bg-light mx-2 highlight" *ngIf="postcodeDistrict">
+        <div class="flex-row my-2 bg-light mx-2 bg-white p-2 br-25" *ngIf="postcodeDistrict">
             <fa-icon size="1x" class="mx-2 bolder color-y" [icon]="faLocation"></fa-icon>
             <span class="bold">{{postcodeDistrict.prefix}} {{postcodeDistrict.coverage}} - {{postcodeDistrict.city}}</span>
         </div>
         <span></span>
     </div>
 
-    <div class="flex-column w-100 mb-2 px-3 jcc aic">
+    <div class="flex-column w-100 px-3 jcc aic">
         <span class="bolder fs-5">Cuisines</span>
-        <div class="flex-row-scrollable py-3">
+        <div class="flex-row-scrollable">
             <div *ngFor="let cuisine of cuisines" class="cuisine" (click)="onSelectCuisine(cuisine)"
                 [class.selectedCuisine]="isSelectedCuisine(cuisine)">
                 <img src={{cuisine.logo}} class="cuisine-logo" height="90px" width="120px">
@@ -23,10 +23,10 @@
         </div>
     </div>
 
-    <div class="flex-column w-100 mb-2 sm  jcc aic">
-        <span class="bolder fs-5">Whats on your mind ?</span>
+    <div class="flex-column w-100 sm jcc aic">
+        <span class="bolder fs-5 py-1">Whats on your mind ?</span>
         <div class="full-screen mb-2 px-3">
-            <div class="flex-row-scrollable py-3">
+            <div class="flex-row-scrollable">
                 <!-- <div *ngFor="let kw of keywords" class="btn-text d-flex jcc aic mr-1 px-3" (click)="onSelectDish(d)" [class.clicked]="isDishSelected(d)"> -->
                 <div *ngFor="let kw of keywords" class="selectable mr-1" (click)="onSelectKeyword(kw)"
                     [class.selected]="isKeywordSelected(kw)">
@@ -37,8 +37,8 @@
         </div>
     </div>
 
-    <div class="flex-column w-100 mb-2 px-3 lg  jcc aic">
-        <span class="bolder fs-5 py-2">Whats on your mind ?</span>
+    <div class="flex-column w-100 px-3 lg  jcc aic">
+        <span class="bolder fs-5 py-1">Whats on your mind ?</span>
         <div class="flex-row-scrollable">
             <!-- <div *ngFor="let d of dishes" class="selectable mr-1" (click)="onSelectDish(d)" [class.selected]="isDishSelected(d)"> -->
             <div *ngFor="let kw of keywords" class="selectable mr-1" (click)="onSelectKeyword(kw)"
@@ -48,14 +48,25 @@
             </div>
         </div>
     </div>
-
-    <div class="full-screen mb-2 px-3 jcc aic">
-        <div class="flex-row-space-between mb-1 md bg-light p-2 mx-1"
-            *ngIf="serviceLocation != null && serviceLocation !== undefined">
-            <span>{{serviceLocation.name}}, {{serviceLocation.city}}</span>
-            <span class="change-area" routerLink="/ck/home">Change</span>
+    <div class="flex-row gap-3 jcc aic mb-3">
+        <div class="flex-row aic gap-2">
+            <span class="bolder">Taking orders</span>
+            <div class="theme_switcher">
+                <label id="switch" class="switch">
+                    <input type="checkbox" (change)="filterOpen($event)" ><span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="flex-row aic gap-2">
+            <span class="bolder">Delivery</span>
+            <div class="theme_switcher">
+                <label id="switch" class="switch">
+                    <input type="checkbox"  (change)="filterDelivery($event)"><span class="slider round"></span>
+                </label>
+            </div>
         </div>
     </div>
+
 
     <div class="p-2 jcc aic row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
         <div class="col mb-4 asfs" *ngFor="let chef of filteredKitchens " [routerLink]="[ '/ckh', chef._id] ">
