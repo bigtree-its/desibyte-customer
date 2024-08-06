@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { faBagShopping, faBars, faKitchenSet, faSpa, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBagShopping, faBars, faKitchenSet, faPaperPlane, faSpa, faUser } from '@fortawesome/free-solid-svg-icons';
 import { User } from 'src/app/model/all-auth';
 import { FoodOrder } from 'src/app/model/all-foods';
 import { Order } from 'src/app/model/all-products';
@@ -33,6 +33,8 @@ export class HeaderComponent {
   cartIcon = faBagShopping;
   faSpa = faSpa;
   faUser = faUser;
+  faPaperPlane = faPaperPlane;
+
   pOrder: Order = null;
   fOrder: FoodOrder = null;
 

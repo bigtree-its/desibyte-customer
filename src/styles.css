@@ -9,8 +9,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100;300;400;500;700;900&display=swap');
 
 /** Logo **/
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
 :root {
     --body: #f5f7f8;
     --blue: #007bff;
@@ -284,7 +283,7 @@ ul {
 }
 
 .logo-text {
-    font-family: "Archivo Black", sans-serif;
+    font-family: "Abril Fatface", serif;
     cursor: pointer;
     font-size: xx-large;
     /* background: -webkit-linear-gradient(#0efa22, #333); */
